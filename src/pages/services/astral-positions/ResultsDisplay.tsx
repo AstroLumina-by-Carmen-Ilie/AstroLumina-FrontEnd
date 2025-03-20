@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ReadingResult } from '../../../types/planetPositions';
+import { ReadingResult } from '../../../types/astralPositions';
 import { planetSymbols } from '../../../constants/astrology';
-import { generatePlanetPositionsPDF } from '../../../templates/pdf/planetPositions';
+import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -27,13 +27,13 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
       setIsGeneratingPDF(true);
       try {
-        const doc = generatePlanetPositionsPDF(result, {
+        const doc = generateAstralPositionsPDF(result, {
           name: userInfo.name,
           date: new Date(userInfo.birthDate).toLocaleDateString(),
           time: new Date(userInfo.birthHour).toLocaleTimeString(),
           location: userInfo.location
         });
-        await doc.save(`planet_positions_${userInfo.name.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+        await doc.save(`astral_positions_${userInfo.name.toLowerCase().replace(/\s+/g, '_')}.pdf`);
       } finally {
         // Ensure the spinner runs for at least 1 second
         setTimeout(() => setIsGeneratingPDF(false), 1000);

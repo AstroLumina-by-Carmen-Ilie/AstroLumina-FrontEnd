@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ReadingResult } from '../../../types/planetPositions';
+import { ReadingResult } from '../../../types/astralPositions';
 import Navbar from '../../../components/navbar/Navbar';
 import astralChartSvg from '../../../assets/astral-chart.svg';
 import BirthDataForm from './BirthDataForm';
 import ResultsDisplay from './ResultsDisplay';
 import { useLoading } from '../../../contexts/LoadingContext';
 
-const PlanetPositionsPage: React.FC = () => {
+const AstralPositionsPage: React.FC = () => {
   const [result, setResult] = useState<ReadingResult | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
@@ -109,4 +109,4 @@ const PlanetPositionsPage: React.FC = () => {
   );
 };
 
-export default PlanetPositionsPage;
+export default AstralPositionsPage;

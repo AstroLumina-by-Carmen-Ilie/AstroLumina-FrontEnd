@@ -3,8 +3,8 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { FormErrors, LocationCoordinates, ReadingPayload, ReadingResult, SelectOption } from '../../../types/planetPositions';
-import { calculatePlanetPositions } from '../utilities/astrologicalCalculations';
+import { FormErrors, LocationCoordinates, ReadingPayload, ReadingResult, SelectOption } from '../../../types/astralPositions';
+import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
 interface BirthDataFormProps {
   setResult: React.Dispatch<React.SetStateAction<ReadingResult | null>>;
@@ -185,7 +185,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
       // Calculate positions
-      const result = await calculatePlanetPositions('ro', payload);
+      const result = await calculateAstralPositions('ro', payload);
 
       // Update parent component state
       setResult(result);

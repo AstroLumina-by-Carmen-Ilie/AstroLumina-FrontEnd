@@ -1,9 +1,9 @@
-import { ReadingResult } from '../../types/planetPositions';
+import { ReadingResult } from '../../types/astralPositions';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { planetSymbols, zodiacSymbols } from '../../constants/astrology';
 
-export const generatePlanetPositionsPDF = (result: ReadingResult, userInfo: { name: string, date: string, time: string, location: string }) => {
+export const generateAstralPositionsPDF = (result: ReadingResult, userInfo: { name: string, date: string, time: string, location: string }) => {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',

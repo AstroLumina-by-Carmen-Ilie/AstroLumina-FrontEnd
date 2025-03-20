@@ -27,7 +27,7 @@ const Services = () => {
 
   const services = [
     {
-      id: 'planet-positions',
+      id: 'astral-positions',
       title: 'Poziția Planetelor în Timp Real',
       description: 'Află pozițiile exacte ale planetelor în acest moment și cum acestea influențează energia zilei. Un instrument esențial pentru planificarea activităților și înțelegerea influențelor astrologice curente.',
       details: [

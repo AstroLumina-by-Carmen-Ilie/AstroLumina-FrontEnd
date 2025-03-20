@@ -1,5 +1,5 @@
 import { FormErrors, SelectOption } from './common';
-import { LocationCoordinates, ReadingPayload, PlanetPosition, ReadingResult } from './planetPositions';
+import { LocationCoordinates, ReadingPayload, AstralPosition, ReadingResult } from './astralPositions';
 
 export interface UserInfo {
     name: string;
@@ -13,16 +13,9 @@ export interface ContactInfo {
     email: string;
 }
 
-export interface InterpretedPlanetPosition {
-    planet: string;
-    sign: string;
-    house: string;
+export interface InterpretedAstralPosition extends AstralPosition {
     interpretation: string;
-  }
-  
-export interface InterpretedReadingResult {
-data: InterpretedPlanetPosition[];
 }
 
 export type { FormErrors, SelectOption };
-export type { LocationCoordinates, ReadingPayload, PlanetPosition, ReadingResult};
+export type { LocationCoordinates, ReadingPayload, AstralPosition, ReadingResult };
