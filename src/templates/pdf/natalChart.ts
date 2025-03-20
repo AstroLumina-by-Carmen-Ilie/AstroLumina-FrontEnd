@@ -1,4 +1,4 @@
-import { InterpretedReadingResult, UserInfo, ContactInfo } from '../../types/astralChart';
+import { InterpretedAstralPositions, UserInfo, ContactInfo } from '../../types/astralChart';
 import { jsPDF } from 'jspdf';
 import { planetSymbols, zodiacSymbols } from '../../constants/astrology';
 
@@ -12,7 +12,7 @@ const formatTime = (date: Date): string => {
 };
 
 export const generateNatalChartPDF = (
-  result: InterpretedReadingResult,
+  result: InterpretedAstralPositions,
   userInfo: UserInfo,
   contactInfo: ContactInfo
 ) => {

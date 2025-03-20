@@ -3,10 +3,10 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { FormErrors, SelectOption, LocationCoordinates, UserInfo, ReadingPayload } from '../../../types/astralChart';
+import { FormErrors, SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types/astralChart';
 
 interface BirthDataFormProps {
-  onNext: (payload: ReadingPayload, userInfo: UserInfo) => void;
+  onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
 }
 
 const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
@@ -101,7 +101,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateInputs() && coordinates && birthDate && birthHour) {
-      const payload: ReadingPayload = {
+      const payload: BirthDataPayload = {
         longitude: coordinates.lng,
         latitude: coordinates.lat,
         year: birthDate.getFullYear(),

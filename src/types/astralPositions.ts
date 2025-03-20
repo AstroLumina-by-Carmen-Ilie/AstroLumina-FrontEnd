@@ -5,7 +5,7 @@ export interface LocationCoordinates {
   lng: number;
 }
 
-export interface ReadingPayload {
+export interface BirthDataPayload {
   longitude: number;
   latitude: number;
   year: number;
@@ -15,7 +15,7 @@ export interface ReadingPayload {
   minute: number;
   city: string;
   nation: string;
-  name: string;
+  fullname: string;
 }
 
 export interface AstralPosition {
@@ -32,8 +32,6 @@ export interface AstralPosition {
   retrograde: boolean;
 }
 
-export interface ReadingResult {
-  data: AstralPosition[];
-}
+export type AstralPositions = AstralPosition[];
 
 export type { FormErrors, SelectOption };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
-import { ReadingPayload, UserInfo, ContactInfo  } from '../../../types/astralChart';
+import { BirthDataPayload, UserInfo, ContactInfo  } from '../../../types/astralChart';
 import karmicChartIllustration from '../../../assets/astral-chart.svg';
 import BirthDataForm from './BirthDataForm';
 import ContactForm from './ContactForm';
@@ -9,7 +9,7 @@ import FinalStep from './FinalStep';
 
 const KarmicChartPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [payload, setPayload] = useState<ReadingPayload | null>(null);
+  const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);

@@ -3,11 +3,11 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { FormErrors, LocationCoordinates, ReadingPayload, ReadingResult, SelectOption } from '../../../types/astralPositions';
+import { FormErrors, LocationCoordinates, BirthDataPayload, AstralPositions, SelectOption } from '../../../types/astralPositions';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
 interface BirthDataFormProps {
-  setResult: React.Dispatch<React.SetStateAction<ReadingResult | null>>;
+  setResult: React.Dispatch<React.SetStateAction<AstralPositions | null>>;
   setUserInfo: React.Dispatch<React.SetStateAction<{
     name: string;
     birthDate: Date;
@@ -168,7 +168,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         throw new Error('Missing required data for calculation');
       }
 
-      const payload: ReadingPayload = {
+      const payload: BirthDataPayload = {
         longitude: coordinates.lng,
         latitude: coordinates.lat,
         year: birthDate.getFullYear(),

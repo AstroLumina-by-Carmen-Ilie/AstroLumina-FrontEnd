@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { ReadingPayload, ReadingResult } from '../../../types/astralPositions';
-import { InterpretedReadingResult } from '../../../types/astralChart';
+import { BirthDataPayload, AstralPositions } from '../../../types/astralPositions';
+import { InterpretedAstralPositions } from '../../../types/astralChart';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
-export const calculateAstralPositions = async (language: string, payload: ReadingPayload): Promise<ReadingResult> => {
+export const calculateAstralPositions = async (language: string, payload: BirthDataPayload): Promise<AstralPositions> => {
   try {
     const response = await axios.post(`${ASTROLOGICAL_API_URL}/api/v1/${language}/planet-sign-house`, payload, {
       headers: {
@@ -18,7 +18,7 @@ export const calculateAstralPositions = async (language: string, payload: Readin
   }
 };
 
-export const calculateNatalChart = async (language: string, payload: ReadingPayload): Promise<InterpretedReadingResult> => {
+export const calculateNatalChart = async (language: string, payload: BirthDataPayload): Promise<InterpretedAstralPositions> => {
   try {
     const response = await axios.post(`${ASTROLOGICAL_API_URL}/api/v1/${language}/interpretations/natal`, payload, {
       headers: {
@@ -33,7 +33,7 @@ export const calculateNatalChart = async (language: string, payload: ReadingPayl
   }
 };
 
-export const calculateKarmicChart = async (language: string, payload: ReadingPayload): Promise<InterpretedReadingResult> => {
+export const calculateKarmicChart = async (language: string, payload: BirthDataPayload): Promise<InterpretedAstralPositions> => {
   try {
     const response = await axios.post(`${ASTROLOGICAL_API_URL}/api/v1/${language}/interpretations/karmic`, payload, {
       headers: {

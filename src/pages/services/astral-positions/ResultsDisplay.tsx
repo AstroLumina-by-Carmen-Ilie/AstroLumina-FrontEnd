@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ReadingResult } from '../../../types/astralPositions';
+import { AstralPositions } from '../../../types/astralPositions';
 import { planetSymbols } from '../../../constants/astrology';
 import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
 
@@ -13,7 +13,7 @@ const formatTime = (date: Date): string => {
 };
 
 const ResultsDisplay: React.FC<{
-  result: ReadingResult;
+  result: AstralPositions;
   userInfo: {
     name: string;
     birthDate: Date;

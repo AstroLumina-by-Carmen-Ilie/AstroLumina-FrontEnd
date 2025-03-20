@@ -1,5 +1,5 @@
 import { FormErrors, SelectOption } from './common';
-import { LocationCoordinates, ReadingPayload, AstralPosition, ReadingResult } from './astralPositions';
+import { LocationCoordinates, BirthDataPayload, AstralPosition, AstralPositions } from './astralPositions';
 
 export interface UserInfo {
     name: string;
@@ -17,5 +17,7 @@ export interface InterpretedAstralPosition extends AstralPosition {
     interpretation: string;
 }
 
+export type InterpretedAstralPositions = InterpretedAstralPosition[];
+
 export type { FormErrors, SelectOption };
-export type { LocationCoordinates, ReadingPayload, AstralPosition, ReadingResult };
+export type { LocationCoordinates, BirthDataPayload, AstralPosition, AstralPositions };

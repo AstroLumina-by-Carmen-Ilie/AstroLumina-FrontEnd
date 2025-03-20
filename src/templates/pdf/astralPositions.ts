@@ -1,9 +1,9 @@
-import { ReadingResult } from '../../types/astralPositions';
+import { AstralPosition, AstralPositions } from '../../types/astralPositions';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { planetSymbols, zodiacSymbols } from '../../constants/astrology';
 
-export const generateAstralPositionsPDF = (result: ReadingResult, userInfo: { name: string, date: string, time: string, location: string }) => {
+export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: { name: string, date: string, time: string, location: string }) => {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -23,12 +23,12 @@ export const generateAstralPositionsPDF = (result: ReadingResult, userInfo: { na
   doc.text(`Oră: ${userInfo.time}`, 20, 44);
   doc.text(`Locație: ${userInfo.location}`, 20, 51);
 
-  const tableData = result.data.map(p => {
-    const planetSymbol = (p.planet === 'Soare' || p.planet === 'Sun') ? 'O' : planetSymbols['ro'][p.planet] || '';
+  const tableData = result.map((p: AstralPosition) => {
+    const planetSymbol = (p.name === 'Soare' || p.name === 'Sun') ? 'O' : planetSymbols['ro'][p.name] || '';
     const zodiacSymbol = zodiacSymbols['ro'][p.sign] || '';
     
     return [
-      `${planetSymbol} ${p.planet}`,
+      `${planetSymbol} ${p.name}`,
       `${zodiacSymbol} ${p.sign}`,
       p.house
     ];
