@@ -51,13 +51,13 @@ export const generateNatalChartPDF = (
   doc.text(`Generat la ${today} de AstroLumina`, 105, doc.internal.pageSize.height - 10, { align: 'center' });
 
   doc.setFont("NotoSansSymbols", "normal");
-  result.data.forEach((interpretation) => {
+  result.forEach((interpretation) => {
     doc.addPage();
     yPosition = 20;
     
-    let planet_sign = (interpretation.planet === 'Soare' || interpretation.planet === 'Sun') ? 'O' : planetSymbols['ro'][interpretation.planet]
+    let planet_sign = (interpretation.name === 'Soare' || interpretation.name === 'Sun') ? 'O' : planetSymbols['ro'][interpretation.name]
     let zodiac_sign = zodiacSymbols['ro'][interpretation.sign]
-    doc.text(planet_sign + ' ' + interpretation.planet, 20, yPosition);
+    doc.text(planet_sign + ' ' + interpretation.name, 20, yPosition);
     yPosition += 10;
     doc.text(zodiac_sign + ' ' + interpretation.sign, 20, yPosition);
     yPosition += 10;

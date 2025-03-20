@@ -13,7 +13,18 @@ export interface ContactInfo {
     email: string;
 }
 
-export interface InterpretedAstralPosition extends AstralPosition {
+export interface InterpretedAstralPosition {
+    name: string;
+    quality: string;
+    element: string;
+    sign: string;
+    sign_num: number;
+    position: number;
+    abs_pos: number;
+    emoji: string;
+    point_type: string;
+    house: string;
+    retrograde: boolean;
     interpretation: string;
 }
 

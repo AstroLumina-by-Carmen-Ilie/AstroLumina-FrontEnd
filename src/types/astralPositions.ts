@@ -15,7 +15,7 @@ export interface BirthDataPayload {
   minute: number;
   city: string;
   nation: string;
-  fullname: string;
+  name: string;
 }
 
 export interface AstralPosition {

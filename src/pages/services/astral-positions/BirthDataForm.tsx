@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { FormErrors, LocationCoordinates, BirthDataPayload, AstralPositions, SelectOption } from '../../../types/astralPositions';
+import { LocationCoordinates, BirthDataPayload, AstralPositions, SelectOption } from '../../../types/astralPositions';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
 interface BirthDataFormProps {
@@ -169,13 +169,16 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       }
 
       const payload: BirthDataPayload = {
+        name: fullName,
+        nation: birthCountry,
+        city: birthCity,
         longitude: coordinates.lng,
         latitude: coordinates.lat,
         year: birthDate.getFullYear(),
         month: birthDate.getMonth() + 1,
         day: birthDate.getDate(),
         hour: birthHour.getHours(),
-        minute: birthHour.getMinutes()
+        minute: birthHour.getMinutes(),
       };
 
       // Get the actual location names for display
