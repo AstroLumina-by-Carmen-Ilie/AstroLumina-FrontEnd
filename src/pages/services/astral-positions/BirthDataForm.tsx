@@ -5,6 +5,7 @@ import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 import { LocationCoordinates, BirthDataPayload, AstralPositions, SelectOption } from '../../../types/astralPositions';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
+import { logger } from '../../../utils/logger';
 
 interface BirthDataFormProps {
   setResult: React.Dispatch<React.SetStateAction<AstralPositions | null>>;
@@ -17,6 +18,8 @@ interface BirthDataFormProps {
 }
 
 const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo }) => {
+  logger.log('BirthDataForm: Component rendering', new Date().toISOString());
+  
   // Form state
   const [formState, setFormState] = useState({
     fullName: '',
@@ -40,6 +43,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Initialize country options once on mount
   useEffect(() => {
+    logger.log('BirthDataForm: Initialize countries effect running');
     try {
       const countries = Country.getAllCountries().map(country => ({
         value: country.isoCode,
@@ -54,18 +58,28 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       // Set Romania as default - but don't cascade updates yet
       const romania = countries.find(c => c.label === 'Romania');
       if (romania) {
+        logger.log('BirthDataForm: Setting Romania as default country');
         setFormState(prev => ({
           ...prev,
           birthCountry: romania.value
         }));
       }
     } catch (error) {
+      logger.error('BirthDataForm: Error initializing countries:', error);
       console.error('Error initializing countries:', error);
     }
+    
+    // Set up on-screen debugging for mobile
+    logger.showLogsOnScreen();
+    
+    return () => {
+      logger.log('BirthDataForm: Countries effect cleanup');
+    };
   }, []);
 
   // Handle country change - load states
   useEffect(() => {
+    logger.log('BirthDataForm: Country change effect running', { country: formState.birthCountry });
     if (!formState.birthCountry) return;
 
     try {
@@ -74,6 +88,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
       }));
 
+      logger.log(`BirthDataForm: Loaded ${states.length} states for country ${formState.birthCountry}`);
+      
       setOptions(prev => ({
         ...prev,
         stateOptions: [{ value: '', label: 'Select ...' }, ...states],
@@ -88,12 +104,22 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         coordinates: null
       }));
     } catch (error) {
+      logger.error('BirthDataForm: Error loading states:', error);
       console.error('Error loading states:', error);
     }
+    
+    return () => {
+      logger.log('BirthDataForm: Country effect cleanup');
+    };
   }, [formState.birthCountry]);
 
   // Handle county change - load cities
   useEffect(() => {
+    logger.log('BirthDataForm: County change effect running', { 
+      county: formState.birthCounty, 
+      country: formState.birthCountry 
+    });
+    
     if (!formState.birthCounty || !formState.birthCountry) return;
 
     try {
@@ -102,6 +128,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: city.name
       }));
 
+      logger.log(`BirthDataForm: Loaded ${cities.length} cities for county ${formState.birthCounty}`);
+      
       setOptions(prev => ({
         ...prev,
         cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
@@ -114,12 +142,23 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         coordinates: null
       }));
     } catch (error) {
+      logger.error('BirthDataForm: Error loading cities:', error);
       console.error('Error loading cities:', error);
     }
+    
+    return () => {
+      logger.log('BirthDataForm: County effect cleanup');
+    };
   }, [formState.birthCounty, formState.birthCountry]);
 
   // Handle city change - set coordinates
   useEffect(() => {
+    logger.log('BirthDataForm: City change effect running', { 
+      city: formState.birthCity, 
+      county: formState.birthCounty, 
+      country: formState.birthCountry 
+    });
+    
     if (!formState.birthCity || !formState.birthCounty || !formState.birthCountry) return;
 
     try {
@@ -127,6 +166,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         .find(city => city.name === formState.birthCity);
 
       if (cityData) {
+        logger.log(`BirthDataForm: Found coordinates for city ${formState.birthCity}`, {
+          lat: cityData.latitude,
+          lng: cityData.longitude
+        });
+        
         setFormState(prev => ({
           ...prev,
           coordinates: {
@@ -136,12 +180,18 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         }));
       }
     } catch (error) {
+      logger.error('BirthDataForm: Error setting coordinates:', error);
       console.error('Error setting coordinates:', error);
     }
+    
+    return () => {
+      logger.log('BirthDataForm: City effect cleanup');
+    };
   }, [formState.birthCity, formState.birthCounty, formState.birthCountry]);
 
   // Validate all inputs
   const validateInputs = () => {
+    logger.log('BirthDataForm: Validating inputs');
     const newErrors: Record<string, string> = {};
 
     if (!formState.fullName.trim()) newErrors.fullName = 'Full Name is required';
@@ -152,17 +202,33 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     if (!formState.birthCity) newErrors.birthCity = 'Birth City is required';
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+    logger.log(`BirthDataForm: Validation result: ${isValid ? 'Valid' : 'Invalid'}`, newErrors);
+    return isValid;
   };
 
   const handleCalculatePositions = async () => {
+    logger.log('BirthDataForm: handleCalculatePositions called');
     const isValid = validateInputs();
-    if (!isValid) return;
+    if (!isValid) {
+      logger.log('BirthDataForm: Validation failed, not calculating');
+      return;
+    }
 
     setFormState(prev => ({ ...prev, isCalculating: true }));
+    logger.log('BirthDataForm: Set isCalculating to true');
 
     try {
       const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
+      logger.log('BirthDataForm: Preparing calculation with data', { 
+        fullName, 
+        birthCountry, 
+        birthCounty, 
+        birthCity,
+        birthDate: birthDate?.toISOString(),
+        birthHour: birthHour?.toISOString(),
+        coordinates
+      });
 
       if (!birthDate || !birthHour || !coordinates) {
         throw new Error('Missing required data for calculation');
@@ -180,17 +246,24 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         hour: birthHour.getHours(),
         minute: birthHour.getMinutes(),
       };
+      
+      logger.log('BirthDataForm: Created payload for calculation', payload);
 
       // Get the actual location names for display
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
       const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
       const cities = City.getCitiesOfState(birthCountry, birthCounty);
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
+      
+      logger.log('BirthDataForm: Resolved location names', { country, state, city });
 
       // Calculate positions
+      logger.log('BirthDataForm: Calling calculateAstralPositions');
       const result = await calculateAstralPositions('ro', payload);
+      logger.log('BirthDataForm: Calculation completed successfully');
 
       // Update parent component state
+      logger.log('BirthDataForm: Updating parent component state');
       setResult(result);
       setUserInfo({
         name: fullName,
@@ -198,16 +271,20 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         birthHour: birthHour,
         location: `${city}, ${state}, ${country}`
       });
+      logger.log('BirthDataForm: Parent component state updated');
     } catch (error) {
+      logger.error('BirthDataForm: Error calculating positions:', error);
       console.error('Error calculating positions:', error);
       setErrors(prev => ({ ...prev, calculation: 'Failed to calculate positions. Please try again.' }));
     } finally {
+      logger.log('BirthDataForm: Setting isCalculating to false');
       setFormState(prev => ({ ...prev, isCalculating: false }));
     }
   };
 
   // Simple form field change handler
   const handleFormChange = (field: string, value: any) => {
+    logger.log(`BirthDataForm: handleFormChange called for field "${field}"`, { value });
     setFormState(prev => ({ ...prev, [field]: value }));
   };
 
@@ -302,8 +379,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          // TODO problema la linia de jos pe iPhone
-          onChange={(option) => handleFormChange('birthCounty', option?.value || '')}
+          onChange={(option) => {
+            logger.log('BirthDataForm: County select onChange triggered', { 
+              optionValue: option?.value,
+              optionLabel: option?.label
+            });
+            handleFormChange('birthCounty', option?.value || '');
+          }}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -338,8 +420,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
-          // TODO problema la linia de jos pe iPhone
-          onChange={(option) => handleFormChange('birthCity', option?.value || '')}
+          onChange={(option) => {
+            logger.log('BirthDataForm: City select onChange triggered', { 
+              optionValue: option?.value,
+              optionLabel: option?.label
+            });
+            handleFormChange('birthCity', option?.value || '');
+          }}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -378,8 +465,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         type="button"
         className="w-full py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center"
         disabled={formState.isCalculating}
-        // TODO problema la linia de jos pe iPhone
-        onClick={handleCalculatePositions}
+        onClick={() => {
+          logger.log('BirthDataForm: Calculate button clicked');
+          handleCalculatePositions();
+        }}
       >
         {formState.isCalculating ? (
           <>
