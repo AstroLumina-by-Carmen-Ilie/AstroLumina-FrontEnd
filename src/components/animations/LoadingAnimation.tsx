@@ -15,7 +15,8 @@ const LoadingAnimation: React.FC = () => {
     setIsIOS(isIOSDevice);
   }, []);
 
-  return isIOS ? <SimpleLoadingSpinner /> : <ParticleLoadingAnimation />;
+  // return isIOS ? <SimpleLoadingSpinner /> : <ParticleLoadingAnimation />;
+  return <ParticleLoadingAnimation />;
 };
 
 export default LoadingAnimation;

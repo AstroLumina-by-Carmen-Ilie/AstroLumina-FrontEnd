@@ -10,100 +10,106 @@
     <meta name="theme-color" content="#000000" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>AstroLumina</title>
-    <script type="module">
-      // Early error logging
-      window.onerror = function(msg, url, line, col, error) {
-        try {
-          var errors = JSON.parse(localStorage.getItem('early_errors') || '[]');
-          errors.push({
-            timestamp: new Date().toISOString(),
-            message: msg,
-            url: url,
-            line: line,
-            col: col,
-            error: error ? error.stack : 'No stack trace',
-            userAgent: navigator.userAgent
-          });
-          localStorage.setItem('early_errors', JSON.stringify(errors.slice(-20)));
-          
-          // Show error UI and debug button immediately
-          showDebugUI();
-        } catch (e) {
-          console.error('Error in early error handler:', e);
-        }
-      };
-
-      // Function to show debug UI
-      function showDebugUI(showButton = true) {
-        if (showButton) {
-          var debugButton = document.createElement('button');
-          debugButton.innerHTML = '📱 Debug';
-          debugButton.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;padding:10px;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:6px;font-family:system-ui;';
-          debugButton.onclick = window.downloadLogs;
-          document.body.appendChild(debugButton);
-        }
-      }
-
-      // Function to download logs
-      window.downloadLogs = function() {
-        try {
-          var allLogs = {
-            early_errors: JSON.parse(localStorage.getItem('early_errors') || '[]'),
-            app_errors: JSON.parse(localStorage.getItem('app_errors') || '[]'),
-            userAgent: navigator.userAgent,
-            timestamp: new Date().toISOString(),
-            screen: {
-              width: window.innerWidth,
-              height: window.innerHeight,
-              pixelRatio: window.devicePixelRatio,
-              orientation: window.orientation
-            },
-            localStorage: Object.keys(localStorage).reduce(function(obj, key) {
-              try {
-                obj[key] = localStorage.getItem(key);
-              } catch (e) {}
-              return obj;
-            }, {})
-          };
-          
-          var blob = new Blob([JSON.stringify(allLogs, null, 2)], { type: 'application/json' });
-          var a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'astrolumina-debug-' + new Date().toISOString() + '.json';
-          a.click();
-        } catch (e) {
-          alert('Error downloading logs: ' + e.message);
-        }
-      };
-
-      // Add touch gesture for debug mode
-      let touchCount = 0;
-      let lastTouch = 0;
-      
-      document.addEventListener('touchstart', function(e) {
-        if (e.touches.length === 3) { // Three finger touch
-          const now = Date.now();
-          if (now - lastTouch < 500) { // Double three-finger touch within 500ms
-            touchCount++;
-            if (touchCount >= 2) {
-              touchCount = 0;
-              showDebugUI(true);
-            }
-          } else {
-            touchCount = 1;
-          }
-          lastTouch = now;
-        }
-      });
-
-      // Also show debug UI if there are any existing errors
-      if (localStorage.getItem('early_errors') || localStorage.getItem('app_errors')) {
-        showDebugUI(true);
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Initialize debug container immediately
+      (function() {
+        // Check if debug mode is enabled
+        const debugMode = "%VITE_DEBUG_MODE%";
+        if (debugMode !== "true") return; // Exit early if debug mode is not enabled
+        
+        window.earlyLogs = [];
+        
+        function addLog(message, type = 'info') {
+          const log = {
+            timestamp: new Date().toISOString(),
+            type: type,
+            message: message
+          };
+          window.earlyLogs.push(log);
+          
+          // Only try to update display if document.body exists
+          if (document.body) {
+            updateDebugDisplay();
+          }
+        }
+
+        function createDebugContainer() {
+          const container = document.createElement('div');
+          container.id = 'early-debug-container';
+          container.style.cssText = `
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-height: 30vh;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 10px;
+            overflow-y: auto;
+            z-index: 999999;
+            display: none;
+          `;
+          document.body.appendChild(container);
+          return container;
+        }
+
+        function updateDebugDisplay() {
+          let container = document.getElementById('early-debug-container');
+          if (!container && document.body) {
+            container = createDebugContainer();
+          }
+          if (container) {
+            container.style.display = 'block';
+            container.innerHTML = window.earlyLogs
+              .map(log => `<div style="color: ${log.type === 'error' ? '#ff6b6b' : '#a5d8ff'}">
+                ${log.timestamp}: ${log.message}
+              </div>`)
+              .join('');
+            container.scrollTop = container.scrollHeight;
+          }
+        }
+
+        // Make logging function globally available immediately
+        window.earlyLog = addLog;
+
+        // Add initial system info
+        addLog('🔍 Early logging initialized');
+        addLog(`📱 Device: ${navigator.userAgent}`);
+        addLog(`📐 Viewport: ${window.innerWidth}x${window.innerHeight}`);
+        addLog(`🔧 Platform: ${navigator.platform}`);
+
+        // Monitor DOM loading stages
+        document.addEventListener('DOMContentLoaded', () => {
+          addLog('✅ DOM Content Loaded');
+          updateDebugDisplay(); // Try to create container once DOM is ready
+        });
+        
+        window.addEventListener('load', () => {
+          addLog('✅ Window Loaded');
+          updateDebugDisplay(); // Ensure container is created after full load
+        });
+
+        // Catch early errors
+        window.onerror = function(msg, url, line, col, error) {
+          addLog(`❌ Error: ${msg} (${url}:${line}:${col})`, 'error');
+          if (error && error.stack) {
+            addLog(`Stack: ${error.stack}`, 'error');
+          }
+          return false;
+        };
+      })();
+    </script>
+    <script>
+      // Log that we're about to start loading the app
+      if (window.earlyLog && "%VITE_DEBUG_MODE%" === "true") {
+        window.earlyLog('🚀 Starting to load application...');
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

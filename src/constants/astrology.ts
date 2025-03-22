@@ -11,10 +11,13 @@ export const planetSymbols: { [key: string]: { [key: string]: string } } = {
     'Neptun': '♆',
     'Pluto': '♇',
     'Ascendent': '↑',
+    'Descendent': '↓',
     'Lilith': '⚸',
     'Chiron': '⚷',
     'Nodul Nord': '☊',
     'Nodul Sud': '☋',
+    'Mijlocul Cerului': 'MC',
+    'Fundul Cerului': 'IC'
   },
   'en': {
     'Sun': '☉',
@@ -28,10 +31,13 @@ export const planetSymbols: { [key: string]: { [key: string]: string } } = {
     'Neptune': '♆',
     'Pluto': '♇',
     'Ascendant': '↑',
+    'Descendant': '↓',
     'Lilith': '⚸',
     'Kiron': '⚷',
     'North Node': '☊',
     'South Node': '☋',
+    'Medium Coeli': 'MC',
+    'Imum Coeli': 'IC'
   },
 };
 

@@ -5,7 +5,7 @@
   "contact": "Contact",
   "learn-more": "Afla mai multe...",
   "services-list": {
-    "planet-positions": "Pozitiile planetelor",
+    "astral-positions": "Pozitiile astrelor",
     "astral-chart": "Harta astrala",
     "karmic-chart": "Harta karmica",
     "relationship-chart": "Harta relationala",
@@ -15,6 +15,15 @@
   "notFound": {
     "title": "Pagină Negăsită",
     "description": "Stelele s-au aliniat, dar această pagină pare să fie în altă constelație.",
-    "backHome": "Înapoi Acasă"
-  }
+    "backHome": "Înapoi acasă"
+  },
+  "at": "la",
+  "Name": "Nume",
+  "Sign": "Semn",
+  "House": "Casa",
+  "Retrograde": "Retrograd",
+  "Position": "Poziție",
+  "Absolute Position": "Poziție absolută",
+  "Generating...": "Generare în curs...",
+  "Download PDF": "Descarcă PDF"
 }

@@ -96,7 +96,7 @@ const BookingsPage: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                  {renderStep()}
+                  {/* {renderStep()} */}
                 </div>
               </div>
             </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ReadingPayload, UserInfo, ContactInfo, InterpretedReadingResult } from '../../../types/astralChart';
+import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralPositions } from '../../../types/astralChart';
 import { calculateNatalChart } from '../utilities/astrologicalCalculations';
 import { generateNatalChartPDF } from '../../../templates/pdf/natalChart';
 
 interface FinalStepProps {
-  payload: ReadingPayload;
+  payload: BirthDataPayload;
   userInfo: UserInfo;
   contactInfo: ContactInfo;
   paymentStatus: boolean;
@@ -12,7 +12,7 @@ interface FinalStepProps {
 
 const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, paymentStatus }) => {
   // const { startLoading, stopLoading } = useLoading();
-  const [result, setResult] = useState<InterpretedReadingResult | null>(null);
+  const [result, setResult] = useState<InterpretedAstralPositions | null>(null);
   const [isGettingData, setIsGettingData] = useState(false);
 
   const formatDate = (date: Date): string => {
@@ -27,8 +27,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
     // startLoading();
     setIsGettingData(true);
     try {
-      const readingResult = await calculateNatalChart('ro', payload);
-      setResult(readingResult);
+      const AstralPositions = await calculateNatalChart('ro', payload);
+      setResult(AstralPositions);
     } catch (error) {
       console.error('Error fetching reading:', error);
       setResult(null);

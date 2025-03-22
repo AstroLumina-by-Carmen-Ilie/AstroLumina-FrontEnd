@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
-import { ReadingPayload, UserInfo, ContactInfo  } from '../../../types/astralChart';
+import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types/astralChart';
 import natalChartIllustration from '../../../assets/astral-chart.svg';
 import BirthDataForm from './BirthDataForm';
 import ContactForm from './ContactForm';
@@ -9,7 +9,7 @@ import FinalStep from './FinalStep';
 
 const NatalChartPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [payload, setPayload] = useState<ReadingPayload | null>(null);
+  const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
@@ -21,23 +21,47 @@ const NatalChartPage: React.FC = () => {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <BirthDataForm onNext={(payload, userInfo) => {
-          setPayload(payload)
-          setUserInfo(userInfo);
-          setCurrentStep(2);
-        }} />;
+        try {
+          return <BirthDataForm onNext={(payload, userInfo) => {
+            setPayload(payload)
+            setUserInfo(userInfo);
+            setCurrentStep(2);
+          }} />;
+        } catch (error) {
+          console.error('Error rendering birth data form:', error);
+          return <div>An error occurred while rendering the birth data form</div>;
+        }
       case 2:
-        return <ContactForm onNext={(contactInfo) => {
-          setContactInfo(contactInfo);
-          setCurrentStep(3);
-        }} onBack={handleBack} />;
+        try {
+          return <ContactForm onNext={(contactInfo) => {
+            setContactInfo(contactInfo);
+            setCurrentStep(3);
+          }} onBack={handleBack} />;
+        } catch (error) {
+          console.error('Error rendering contact form:', error);
+          return <div>An error occurred while rendering the contact form</div>;
+        }
       case 3:
-        return <PaymentForm onNext={(paymentStatus) => {
-          setPaymentStatus(paymentStatus);
-          setCurrentStep(4);
-        }} onBack={handleBack} />;
+        try {
+          return <PaymentForm onNext={(paymentStatus) => {
+            setPaymentStatus(paymentStatus);
+            setCurrentStep(4);
+          }} onBack={handleBack} />;
+        } catch (error) {
+          console.error('Error rendering payment form:', error);
+          return <div>An error occurred while rendering the payment form</div>;
+        }
       case 4:
-        return <FinalStep payload={payload!} userInfo={userInfo!} contactInfo={contactInfo!} paymentStatus={paymentStatus!} />;
+        try {
+          return <FinalStep
+            payload={payload!}
+            userInfo={userInfo!}
+            contactInfo={contactInfo!}
+            paymentStatus={paymentStatus!} />;
+        } catch (error) {
+          console.error('Error rendering final step:', error);
+          return <div>An error occurred while rendering the final step</div>;
+        }
       default:
         return null;
     }
@@ -87,11 +111,11 @@ const NatalChartPage: React.FC = () => {
                           key={step}
                           className={`w-8 h-8 rounded-full flex items-center justify-center ${
                             step === currentStep
-                              ? 'bg-amber-500 text-white'
-                              : step < currentStep
+                            ? 'bg-amber-500 text-white'
+                            : step < currentStep
                               ? 'bg-green-500 text-white'
                               : 'bg-gray-200 text-gray-600'
-                          }`}
+                            }`}
                         >
                           {step < currentStep ? '✓' : step}
                         </div>

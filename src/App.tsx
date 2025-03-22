@@ -9,7 +9,6 @@ import { Star, Sparkles, Clock, MessageCircle } from 'lucide-react';
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { startLoading, stopLoading } = useLoading();
   const { t } = useTranslation();
 
