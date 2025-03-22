@@ -102,13 +102,16 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
     e.preventDefault();
     if (validateInputs() && coordinates && birthDate && birthHour) {
       const payload: BirthDataPayload = {
+        name: fullName,
+        nation: birthCountry,
+        city: birthCity,
         longitude: coordinates.lng,
         latitude: coordinates.lat,
         year: birthDate.getFullYear(),
         month: birthDate.getMonth() + 1,
         day: birthDate.getDate(),
         hour: birthHour.getHours(),
-        minute: birthHour.getMinutes()
+        minute: birthHour.getMinutes(),
       };
       
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
@@ -145,7 +148,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
       <div className="mb-6">
         <label className="block text-gray-800 mb-2" htmlFor="birthDate">Birth Date</label>
         <Flatpickr
-          value={birthDate}
+          value={birthDate || undefined}
           onChange={(date) => setBirthDate(date[0])}
           options={{
             dateFormat: "d/m/Y",
@@ -162,7 +165,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
       <div className="mb-6">
         <label className="block text-gray-800 mb-2" htmlFor="birthHour">Birth Hour</label>
         <Flatpickr
-          value={birthHour}
+          value={birthHour || undefined}
           onChange={(date) => setBirthHour(date[0])}
           options={{
             enableTime: true,

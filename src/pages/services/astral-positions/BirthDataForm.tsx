@@ -95,7 +95,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   // Handle county change - load cities
   useEffect(() => {
     if (!formState.birthCounty || !formState.birthCountry) return;
-    
+
     try {
       const cities = City.getCitiesOfState(formState.birthCountry, formState.birthCounty).map(city => ({
         value: city.name,
@@ -121,7 +121,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   // Handle city change - set coordinates
   useEffect(() => {
     if (!formState.birthCity || !formState.birthCounty || !formState.birthCountry) return;
-    
+
     try {
       const cityData = City.getCitiesOfState(formState.birthCountry, formState.birthCounty)
         .find(city => city.name === formState.birthCity);

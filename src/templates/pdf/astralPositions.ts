@@ -73,15 +73,13 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: { 
       p.emoji,
       p.element,
       p.house,
-      p.retrograde ? 'X' : '',
-      p.position,
-      p.abs_pos
+      p.retrograde ? 'X' : ''
     ];
   });
 
   (doc as any).autoTable({
     startY: 30,
-    head: [['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd', 'Poziție', 'Poziție absolută']],
+    head: [['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd']],
     body: tableData,
     theme: 'grid',
     headStyles: {

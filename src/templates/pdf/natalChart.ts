@@ -55,11 +55,10 @@ export const generateNatalChartPDF = (
     doc.addPage();
     yPosition = 20;
     
-    let planet_sign = (interpretation.name === 'Soare' || interpretation.name === 'Sun') ? 'O' : planetSymbols['ro'][interpretation.name]
-    let zodiac_sign = zodiacSymbols['ro'][interpretation.sign]
+    let planet_sign = (interpretation.name === 'Soare' || interpretation.name === 'Sun') ? 'O' : planetSymbols['ro'][interpretation.name] || '';
     doc.text(planet_sign + ' ' + interpretation.name, 20, yPosition);
     yPosition += 10;
-    doc.text(zodiac_sign + ' ' + interpretation.sign, 20, yPosition);
+    doc.text(interpretation.emoji + ' ' + interpretation.sign, 20, yPosition);
     yPosition += 10;
     doc.text(interpretation.house, 20, yPosition);
     yPosition += 10;
