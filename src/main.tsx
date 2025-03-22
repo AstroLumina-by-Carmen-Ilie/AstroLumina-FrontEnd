@@ -66,7 +66,7 @@ if (rootElement) {
 
   try {
     root.render(
-      <React.StrictMode>
+      // <React.StrictMode>
         <I18nextProvider i18n={i18n}>
           <LoadingProvider>
             <Router>
@@ -86,7 +86,7 @@ if (rootElement) {
             </Router>
           </LoadingProvider>
         </I18nextProvider>
-      </React.StrictMode>
+      // </React.StrictMode>
     );
     if (import.meta.env.VITE_DEBUG_MODE) {
       log('✅ React rendered successfully');
