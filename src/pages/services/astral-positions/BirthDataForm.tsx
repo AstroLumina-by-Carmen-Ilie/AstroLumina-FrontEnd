@@ -38,45 +38,45 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Initialize country options only once on component mount
-  useEffect(() => {
-    // Initialize country options
-    try {
-      const defaultOptions = [{ value: '', label: 'Select ...' }];
-      const countries = Country.getAllCountries().map(country => ({
-        value: country.isoCode,
-        label: country.name
-      }));
+  // // Initialize country options only once on component mount
+  // useEffect(() => {
+  //   // Initialize country options
+  //   try {
+  //     const defaultOptions = [{ value: '', label: 'Select ...' }];
+  //     const countries = Country.getAllCountries().map(country => ({
+  //       value: country.isoCode,
+  //       label: country.name
+  //     }));
       
-      setOptions(prev => ({
-        ...prev,
-        countryOptions: [...defaultOptions, ...countries]
-      }));
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       countryOptions: [...defaultOptions, ...countries]
+  //     }));
       
-      // Set Romania as default
-      const romania = countries.find(c => c.label === 'Romania');
-      if (romania) {
-        // Set country and immediately load its states
-        setFormState(prev => ({
-          ...prev,
-          birthCountry: romania.value
-        }));
+  //     // Set Romania as default
+  //     const romania = countries.find(c => c.label === 'Romania');
+  //     if (romania) {
+  //       // Set country and immediately load its states
+  //       setFormState(prev => ({
+  //         ...prev,
+  //         birthCountry: romania.value
+  //       }));
         
-        // Pre-load states for Romania
-        const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
-          value: state.isoCode,
-          label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
-        }));
+  //       // Pre-load states for Romania
+  //       const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
+  //         value: state.isoCode,
+  //         label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+  //       }));
         
-        setOptions(prev => ({
-          ...prev,
-          stateOptions: [...defaultOptions, ...romaniaStates]
-        }));
-      }
-    } catch (error) {
-      console.error('Error initializing countries:', error);
-    }
-  }, []); // Empty dependency array ensures this runs only once
+  //       setOptions(prev => ({
+  //         ...prev,
+  //         stateOptions: [...defaultOptions, ...romaniaStates]
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error initializing countries:', error);
+  //   }
+  // }, []); // Empty dependency array ensures this runs only once
 
   // Simple form field change handler
   const handleFormChange = (field: string, value: any) => {
