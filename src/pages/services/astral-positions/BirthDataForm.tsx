@@ -290,9 +290,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          onChange={(option) => {
-            handleFormChange('birthCountry', option?.value || '')
-          }}
+          // onChange={(option) => {
+          //   handleFormChange('birthCountry', option?.value || '')
+          // }}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -326,9 +326,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          onChange={(option) => {
-            handleFormChange('birthCounty', option?.value || '');
-          }}
+          // onChange={(option) => {
+          //   handleFormChange('birthCounty', option?.value || '');
+          // }}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -363,9 +363,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
-          onChange={(option) => {
-            handleFormChange('birthCity', option?.value || '');
-          }}
+          // onChange={(option) => {
+          //   handleFormChange('birthCity', option?.value || '');
+          // }}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
