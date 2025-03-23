@@ -38,31 +38,31 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Initialize country options once on mount
-  useEffect(() => {
-    try {
-      const countries = Country.getAllCountries().map(country => ({
-        value: country.isoCode,
-        label: country.name
-      }));
+  // // Initialize country options once on mount
+  // useEffect(() => {
+  //   try {
+  //     const countries = Country.getAllCountries().map(country => ({
+  //       value: country.isoCode,
+  //       label: country.name
+  //     }));
 
-      setOptions(prev => ({
-        ...prev,
-        countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
-      }));
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
+  //     }));
 
-      // Set Romania as default - but don't cascade updates yet
-      const romania = countries.find(c => c.label === 'Romania');
-      if (romania) {
-        setFormState(prev => ({
-          ...prev,
-          birthCountry: romania.value
-        }));
-      }
-    } catch (error) {
-      console.error('Error initializing countries:', error);
-    }
-  }, []);
+  //     // Set Romania as default - but don't cascade updates yet
+  //     const romania = countries.find(c => c.label === 'Romania');
+  //     if (romania) {
+  //       setFormState(prev => ({
+  //         ...prev,
+  //         birthCountry: romania.value
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error initializing countries:', error);
+  //   }
+  // }, []);
 
   // Load states when country changes
   const loadStates = useCallback((countryCode: string) => {
