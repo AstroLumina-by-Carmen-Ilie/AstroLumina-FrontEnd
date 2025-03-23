@@ -32,21 +32,21 @@ const AstralPositionsPage: React.FC = () => {
       return null; // Don't render anything until loading is complete
     }
 
-    if (result && userInfo) {
-      try {
-        return <ResultsDisplay result={result} userInfo={userInfo} />;
-      } catch (error) {
-        console.error('Error rendering results:', error);
-        return <div>An error occurred while rendering results</div>;
-      }
-    }
+    // if (result && userInfo) {
+    //   try {
+    //     return <ResultsDisplay result={result} userInfo={userInfo} />;
+    //   } catch (error) {
+    //     console.error('Error rendering results:', error);
+    //     return <div>An error occurred while rendering results</div>;
+    //   }
+    // }
 
-    try {
-      return <BirthDataForm setResult={setResult} setUserInfo={setUserInfo} />;
-    } catch (error) {
-      console.error('Error rendering form:', error);
-      return <div>An error occurred while rendering the form</div>;
-    }
+    // try {
+    //   return <BirthDataForm setResult={setResult} setUserInfo={setUserInfo} />;
+    // } catch (error) {
+    //   console.error('Error rendering form:', error);
+    //   return <div>An error occurred while rendering the form</div>;
+    // }
   };
 
   return (
