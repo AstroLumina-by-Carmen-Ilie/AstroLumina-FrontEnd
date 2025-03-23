@@ -55,22 +55,15 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
       }));
 
-      // // Set Romania as default - but don't cascade updates yet
-      // const romania = countries.find(c => c.label === 'Romania');
-      // if (romania) {
-      //   logger.log('BirthDataForm: Setting Romania as default country');
-      //   setFormState(prev => ({
-      //     ...prev,
-      //     birthCountry: romania.value
-      //   }));
-      // }
-      setFormState(prev => ({
-        ...prev,
-        birthCountry: '',
-        birthCounty: '',
-        birthCity: '',
-        coordinates: null
-      }));
+      // Set Romania as default - but don't cascade updates yet
+      const romania = countries.find(c => c.label === 'Romania');
+      if (romania) {
+        logger.log('BirthDataForm: Setting Romania as default country');
+        setFormState(prev => ({
+          ...prev,
+          birthCountry: romania.value
+        }));
+      }
     } catch (error) {
       logger.error('BirthDataForm: Error initializing countries:', error);
       console.error('Error initializing countries:', error);
