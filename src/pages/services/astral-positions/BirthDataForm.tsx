@@ -345,7 +345,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          onChange={(option) => handleFormChange('birthCountry', option?.value || '')}
+          // onChange={(option) => handleFormChange('birthCountry', option?.value || '')}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
