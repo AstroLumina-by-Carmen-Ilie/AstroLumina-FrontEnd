@@ -41,153 +41,153 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Initialize country options once on mount
-  useEffect(() => {
-    logger.log('BirthDataForm: Initialize countries effect running');
-    try {
-      const countries = Country.getAllCountries().map(country => ({
-        value: country.isoCode,
-        label: country.name
-      }));
+  // // Initialize country options once on mount
+  // useEffect(() => {
+  //   logger.log('BirthDataForm: Initialize countries effect running');
+  //   try {
+  //     const countries = Country.getAllCountries().map(country => ({
+  //       value: country.isoCode,
+  //       label: country.name
+  //     }));
 
-      setOptions(prev => ({
-        ...prev,
-        countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
-      }));
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
+  //     }));
 
-      // Set Romania as default - but don't cascade updates yet
-      const romania = countries.find(c => c.label === 'Romania');
-      if (romania) {
-        logger.log('BirthDataForm: Setting Romania as default country');
-        setFormState(prev => ({
-          ...prev,
-          birthCountry: romania.value
-        }));
-      }
-    } catch (error) {
-      logger.error('BirthDataForm: Error initializing countries:', error);
-      console.error('Error initializing countries:', error);
-    }
+  //     // Set Romania as default - but don't cascade updates yet
+  //     const romania = countries.find(c => c.label === 'Romania');
+  //     if (romania) {
+  //       logger.log('BirthDataForm: Setting Romania as default country');
+  //       setFormState(prev => ({
+  //         ...prev,
+  //         birthCountry: romania.value
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     logger.error('BirthDataForm: Error initializing countries:', error);
+  //     console.error('Error initializing countries:', error);
+  //   }
     
-    // Set up on-screen debugging for mobile
-    logger.showLogsOnScreen();
+  //   // Set up on-screen debugging for mobile
+  //   logger.showLogsOnScreen();
     
-    return () => {
-      logger.log('BirthDataForm: Countries effect cleanup');
-    };
-  }, []);
+  //   return () => {
+  //     logger.log('BirthDataForm: Countries effect cleanup');
+  //   };
+  // }, []);
 
-  // Handle country change - load states
-  useEffect(() => {
-    logger.log('BirthDataForm: Country change effect running', { country: formState.birthCountry });
-    if (!formState.birthCountry) return;
+  // // Handle country change - load states
+  // useEffect(() => {
+  //   logger.log('BirthDataForm: Country change effect running', { country: formState.birthCountry });
+  //   if (!formState.birthCountry) return;
 
-    try {
-      const states = State.getStatesOfCountry(formState.birthCountry).map(state => ({
-        value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
-      }));
+  //   try {
+  //     const states = State.getStatesOfCountry(formState.birthCountry).map(state => ({
+  //       value: state.isoCode,
+  //       label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+  //     }));
 
-      logger.log(`BirthDataForm: Loaded ${states.length} states for country ${formState.birthCountry}`);
+  //     logger.log(`BirthDataForm: Loaded ${states.length} states for country ${formState.birthCountry}`);
       
-      setOptions(prev => ({
-        ...prev,
-        stateOptions: [{ value: '', label: 'Select ...' }, ...states],
-        cityOptions: [{ value: '', label: 'Select ...' }]
-      }));
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       stateOptions: [{ value: '', label: 'Select ...' }, ...states],
+  //       cityOptions: [{ value: '', label: 'Select ...' }]
+  //     }));
 
-      // Reset dependent fields
-      setFormState(prev => ({
-        ...prev,
-        birthCounty: '',
-        birthCity: '',
-        coordinates: null
-      }));
-    } catch (error) {
-      logger.error('BirthDataForm: Error loading states:', error);
-      console.error('Error loading states:', error);
-    }
+  //     // Reset dependent fields
+  //     setFormState(prev => ({
+  //       ...prev,
+  //       birthCounty: '',
+  //       birthCity: '',
+  //       coordinates: null
+  //     }));
+  //   } catch (error) {
+  //     logger.error('BirthDataForm: Error loading states:', error);
+  //     console.error('Error loading states:', error);
+  //   }
     
-    return () => {
-      logger.log('BirthDataForm: Country effect cleanup');
-    };
-  }, [formState.birthCountry]);
+  //   return () => {
+  //     logger.log('BirthDataForm: Country effect cleanup');
+  //   };
+  // }, [formState.birthCountry]);
 
-  // Handle county change - load cities
-  useEffect(() => {
-    logger.log('BirthDataForm: County change effect running', { 
-      county: formState.birthCounty, 
-      country: formState.birthCountry 
-    });
+  // // Handle county change - load cities
+  // useEffect(() => {
+  //   logger.log('BirthDataForm: County change effect running', { 
+  //     county: formState.birthCounty, 
+  //     country: formState.birthCountry 
+  //   });
     
-    if (!formState.birthCounty || !formState.birthCountry) return;
+  //   if (!formState.birthCounty || !formState.birthCountry) return;
 
-    try {
-      const cities = City.getCitiesOfState(formState.birthCountry, formState.birthCounty).map(city => ({
-        value: city.name,
-        label: city.name
-      }));
+  //   try {
+  //     const cities = City.getCitiesOfState(formState.birthCountry, formState.birthCounty).map(city => ({
+  //       value: city.name,
+  //       label: city.name
+  //     }));
 
-      logger.log(`BirthDataForm: Loaded ${cities.length} cities for county ${formState.birthCounty}`);
+  //     logger.log(`BirthDataForm: Loaded ${cities.length} cities for county ${formState.birthCounty}`);
       
-      setOptions(prev => ({
-        ...prev,
-        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
-      }));
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+  //     }));
 
-      // Reset city when county changes
-      setFormState(prev => ({
-        ...prev,
-        birthCity: '',
-        coordinates: null
-      }));
-    } catch (error) {
-      logger.error('BirthDataForm: Error loading cities:', error);
-      console.error('Error loading cities:', error);
-    }
+  //     // Reset city when county changes
+  //     setFormState(prev => ({
+  //       ...prev,
+  //       birthCity: '',
+  //       coordinates: null
+  //     }));
+  //   } catch (error) {
+  //     logger.error('BirthDataForm: Error loading cities:', error);
+  //     console.error('Error loading cities:', error);
+  //   }
     
-    return () => {
-      logger.log('BirthDataForm: County effect cleanup');
-    };
-  }, [formState.birthCounty, formState.birthCountry]);
+  //   return () => {
+  //     logger.log('BirthDataForm: County effect cleanup');
+  //   };
+  // }, [formState.birthCounty, formState.birthCountry]);
 
-  // Handle city change - set coordinates
-  useEffect(() => {
-    logger.log('BirthDataForm: City change effect running', { 
-      city: formState.birthCity, 
-      county: formState.birthCounty, 
-      country: formState.birthCountry 
-    });
+  // // Handle city change - set coordinates
+  // useEffect(() => {
+  //   logger.log('BirthDataForm: City change effect running', { 
+  //     city: formState.birthCity, 
+  //     county: formState.birthCounty, 
+  //     country: formState.birthCountry 
+  //   });
     
-    if (!formState.birthCity || !formState.birthCounty || !formState.birthCountry) return;
+  //   if (!formState.birthCity || !formState.birthCounty || !formState.birthCountry) return;
 
-    try {
-      const cityData = City.getCitiesOfState(formState.birthCountry, formState.birthCounty)
-        .find(city => city.name === formState.birthCity);
+  //   try {
+  //     const cityData = City.getCitiesOfState(formState.birthCountry, formState.birthCounty)
+  //       .find(city => city.name === formState.birthCity);
 
-      if (cityData) {
-        logger.log(`BirthDataForm: Found coordinates for city ${formState.birthCity}`, {
-          lat: cityData.latitude,
-          lng: cityData.longitude
-        });
+  //     if (cityData) {
+  //       logger.log(`BirthDataForm: Found coordinates for city ${formState.birthCity}`, {
+  //         lat: cityData.latitude,
+  //         lng: cityData.longitude
+  //       });
         
-        setFormState(prev => ({
-          ...prev,
-          coordinates: {
-            lat: Number(cityData.latitude),
-            lng: Number(cityData.longitude)
-          }
-        }));
-      }
-    } catch (error) {
-      logger.error('BirthDataForm: Error setting coordinates:', error);
-      console.error('Error setting coordinates:', error);
-    }
+  //       setFormState(prev => ({
+  //         ...prev,
+  //         coordinates: {
+  //           lat: Number(cityData.latitude),
+  //           lng: Number(cityData.longitude)
+  //         }
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     logger.error('BirthDataForm: Error setting coordinates:', error);
+  //     console.error('Error setting coordinates:', error);
+  //   }
     
-    return () => {
-      logger.log('BirthDataForm: City effect cleanup');
-    };
-  }, [formState.birthCity, formState.birthCounty, formState.birthCountry]);
+  //   return () => {
+  //     logger.log('BirthDataForm: City effect cleanup');
+  //   };
+  // }, [formState.birthCity, formState.birthCounty, formState.birthCountry]);
 
   // Validate all inputs
   const validateInputs = () => {
@@ -345,7 +345,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          // onChange={(option) => handleFormChange('birthCountry', option?.value || '')}
+          // onChange={(option) => {
+          //   logger.log('BirthDataForm: Country select onChange triggered', { 
+          //     optionValue: option?.value,
+          //     optionLabel: option?.label
+          //   });
+          //   handleFormChange('birthCountry', option?.value || '')}
+          // }
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -465,10 +471,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         type="button"
         className="w-full py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center"
         disabled={formState.isCalculating}
-        // onClick={() => {
-        //   logger.log('BirthDataForm: Calculate button clicked');
-        //   handleCalculatePositions();
-        // }}
+        onClick={() => {
+          logger.log('BirthDataForm: Calculate button clicked');
+          handleCalculatePositions();
+        }}
       >
         {formState.isCalculating ? (
           <>
