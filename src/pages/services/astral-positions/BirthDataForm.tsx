@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
-// import Flatpickr from 'react-flatpickr';
-// import 'flatpickr/dist/themes/material_blue.css';
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/material_blue.css';
 import { LocationCoordinates, BirthDataPayload, AstralPositions, SelectOption } from '../../../types/astralPositions';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
@@ -248,7 +248,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
       </div>
 
-      {/* <div className="mb-6">
+      <div className="mb-6">
         <label className="block text-gray-800 mb-2" htmlFor="birthDate">Birth Date</label>
         <Flatpickr
           value={formState.birthDate || ''}
@@ -282,7 +282,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           required
         />
         {errors.birthHour && <p className="text-red-500 text-sm mt-1">{errors.birthHour}</p>}
-      </div> */}
+      </div>
 
       <div className="mb-6">
         <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Birth Country</label>
