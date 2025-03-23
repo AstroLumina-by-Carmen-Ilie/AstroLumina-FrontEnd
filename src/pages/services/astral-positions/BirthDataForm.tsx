@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
@@ -31,133 +31,171 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Options state - separate from form state to reduce re-renders
   const [options, setOptions] = useState({
-    countryOptions: [{ value: '', label: 'Select ...' }] as SelectOption[],
-    stateOptions: [{ value: '', label: 'Select ...' }] as SelectOption[],
-    cityOptions: [{ value: '', label: 'Select ...' }] as SelectOption[]
+    countryOptions: [] as SelectOption[],
+    stateOptions: [] as SelectOption[],
+    cityOptions: [] as SelectOption[]
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // // Initialize country options once on mount
-  // useEffect(() => {
-  //   try {
-  //     const countries = Country.getAllCountries().map(country => ({
-  //       value: country.isoCode,
-  //       label: country.name
-  //     }));
+  // Initialize country options only once on component mount
+  useEffect(() => {
+    // Initialize country options
+    try {
+      const defaultOptions = [{ value: '', label: 'Select ...' }];
+      const countries = Country.getAllCountries().map(country => ({
+        value: country.isoCode,
+        label: country.name
+      }));
+      
+      setOptions(prev => ({
+        ...prev,
+        countryOptions: [...defaultOptions, ...countries]
+      }));
+      
+      // Set Romania as default
+      const romania = countries.find(c => c.label === 'Romania');
+      if (romania) {
+        // Set country and immediately load its states
+        setFormState(prev => ({
+          ...prev,
+          birthCountry: romania.value
+        }));
+        
+        // Pre-load states for Romania
+        const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
+          value: state.isoCode,
+          label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+        }));
+        
+        setOptions(prev => ({
+          ...prev,
+          stateOptions: [...defaultOptions, ...romaniaStates]
+        }));
+      }
+    } catch (error) {
+      console.error('Error initializing countries:', error);
+    }
+  }, []); // Empty dependency array ensures this runs only once
 
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       countryOptions: [{ value: '', label: 'Select ...' }, ...countries]
-  //     }));
+  // Simple form field change handler
+  const handleFormChange = (field: string, value: any) => {
+    setFormState(prev => ({ ...prev, [field]: value }));
+  };
 
-  //     // Set Romania as default - but don't cascade updates yet
-  //     const romania = countries.find(c => c.label === 'Romania');
-  //     if (romania) {
-  //       setFormState(prev => ({
-  //         ...prev,
-  //         birthCountry: romania.value
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.error('Error initializing countries:', error);
-  //   }
-  // }, []);
+  // Handle country selection - load states
+  const handleCountryChange = (option: SelectOption | null) => {
+    const countryCode = option?.value || '';
+    
+    // Update form state with new country
+    setFormState(prev => ({
+      ...prev,
+      birthCountry: countryCode,
+      birthCounty: '', // Reset county
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+    
+    // If no country selected, reset state options
+    if (!countryCode) {
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Select ...' }],
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+      return;
+    }
+    
+    // Load states for selected country
+    try {
+      const states = State.getStatesOfCountry(countryCode).map(state => ({
+        value: state.isoCode,
+        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+      }));
+      
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Select ...' }, ...states],
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+    } catch (error) {
+      console.error('Error loading states:', error);
+    }
+  };
 
-  // // Load states when country changes
-  // const loadStates = useCallback((countryCode: string) => {
-  //   if (!countryCode) return;
+  // Handle county/state selection - load cities
+  const handleCountyChange = (option: SelectOption | null) => {
+    const countyCode = option?.value || '';
+    const { birthCountry } = formState;
+    
+    // Update form state with new county
+    setFormState(prev => ({
+      ...prev,
+      birthCounty: countyCode,
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+    
+    // If no county selected or no country selected, reset city options
+    if (!countyCode || !birthCountry) {
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+      return;
+    }
+    
+    // Load cities for selected county
+    try {
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
+        value: city.name,
+        label: city.name
+      }));
+      
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+      }));
+    } catch (error) {
+      console.error('Error loading cities:', error);
+    }
+  };
 
-  //   try {
-  //     const states = State.getStatesOfCountry(countryCode).map(state => ({
-  //       value: state.isoCode,
-  //       label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
-  //     }));
-
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       stateOptions: [{ value: '', label: 'Select ...' }, ...states],
-  //       cityOptions: [{ value: '', label: 'Select ...' }]
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error loading states:', error);
-  //   }
-  // }, []);
-
-  // // Load cities when state changes
-  // const loadCities = useCallback((countryCode: string, stateCode: string) => {
-  //   if (!countryCode || !stateCode) return;
-
-  //   try {
-  //     const cities = City.getCitiesOfState(countryCode, stateCode).map(city => ({
-  //       value: city.name,
-  //       label: city.name
-  //     }));
-
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error loading cities:', error);
-  //   }
-  // }, []);
-
-  // // Set coordinates when city changes
-  // const setCoordinates = useCallback((countryCode: string, stateCode: string, cityName: string) => {
-  //   if (!countryCode || !stateCode || !cityName) return;
-
-  //   try {
-  //     const cityData = City.getCitiesOfState(countryCode, stateCode)
-  //       .find(city => city.name === cityName);
-
-  //     if (cityData && cityData.latitude && cityData.longitude) {
-  //       setFormState(prev => ({
-  //         ...prev,
-  //         coordinates: {
-  //           lat: Number(cityData.latitude),
-  //           lng: Number(cityData.longitude)
-  //         }
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.error('Error setting coordinates:', error);
-  //   }
-  // }, []);
-
-  // // Handle country change
-  // useEffect(() => {
-  //   if (formState.birthCountry) {
-  //     loadStates(formState.birthCountry);
-  //     // Reset dependent fields
-  //     setFormState(prev => ({
-  //       ...prev,
-  //       birthCounty: '',
-  //       birthCity: '',
-  //       coordinates: null
-  //     }));
-  //   }
-  // }, [formState.birthCountry, loadStates]);
-
-  // // Handle county change
-  // useEffect(() => {
-  //   if (formState.birthCountry && formState.birthCounty) {
-  //     loadCities(formState.birthCountry, formState.birthCounty);
-  //     // Reset city when county changes
-  //     setFormState(prev => ({
-  //       ...prev,
-  //       birthCity: '',
-  //       coordinates: null
-  //     }));
-  //   }
-  // }, [formState.birthCounty, formState.birthCountry, loadCities]);
-
-  // // Handle city change
-  // useEffect(() => {
-  //   if (formState.birthCountry && formState.birthCounty && formState.birthCity) {
-  //     setCoordinates(formState.birthCountry, formState.birthCounty, formState.birthCity);
-  //   }
-  // }, [formState.birthCity, formState.birthCounty, formState.birthCountry, setCoordinates]);
+  // Handle city selection - set coordinates
+  const handleCityChange = (option: SelectOption | null) => {
+    const cityName = option?.value || '';
+    const { birthCountry, birthCounty } = formState;
+    
+    // Update form state with new city
+    setFormState(prev => ({
+      ...prev,
+      birthCity: cityName,
+      coordinates: null // Reset coordinates initially
+    }));
+    
+    // If no city selected or missing country/county, return
+    if (!cityName || !birthCountry || !birthCounty) {
+      return;
+    }
+    
+    // Set coordinates for selected city
+    try {
+      const cityData = City.getCitiesOfState(birthCountry, birthCounty)
+        .find(city => city.name === cityName);
+      
+      if (cityData && cityData.latitude && cityData.longitude) {
+        setFormState(prev => ({
+          ...prev,
+          coordinates: {
+            lat: Number(cityData.latitude),
+            lng: Number(cityData.longitude)
+          }
+        }));
+      }
+    } catch (error) {
+      console.error('Error setting coordinates:', error);
+    }
+  };
 
   // Validate all inputs
   const validateInputs = () => {
@@ -228,11 +266,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
   };
 
-  // Simple form field change handler
-  const handleFormChange = (field: string, value: any) => {
-    setFormState(prev => ({ ...prev, [field]: value }));
-  };
-
   return (
     <div className="space-y-6">
       <div className="mb-6">
@@ -290,9 +323,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          // onChange={(option) => {
-          //   handleFormChange('birthCountry', option?.value || '')
-          // }}
+          onChange={handleCountryChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -326,9 +357,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          // onChange={(option) => {
-          //   handleFormChange('birthCounty', option?.value || '');
-          // }}
+          onChange={handleCountyChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -363,9 +392,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
-          // onChange={(option) => {
-          //   handleFormChange('birthCity', option?.value || '');
-          // }}
+          onChange={handleCityChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -404,9 +431,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         type="button"
         className="w-full py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center"
         disabled={formState.isCalculating}
-        // onClick={() => {
-        //   handleCalculatePositions();
-        // }}
+        // onClick={handleCalculatePositions}
       >
         {formState.isCalculating ? (
           <>
