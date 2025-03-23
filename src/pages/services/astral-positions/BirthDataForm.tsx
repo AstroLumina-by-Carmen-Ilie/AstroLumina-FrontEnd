@@ -125,39 +125,39 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
   }, []);
 
-  // Handle country change
-  useEffect(() => {
-    if (formState.birthCountry) {
-      loadStates(formState.birthCountry);
-      // Reset dependent fields
-      setFormState(prev => ({
-        ...prev,
-        birthCounty: '',
-        birthCity: '',
-        coordinates: null
-      }));
-    }
-  }, [formState.birthCountry, loadStates]);
+  // // Handle country change
+  // useEffect(() => {
+  //   if (formState.birthCountry) {
+  //     loadStates(formState.birthCountry);
+  //     // Reset dependent fields
+  //     setFormState(prev => ({
+  //       ...prev,
+  //       birthCounty: '',
+  //       birthCity: '',
+  //       coordinates: null
+  //     }));
+  //   }
+  // }, [formState.birthCountry, loadStates]);
 
-  // Handle county change
-  useEffect(() => {
-    if (formState.birthCountry && formState.birthCounty) {
-      loadCities(formState.birthCountry, formState.birthCounty);
-      // Reset city when county changes
-      setFormState(prev => ({
-        ...prev,
-        birthCity: '',
-        coordinates: null
-      }));
-    }
-  }, [formState.birthCounty, formState.birthCountry, loadCities]);
+  // // Handle county change
+  // useEffect(() => {
+  //   if (formState.birthCountry && formState.birthCounty) {
+  //     loadCities(formState.birthCountry, formState.birthCounty);
+  //     // Reset city when county changes
+  //     setFormState(prev => ({
+  //       ...prev,
+  //       birthCity: '',
+  //       coordinates: null
+  //     }));
+  //   }
+  // }, [formState.birthCounty, formState.birthCountry, loadCities]);
 
-  // Handle city change
-  useEffect(() => {
-    if (formState.birthCountry && formState.birthCounty && formState.birthCity) {
-      setCoordinates(formState.birthCountry, formState.birthCounty, formState.birthCity);
-    }
-  }, [formState.birthCity, formState.birthCounty, formState.birthCountry, setCoordinates]);
+  // // Handle city change
+  // useEffect(() => {
+  //   if (formState.birthCountry && formState.birthCounty && formState.birthCity) {
+  //     setCoordinates(formState.birthCountry, formState.birthCounty, formState.birthCity);
+  //   }
+  // }, [formState.birthCity, formState.birthCounty, formState.birthCountry, setCoordinates]);
 
   // Validate all inputs
   const validateInputs = () => {
