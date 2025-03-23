@@ -83,119 +83,119 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     setFormState(prev => ({ ...prev, [field]: value }));
   };
 
-  // // Handle country selection - load states
-  // const handleCountryChange = (option: SelectOption | null) => {
-  //   const countryCode = option?.value || '';
+  // Handle country selection - load states
+  const handleCountryChange = (option: SelectOption | null) => {
+    const countryCode = option?.value || '';
     
-  //   // Update form state with new country
-  //   setFormState(prev => ({
-  //     ...prev,
-  //     birthCountry: countryCode,
-  //     birthCounty: '', // Reset county
-  //     birthCity: '',   // Reset city
-  //     coordinates: null // Reset coordinates
-  //   }));
+    // Update form state with new country
+    setFormState(prev => ({
+      ...prev,
+      birthCountry: countryCode,
+      birthCounty: '', // Reset county
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
     
-  //   // If no country selected, reset state options
-  //   if (!countryCode) {
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       stateOptions: [{ value: '', label: 'Select ...' }],
-  //       cityOptions: [{ value: '', label: 'Select ...' }]
-  //     }));
-  //     return;
-  //   }
+    // If no country selected, reset state options
+    if (!countryCode) {
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Select ...' }],
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+      return;
+    }
     
-  //   // Load states for selected country
-  //   try {
-  //     const states = State.getStatesOfCountry(countryCode).map(state => ({
-  //       value: state.isoCode,
-  //       label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
-  //     }));
+    // Load states for selected country
+    try {
+      const states = State.getStatesOfCountry(countryCode).map(state => ({
+        value: state.isoCode,
+        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+      }));
       
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       stateOptions: [{ value: '', label: 'Select ...' }, ...states],
-  //       cityOptions: [{ value: '', label: 'Select ...' }]
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error loading states:', error);
-  //   }
-  // };
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Select ...' }, ...states],
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+    } catch (error) {
+      console.error('Error loading states:', error);
+    }
+  };
 
-  // // Handle county/state selection - load cities
-  // const handleCountyChange = (option: SelectOption | null) => {
-  //   const countyCode = option?.value || '';
-  //   const { birthCountry } = formState;
+  // Handle county/state selection - load cities
+  const handleCountyChange = (option: SelectOption | null) => {
+    const countyCode = option?.value || '';
+    const { birthCountry } = formState;
     
-  //   // Update form state with new county
-  //   setFormState(prev => ({
-  //     ...prev,
-  //     birthCounty: countyCode,
-  //     birthCity: '',   // Reset city
-  //     coordinates: null // Reset coordinates
-  //   }));
+    // Update form state with new county
+    setFormState(prev => ({
+      ...prev,
+      birthCounty: countyCode,
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
     
-  //   // If no county selected or no country selected, reset city options
-  //   if (!countyCode || !birthCountry) {
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       cityOptions: [{ value: '', label: 'Select ...' }]
-  //     }));
-  //     return;
-  //   }
+    // If no county selected or no country selected, reset city options
+    if (!countyCode || !birthCountry) {
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+      return;
+    }
     
-  //   // Load cities for selected county
-  //   try {
-  //     const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
-  //       value: city.name,
-  //       label: city.name
-  //     }));
+    // Load cities for selected county
+    try {
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
+        value: city.name,
+        label: city.name
+      }));
       
-  //     setOptions(prev => ({
-  //       ...prev,
-  //       cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error loading cities:', error);
-  //   }
-  // };
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+      }));
+    } catch (error) {
+      console.error('Error loading cities:', error);
+    }
+  };
 
-  // // Handle city selection - set coordinates
-  // const handleCityChange = (option: SelectOption | null) => {
-  //   const cityName = option?.value || '';
-  //   const { birthCountry, birthCounty } = formState;
+  // Handle city selection - set coordinates
+  const handleCityChange = (option: SelectOption | null) => {
+    const cityName = option?.value || '';
+    const { birthCountry, birthCounty } = formState;
     
-  //   // Update form state with new city
-  //   setFormState(prev => ({
-  //     ...prev,
-  //     birthCity: cityName,
-  //     coordinates: null // Reset coordinates initially
-  //   }));
+    // Update form state with new city
+    setFormState(prev => ({
+      ...prev,
+      birthCity: cityName,
+      coordinates: null // Reset coordinates initially
+    }));
     
-  //   // If no city selected or missing country/county, return
-  //   if (!cityName || !birthCountry || !birthCounty) {
-  //     return;
-  //   }
+    // If no city selected or missing country/county, return
+    if (!cityName || !birthCountry || !birthCounty) {
+      return;
+    }
     
-  //   // Set coordinates for selected city
-  //   try {
-  //     const cityData = City.getCitiesOfState(birthCountry, birthCounty)
-  //       .find(city => city.name === cityName);
+    // Set coordinates for selected city
+    try {
+      const cityData = City.getCitiesOfState(birthCountry, birthCounty)
+        .find(city => city.name === cityName);
       
-  //     if (cityData && cityData.latitude && cityData.longitude) {
-  //       setFormState(prev => ({
-  //         ...prev,
-  //         coordinates: {
-  //           lat: Number(cityData.latitude),
-  //           lng: Number(cityData.longitude)
-  //         }
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.error('Error setting coordinates:', error);
-  //   }
-  // };
+      if (cityData && cityData.latitude && cityData.longitude) {
+        setFormState(prev => ({
+          ...prev,
+          coordinates: {
+            lat: Number(cityData.latitude),
+            lng: Number(cityData.longitude)
+          }
+        }));
+      }
+    } catch (error) {
+      console.error('Error setting coordinates:', error);
+    }
+  };
 
   // Validate all inputs
   const validateInputs = () => {
@@ -323,7 +323,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          onChange={handleCountryChange}
+          // onChange={handleCountryChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -357,7 +357,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          onChange={handleCountyChange}
+          // onChange={handleCountyChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -392,7 +392,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
-          onChange={handleCityChange}
+          // onChange={handleCityChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -431,7 +431,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         type="button"
         className="w-full py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center"
         disabled={formState.isCalculating}
-        onClick={handleCalculatePositions}
+        // onClick={handleCalculatePositions}
       >
         {formState.isCalculating ? (
           <>
