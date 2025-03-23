@@ -64,66 +64,66 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   //   }
   // }, []);
 
-  // Load states when country changes
-  const loadStates = useCallback((countryCode: string) => {
-    if (!countryCode) return;
+  // // Load states when country changes
+  // const loadStates = useCallback((countryCode: string) => {
+  //   if (!countryCode) return;
 
-    try {
-      const states = State.getStatesOfCountry(countryCode).map(state => ({
-        value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
-      }));
+  //   try {
+  //     const states = State.getStatesOfCountry(countryCode).map(state => ({
+  //       value: state.isoCode,
+  //       label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+  //     }));
 
-      setOptions(prev => ({
-        ...prev,
-        stateOptions: [{ value: '', label: 'Select ...' }, ...states],
-        cityOptions: [{ value: '', label: 'Select ...' }]
-      }));
-    } catch (error) {
-      console.error('Error loading states:', error);
-    }
-  }, []);
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       stateOptions: [{ value: '', label: 'Select ...' }, ...states],
+  //       cityOptions: [{ value: '', label: 'Select ...' }]
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error loading states:', error);
+  //   }
+  // }, []);
 
-  // Load cities when state changes
-  const loadCities = useCallback((countryCode: string, stateCode: string) => {
-    if (!countryCode || !stateCode) return;
+  // // Load cities when state changes
+  // const loadCities = useCallback((countryCode: string, stateCode: string) => {
+  //   if (!countryCode || !stateCode) return;
 
-    try {
-      const cities = City.getCitiesOfState(countryCode, stateCode).map(city => ({
-        value: city.name,
-        label: city.name
-      }));
+  //   try {
+  //     const cities = City.getCitiesOfState(countryCode, stateCode).map(city => ({
+  //       value: city.name,
+  //       label: city.name
+  //     }));
 
-      setOptions(prev => ({
-        ...prev,
-        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
-      }));
-    } catch (error) {
-      console.error('Error loading cities:', error);
-    }
-  }, []);
+  //     setOptions(prev => ({
+  //       ...prev,
+  //       cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error loading cities:', error);
+  //   }
+  // }, []);
 
-  // Set coordinates when city changes
-  const setCoordinates = useCallback((countryCode: string, stateCode: string, cityName: string) => {
-    if (!countryCode || !stateCode || !cityName) return;
+  // // Set coordinates when city changes
+  // const setCoordinates = useCallback((countryCode: string, stateCode: string, cityName: string) => {
+  //   if (!countryCode || !stateCode || !cityName) return;
 
-    try {
-      const cityData = City.getCitiesOfState(countryCode, stateCode)
-        .find(city => city.name === cityName);
+  //   try {
+  //     const cityData = City.getCitiesOfState(countryCode, stateCode)
+  //       .find(city => city.name === cityName);
 
-      if (cityData && cityData.latitude && cityData.longitude) {
-        setFormState(prev => ({
-          ...prev,
-          coordinates: {
-            lat: Number(cityData.latitude),
-            lng: Number(cityData.longitude)
-          }
-        }));
-      }
-    } catch (error) {
-      console.error('Error setting coordinates:', error);
-    }
-  }, []);
+  //     if (cityData && cityData.latitude && cityData.longitude) {
+  //       setFormState(prev => ({
+  //         ...prev,
+  //         coordinates: {
+  //           lat: Number(cityData.latitude),
+  //           lng: Number(cityData.longitude)
+  //         }
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error setting coordinates:', error);
+  //   }
+  // }, []);
 
   // // Handle country change
   // useEffect(() => {
