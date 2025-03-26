@@ -48,19 +48,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: country.name
       }));
 
-      alert("1");
-
       setOptions(prev => ({
         ...prev,
         countryOptions: [...defaultOptions, ...countries]
       }));
 
-      alert("2");
-
       // Set Romania as default
       const romania = countries.find(c => c.label === 'Romania');
-
-      alert("3");
 
       if (romania) {
         // Set country and immediately load its states
@@ -69,22 +63,16 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           birthCountry: romania.value
         }));
 
-        alert("4");
-
         // Pre-load states for Romania
         const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
           value: state.isoCode,
           label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
         }));
 
-        alert("5");
-
         setOptions(prev => ({
           ...prev,
           stateOptions: [...defaultOptions, ...romaniaStates]
         }));
-
-        alert("6");
       }
     } catch (error) {
       console.error('Error initializing countries:', error);
@@ -98,8 +86,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Handle country selection - load states
   const handleCountryChange = (option: SelectOption | null) => {
+    alert("1 Country changed");
     const countryCode = option?.value || '';
 
+    alert("2 Country code: " + countryCode);
     // Update form state with new country
     setFormState(prev => ({
       ...prev,
@@ -109,6 +99,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates
     }));
 
+    alert("3 Country code: " + countryCode);
     // If no country selected, reset state options
     if (!countryCode) {
       setOptions(prev => ({
@@ -119,6 +110,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
+    alert("4 Country code: " + countryCode);
     // Load states for selected country
     try {
       const states = State.getStatesOfCountry(countryCode).map(state => ({
@@ -126,6 +118,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
       }));
 
+      alert("5 Country code: " + countryCode);
       setOptions(prev => ({
         ...prev,
         stateOptions: [{ value: '', label: 'Select ...' }, ...states],
@@ -336,7 +329,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          // onChange={handleCountryChange}
+          onChange={handleCountryChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
