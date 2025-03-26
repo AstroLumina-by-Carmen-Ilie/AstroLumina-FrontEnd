@@ -48,19 +48,19 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: country.name
       }));
 
-      console.log("1");
+      alert("1");
 
       setOptions(prev => ({
         ...prev,
         countryOptions: [...defaultOptions, ...countries]
       }));
 
-      console.log("2");
+      alert("2");
 
       // Set Romania as default
       const romania = countries.find(c => c.label === 'Romania');
 
-      console.log("3");
+      alert("3");
 
       if (romania) {
         // Set country and immediately load its states
@@ -69,7 +69,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           birthCountry: romania.value
         }));
 
-        console.log("4");
+        alert("4");
 
         // Pre-load states for Romania
         const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
@@ -77,14 +77,14 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
         }));
 
-        console.log("5");
+        alert("5");
 
         setOptions(prev => ({
           ...prev,
           stateOptions: [...defaultOptions, ...romaniaStates]
         }));
 
-        console.log("6");
+        alert("6");
       }
     } catch (error) {
       console.error('Error initializing countries:', error);
