@@ -86,10 +86,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Handle country selection - load states
   const handleCountryChange = (option: SelectOption | null) => {
-    alert("1 Country changed");
     const countryCode = option?.value || '';
 
-    alert("2 Country code: " + countryCode);
     // Update form state with new country
     setFormState(prev => ({
       ...prev,
@@ -99,7 +97,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates
     }));
 
-    alert("3 Country code: " + countryCode);
     // If no country selected, reset state options
     if (!countryCode) {
       setOptions(prev => ({
@@ -110,7 +107,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    alert("4 Country code: " + countryCode);
     // Load states for selected country
     try {
       const states = State.getStatesOfCountry(countryCode).map(state => ({
@@ -118,7 +114,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
       }));
 
-      alert("5 Country code: " + countryCode);
       setOptions(prev => ({
         ...prev,
         stateOptions: [{ value: '', label: 'Select ...' }, ...states],
@@ -131,9 +126,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Handle county/state selection - load cities
   const handleCountyChange = (option: SelectOption | null) => {
+    alert("1. County changed");
     const countyCode = option?.value || '';
     const { birthCountry } = formState;
 
+    alert("2. County code: " + countyCode);
     // Update form state with new county
     setFormState(prev => ({
       ...prev,
@@ -142,8 +139,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates
     }));
 
+    alert("3. County code: " + countyCode);
     // If no county selected or no country selected, reset city options
     if (!countyCode || !birthCountry) {
+      alert("4. No county or country selected");
       setOptions(prev => ({
         ...prev,
         cityOptions: [{ value: '', label: 'Select ...' }]
@@ -151,6 +150,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
+    alert("5. Loading cities");
     // Load cities for selected county
     try {
       const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
@@ -158,6 +158,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: city.name
       }));
 
+      alert("6. Cities loaded");
       setOptions(prev => ({
         ...prev,
         cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
@@ -363,7 +364,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          // onChange={handleCountyChange}
+          onChange={handleCountyChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
