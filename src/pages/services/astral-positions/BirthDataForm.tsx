@@ -139,16 +139,16 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates
     }));
 
-    // alert("3. County code: " + countyCode);
-    // // If no county selected or no country selected, reset city options
-    // if (!countyCode || !birthCountry) {
-    //   alert("4. No county or country selected");
-    //   setOptions(prev => ({
-    //     ...prev,
-    //     cityOptions: [{ value: '', label: 'Select ...' }]
-    //   }));
-    //   return;
-    // }
+    alert("3. County code: " + countyCode);
+    // If no county selected or no country selected, reset city options
+    if (!countyCode || !birthCountry) {
+      alert("4. No county or country selected");
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }]
+      }));
+      return;
+    }
 
     // alert("5. Loading cities");
     // // Load cities for selected county
