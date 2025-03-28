@@ -41,8 +41,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
   useEffect(() => {
     if (result && userInfo && contactInfo && paymentStatus) {
       const generatePDF = async () => {
-        const doc = generateNatalChartPDF(result, userInfo, contactInfo);
-        await doc.save(`natal-chart-${userInfo.name.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+        const doc = await generateNatalChartPDF(result, userInfo, contactInfo);
+        doc.save(`natal-chart-${userInfo.name.toLowerCase().replace(/\s+/g, '-')}.pdf`);
       };
       generatePDF();
     }

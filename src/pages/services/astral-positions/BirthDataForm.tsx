@@ -38,6 +38,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const formatStateName = (stateName: string) => {
+    if (!stateName) return '';
+    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+  };
+
   // Initialize country options once on mount
   useEffect(() => {
     try {
@@ -71,7 +76,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     try {
       const states = State.getStatesOfCountry(formState.birthCountry).map(state => ({
         value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+        label: formatStateName(state.name)
       }));
 
       setOptions(prev => ({
@@ -196,7 +201,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         name: fullName,
         birthDate: birthDate,
         birthHour: birthHour,
-        location: `${city}, ${state}, ${country}`
+        location: `${city}, ${formatStateName(state)}, ${country}`
       });
     } catch (error) {
       console.error('Error calculating positions:', error);
