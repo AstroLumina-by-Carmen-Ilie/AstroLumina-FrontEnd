@@ -41,8 +41,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
   useEffect(() => {
     if (result && userInfo && contactInfo && paymentStatus) {
       const generatePDF = async () => {
-        const doc = generateKarmicChartPDF(result, userInfo, contactInfo);
-        await doc.save(`karmic-chart-${userInfo.name.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+        const doc = await generateKarmicChartPDF(result, userInfo, contactInfo);
+        doc.save(`Harta_Karmica_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
       };
       generatePDF();
     }
