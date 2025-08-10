@@ -17,6 +17,7 @@ const formatTime = (date: Date): string => {
 
 export const generateNatalChartPDF = async (
   result: InterpretedAstralPositions,
+  chart: string,
   userInfo: UserInfo,
   contactInfo: ContactInfo
 ): Promise<jsPDF> => {
@@ -43,9 +44,13 @@ export const generateNatalChartPDF = async (
   doc.addPage();
   await generateThankYouPage(doc, userInfo, contactInfo);
 
+  // // Generate chart page
+  // doc.addPage('a4', 'landscape');
+  // await generateChartPage(doc, chart);
+
   // Generate interpretation pages
   for (const interpretation of result) {
-    doc.addPage();
+    doc.addPage('a4', 'portrait');
     await generateInterpretationPage(doc, interpretation);
   }
 
@@ -206,6 +211,40 @@ const generateThankYouPage = async (
     doc.text(line, pageCenter, yPosition, { align: 'center' });
     yPosition += 7;
   });
+};
+
+// Function to generate the chart page
+const generateChartPage = async (
+  doc: jsPDF,
+  chart: string
+): Promise<void> => {
+  // Add starry sky watermark
+  await addWatermark(doc, starrySkySvg);
+
+  try {
+    // Validate the SVG string
+    if (!chart || typeof chart !== 'string') {
+      throw new Error('Invalid SVG string provided.');
+    }
+
+    // Convert the SVG string to a PNG data URL
+    const dataUrl = await svgAsPngDataUrl(chart);
+
+    // Add the SVG as an image, covering the entire page
+    doc.addImage(
+      dataUrl,
+      'PNG',
+      20,
+      20,
+      doc.internal.pageSize.width - 20,
+      doc.internal.pageSize.height - 20
+    );
+  } catch (error) {
+    console.error('Error rendering chart SVG:', error);
+    doc.setFontSize(12);
+    doc.setTextColor(255, 0, 0); // Red color for error message
+    doc.text('Eroare la încărcarea SVG-ului.', 20, 20);
+  }
 };
 
 // Function to generate an interpretation page

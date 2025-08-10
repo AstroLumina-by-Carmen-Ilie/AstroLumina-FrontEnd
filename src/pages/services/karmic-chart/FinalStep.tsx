@@ -14,6 +14,7 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
   // const { startLoading, stopLoading } = useLoading();
   const [result, setResult] = useState<InterpretedAstralPositions | null>(null);
   const [isGettingData, setIsGettingData] = useState(false);
+  const [chart, setChart] = useState('');
 
   const formatDate = (date: Date): string => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -28,10 +29,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
     setIsGettingData(true);
     try {
       const AstralPositions = await calculateKarmicChart('ro', payload);
-      setResult(AstralPositions);
+      setResult(AstralPositions.data);
+      setChart(AstralPositions.chart);
     } catch (error) {
       console.error('Error fetching reading:', error);
       setResult(null);
+      setChart('');
     } finally {
       // stopLoading();
       setTimeout(() => setIsGettingData(false), 1500);
@@ -39,14 +42,14 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
   };
 
   useEffect(() => {
-    if (result && userInfo && contactInfo && paymentStatus) {
+    if (result && chart && userInfo && contactInfo && paymentStatus) {
       const generatePDF = async () => {
-        const doc = await generateKarmicChartPDF(result, userInfo, contactInfo);
+        const doc = await generateKarmicChartPDF(result, chart, userInfo, contactInfo);
         doc.save(`Harta_Karmica_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
       };
       generatePDF();
     }
-  }, [result, userInfo, contactInfo, paymentStatus]);
+  }, [result, chart, userInfo, contactInfo, paymentStatus]);
 
   const handleKarmicChart = async () => {
     await handleFormSubmit();

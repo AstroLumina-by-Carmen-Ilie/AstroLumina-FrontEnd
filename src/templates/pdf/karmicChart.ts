@@ -17,6 +17,7 @@ const formatTime = (date: Date): string => {
 
 export const generateKarmicChartPDF = async (
   result: InterpretedAstralPositions,
+  chart: string,
   userInfo: UserInfo,
   contactInfo: ContactInfo
 ): Promise<jsPDF> => {
@@ -42,6 +43,10 @@ export const generateKarmicChartPDF = async (
   // Generate thank you page
   doc.addPage();
   await generateThankYouPage(doc, userInfo, contactInfo);
+
+  // // Generate chart page
+  // doc.addPage();
+  // await generateChartPage(doc, chart)
 
   // Generate interpretation pages
   for (const interpretation of result) {
@@ -206,6 +211,23 @@ const generateThankYouPage = async (
     doc.text(line, pageCenter, yPosition, { align: 'center' });
     yPosition += 7;
   });
+};
+
+// Function to generate the chart page
+const generateChartPage = async (
+  doc: jsPDF,
+  chart: string
+): Promise<void> => {
+  // Add starry sky watermark
+  await addWatermark(doc, starrySkySvg);
+
+  const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
+
+  // Contact information in bottom right corner
+  doc.setFontSize(10);
+  doc.setFont('NotoSans', 'normal');
+  doc.setTextColor(255, 255, 255);
 };
 
 // Function to generate an interpretation page
