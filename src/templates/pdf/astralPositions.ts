@@ -1,9 +1,18 @@
-import { AstralPosition, AstralPositions } from '../../types/astralPositions';
+import { AstralPosition, AstralPositions, UserInfo } from '../../types/astralChart';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { planetSymbols } from '../../constants/astrology';
 
-export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: { name: string, date: string, time: string, location: string }) => {
+// Utility functions
+const formatDate = (date: Date): string => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+};
+
+const formatTime = (date: Date): string => {
+  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+};
+
+export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: UserInfo) => {
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',
@@ -20,8 +29,8 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: { 
   // Poziționăm informațiile utilizatorului în colțul din stânga sus
   doc.setFontSize(10);
   doc.text(`Nume: ${userInfo.name}`, 10, 10);
-  doc.text(`Dată: ${userInfo.date}`, 10, 15);
-  doc.text(`Oră: ${userInfo.time}`, 10, 20);
+  doc.text(`Dată: ${formatDate(userInfo.birthDate)}`, 10, 15);
+  doc.text(`Oră: ${formatTime(userInfo.birthHour)}`, 10, 20);
   doc.text(`Locație: ${userInfo.location}`, 10, 25);
 
   // Calculăm distribuția planetelor pe elemente

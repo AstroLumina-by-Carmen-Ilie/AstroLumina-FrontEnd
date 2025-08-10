@@ -29,13 +29,8 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
       setIsGeneratingPDF(true);
       try {
-        const doc = generateAstralPositionsPDF(result, {
-          name: userInfo.name,
-          date: new Date(userInfo.birthDate).toLocaleDateString(),
-          time: new Date(userInfo.birthHour).toLocaleTimeString(),
-          location: userInfo.location
-        });
-        await doc.save(`astral_positions_${userInfo.name.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+        const doc = generateAstralPositionsPDF(result, userInfo);
+        await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
       } finally {
         setTimeout(() => setIsGeneratingPDF(false), 1000);
       }

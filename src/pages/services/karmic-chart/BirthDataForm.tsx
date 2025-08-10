@@ -24,7 +24,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
   const [cityOptions, setCityOptions] = useState<SelectOption[]>([{ value: '', label: 'Select ...' }]);
 
   const [errors, setErrors] = useState<FormErrors>({});
-  
+
+  const formatStateName = (stateName: string) => {
+    if (!stateName) return '';
+    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+  };
+
   useEffect(() => {
     const countries = Country.getAllCountries().map(country => ({
       value: country.isoCode,
@@ -51,7 +56,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
     if (birthCountry) {
       const states = State.getStatesOfCountry(birthCountry).map(state => ({
         value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+        label: formatStateName(state.name)
       }));
       setStateOptions([{ value: '', label: 'Select ...' }, ...states]);
       setBirthCounty('');
@@ -62,9 +67,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
 
   useEffect(() => {
     if (birthCounty) {
-      const cities = City.getCitiesOfState(birthCountry, birthCounty).map(city => ({ 
-        value: city.name, 
-        label: city.name 
+      const cities = City.getCitiesOfState(birthCountry, birthCounty).map(city => ({
+        value: city.name,
+        label: city.name
       }));
       setCityOptions([{ value: '', label: 'Select ...' }, ...cities]);
       setBirthCity('');
@@ -76,9 +81,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
       const cityData = City.getCitiesOfState(birthCountry, birthCounty)
         .find(city => city.name === birthCity);
       if (cityData) {
-        setCoordinates({ 
-          lat: Number(cityData.latitude), 
-          lng: Number(cityData.longitude) 
+        setCoordinates({
+          lat: Number(cityData.latitude),
+          lng: Number(cityData.longitude)
         });
       }
     }
@@ -113,20 +118,20 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
         hour: birthHour.getHours(),
         minute: birthHour.getMinutes(),
       };
-      
+
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
       const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
       const cities = City.getCitiesOfState(birthCountry, birthCounty);
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
-    onNext(
-      payload,
-      {
-        name: fullName,
-        birthDate: birthDate,
-        birthHour: birthHour,
-        location: `${city}, ${state}, ${country}`
-      });
+      onNext(
+        payload,
+        {
+          name: fullName,
+          birthDate: birthDate,
+          birthHour: birthHour,
+          location: `${city}, ${formatStateName(state)}, ${country}`
+        });
     }
   };
 
@@ -144,7 +149,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
         />
         {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
       </div>
-      
+
       <div className="mb-6">
         <label className="block text-gray-800 mb-2" htmlFor="birthDate">Birth Date</label>
         <Flatpickr

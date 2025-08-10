@@ -25,6 +25,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
 
   const [errors, setErrors] = useState<FormErrors>({});
   
+  const formatStateName = (stateName: string) => {
+    if (!stateName) return '';
+    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+  };
+
   useEffect(() => {
     const countries = Country.getAllCountries().map(country => ({
       value: country.isoCode,
@@ -51,7 +56,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
     if (birthCountry) {
       const states = State.getStatesOfCountry(birthCountry).map(state => ({
         value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+        label: formatStateName(state.name)
       }));
       setStateOptions([{ value: '', label: 'Select ...' }, ...states]);
       setBirthCounty('');
@@ -125,7 +130,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
         name: fullName,
         birthDate: birthDate,
         birthHour: birthHour,
-        location: `${city}, ${state}, ${country}`
+        location: `${city}, ${formatStateName(state)}, ${country}`
       });
     }
   };
