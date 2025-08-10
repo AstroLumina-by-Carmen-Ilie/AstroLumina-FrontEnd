@@ -38,7 +38,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Initialize country options only once on component mount
+  const formatStateName = (stateName: string) => {
+    if (!stateName) return '';
+    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+  };
+
+  // Initialize country options once on mount
   useEffect(() => {
     // Initialize country options
     try {
@@ -66,7 +71,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         // Pre-load states for Romania
         const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
           value: state.isoCode,
-          label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+          label: formatStateName(state.name)
         }));
 
         setOptions(prev => ({
@@ -111,7 +116,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     try {
       const states = State.getStatesOfCountry(countryCode).map(state => ({
         value: state.isoCode,
-        label: state.name.replace(/ County$| Province$| Voivodeship$| District$/, '')
+        label: formatStateName(state.name)
       }));
 
       setOptions(prev => ({
