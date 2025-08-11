@@ -131,11 +131,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Handle county/state selection - load cities
   const handleCountyChange = (option: SelectOption | null) => {
-    alert("1. County changed");
     const countyCode = option?.value || '';
     const { birthCountry } = formState;
 
-    alert("2. County code: " + countyCode);
     // Update form state with new county
     setFormState(prev => ({
       ...prev,
@@ -144,10 +142,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates
     }));
 
-    alert("3. County code: " + countyCode);
     // If no county selected or no country selected, reset city options
     if (!countyCode || !birthCountry) {
-      alert("4. No county or country selected");
       setOptions(prev => ({
         ...prev,
         cityOptions: [{ value: '', label: 'Select ...' }]
@@ -155,7 +151,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    alert("5. Loading cities");
     // Load cities for selected county
     try {
       const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
@@ -163,7 +158,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         label: city.name
       }));
 
-      alert("6. Cities loaded");
       setOptions(prev => ({
         ...prev,
         cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
@@ -175,24 +169,26 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Handle city selection - set coordinates
   const handleCityChange = (option: SelectOption | null) => {
-    alert("1. City changed");
     const cityName = option?.value || '';
-    // const { birthCountry, birthCounty } = formState;
+    alert("1. City changed");
+    const { birthCountry, birthCounty } = formState;
 
-    // alert("2. City name: " + cityName);
-    // // Update form state with new city
-    // setFormState(prev => ({
-    //   ...prev,
-    //   birthCity: cityName,
-    //   coordinates: null // Reset coordinates initially
-    // }));
+    alert("2. City name: " + cityName);
+    // Update form state with new city
+    setFormState(prev => ({
+      ...prev,
+      birthCity: cityName,
+      coordinates: null // Reset coordinates initially
+    }));
 
-    // // If no city selected or missing country/county, return
-    // if (!cityName || !birthCountry || !birthCounty) {
-    //   alert("3. No city or country/county selected");
-    //   return;
-    // }
+    alert("3. City name: " + cityName);
+    // If no city selected or missing country/county, return
+    if (!cityName || !birthCountry || !birthCounty) {
+      alert("4. No city or country/county selected");
+      return;
+    }
 
+    alert("5. Setting coordinates");
     // // Set coordinates for selected city
     // try {
     //   alert("4. Setting coordinates");
