@@ -189,26 +189,32 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
 
     alert("5. Setting coordinates");
-    // // Set coordinates for selected city
-    // try {
-    //   alert("4. Setting coordinates");
-    //   const cityData = City.getCitiesOfState(birthCountry, birthCounty)
-    //     .find(city => city.name === cityName);
 
-    //   alert("5. City data: " + JSON.stringify(cityData));
-    //   if (cityData && cityData.latitude && cityData.longitude) {
-    //     alert("6. Setting coordinates");
-    //     setFormState(prev => ({
-    //       ...prev,
-    //       coordinates: {
-    //         lat: Number(cityData.latitude),
-    //         lng: Number(cityData.longitude)
-    //       }
-    //     }));
-    //   }
-    // } catch (error) {
-    //   console.error('Error setting coordinates:', error);
-    // }
+
+
+
+
+    
+    // Set coordinates for selected city
+    try {
+      alert("6. Setting coordinates");
+      const cityData = City.getCitiesOfState(birthCountry, birthCounty)
+        .find(city => city.name === cityName);
+
+      alert("7. City data: " + JSON.stringify(cityData));
+      if (cityData && cityData.latitude && cityData.longitude) {
+        alert("8. Setting coordinates");
+        setFormState(prev => ({
+          ...prev,
+          coordinates: {
+            lat: Number(cityData.latitude),
+            lng: Number(cityData.longitude)
+          }
+        }));
+      }
+    } catch (error) {
+      console.error('Error setting coordinates:', error);
+    }
   };
 
   // Validate all inputs
