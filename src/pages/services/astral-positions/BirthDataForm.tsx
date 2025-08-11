@@ -155,22 +155,22 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    // alert("5. Loading cities");
-    // // Load cities for selected county
-    // try {
-    //   const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
-    //     value: city.name,
-    //     label: city.name
-    //   }));
+    alert("5. Loading cities");
+    // Load cities for selected county
+    try {
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
+        value: city.name,
+        label: city.name
+      }));
 
-    //   alert("6. Cities loaded");
-    //   setOptions(prev => ({
-    //     ...prev,
-    //     cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
-    //   }));
-    // } catch (error) {
-    //   console.error('Error loading cities:', error);
-    // }
+      alert("6. Cities loaded");
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+      }));
+    } catch (error) {
+      console.error('Error loading cities:', error);
+    }
   };
 
   // Handle city selection - set coordinates
