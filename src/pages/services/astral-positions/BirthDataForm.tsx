@@ -220,7 +220,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   };
 
   const handleCalculatePositions = async () => {
-    alert("1. Validating inputs")
     const isValid = validateInputs();
     if (!isValid) {
       return;
@@ -228,16 +227,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
     setFormState(prev => ({ ...prev, isCalculating: true }));
 
-    alert("2. Calculating positions")
     try {
       const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
 
-      alert("3. Validating data")
       if (!birthDate || !birthHour || !coordinates) {
         throw new Error('Missing required data for calculation');
       }
 
-      alert("4. Calculating positions")
       const payload: BirthDataPayload = {
         name: fullName,
         nation: birthCountry,
@@ -251,7 +247,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         minute: birthHour.getMinutes(),
       };
 
-      alert("5. Calculating positions")
       // Get the actual location names for display
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
       const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
@@ -260,18 +255,18 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       alert("6. Calculating positions")
       // Calculate positions
-    //   const result = await calculateAstralPositions('ro', payload);
+      const result = await calculateAstralPositions('ro', payload);
 
-    //   alert("7. Updating state")
-    //   // Update parent component state
-    //   setResult(result);
-    //   alert("8. Updating user info")
-    //   setUserInfo({
-    //     name: fullName,
-    //     birthDate: birthDate,
-    //     birthHour: birthHour,
-    //     location: `${city}, ${state}, ${country}`
-    //   });
+      alert("7. Updating state")
+      // Update parent component state
+      setResult(result);
+      alert("8. Updating user info")
+      setUserInfo({
+        name: fullName,
+        birthDate: birthDate,
+        birthHour: birthHour,
+        location: `${city}, ${state}, ${country}`
+      });
     } catch (error) {
       console.error('Error calculating positions:', error);
       setErrors(prev => ({ ...prev, calculation: 'Failed to calculate positions. Please try again.' }));
