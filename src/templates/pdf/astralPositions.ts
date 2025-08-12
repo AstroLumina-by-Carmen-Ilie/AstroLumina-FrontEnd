@@ -1,6 +1,6 @@
 import { AstralPosition, AstralPositions, UserInfo } from '../../types/astralChart';
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { planetSymbols } from '../../constants/astrology';
 
 // Utility functions
@@ -86,7 +86,7 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: Us
     ];
   });
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: 30,
     head: [['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd']],
     body: tableData,
