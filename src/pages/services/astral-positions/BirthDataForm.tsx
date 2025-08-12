@@ -237,29 +237,29 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         throw new Error('Missing required data for calculation');
       }
 
-    //   alert("4. Calculating positions")
-    //   const payload: BirthDataPayload = {
-    //     name: fullName,
-    //     nation: birthCountry,
-    //     city: birthCity,
-    //     longitude: coordinates.lng,
-    //     latitude: coordinates.lat,
-    //     year: birthDate.getFullYear(),
-    //     month: birthDate.getMonth() + 1,
-    //     day: birthDate.getDate(),
-    //     hour: birthHour.getHours(),
-    //     minute: birthHour.getMinutes(),
-    //   };
+      alert("4. Calculating positions")
+      const payload: BirthDataPayload = {
+        name: fullName,
+        nation: birthCountry,
+        city: birthCity,
+        longitude: coordinates.lng,
+        latitude: coordinates.lat,
+        year: birthDate.getFullYear(),
+        month: birthDate.getMonth() + 1,
+        day: birthDate.getDate(),
+        hour: birthHour.getHours(),
+        minute: birthHour.getMinutes(),
+      };
 
-    //   alert("5. Calculating positions")
-    //   // Get the actual location names for display
-    //   const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
-    //   const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
-    //   const cities = City.getCitiesOfState(birthCountry, birthCounty);
-    //   const city = cities.find(c => c.name === birthCity)?.name || birthCity;
+      alert("5. Calculating positions")
+      // Get the actual location names for display
+      const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
+      const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
+      const cities = City.getCitiesOfState(birthCountry, birthCounty);
+      const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
-    //   alert("6. Calculating positions")
-    //   // Calculate positions
+      alert("6. Calculating positions")
+      // Calculate positions
     //   const result = await calculateAstralPositions('ro', payload);
 
     //   alert("7. Updating state")
