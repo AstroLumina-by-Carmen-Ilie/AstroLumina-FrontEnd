@@ -253,14 +253,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       const cities = City.getCitiesOfState(birthCountry, birthCounty);
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
-      alert("6. Calculating positions")
       // Calculate positions
       const result = await calculateAstralPositions('ro', payload);
 
-      alert("7. Updating state")
       // Update parent component state
       setResult(result);
-      alert("8. Updating user info")
       setUserInfo({
         name: fullName,
         birthDate: birthDate,
