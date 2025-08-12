@@ -170,10 +170,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   // Handle city selection - set coordinates
   const handleCityChange = (option: SelectOption | null) => {
     const cityName = option?.value || '';
-    alert("1. City changed");
     const { birthCountry, birthCounty } = formState;
 
-    alert("2. City name: " + cityName);
     // Update form state with new city
     setFormState(prev => ({
       ...prev,
@@ -181,29 +179,17 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       coordinates: null // Reset coordinates initially
     }));
 
-    alert("3. City name: " + cityName);
     // If no city selected or missing country/county, return
     if (!cityName || !birthCountry || !birthCounty) {
-      alert("4. No city or country/county selected");
       return;
     }
 
-    alert("5. Setting coordinates");
-
-
-
-
-
-    
     // Set coordinates for selected city
     try {
-      alert("6. Setting coordinates");
       const cityData = City.getCitiesOfState(birthCountry, birthCounty)
         .find(city => city.name === cityName);
 
-      alert("7. City data: " + JSON.stringify(cityData));
       if (cityData && cityData.latitude && cityData.longitude) {
-        alert("8. Setting coordinates");
         setFormState(prev => ({
           ...prev,
           coordinates: {
@@ -234,22 +220,22 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   };
 
   const handleCalculatePositions = async () => {
+    alert("1. Validating inputs")
     const isValid = validateInputs();
     if (!isValid) {
       return;
     }
 
-    // alert("1. Validating inputs")
-    // setFormState(prev => ({ ...prev, isCalculating: true }));
+    setFormState(prev => ({ ...prev, isCalculating: true }));
 
-    // alert("2. Calculating positions")
-    // try {
-    //   const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
+    alert("2. Calculating positions")
+    try {
+      const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
 
-    //   alert("3. Validating data")
-    //   if (!birthDate || !birthHour || !coordinates) {
-    //     throw new Error('Missing required data for calculation');
-    //   }
+      alert("3. Validating data")
+      if (!birthDate || !birthHour || !coordinates) {
+        throw new Error('Missing required data for calculation');
+      }
 
     //   alert("4. Calculating positions")
     //   const payload: BirthDataPayload = {
@@ -286,12 +272,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     //     birthHour: birthHour,
     //     location: `${city}, ${state}, ${country}`
     //   });
-    // } catch (error) {
-    //   console.error('Error calculating positions:', error);
-    //   setErrors(prev => ({ ...prev, calculation: 'Failed to calculate positions. Please try again.' }));
-    // } finally {
-    //   setFormState(prev => ({ ...prev, isCalculating: false }));
-    // }
+    } catch (error) {
+      console.error('Error calculating positions:', error);
+      setErrors(prev => ({ ...prev, calculation: 'Failed to calculate positions. Please try again.' }));
+    } finally {
+      setFormState(prev => ({ ...prev, isCalculating: false }));
+    }
   };
 
   return (
