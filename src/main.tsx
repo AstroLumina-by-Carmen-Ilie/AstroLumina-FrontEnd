@@ -80,7 +80,7 @@ if (rootElement) {
                 <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />
                 {/* <Route path="/servicii/lumina-previzionala" element={<NotFound />} /> */}
                 {/* <Route path="/servicii/lumina-relationala" element={<NotFound />} /> */}
-                {/* <Route path="/servicii/consultatii" element={<Bookings />} /> */}
+                <Route path="/servicii/consultatii" element={<Bookings />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Router>
