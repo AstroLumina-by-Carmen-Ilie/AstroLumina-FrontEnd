@@ -249,7 +249,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       // Get the actual location names for display
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
-      const state = formatStateName(State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty);
+      const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
       const cities = City.getCitiesOfState(birthCountry, birthCounty);
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
@@ -262,7 +262,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         name: fullName,
         birthDate: birthDate,
         birthHour: birthHour,
-        location: `${city}, ${state}, ${country}`
+        location: `${city}, ${formatStateName(state)}, ${country}`
       });
     } catch (error) {
       console.error('Error calculating positions:', error);
