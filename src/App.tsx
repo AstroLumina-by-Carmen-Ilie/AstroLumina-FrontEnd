@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Navbar from './components/navbar/Navbar';
 import ScrollToTopButton from './components/scroll/ScrollToTopButton';
 import { useLoading } from './contexts/LoadingContext';
@@ -8,9 +7,7 @@ import { Star, Sparkles, Clock, MessageCircle } from 'lucide-react';
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { startLoading, stopLoading } = useLoading();
-  const { t } = useTranslation();
 
   useEffect(() => {
     startLoading();
@@ -39,7 +36,6 @@ function App() {
         top: offsetPosition,
         behavior: 'smooth'
       });
-      setIsMobileMenuOpen(false);
     }
   };
 
@@ -79,20 +75,20 @@ function App() {
               <span className="text-3xl md:text-5xl text-yellow-200">by Carmen Ilie</span>
             </h1>
             <p className="text-xl md:text-2xl text-yellow-100/90 mb-12 max-w-3xl mx-auto">
-              {t('hero-presentation')}
+              Deblocheaza secretele propriului destin prin intelepciunea straveche a stelelor
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <button 
                 onClick={() => scrollToSection('services')}
                 className="bg-yellow-400 text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 transition-all shadow-lg hover:shadow-yellow-400/25"
               >
-                Explore Services
+                Explorează Servicii
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
                 className="bg-transparent text-yellow-200 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all border-2 border-yellow-200 hover:border-yellow-100 shadow-lg"
               >
-                Contact Me
+                Contactează-mă
               </button>
             </div>
           </div>
@@ -106,7 +102,7 @@ function App() {
           {/* Services Section */}
           <section id="services" className="py-20 bg-gradient-to-br from-amber-50 to-amber-100">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">{t('services')}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">Servicii</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
                   {
@@ -180,7 +176,7 @@ function App() {
                       to={service.link}
                       className="text-amber-500 hover:text-amber-700 transition-colors"
                     >
-                      {t('learn-more')}
+                      Afla mai multe
                     </Link>
                   </div>
                 ))}
@@ -191,28 +187,28 @@ function App() {
           {/* Features Section */}
           <section id="features" className="py-20">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">Why Choose Us</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">De ce să ne alegi</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[
                   {
                     icon: <Clock className="w-8 h-8" />,
-                    title: "Accurate Readings",
-                    description: "Our expert astrologers provide accurate and insightful readings.",
+                    title: "Interpretări Accurate",
+                    description: "Experții noștri astrologi oferă interpretări precise și pline de înțelepciune.",
                   },
                   {
                     icon: <MessageCircle className="w-8 h-8" />,
-                    title: "Personalized Guidance",
-                    description: "Get personalized guidance and advice tailored to your needs.",
+                    title: "Ghidare Personalizată",
+                    description: "Primești ghidare și sfaturi personalizate, adaptate nevoilor tale.",
                   },
                   {
                     icon: <Star className="w-8 h-8" />,
-                    title: "Spiritual Growth",
-                    description: "Achieve spiritual growth and self-awareness through our services.",
+                    title: "Creștere Spirituală",
+                    description: "Obtine creștere spirituală și conștientizare de sine prin serviciile noastre.",
                   },
                   {
                     icon: <Sparkles className="w-8 h-8" />,
-                    title: "Cosmic Connection",
-                    description: "Understand the cosmic connection between you and the universe.",
+                    title: "Conexiune Cosmică",
+                    description: "Înțelege conexiunea cosmică dintre tine și univers.",
                   },
                 ].map((feature, index) => (
                   <div key={index} className="text-center">

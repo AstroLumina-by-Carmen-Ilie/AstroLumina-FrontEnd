@@ -5,8 +5,6 @@ import App from './App';
 import './styles/starry-theme.css';
 import 'flatpickr/dist/themes/material_blue.css';
 import { LoadingProvider } from './contexts/LoadingContext';
-import { I18nextProvider } from 'react-i18next';
-import i18n from './lib/i18n';
 import AstralPositions from './pages/services/AstralPositions';
 import NatalChart from './pages/services/NatalChart';
 import KarmicChart from './pages/services/KarmicChart';
@@ -67,25 +65,23 @@ if (rootElement) {
   try {
     root.render(
       <React.StrictMode>
-        <I18nextProvider i18n={i18n}>
-          <LoadingProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="/despre-mine" element={<AboutMe />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/servicii" element={<Services />} />
-                <Route path="/servicii/pozitia-astrelor" element={<AstralPositions />} />
-                <Route path="/servicii/lumina-natala" element={<NatalChart />} />
-                <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />
-                <Route path="/servicii/lumina-previzionala" element={<NotFound />} />
-                <Route path="/servicii/lumina-relationala" element={<NotFound />} />
-                <Route path="/servicii/consultatii" element={<Bookings />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Router>
-          </LoadingProvider>
-        </I18nextProvider>
+        <LoadingProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/despre-mine" element={<AboutMe />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/servicii" element={<Services />} />
+              <Route path="/servicii/pozitia-astrelor" element={<AstralPositions />} />
+              <Route path="/servicii/lumina-natala" element={<NatalChart />} />
+              <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />
+              <Route path="/servicii/lumina-previzionala" element={<NotFound />} />
+              <Route path="/servicii/lumina-relationala" element={<NotFound />} />
+              <Route path="/servicii/consultatii" element={<Bookings />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </LoadingProvider>
       </React.StrictMode>
     );
     if (import.meta.env.VITE_DEBUG_MODE) {

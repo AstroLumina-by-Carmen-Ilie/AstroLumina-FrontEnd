@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../language/LanguageSwitcher';
 
 export interface NavbarProps {
   isScrolled: boolean;
@@ -36,23 +34,17 @@ export const NavbarLogo: React.FC<{ logoClasses: string }> = ({ logoClasses }) =
 );
 
 export const NavbarLinks: React.FC<{ linkClasses: string }> = ({ linkClasses }) => {
-  const { t } = useTranslation();
-  
   return (
     <>
       <Link to="/servicii" className={linkClasses}>
-        {t('services')}
+        Servicii
       </Link>
       <Link to="/despre-mine" className={linkClasses}>
-        {t('about')}
+        Despre mine
       </Link>
       <Link to="/contact" className={linkClasses}>
-        {t('contact')}
+        Contact
       </Link>
     </>
   );
 };
-
-export const NavbarLanguageSwitcher: React.FC<{ lightTheme: boolean }> = ({ lightTheme }) => (
-  <LanguageSwitcher lightTheme={lightTheme} />
-);
