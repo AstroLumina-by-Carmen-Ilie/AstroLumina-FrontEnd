@@ -11,6 +11,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@stripe/react-stripe-js": "^3.10.0",
     "@stripe/stripe-js": "^5.10.0",
     "@supabase/supabase-js": "^2.99.0",
