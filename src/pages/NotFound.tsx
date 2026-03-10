@@ -1,11 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Moon, Star, ArrowLeft } from 'lucide-react';
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center p-4">
@@ -28,10 +26,10 @@ const NotFound: React.FC = () => {
           {/* Error message */}
           <h1 className="text-6xl font-bold text-amber-500 mb-4">404</h1>
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            {t('notFound.title', 'Page Not Found')}
+            Pagină Negăsită
           </h2>
           <p className="text-gray-600 mb-8">
-            {t('notFound.description', 'The stars have aligned, but this page seems to be in another constellation.')}
+            Stelele s-au aliniat, dar această pagină pare să fie în altă constelație.
           </p>
 
           {/* Back button */}
@@ -40,7 +38,7 @@ const NotFound: React.FC = () => {
             className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
-            {t('notFound.backHome', 'Back to Home')}
+            Înapoi acasă
           </button>
         </div>
       </div>

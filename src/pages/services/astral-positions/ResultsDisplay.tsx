@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AstralPosition, AstralPositions } from '../../../types/astralPositions';
 import { planetSymbols } from '../../../constants/astrology';
 import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
-import { useTranslation } from 'react-i18next';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -22,17 +21,16 @@ const ResultsDisplay: React.FC<{
     location: string;
   };
 }> = ({ result, userInfo }) => {
-  const { t } = useTranslation();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (result && userInfo) {
-      setIsGeneratingPDF(true);
-      try {
-        const doc = generateAstralPositionsPDF(result, userInfo);
-        await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
-      } finally {
-        setTimeout(() => setIsGeneratingPDF(false), 1000);
+    setIsGeneratingPDF(true);
+    try {
+      const doc = generateAstralPositionsPDF(result, userInfo);
+      await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
+    } finally {
+      setTimeout(() => setIsGeneratingPDF(false), 1000);
       }
     }
   };
@@ -42,21 +40,21 @@ const ResultsDisplay: React.FC<{
       <div className="mb-6">
         <h3 className="text-2xl font-bold text-amber-900 mb-2">{userInfo.name}</h3>
         <p className="text-lg text-amber-700">
-          {formatDate(userInfo.birthDate)} {t('at')} {formatTime(userInfo.birthHour)}
+          {formatDate(userInfo.birthDate)} la {formatTime(userInfo.birthHour)}
         </p>
         <p className="text-lg text-amber-700 mb-4">{userInfo.location}</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md">
-        <h4 className="text-xl font-semibold text-amber-900 mb-4">{t('services-list.astral-positions')}</h4>
+        <h4 className="text-xl font-semibold text-amber-900 mb-4">Pozițiile astrelor</h4>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-amber-50">
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">{t('Name')}</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">{t('Sign')}</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">{t('House')}</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">{t('Retrograde')}</th>
+                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Nume</th>
+                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Semn</th>
+                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Casa</th>
+                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Retrograd</th>
               </tr>
             </thead>
             <tbody>
@@ -127,7 +125,7 @@ const ResultsDisplay: React.FC<{
               />
             </svg>
           )}
-          {isGeneratingPDF ? t('Generating...') : t('Download PDF')}
+          {isGeneratingPDF ? 'Se generează...' : 'Descarcă PDF'}
         </button>
       </div>
     </div>

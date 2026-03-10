@@ -31,9 +31,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Options state - separate from form state to reduce re-renders
   const [options, setOptions] = useState({
-    countryOptions: [] as SelectOption[],
-    stateOptions: [] as SelectOption[],
-    cityOptions: [] as SelectOption[]
+    countryOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
+    stateOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
+    cityOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[]
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -55,7 +55,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       setOptions(prev => ({
         ...prev,
-        countryOptions: [...defaultOptions, ...countries]
+        countryOptions: [{ value: '', label: 'Selectează...' }, ...countries]
       }));
 
       // Set Romania as default
@@ -121,8 +121,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       setOptions(prev => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Select ...' }, ...states],
-        cityOptions: [{ value: '', label: 'Select ...' }]
+        stateOptions: [{ value: '', label: 'Selectează...' }, ...states],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
     } catch (error) {
       console.error('Error loading states:', error);
@@ -160,7 +160,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       setOptions(prev => ({
         ...prev,
-        cityOptions: [{ value: '', label: 'Select ...' }, ...cities]
+        cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
       }));
     } catch (error) {
       console.error('Error loading cities:', error);
@@ -207,12 +207,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formState.fullName.trim()) newErrors.fullName = 'Full Name is required';
-    if (!formState.birthDate) newErrors.birthDate = 'Birth Date is required';
-    if (!formState.birthHour) newErrors.birthHour = 'Birth Hour is required';
-    if (!formState.birthCountry) newErrors.birthCountry = 'Birth Country is required';
-    if (!formState.birthCounty) newErrors.birthCounty = 'Birth County is required';
-    if (!formState.birthCity) newErrors.birthCity = 'Birth City is required';
+    if (!formState.fullName.trim()) newErrors.fullName = 'Numele complet este obligatoriu';
+    if (!formState.birthDate) newErrors.birthDate = 'Data nașterii este obligatorie';
+    if (!formState.birthHour) newErrors.birthHour = 'Ora nașterii este obligatorie';
+    if (!formState.birthCountry) newErrors.birthCountry = 'Țara nașterii este obligatorie';
+    if (!formState.birthCounty) newErrors.birthCounty = 'Județul nașterii este obligatoriu';
+    if (!formState.birthCity) newErrors.birthCity = 'Orașul nașterii este obligatoriu';
 
     setErrors(newErrors);
     const isValid = Object.keys(newErrors).length === 0;
@@ -266,7 +266,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       });
     } catch (error) {
       console.error('Error calculating positions:', error);
-      setErrors(prev => ({ ...prev, calculation: 'Failed to calculate positions. Please try again.' }));
+      setErrors(prev => ({ ...prev, calculation: 'Calcularea pozițiilor a eșuat. Încercați din nou.' }));
     } finally {
       setFormState(prev => ({ ...prev, isCalculating: false }));
     }
@@ -275,7 +275,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="fullName">Full Name</label>
+        <label className="block text-gray-800 mb-2" htmlFor="fullName">Nume complet</label>
         <input
           type="text"
           id="fullName"
@@ -288,7 +288,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthDate">Birth Date</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthDate">Data nașterii</label>
         <Flatpickr
           value={formState.birthDate || ''}
           onChange={(date) => handleFormChange('birthDate', date[0])}
@@ -297,14 +297,14 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
             allowInput: true,
           }}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          placeholder="Select date..."
+          placeholder="Selectează data..."
           required
         />
         {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthHour">Birth Hour</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthHour">Ora nașterii</label>
         <Flatpickr
           value={formState.birthHour || ''}
           onChange={(date) => handleFormChange('birthHour', date[0])}
@@ -317,14 +317,14 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
             minuteIncrement: 1,
           }}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          placeholder="Select time..."
+          placeholder="Selectează ora..."
           required
         />
         {errors.birthHour && <p className="text-red-500 text-sm mt-1">{errors.birthHour}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Birth Country</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Țara nașterii</label>
         <Select
           id="birthCountry"
           options={options.countryOptions}
@@ -350,7 +350,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
               }
             })
           }}
-          placeholder="Select country..."
+          placeholder="Selectează țara..."
           isSearchable
           required
         />
@@ -358,7 +358,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCounty">Birth County/State</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCounty">Județ/Regiune</label>
         <Select
           id="birthCounty"
           options={options.stateOptions}
@@ -384,7 +384,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
               }
             })
           }}
-          placeholder="Select county/state..."
+          placeholder="Selectează județul..."
           isSearchable
           isDisabled={!formState.birthCountry}
           required
@@ -393,7 +393,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCity">Birth City</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCity">Orașul nașterii</label>
         <Select
           id="birthCity"
           options={options.cityOptions}
@@ -419,7 +419,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
               }
             })
           }}
-          placeholder="Select city..."
+          placeholder="Selectează orașul..."
           isSearchable
           isDisabled={!formState.birthCounty}
           required
@@ -451,10 +451,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
             >
               <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
             </svg>
-            <span className="ml-2">Calculating...</span>
+            <span className="ml-2">Se calculează...</span>
           </>
         ) : (
-          'Calculate Planet Positions'
+          'Calculează Pozițiile Planetelor'
         )}
       </button>
     </div>

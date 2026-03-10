@@ -36,16 +36,16 @@ const AstralPositionsPage: React.FC = () => {
       try {
         return <ResultsDisplay result={result} userInfo={userInfo} />;
       } catch (error) {
-        console.error('Error rendering results:', error);
-        return <div>An error occurred while rendering results</div>;
+        console.error('Eroare la afișarea rezultatelor:', error);
+        return <div>A apărut o eroare la afișarea rezultatelor</div>;
       }
     }
 
     try {
       return <BirthDataForm setResult={setResult} setUserInfo={setUserInfo} />;
     } catch (error) {
-      console.error('Error rendering form:', error);
-      return <div>An error occurred while rendering the form</div>;
+      console.error('Eroare la afișarea formularului:', error);
+      return <div>A apărut o eroare la afișarea formularului</div>;
     }
   };
 
@@ -59,10 +59,10 @@ const AstralPositionsPage: React.FC = () => {
             {/* Left Panel - Illustration and Info */}
             <div className="w-full md:w-1/2 bg-indigo-50 p-6 flex flex-col justify-center items-center">
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-indigo-900 mb-4">Planetary Positions</h1>
+                <h1 className="text-3xl font-bold text-indigo-900 mb-4">Pozițiile Planetelor</h1>
                 <p className="text-gray-700 mb-6">
-                  Discover the exact positions of celestial bodies at the moment of your birth
-                  and understand their influence on your life path.
+                  Descoperă pozițiile exacte ale corpurilor cerești în momentul nașterii tale
+                  și înțelege influența lor asupra căii tale de viață.
                 </p>
               </div>
               
@@ -73,19 +73,19 @@ const AstralPositionsPage: React.FC = () => {
               />
               
               <div className="w-full">
-                <h3 className="text-xl font-semibold text-indigo-800 mb-4">What You'll Receive:</h3>
+                <h3 className="text-xl font-semibold text-indigo-800 mb-4">Ce vei primi:</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>
-                    <span>Precise planetary positions at your birth moment</span>
+                    <span>Poziții planetare precise la momentul nașterii tale</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>
-                    <span>Interpretation of each planet's influence</span>
+                    <span>Interpretarea influenței fiecărei planete</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>
-                    <span>Understanding of your celestial blueprint</span>
+                    <span>Înțelegerea planului tău celestial</span>
                   </li>
                 </ul>
               </div>
@@ -96,7 +96,7 @@ const AstralPositionsPage: React.FC = () => {
               {/* Mobile Title */}
               <div className="md:hidden text-center mb-6">
                   <h2 className="text-2xl font-bold text-indigo-900">
-                    Discover Your Celestial Blueprint
+                    Descoperă Planul Tău Celestial
                   </h2>
               </div>
 
