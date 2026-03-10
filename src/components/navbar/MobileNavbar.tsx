@@ -3,8 +3,7 @@ import {
   NavbarProps,
   getNavbarStyles,
   NavbarLogo,
-  NavbarLinks,
-  NavbarLanguageSwitcher
+  NavbarLinks
 } from './NavbarCommon';
 
 const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
@@ -71,7 +70,7 @@ const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
                 aria-expanded={isOpen}
               >
                 <span className="sr-only">
-                  {isOpen ? 'Close main menu' : 'Open main menu'}
+                  {isOpen ? 'Închide meniul principal' : 'Deschide meniul principal'}
                 </span>
                 {!isOpen ? (
                   <svg
@@ -115,9 +114,6 @@ const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
         <div ref={navbarRef} className={mobileMenuClasses}>
           <div className="px-2 pt-2 pb-3 space-y-1">
             <NavbarLinks linkClasses={mobileLinkClasses} />
-            {/* <div className="px-3 py-2">
-              <NavbarLanguageSwitcher lightTheme={lightTheme} />
-            </div> */}
           </div>
         </div>
       </nav>
