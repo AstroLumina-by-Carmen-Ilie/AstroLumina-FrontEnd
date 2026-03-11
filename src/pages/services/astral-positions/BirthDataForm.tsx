@@ -47,7 +47,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   useEffect(() => {
     // Initialize country options
     try {
-      const defaultOptions = [{ value: '', label: 'Select ...' }];
+      const defaultOptions = [{ value: '', label: 'Selectează...' }];
       const countries = Country.getAllCountries().map(country => ({
         value: country.isoCode,
         label: country.name
@@ -106,8 +106,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     if (!countryCode) {
       setOptions(prev => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Select ...' }],
-        cityOptions: [{ value: '', label: 'Select ...' }]
+        stateOptions: [{ value: '', label: 'Selectează...' }],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
       return;
     }
@@ -146,7 +146,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     if (!countyCode || !birthCountry) {
       setOptions(prev => ({
         ...prev,
-        cityOptions: [{ value: '', label: 'Select ...' }]
+        cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
       return;
     }

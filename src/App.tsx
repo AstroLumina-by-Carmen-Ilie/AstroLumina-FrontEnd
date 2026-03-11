@@ -290,7 +290,7 @@ function App() {
         {/* Footer */}
         <footer className="py-8 px-4 bg-amber-50 border-t border-amber-100">
           <div className="max-w-6xl mx-auto text-center text-amber-900">
-            <p> 2024 AstroLumina by Carmen Ilie. All rights reserved.</p>
+            <p> 2024 AstroLumina by Carmen Ilie. Toate drepturile rezervate.</p>
           </div>
         </footer>
 

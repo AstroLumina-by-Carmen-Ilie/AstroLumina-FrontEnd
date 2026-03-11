@@ -69,7 +69,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onNext, onBack }) => {
             onClick={onBack}
             className="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors"
           >
-            Back
+            Înapoi
           </button>
           <div className="flex-1 relative">
             <button
@@ -81,7 +81,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onNext, onBack }) => {
                   : 'hover:bg-amber-600 cursor-pointer'
               }`}
             >
-              Complete Payment
+              Finalizează plata
               {!isComplete && (
                 <Tooltip message="Plata este obligatorie pentru a putea continua" />
               )}
