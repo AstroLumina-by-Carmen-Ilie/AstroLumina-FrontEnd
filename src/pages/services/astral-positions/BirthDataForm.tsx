@@ -45,7 +45,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
   // Initialize country options once on mount
   useEffect(() => {
+    // Initialize country options
     try {
+      const defaultOptions = [{ value: '', label: 'Selectează...' }];
       const countries = Country.getAllCountries().map(country => ({
         value: country.isoCode,
         label: country.name
@@ -56,25 +58,63 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         countryOptions: [{ value: '', label: 'Selectează...' }, ...countries]
       }));
 
-      // Set Romania as default - but don't cascade updates yet
+      // Set Romania as default
       const romania = countries.find(c => c.label === 'Romania');
+
       if (romania) {
+        // Set country and immediately load its states
         setFormState(prev => ({
           ...prev,
           birthCountry: romania.value
+        }));
+
+        // Pre-load states for Romania
+        const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
+          value: state.isoCode,
+          label: formatStateName(state.name)
+        }));
+
+        setOptions(prev => ({
+          ...prev,
+          stateOptions: [...defaultOptions, ...romaniaStates]
         }));
       }
     } catch (error) {
       console.error('Error initializing countries:', error);
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
 
-  // Handle country change - load states
-  useEffect(() => {
-    if (!formState.birthCountry) return;
+  // Simple form field change handler
+  const handleFormChange = (field: string, value: any) => {
+    setFormState(prev => ({ ...prev, [field]: value }));
+  };
 
+  // Handle country selection - load states
+  const handleCountryChange = (option: SelectOption | null) => {
+    const countryCode = option?.value || '';
+
+    // Update form state with new country
+    setFormState(prev => ({
+      ...prev,
+      birthCountry: countryCode,
+      birthCounty: '', // Reset county
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+
+    // If no country selected, reset state options
+    if (!countryCode) {
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Selectează...' }],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
+      }));
+      return;
+    }
+
+    // Load states for selected country
     try {
-      const states = State.getStatesOfCountry(formState.birthCountry).map(state => ({
+      const states = State.getStatesOfCountry(countryCode).map(state => ({
         value: state.isoCode,
         label: formatStateName(state.name)
       }));
@@ -84,25 +124,36 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         stateOptions: [{ value: '', label: 'Selectează...' }, ...states],
         cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
-
-      // Reset dependent fields
-      setFormState(prev => ({
-        ...prev,
-        birthCounty: '',
-        birthCity: '',
-        coordinates: null
-      }));
     } catch (error) {
       console.error('Error loading states:', error);
     }
-  }, [formState.birthCountry]);
+  };
 
-  // Handle county change - load cities
-  useEffect(() => {
-    if (!formState.birthCounty || !formState.birthCountry) return;
+  // Handle county/state selection - load cities
+  const handleCountyChange = (option: SelectOption | null) => {
+    const countyCode = option?.value || '';
+    const { birthCountry } = formState;
 
+    // Update form state with new county
+    setFormState(prev => ({
+      ...prev,
+      birthCounty: countyCode,
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+
+    // If no county selected or no country selected, reset city options
+    if (!countyCode || !birthCountry) {
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Selectează...' }]
+      }));
+      return;
+    }
+
+    // Load cities for selected county
     try {
-      const cities = City.getCitiesOfState(formState.birthCountry, formState.birthCounty).map(city => ({
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
         value: city.name,
         label: city.name
       }));
@@ -111,27 +162,34 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         ...prev,
         cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
       }));
-
-      // Reset city when county changes
-      setFormState(prev => ({
-        ...prev,
-        birthCity: '',
-        coordinates: null
-      }));
     } catch (error) {
       console.error('Error loading cities:', error);
     }
-  }, [formState.birthCounty, formState.birthCountry]);
+  };
 
-  // Handle city change - set coordinates
-  useEffect(() => {
-    if (!formState.birthCity || !formState.birthCounty || !formState.birthCountry) return;
+  // Handle city selection - set coordinates
+  const handleCityChange = (option: SelectOption | null) => {
+    const cityName = option?.value || '';
+    const { birthCountry, birthCounty } = formState;
 
+    // Update form state with new city
+    setFormState(prev => ({
+      ...prev,
+      birthCity: cityName,
+      coordinates: null // Reset coordinates initially
+    }));
+
+    // If no city selected or missing country/county, return
+    if (!cityName || !birthCountry || !birthCounty) {
+      return;
+    }
+
+    // Set coordinates for selected city
     try {
-      const cityData = City.getCitiesOfState(formState.birthCountry, formState.birthCounty)
-        .find(city => city.name === formState.birthCity);
+      const cityData = City.getCitiesOfState(birthCountry, birthCounty)
+        .find(city => city.name === cityName);
 
-      if (cityData) {
+      if (cityData && cityData.latitude && cityData.longitude) {
         setFormState(prev => ({
           ...prev,
           coordinates: {
@@ -143,7 +201,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     } catch (error) {
       console.error('Error setting coordinates:', error);
     }
-  }, [formState.birthCity, formState.birthCounty, formState.birthCountry]);
+  };
 
   // Validate all inputs
   const validateInputs = () => {
@@ -157,12 +215,15 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     if (!formState.birthCity) newErrors.birthCity = 'Orașul nașterii este obligatoriu';
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+    return isValid;
   };
 
   const handleCalculatePositions = async () => {
     const isValid = validateInputs();
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
 
     setFormState(prev => ({ ...prev, isCalculating: true }));
 
@@ -209,11 +270,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     } finally {
       setFormState(prev => ({ ...prev, isCalculating: false }));
     }
-  };
-
-  // Simple form field change handler
-  const handleFormChange = (field: string, value: any) => {
-    setFormState(prev => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -273,7 +329,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
-          onChange={(option) => handleFormChange('birthCountry', option?.value || '')}
+          onChange={handleCountryChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -307,8 +363,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
-          // TODO problema la linia de jos pe iPhone
-          onChange={(option) => handleFormChange('birthCounty', option?.value || '')}
+          onChange={handleCountyChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{
@@ -343,8 +398,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
-          // TODO problema la linia de jos pe iPhone
-          onChange={(option) => handleFormChange('birthCity', option?.value || '')}
+          onChange={handleCityChange}
           className="react-select-container"
           classNamePrefix="react-select"
           styles={{

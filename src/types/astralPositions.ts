@@ -20,6 +20,7 @@ export interface BirthDataPayload {
 
 export interface AstralPosition {
   name: string;
+  symbol: string;
   quality: string;
   element: string;
   sign: string;

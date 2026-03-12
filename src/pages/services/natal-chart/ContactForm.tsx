@@ -14,10 +14,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!phone) newErrors.phone = 'Phone number is required';
-    if (!email) newErrors.email = 'Email is required';
+    if (!phone) newErrors.phone = 'Numărul de telefon este obligatoriu';
+    if (!email) newErrors.email = 'Emailul este obligatoriu';
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Te rog introdu o adresă de email validă';
     }
 
     setErrors(newErrors);
@@ -34,7 +34,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="phone">Phone Number</label>
+        <label className="block text-gray-800 mb-2" htmlFor="phone">Număr de telefon</label>
         <input
           type="tel"
           id="phone"
@@ -65,13 +65,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
           onClick={onBack}
           className="w-1/2 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors"
         >
-          Back
+          Înapoi
         </button>
         <button
           type="submit"
           className="w-1/2 bg-amber-500 text-white py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors"
         >
-          Next Step
+          Pasul următor
         </button>
       </div>
     </form>

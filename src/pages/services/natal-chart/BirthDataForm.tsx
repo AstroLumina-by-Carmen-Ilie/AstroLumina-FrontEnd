@@ -3,109 +3,229 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { FormErrors, SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types/astralChart';
+import { SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types/astralChart';
 
 interface BirthDataFormProps {
   onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
 }
 
 const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
-  const [fullName, setFullName] = useState('');
+  // Form state
+  const [formState, setFormState] = useState({
+    fullName: '',
+    birthDate: null as Date | null,
+    birthHour: null as Date | null,
+    birthCountry: '',
+    birthCounty: '',
+    birthCity: '',
+    coordinates: null as LocationCoordinates | null
+  });
 
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [birthHour, setBirthHour] = useState<Date | null>(null);
-  const [birthCountry, setBirthCountry] = useState('');
-  const [birthCounty, setBirthCounty] = useState('');
-  const [birthCity, setBirthCity] = useState('');
-  const [coordinates, setCoordinates] = useState<LocationCoordinates | null>(null);
+  // Options state - separate from form state to reduce re-renders
+  const [options, setOptions] = useState({
+    countryOptions: [] as SelectOption[],
+    stateOptions: [] as SelectOption[],
+    cityOptions: [] as SelectOption[]
+  });
 
-  const [countryOptions, setCountryOptions] = useState<SelectOption[]>([{ value: '', label: 'Select ...' }]);
-  const [stateOptions, setStateOptions] = useState<SelectOption[]>([{ value: '', label: 'Select ...' }]);
-  const [cityOptions, setCityOptions] = useState<SelectOption[]>([{ value: '', label: 'Select ...' }]);
-
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   
   const formatStateName = (stateName: string) => {
     if (!stateName) return '';
     return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
   };
 
+  // Initialize country options once on mount
   useEffect(() => {
-    const countries = Country.getAllCountries().map(country => ({
-      value: country.isoCode,
-      label: country.name
-    }));
-    const romania = countries.find(c => c.label === 'Romania');
-    if (romania) {
-      setBirthCountry(romania.value);
-      const romanianStates = State.getStatesOfCountry(romania.value).map(state => ({
-        value: state.isoCode,
-        label: state.name
+    // Initialize country options
+    try {
+      const defaultOptions = [{ value: '', label: 'Selectează...' }];
+      const countries = Country.getAllCountries().map(country => ({
+        value: country.isoCode,
+        label: country.name
       }));
-      setStateOptions([{ value: '', label: 'Select ...' }, ...romanianStates]);
-      const romanianCities = City.getCitiesOfCountry(romania.value)?.map(city => ({
-        value: city.name,
-        label: city.name
-      })) || [];
-      setCityOptions([{ value: '', label: 'Select ...' }, ...romanianCities]);
-    }
-    setCountryOptions([{ value: '', label: 'Select ...' }, ...countries]);
-  }, []);
 
-  useEffect(() => {
-    if (birthCountry) {
-      const states = State.getStatesOfCountry(birthCountry).map(state => ({
+      setOptions(prev => ({
+        ...prev,
+        countryOptions: [...defaultOptions, ...countries]
+      }));
+
+      // Set Romania as default
+      const romania = countries.find(c => c.label === 'Romania');
+
+      if (romania) {
+        // Set country and immediately load its states
+        setFormState(prev => ({
+          ...prev,
+          birthCountry: romania.value
+        }));
+
+        // Pre-load states for Romania
+        const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
+          value: state.isoCode,
+          label: formatStateName(state.name)
+        }));
+
+        setOptions(prev => ({
+          ...prev,
+          stateOptions: [...defaultOptions, ...romaniaStates]
+        }));
+      }
+    } catch (error) {
+      console.error('Error initializing countries:', error);
+    }
+  }, []); // Empty dependency array ensures this runs only once
+
+  // Simple form field change handler
+  const handleFormChange = (field: string, value: any) => {
+    setFormState(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Handle country selection - load states
+  const handleCountryChange = (option: SelectOption | null) => {
+    const countryCode = option?.value || '';
+
+    // Update form state with new country
+    setFormState(prev => ({
+      ...prev,
+      birthCountry: countryCode,
+      birthCounty: '', // Reset county
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+
+    // If no country selected, reset state options
+    if (!countryCode) {
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Selectează...' }],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
+      }));
+      return;
+    }
+
+    // Load states for selected country
+    try {
+      const states = State.getStatesOfCountry(countryCode).map(state => ({
         value: state.isoCode,
         label: formatStateName(state.name)
       }));
-      setStateOptions([{ value: '', label: 'Select ...' }, ...states]);
-      setBirthCounty('');
-      setBirthCity('');
-      setCityOptions([{ value: '', label: 'Select ...' }]);
-    }
-  }, [birthCountry]);
 
-  useEffect(() => {
-    if (birthCounty) {
-      const cities = City.getCitiesOfState(birthCountry, birthCounty).map(city => ({ 
-        value: city.name, 
-        label: city.name 
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Selectează...' }, ...states],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
-      setCityOptions([{ value: '', label: 'Select ...' }, ...cities]);
-      setBirthCity('');
+    } catch (error) {
+      console.error('Error loading states:', error);
     }
-  }, [birthCounty, birthCountry]);
+  };
 
-  useEffect(() => {
-    if (birthCity) {
+  // Handle county/state selection - load cities
+  const handleCountyChange = (option: SelectOption | null) => {
+    const countyCode = option?.value || '';
+    const { birthCountry } = formState;
+
+    // Update form state with new county
+    setFormState(prev => ({
+      ...prev,
+      birthCounty: countyCode,
+      birthCity: '',   // Reset city
+      coordinates: null // Reset coordinates
+    }));
+
+    // If no county selected or no country selected, reset city options
+    if (!countyCode || !birthCountry) {
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Selectează...' }]
+      }));
+      return;
+    }
+
+    // Load cities for selected county
+    try {
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
+        value: city.name,
+        label: city.name
+      }));
+
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
+      }));
+    } catch (error) {
+      console.error('Error loading cities:', error);
+    }
+  };
+
+  // Handle city selection - set coordinates
+  const handleCityChange = (option: SelectOption | null) => {
+    const cityName = option?.value || '';
+    const { birthCountry, birthCounty } = formState;
+
+    // Update form state with new city
+    setFormState(prev => ({
+      ...prev,
+      birthCity: cityName,
+      coordinates: null // Reset coordinates initially
+    }));
+
+    // If no city selected or missing country/county, return
+    if (!cityName || !birthCountry || !birthCounty) {
+      return;
+    }
+
+    // Set coordinates for selected city
+    try {
       const cityData = City.getCitiesOfState(birthCountry, birthCounty)
-        .find(city => city.name === birthCity);
-      if (cityData) {
-        setCoordinates({ 
-          lat: Number(cityData.latitude), 
-          lng: Number(cityData.longitude) 
-        });
+        .find(city => city.name === cityName);
+
+      if (cityData && cityData.latitude && cityData.longitude) {
+        setFormState(prev => ({
+          ...prev,
+          coordinates: {
+            lat: Number(cityData.latitude),
+            lng: Number(cityData.longitude)
+          }
+        }));
       }
+    } catch (error) {
+      console.error('Error setting coordinates:', error);
     }
-  }, [birthCity, birthCountry, birthCounty]);
+  };
 
-  const validateInputs = (): boolean => {
-    const newErrors: FormErrors = {};
+  // Validate all inputs
+  const validateInputs = () => {
+    const newErrors: Record<string, string> = {};
 
-    if (!fullName.trim()) newErrors.fullName = 'Full Name is required';
-    if (!birthDate) newErrors.birthDate = 'Birth Date is required';
-    if (!birthHour) newErrors.birthHour = 'Birth Hour is required';
-    if (!birthCountry) newErrors.birthCountry = 'Birth Country is required';
-    if (!birthCounty) newErrors.birthCounty = 'Birth County is required';
-    if (!birthCity) newErrors.birthCity = 'Birth City is required';
+    if (!formState.fullName.trim()) newErrors.fullName = 'Numele complet este obligatoriu';
+    if (!formState.birthDate) newErrors.birthDate = 'Data nașterii este obligatorie';
+    if (!formState.birthHour) newErrors.birthHour = 'Ora nașterii este obligatorie';
+    if (!formState.birthCountry) newErrors.birthCountry = 'Țara nașterii este obligatorie';
+    if (!formState.birthCounty) newErrors.birthCounty = 'Județul/Regiunea nașterii este obligatoriu/oare';
+    if (!formState.birthCity) newErrors.birthCity = 'Orașul nașterii este obligatoriu';
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+    return isValid;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateInputs() && coordinates && birthDate && birthHour) {
+
+    const isValid = validateInputs();
+    if (!isValid) {
+      return;
+    }
+    
+    try {
+      const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
+
+      if (!birthDate || !birthHour || !coordinates) {
+        throw new Error('Missing required data for calculation');
+      }
+
       const payload: BirthDataPayload = {
         name: fullName,
         nation: birthCountry,
@@ -124,54 +244,56 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
       const cities = City.getCitiesOfState(birthCountry, birthCounty);
       const city = cities.find(c => c.name === birthCity)?.name || birthCity;
 
-    onNext(
-      payload,
-      {
-        name: fullName,
-        birthDate: birthDate,
-        birthHour: birthHour,
-        location: `${city}, ${formatStateName(state)}, ${country}`
-      });
+      onNext(
+        payload,
+        {
+          name: fullName,
+          birthDate: birthDate,
+          birthHour: birthHour,
+          location: `${city}, ${formatStateName(state)}, ${country}`
+        });
+    } catch (error) {
+      console.error('Error setting Birth Data Payload:', error);
+      setErrors(prev => ({ ...prev, birthDataPayload: 'Nu am putut salva datele introduse. Te rog încearcă din nou.' }));
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="fullName">Full Name</label>
+        <label className="block text-gray-800 mb-2" htmlFor="fullName">Nume complet</label>
         <input
           type="text"
           id="fullName"
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={formState.fullName}
+          onChange={(e) => handleFormChange('fullName', e.target.value)}
           required
         />
         {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
       </div>
       
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthDate">Birth Date</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthDate">Data nașterii</label>
         <Flatpickr
-          value={birthDate || undefined}
-          onChange={(date) => setBirthDate(date[0])}
+          value={formState.birthDate || ''}
+          onChange={(date) => handleFormChange('birthDate', date[0])}
           options={{
             dateFormat: "d/m/Y",
             allowInput: true,
-            onClose: (selectedDates) => setBirthDate(selectedDates[0]),
           }}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          placeholder="Select date..."
+          placeholder="Selectează data..."
           required
         />
         {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthHour">Birth Hour</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthHour">Ora nașterii</label>
         <Flatpickr
-          value={birthHour || undefined}
-          onChange={(date) => setBirthHour(date[0])}
+          value={formState.birthHour || ''}
+          onChange={(date) => handleFormChange('birthHour', date[0])}
           options={{
             enableTime: true,
             noCalendar: true,
@@ -179,22 +301,21 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
             time_24hr: true,
             allowInput: true,
             minuteIncrement: 1,
-            onClose: (selectedDates) => setBirthHour(selectedDates[0]),
           }}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          placeholder="Select time..."
+          placeholder="Selectează ora..."
           required
         />
         {errors.birthHour && <p className="text-red-500 text-sm mt-1">{errors.birthHour}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Birth Country</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Țara nașterii</label>
         <Select
           id="birthCountry"
-          options={countryOptions}
-          value={countryOptions.find(option => option.value === birthCountry)}
-          onChange={(option) => option && setBirthCountry(option.value)}
+          options={options.countryOptions}
+          value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
+          onChange={handleCountryChange}
           className="w-full"
           classNamePrefix="select"
           styles={{
@@ -215,17 +336,20 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
               }
             })
           }}
+          placeholder="Selectează țara..."
+          isSearchable
+          required
         />
         {errors.birthCountry && <p className="text-red-500 text-sm mt-1">{errors.birthCountry}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCounty">Birth County</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCounty">Județ/Regiune</label>
         <Select
           id="birthCounty"
-          options={stateOptions}
-          value={stateOptions.find(option => option.value === birthCounty)}
-          onChange={(option) => option && setBirthCounty(option.value)}
+          options={options.stateOptions}
+          value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
+          onChange={handleCountyChange}
           className="w-full"
           classNamePrefix="select"
           styles={{
@@ -246,17 +370,21 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
               }
             })
           }}
+          placeholder="Selectează județul/regiunea..."
+          isSearchable
+          isDisabled={!formState.birthCountry}
+          required
         />
         {errors.birthCounty && <p className="text-red-500 text-sm mt-1">{errors.birthCounty}</p>}
       </div>
 
       <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCity">Birth City</label>
+        <label className="block text-gray-800 mb-2" htmlFor="birthCity">Orașul nașterii</label>
         <Select
           id="birthCity"
-          options={cityOptions}
-          value={cityOptions.find(option => option.value === birthCity)}
-          onChange={(option) => option && setBirthCity(option.value)}
+          options={options.cityOptions}
+          value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
+          onChange={handleCityChange}
           className="w-full"
           classNamePrefix="select"
           styles={{
@@ -277,6 +405,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
               }
             })
           }}
+          placeholder="Selectează orașul..."
+          isSearchable
+          isDisabled={!formState.birthCounty}
+          required
         />
         {errors.birthCity && <p className="text-red-500 text-sm mt-1">{errors.birthCity}</p>}
       </div>
@@ -285,7 +417,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
         type="submit"
         className="w-full bg-amber-500 text-white py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors"
       >
-        Next Step
+        Pasul următor
       </button>
     </form>
   );

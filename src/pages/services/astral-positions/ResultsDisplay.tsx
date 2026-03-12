@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AstralPosition, AstralPositions } from '../../../types/astralPositions';
-import { planetSymbols } from '../../../constants/astrology';
 import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
 
 // Utility functions
@@ -22,6 +21,14 @@ const ResultsDisplay: React.FC<{
   };
 }> = ({ result, userInfo }) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [activeTab, setActiveTab] = useState<1 | 2>(1);
+
+  const splitIndex = result.findIndex((item: AstralPosition) => item.name === 'Chiron');
+
+  const firstTabData = splitIndex === -1 ? result : result.slice(0, splitIndex);
+  const secondTabData = splitIndex === -1 ? [] : result.slice(splitIndex);
+
+  const displayedData = activeTab === 1 ? firstTabData : secondTabData;
 
   const handleDownloadPDF = async () => {
     if (result && userInfo) {
@@ -47,6 +54,31 @@ const ResultsDisplay: React.FC<{
 
       <div className="bg-white rounded-lg shadow-md">
         <h4 className="text-xl font-semibold text-amber-900 mb-4">Pozițiile astrelor</h4>
+
+        <div className="flex mb-4 border-b border-amber-100">
+          <button
+            type="button"
+            className={`flex-1 py-2 text-sm sm:text-base font-medium ${
+              activeTab === 1
+                ? 'text-amber-900 border-b-2 border-amber-500'
+                : 'text-amber-600 hover:text-amber-800'
+            }`}
+            onClick={() => setActiveTab(1)}
+          >
+            Planete și puncte uzuale
+          </button>
+          <button
+            type="button"
+            className={`flex-1 py-2 text-sm sm:text-base font-medium ${
+              activeTab === 2
+                ? 'text-amber-900 border-b-2 border-amber-500'
+                : 'text-amber-600 hover:text-amber-800'
+            }`}
+            onClick={() => setActiveTab(2)}
+          >
+            Asteroizi și stele fixe
+          </button>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -58,10 +90,10 @@ const ResultsDisplay: React.FC<{
               </tr>
             </thead>
             <tbody>
-              {result.map((info: AstralPosition, index: number) => (
+              {displayedData.map((info: AstralPosition, index: number) => (
                 <tr key={index} className="border-b border-amber-100">
                   <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
-                    <span className="mr-2 font-semibold">{planetSymbols['ro'][info.name] || ''}</span>
+                    <span className="astronomicon-symbol-fallback mr-2 font-semibold">{info.symbol || ''}</span>
                     {info.name}
                   </td>
                   <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">

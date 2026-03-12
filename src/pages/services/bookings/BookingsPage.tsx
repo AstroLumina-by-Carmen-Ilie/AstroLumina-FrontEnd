@@ -5,7 +5,7 @@ import BookingPaymentForm from './BookingPaymentForm';
 import consultationIllustration from '../../../assets/consultation.svg';
 
 const BookingsPage: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [paymentStatus, setPaymentStatus] = useState<boolean>(false);
 
   const renderStep = () => {
@@ -96,7 +96,7 @@ const BookingsPage: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                  {/* {renderStep()} */}
+                  {renderStep()}
                 </div>
               </div>
             </div>
