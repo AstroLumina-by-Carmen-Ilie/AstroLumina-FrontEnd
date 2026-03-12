@@ -7,7 +7,7 @@ export const calculateAstralPositions = async (language: string, payload: BirthD
   try {
     const options = {
       method: 'POST',
-      url: `${ASTROLOGICAL_API_URL}/api/v1/${language}/astral-data`,
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data`,
       headers: {
         'Accept-Language': language,
         'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ export const calculateAstralPositions = async (language: string, payload: BirthD
     const response = await axios.request(options);
 
     console.log('API Response:', response.data);
-    return response.data;
+    return response.data.cosmic_elements;
   } catch (error) {
     console.error('API request error:', error);
     throw new Error('Failed to fetch reading');

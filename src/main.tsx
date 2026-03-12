@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import './styles/starry-theme.css';
+import './styles/astronomy-fonts.css';
 import 'flatpickr/dist/themes/material_blue.css';
 import { LoadingProvider } from './contexts/LoadingContext';
 import AstralPositions from './pages/services/AstralPositions';

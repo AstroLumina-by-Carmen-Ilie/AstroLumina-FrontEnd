@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Astronomicon';
+  src: url('/fonts/Astronomicon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Symbols 2';
+  src: url('/fonts/NotoSansSymbols2-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.astronomicon-symbol {
+  font-family: 'Astronomicon', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.astronomicon-symbol-fallback {
+  font-family: 'Noto Sans Symbols 2', 'Astronomicon', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+

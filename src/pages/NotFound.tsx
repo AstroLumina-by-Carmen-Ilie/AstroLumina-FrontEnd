@@ -12,9 +12,6 @@ const NotFound: React.FC = () => {
           {/* Decorative elements */}
           <div className="relative mb-8">
             <Moon className="w-24 h-24 mx-auto text-amber-500" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2">
-              <Star className="w-6 h-6 text-yellow-400 animate-pulse" />
-            </div>
             <div className="absolute top-1/4 right-1/4">
               <Star className="w-4 h-4 text-yellow-400 animate-pulse delay-75" />
             </div>

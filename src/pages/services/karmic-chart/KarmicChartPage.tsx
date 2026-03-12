@@ -29,7 +29,7 @@ const KarmicChartPage: React.FC = () => {
         }} />;
         } catch (error) {
           console.error('Error rendering birth data form:', error);
-          return <div>An error occurred while rendering the birth data form</div>;
+          return <div>A apărut o eroare la afișarea formularului de date naștere</div>;
         }
       case 2:
         try {
@@ -39,7 +39,7 @@ const KarmicChartPage: React.FC = () => {
         }} onBack={handleBack} />;
         } catch (error) {
           console.error('Error rendering contact form:', error);
-          return <div>An error occurred while rendering the contact form</div>;
+          return <div>A apărut o eroare la afișarea formularului de contact</div>;
         }
       case 3:
         try {
@@ -49,7 +49,7 @@ const KarmicChartPage: React.FC = () => {
         }} onBack={handleBack} />;
         } catch (error) {
           console.error('Error rendering payment form:', error);
-          return <div>An error occurred while rendering the payment form</div>;
+          return <div>A apărut o eroare la afișarea formularului de plată</div>;
         }
       case 4:
         try {
@@ -60,7 +60,7 @@ const KarmicChartPage: React.FC = () => {
             paymentStatus={paymentStatus!} />;
         } catch (error) {
           console.error('Error rendering final step:', error);
-          return <div>An error occurred while rendering the final step</div>;
+          return <div>A apărut o eroare la afișarea pasului final</div>;
         }
       default:
         return null;
@@ -72,14 +72,14 @@ const KarmicChartPage: React.FC = () => {
       <Navbar isScrolled={true} lightTheme={true} />
 
       <main className="container mx-auto px-6 pt-24">
-        <h1 className="text-4xl font-bold text-center mb-8">Karmic Chart Reading</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">Interpretare Hartă Karmică</h1>
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="flex flex-col md:flex-row">
               {/* Left Panel - Service Description - Hidden on mobile */}
               <div className="hidden md:block md:w-1/2 p-8 bg-gradient-to-br from-purple-50 to-indigo-50">
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Discover Your Celestial Blueprint
+                  Descoperă Planul Tău Celestial
                 </h2>
                 <div className="mb-8">
                   <img
@@ -90,8 +90,8 @@ const KarmicChartPage: React.FC = () => {
                 </div>
                 <div className="prose prose-indigo">
                   <p className="text-lg text-gray-600 mb-4">
-                    Discover your unique astrological blueprint with our comprehensive karmic chart reading.
-                    This multi-step process will guide you through providing your birth details and receiving your personalized reading.
+                    Descoperă planul tău astrologic unic cu interpretarea noastră completă a hărții karmice.
+                    Acest proces în mai mulți pași te va ghida în furnizarea detaliilor tale de naștere și în primirea interpretării tale personalizate.
                   </p>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const KarmicChartPage: React.FC = () => {
                 {/* Mobile Title */}
                 <div className="block md:hidden mb-6 text-center">
                   <h2 className="text-2xl font-bold text-gray-900">
-                    Discover Your Celestial Blueprint
+                    Descoperă Planul Tău Celestial
                   </h2>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg">
