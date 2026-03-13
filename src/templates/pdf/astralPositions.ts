@@ -1,7 +1,6 @@
 import { AstralPosition, AstralPositions, UserInfo } from '../../types/astralChart';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { planetSymbols } from '../../constants/astrology';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -73,7 +72,7 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: Us
   });
 
   const tableData = result.map((p: AstralPosition) => {
-    const planetSymbol = (p.name === 'Soare' || p.name === 'Sun') ? 'O' : planetSymbols['ro'][p.name] || '';
+    const planetSymbol = (p.name === 'Soare' || p.name === 'Sun') ? 'O' : '';
 
     return [
       p.name,

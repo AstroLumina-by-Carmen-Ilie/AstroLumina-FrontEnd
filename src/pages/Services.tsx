@@ -85,7 +85,7 @@ const Services = () => {
       ],
       duration: '60 minute',
       price: '300 RON',
-      link: '/servicii/lumina-previzionala'
+      link: '/servicii/consultatii'
     },
     {
       id: 'relationship-synastry',
@@ -100,7 +100,7 @@ const Services = () => {
       ],
       duration: '120 minute',
       price: '400 RON',
-      link: '/servicii/lumina-relationala'
+      link: '/servicii/consultatii'
     },
     {
       id: 'career-guidance',
