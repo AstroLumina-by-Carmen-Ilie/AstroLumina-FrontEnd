@@ -21,8 +21,8 @@ const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
     : "inline-flex items-center justify-center p-2 rounded-md text-white hover:text-yellow-200 focus:outline-none";
 
   const mobileMenuClasses = lightTheme
-    ? `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-16 left-0 right-0 z-50 bg-white/50 backdrop-blur-md`
-    : `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-16 left-0 right-0 z-50 bg-black/50 backdrop-blur-md`;
+    ? `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-auto left-0 right-0 z-50 bg-white/50 backdrop-blur-md`
+    : `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-auto left-0 right-0 z-50 bg-black/50 backdrop-blur-md`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,11 +59,13 @@ const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
     <div className="md:hidden">
       <nav className={navClasses}>
         <div className={navSubdivClasses}>
-          <div className="flex items-center justify-between h-16">
-            <NavbarLogo logoClasses={logoClasses} />
+          <div className="flex items-center justify-between min-h-[100px] px-4 py-4">
+            <div className="flex-1 flex justify-center">
+              <NavbarLogo logoClasses={logoClasses} />
+            </div>
 
             {/* Mobile menu button */}
-            <div>
+            <div className="flex-shrink-0">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={buttonClasses}
