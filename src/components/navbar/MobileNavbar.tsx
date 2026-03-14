@@ -12,8 +12,8 @@ const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
   const { mobileLinkClasses, logoClasses } = getNavbarStyles(lightTheme);
 
   const navClasses = lightTheme
-    ? `fixed top-0 left-0 right-0 z-50 bg-white/50 ${!isOpen ? 'backdrop-blur-md' : ''}`
-    : `fixed top-0 left-0 right-0 z-50 bg-black/50 ${!isOpen ? 'backdrop-blur-md' : ''}`;
+    ? `relative top-0 left-0 right-0 z-50 bg-white/50 ${!isOpen ? 'backdrop-blur-md' : ''}`
+    : `relative top-0 left-0 right-0 z-50 bg-black/50 ${!isOpen ? 'backdrop-blur-md' : ''}`;
   const navSubdivClasses = `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isOpen ? 'backdrop-blur-md' : ''}`
 
   const buttonClasses = lightTheme
