@@ -20,19 +20,37 @@ export interface BirthDataPayload {
 
 export interface AstralPosition {
   name: string;
-  symbol: string;
-  quality: string;
+  // quality: string;
   element: string;
   sign: string;
-  sign_num: number;
+  // sign_num: number;
   position: number;
-  abs_pos: number;
+  // abs_pos: number;
   emoji: string;
   point_type: string;
   house: string;
   retrograde: boolean;
+  // speed: number;
+  // declination: number;
+  symbol: string;
 }
-
 export type AstralPositions = AstralPosition[];
+
+export interface AstralHouse{
+  name: string;
+  quality: string;
+  element: string;
+  sign: string;
+  // sign_num: number;
+  position: number;
+  // abs_pos: number;
+  emoji: string;
+  // point_type: string;
+  // house: string;
+  retrograde: boolean;
+  // speed: number;
+  // declination: number;
+}
+export type AstralHouses = AstralHouse[];
 
 export type { FormErrors, SelectOption };

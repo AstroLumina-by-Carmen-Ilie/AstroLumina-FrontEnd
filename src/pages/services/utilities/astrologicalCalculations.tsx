@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { BirthDataPayload, AstralPositions } from '../../../types/astralPositions';
+import { BirthDataPayload, AstralPositions, AstralHouses } from '../../../types/astralPositions';
 import { InterpretedAstralPositions } from '../../../types/astralChart';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
-export const calculateAstralPositions = async (language: string, payload: BirthDataPayload): Promise<AstralPositions> => {
+export const calculateAstralPositions = async (language: string, payload: BirthDataPayload):
+  Promise<{astral_elements: AstralPositions, astral_houses: AstralHouses}> => {
   try {
     const options = {
       method: 'POST',
@@ -18,15 +19,18 @@ export const calculateAstralPositions = async (language: string, payload: BirthD
     const response = await axios.request(options);
 
     console.log('API Response:', response.data);
-    return response.data.cosmic_elements;
+    return {
+      astral_elements: response.data.cosmic_elements,
+      astral_houses: response.data.cosmic_houses
+    };
   } catch (error) {
     console.error('API request error:', error);
     throw new Error('Failed to fetch reading');
   }
 };
 
-export const calculateNatalChart = async (language: string, payload: BirthDataPayload): 
-  Promise<{data: InterpretedAstralPositions, chart: string}> => {
+export const calculateNatalChart = async (language: string, payload: BirthDataPayload):
+  Promise<{ data: InterpretedAstralPositions, chart: string }> => {
   try {
     const options_data = {
       method: 'POST',

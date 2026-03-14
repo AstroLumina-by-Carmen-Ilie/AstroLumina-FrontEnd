@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AstralPositions } from '../../../types/astralPositions';
+import { AstralHouses, AstralPositions } from '../../../types/astralPositions';
 import Navbar from '../../../components/navbar/Navbar';
 import astralChartSvg from '../../../assets/astral-chart.svg';
 import BirthDataForm from './BirthDataForm';
@@ -7,7 +7,7 @@ import ResultsDisplay from './ResultsDisplay';
 import { useLoading } from '../../../contexts/LoadingContext';
 
 const AstralPositionsPage: React.FC = () => {
-  const [result, setResult] = useState<AstralPositions | null>(null);
+  const [result, setResult] = useState<{astral_elements: AstralPositions, astral_houses: AstralHouses} | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
     birthDate: Date;
