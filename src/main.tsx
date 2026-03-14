@@ -69,16 +69,17 @@ if (rootElement) {
         <LoadingProvider>
           <Router>
             <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/despre-mine" element={<AboutMe />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/servicii" element={<Services />} />
-              <Route path="/servicii/pozitia-astrelor" element={<AstralPositions />} />
-              <Route path="/servicii/lumina-natala" element={<NatalChart />} />
-              <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />
+              <Route path="/" element={<AstralPositions />} />
+              <Route path="/despre-mine" element={<NotFound />} />
+              <Route path="/contact" element={<NotFound />} />
+              <Route path="/servicii" element={<NotFound />} />
+              <Route path="/servicii/pozitia-astrelor" element={<NotFound />} />
+              <Route path="/servicii/pozitia-caselor" element={<NotFound />} />
+              <Route path="/servicii/lumina-natala" element={<NotFound />} />
+              <Route path="/servicii/lumina-karmica" element={<NotFound />} />
               <Route path="/servicii/lumina-previzionala" element={<NotFound />} />
               <Route path="/servicii/lumina-relationala" element={<NotFound />} />
-              <Route path="/servicii/consultatii" element={<Bookings />} />
+              <Route path="/servicii/consultatii" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
