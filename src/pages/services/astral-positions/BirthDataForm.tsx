@@ -3,11 +3,11 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { LocationCoordinates, BirthDataPayload, SelectOption, AstralPositions, AstralHouses } from '../../../types/astralPositions';
+import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
 interface BirthDataFormProps {
-  setResult: React.Dispatch<React.SetStateAction<{astral_elements: AstralPositions, astral_houses: AstralHouses} | null>>;
+  setResult: React.Dispatch<React.SetStateAction<{astral_elements: AstralElements, astral_houses: AstralElements} | null>>;
   setUserInfo: React.Dispatch<React.SetStateAction<{
     name: string;
     birthDate: Date;

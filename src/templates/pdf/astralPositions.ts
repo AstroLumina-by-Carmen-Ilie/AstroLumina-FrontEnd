@@ -1,4 +1,4 @@
-import { AstralPosition, AstralPositions, UserInfo } from '../../types/astralChart';
+import { AstralElements, UserInfo } from '../../types';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -11,84 +11,88 @@ const formatTime = (date: Date): string => {
   return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
 
-export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: UserInfo) => {
-  const doc = new jsPDF({
-    orientation: 'landscape',
-    unit: 'mm',
-    format: 'a4'
-  });
-
-  doc.addFont('/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
-  doc.addFont('/fonts/NotoSansSymbols-Regular.ttf', 'NotoSansSymbols', 'normal');
-
+const addUserInfo = (doc: jsPDF, userInfo: UserInfo) => {
   doc.setFont('NotoSans');
-  doc.setFontSize(12);
-  doc.text('Poziția elementelor astrale', 148, 15, { align: 'center' });
-
-  // Poziționăm informațiile utilizatorului în colțul din stânga sus
   doc.setFontSize(10);
   doc.text(`Nume: ${userInfo.name}`, 10, 10);
   doc.text(`Dată: ${formatDate(userInfo.birthDate)}`, 10, 15);
   doc.text(`Oră: ${formatTime(userInfo.birthHour)}`, 10, 20);
   doc.text(`Locație: ${userInfo.location}`, 10, 25);
+};
 
-  // Calculăm distribuția planetelor pe elemente
+const calculateElementDistribution = (elements: AstralElements): Record<string, number> => {
   const elementDistribution: Record<string, number> = {};
-  result.forEach((p: AstralPosition) => {
+  elements.forEach((p: any) => {
     if (p.element) {
       elementDistribution[p.element] = (elementDistribution[p.element] || 0) + 1;
     }
   });
+  return elementDistribution;
+};
 
-  // Definim culorile pentru fiecare element
+const addElementDistribution = (doc: jsPDF, elementDistribution: Record<string, number>) => {
   const elementColors: Record<string, number[]> = {
     'Aer': [220, 230, 255], // Albastru foarte deschis pentru Aer
-    'Air': [220, 230, 255],
     'Apă': [173, 216, 230], // Albastru lichid pentru Apă
-    'Water': [173, 216, 230],
     'Foc': [255, 200, 180], // Portocaliu spre roșu pentru Foc
-    'Fire': [255, 200, 180],
-    'Pământ': [222, 184, 135], // Maro deschis pentru Pământ
-    'Earth': [222, 184, 135]
+    'Pământ': [222, 184, 135] // Maro deschis pentru Pământ
   };
 
-  // Afișăm distribuția elementelor în colțul din dreapta sus
   doc.setFontSize(10);
   let yPos = 10;
-  
-  // Afișăm fiecare element cu numărul de planete
+
   Object.entries(elementColors).forEach(([element, color]) => {
-    // Verificăm dacă este un element principal (nu o traducere)
     if (['Aer', 'Apă', 'Foc', 'Pământ'].includes(element)) {
       const count = elementDistribution[element] || 0;
-      // Setăm culoarea de umplere pentru un mic pătrat colorat
       doc.setFillColor(color[0], color[1], color[2]);
       doc.rect(260, yPos - 3.5, 3.5, 3.5, 'F');
-      // Setăm culoarea textului înapoi la negru
       doc.setTextColor(0, 0, 0);
       doc.text(`${element}: ${count}`, 265, yPos);
       yPos += 5;
     }
   });
+};
 
-  const tableData = result.map((p: AstralPosition) => {
-    const planetSymbol = (p.name === 'Soare' || p.name === 'Sun') ? 'O' : '';
+const createPlanetsTable = (elements: AstralElements) => {
+  return elements.map((p: any) => [
+    p.name,
+    p.symbol,
+    p.sign,
+    p.emoji,
+    p.element,
+    p.house,
+    p.retrograde ? '✓' : ''
+  ]);
+};
 
-    return [
-      p.name,
-      planetSymbol,
-      p.sign,
-      p.emoji,
-      p.element,
-      p.house,
-      p.retrograde ? 'X' : ''
-    ];
-  });
+const createHousesTable = (houses: AstralElements) => {
+  return houses.map((h: any) => [
+    h.name,
+    h.sign,
+    h.position.toFixed(1) + '°'
+  ]);
+};
+
+const createAsteroidsTable = (elements: AstralElements) => {
+  return elements.map((p: any) => [
+    p.name,
+    p.symbol,
+    p.sign,
+    p.emoji,
+    p.element,
+    p.house,
+    p.retrograde ? '✓' : ''
+  ]);
+};
+
+const addTable = (doc: jsPDF, title: string, headers: string[], data: any[][], startY: number) => {
+  doc.setFont('NotoSans');
+  doc.setFontSize(12);
 
   autoTable(doc, {
-    startY: 30,
-    head: [['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd']],
-    body: tableData,
+    startY: startY,
+    head: [headers],
+    body: data,
     theme: 'grid',
     headStyles: {
       fillColor: [220, 220, 220], // Gri deschis pentru header
@@ -105,23 +109,30 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: Us
       lineWidth: 0.1
     },
     didParseCell: function (data: any) {
-      // Folosim fonturi diferite în funcție de conținutul celulei
       if (data.row.section === 'head') {
-        // Headerul folosește întotdeauna NotoSans pentru diacritice
         data.cell.styles.font = 'NotoSans';
       } else {
-        // Pentru celulele din body, alegem fontul în funcție de coloană
-        if (data.column.index === 1 || data.column.index === 3) {
-          // Coloanele cu simboluri (1=planetSymbol, 3=zodiacSymbol)
-          data.cell.styles.font = 'NotoSansSymbols';
+        // Font logic: Quivira for symbols -> NotoSans for text
+        if (
+          (data.column.index === 1 ||
+            data.column.index === 3 ||
+            data.column.index === 6
+          ) && headers.length === 7) {
+          // Use Quivira font for symbol columns in 7-column tables
+          data.cell.styles.font = 'Quivira';
         } else {
-          // Celelalte coloane (text normal cu posibile diacritice)
           data.cell.styles.font = 'NotoSans';
         }
-        
-        // Colorăm rândul în funcție de element
-        if (data.row.section === 'body') {
-          const element = data.row.raw[4]; // Coloana cu elementul (index 4)
+
+        if (data.row.section === 'body' && data.column.index === 4) {
+          const element = data.row.raw[4];
+          const elementColors: Record<string, number[]> = {
+            'Aer': [220, 230, 255],
+            'Apă': [173, 216, 230],
+            'Foc': [255, 200, 180],
+            'Pământ': [222, 184, 135]
+          };
+
           if (element && typeof element === 'string' && element in elementColors) {
             data.cell.styles.fillColor = elementColors[element];
           }
@@ -129,7 +140,58 @@ export const generateAstralPositionsPDF = (result: AstralPositions, userInfo: Us
       }
     }
   });
+};
 
+export const generateAstralPositionsPDF = (result: { astral_elements: AstralElements, astral_houses: AstralElements }, userInfo: UserInfo) => {
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+  doc.addFont('/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
+  doc.addFont('/fonts/Quivira.otf', 'Quivira', 'normal');
+
+  // Split astral elements into planets and asteroids
+  const splitIndex = result.astral_elements.findIndex((item: any) => item.name === 'Chiron');
+  const planetsData = splitIndex === -1 ? result.astral_elements : result.astral_elements.slice(0, splitIndex);
+  const asteroidsData = splitIndex === -1 ? [] : result.astral_elements.slice(splitIndex);
+
+  // PAGE 1: Planets
+  addUserInfo(doc, userInfo);
+  doc.setFont('NotoSans');
+  doc.setFontSize(14);
+  doc.text('Planete și puncte virtuale', 148, 35, { align: 'center' });
+
+  const planetElementDistribution = calculateElementDistribution(planetsData);
+  addElementDistribution(doc, planetElementDistribution);
+
+  const planetsTableData = createPlanetsTable(planetsData);
+  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], planetsTableData, 45);
+
+  // PAGE 2: Houses
+  doc.addPage();
+  addUserInfo(doc, userInfo);
+  doc.setFont('NotoSans');
+  doc.setFontSize(14);
+  doc.text('Case Astrologice', 148, 35, { align: 'center' });
+
+  const housesTableData = createHousesTable(result.astral_houses);
+  addTable(doc, 'Tabel Case', ['Casă', 'Semn', 'Pozitie'], housesTableData, 50);
+
+  // PAGE 3: Asteroids
+  if (asteroidsData.length > 0) {
+    doc.addPage();
+    addUserInfo(doc, userInfo);
+    doc.setFont('NotoSans');
+    doc.setFontSize(14);
+    doc.text('Asteroizi și stele fixe', 148, 35, { align: 'center' });
+
+    const asteroidsTableData = createAsteroidsTable(asteroidsData);
+    addTable(doc, 'Tabel Asteroizi', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], asteroidsTableData, 50);
+  }
+
+  // Footer
   doc.setFont('NotoSans');
   const today = new Date().toLocaleDateString('ro-RO');
   doc.setFontSize(10);

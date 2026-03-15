@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { BirthDataPayload, AstralPositions, AstralHouses } from '../../../types/astralPositions';
-import { InterpretedAstralPositions } from '../../../types/astralChart';
+import { BirthDataPayload, AstralElements } from '../../../types';
+import { InterpretedAstralPositions } from '../../../types';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
 export const calculateAstralPositions = async (language: string, payload: BirthDataPayload):
-  Promise<{astral_elements: AstralPositions, astral_houses: AstralHouses}> => {
+  Promise<{astral_elements: AstralElements, astral_houses: AstralElements}> => {
   try {
     const options = {
       method: 'POST',

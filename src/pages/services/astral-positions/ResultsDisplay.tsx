@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AstralHouses, AstralPosition, AstralPositions } from '../../../types/astralPositions';
+import { AstralElements } from '../../../types';
 import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
 
 // Utility functions
@@ -12,7 +12,7 @@ const formatTime = (date: Date): string => {
 };
 
 const ResultsDisplay: React.FC<{
-  result: {astral_elements: AstralPositions, astral_houses: AstralHouses};
+  result: {astral_elements: AstralElements, astral_houses: AstralElements};
   userInfo: {
     name: string;
     birthDate: Date;
@@ -23,7 +23,7 @@ const ResultsDisplay: React.FC<{
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [activeTab, setActiveTab] = useState<1 | 2 | 3>(1);
 
-  const splitIndex = result.astral_elements.findIndex((item: AstralPosition) => item.name === 'Chiron');
+  const splitIndex = result.astral_elements.findIndex((item: any) => item.name === 'Chiron');
   
   const planetsData = splitIndex === -1 ? result.astral_elements : result.astral_elements.slice(0, splitIndex);
   const asteroidsData = splitIndex === -1 ? [] : result.astral_elements.slice(splitIndex);
@@ -35,7 +35,7 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
     setIsGeneratingPDF(true);
     try {
-      const doc = generateAstralPositionsPDF(result.astral_elements, userInfo);
+      const doc = generateAstralPositionsPDF(result, userInfo);
       await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
     } finally {
       setTimeout(() => setIsGeneratingPDF(false), 1000);
@@ -108,7 +108,7 @@ const ResultsDisplay: React.FC<{
               </tr>
             </thead>
             <tbody>
-              {displayedData.map((info: AstralPosition | any, index: number) => (
+              {displayedData.map((info: any, index: number) => (
                 <tr key={index} className="border-b border-amber-100">
                   <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
                     {activeTab === 2 ? (
