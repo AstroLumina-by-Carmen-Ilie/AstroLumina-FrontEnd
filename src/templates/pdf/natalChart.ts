@@ -1,4 +1,4 @@
-import { InterpretedAstralPositions, UserInfo, ContactInfo } from '../../types/astralChart';
+import { AstralElements, UserInfo, ContactInfo } from '../../types';
 import { jsPDF } from 'jspdf';
 import { svgAsPngDataUrl } from '../utils/svgUtils';
 
@@ -16,7 +16,7 @@ const formatTime = (date: Date): string => {
 };
 
 export const generateNatalChartPDF = async (
-  result: InterpretedAstralPositions,
+  result: AstralElements,
   chart: string,
   userInfo: UserInfo,
   contactInfo: ContactInfo

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AstralPosition, AstralPositions } from '../../../types/astralPositions';
+import { AstralElements } from '../../../types';
 import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
 
 // Utility functions
@@ -12,7 +12,7 @@ const formatTime = (date: Date): string => {
 };
 
 const ResultsDisplay: React.FC<{
-  result: AstralPositions;
+  result: {astral_elements: AstralElements, astral_houses: AstralElements};
   userInfo: {
     name: string;
     birthDate: Date;
@@ -21,14 +21,15 @@ const ResultsDisplay: React.FC<{
   };
 }> = ({ result, userInfo }) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [activeTab, setActiveTab] = useState<1 | 2>(1);
+  const [activeTab, setActiveTab] = useState<1 | 2 | 3>(1);
 
-  const splitIndex = result.findIndex((item: AstralPosition) => item.name === 'Chiron');
+  const splitIndex = result.astral_elements.findIndex((item: any) => item.name === 'Chiron');
+  
+  const planetsData = splitIndex === -1 ? result.astral_elements : result.astral_elements.slice(0, splitIndex);
+  const asteroidsData = splitIndex === -1 ? [] : result.astral_elements.slice(splitIndex);
+  const housesData = result.astral_houses;
 
-  const firstTabData = splitIndex === -1 ? result : result.slice(0, splitIndex);
-  const secondTabData = splitIndex === -1 ? [] : result.slice(splitIndex);
-
-  const displayedData = activeTab === 1 ? firstTabData : secondTabData;
+  const displayedData = activeTab === 1 ? planetsData : activeTab === 2 ? housesData : asteroidsData;
 
   const handleDownloadPDF = async () => {
     if (result && userInfo) {
@@ -65,7 +66,7 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(1)}
           >
-            Planete și puncte uzuale
+            Planete
           </button>
           <button
             type="button"
@@ -76,7 +77,18 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(2)}
           >
-            Asteroizi și stele fixe
+            Case
+          </button>
+          <button
+            type="button"
+            className={`flex-1 py-2 text-sm sm:text-base font-medium ${
+              activeTab === 3
+                ? 'text-amber-900 border-b-2 border-amber-500'
+                : 'text-amber-600 hover:text-amber-800'
+            }`}
+            onClick={() => setActiveTab(3)}
+          >
+            Asteroizi
           </button>
         </div>
         <div className="overflow-x-auto">
@@ -85,27 +97,47 @@ const ResultsDisplay: React.FC<{
               <tr className="bg-amber-50">
                 <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Nume</th>
                 <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Semn</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Casa</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Retrograd</th>
+                {activeTab === 2 ? (
+                  <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Pozitie</th>
+                ) : (
+                  <>
+                    <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Casa</th>
+                    <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Retrograd</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
-              {displayedData.map((info: AstralPosition, index: number) => (
+              {displayedData.map((info: any, index: number) => (
                 <tr key={index} className="border-b border-amber-100">
                   <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
-                    <span className="astronomicon-symbol-fallback mr-2 font-semibold">{info.symbol || ''}</span>
-                    {info.name}
+                    {activeTab === 2 ? (
+                      info.name
+                    ) : (
+                      <>
+                        <span className="astronomicon-symbol-fallback mr-2 font-semibold">{info.symbol || ''}</span>
+                        {info.name}
+                      </>
+                    )}
                   </td>
                   <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
                     <span className="mr-2 font-semibold">{info.emoji}</span>
                     {info.sign}
                   </td>
-                  <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
-                    {info.house}
-                  </td>
-                  <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
-                    {info.retrograde ? '✓' : ''}
-                  </td>
+                  {activeTab === 2 ? (
+                    <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                      {info.position.toFixed(1)} °
+                    </td>
+                  ) : (
+                    <>
+                      <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                        {info.house}
+                      </td>
+                      <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                        {info.retrograde ? '✓' : ''}
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
             </tbody>
