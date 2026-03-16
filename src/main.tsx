@@ -13,6 +13,8 @@ import Bookings from './pages/services/Bookings';
 import AboutMe from './pages/AboutMe';
 import Contact from './pages/Contact';
 import Services from './pages/Services';
+import Products from './pages/Products';
+import Events from './pages/Events';
 import NotFound from './pages/NotFound';
 
 // Declare the earlyLog property on the Window interface
@@ -73,6 +75,8 @@ if (rootElement) {
               <Route path="/despre-mine" element={<AboutMe />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/servicii" element={<Services />} />
+              <Route path="/produse" element={<Products />} />
+              <Route path="/evenimente" element={<Events />} />
               <Route path="/servicii/pozitia-astrelor" element={<AstralPositions />} />
               <Route path="/servicii/lumina-natala" element={<NatalChart />} />
               <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />

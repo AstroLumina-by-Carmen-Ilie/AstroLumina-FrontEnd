@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import LogoImage from '/assets/icon/Logo_Transparent_Wide.png';
 
 export interface NavbarProps {
   isScrolled: boolean;
@@ -8,8 +9,8 @@ export interface NavbarProps {
 export const getNavbarStyles = (lightTheme: boolean) => {
   return {
     navClasses: lightTheme
-      ? `fixed top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-md`
-      : `fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md`,
+      ? `relative top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-md `
+      : `relative top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md`,
 
     linkClasses: lightTheme
       ? "text-gray-800 hover:text-amber-600 px-4 py-3 rounded-md text-lg font-semibold transition-colors"
@@ -29,7 +30,7 @@ export const NavbarLogo: React.FC<{ logoClasses: string }> = ({ logoClasses }) =
   <div className="flex-shrink-0 flex items-center justify-center">
     <Link to="/" className="flex items-center">
       <span className={logoClasses}>
-        <img src="/src/assets/icon/Logo_Transparent_Wide.png" alt="AstroLumina" className="h-auto w-auto max-h-[130px]" />
+        <img src={LogoImage} alt="AstroLumina" className="h-auto w-auto max-h-[130px]" />
       </span>
     </Link>
   </div>
