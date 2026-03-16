@@ -39,7 +39,7 @@ export const NavbarLogo: React.FC<{ logoClasses: string }> = ({ logoClasses }) =
 export const NavbarLinks: React.FC<{ linkClasses: string }> = ({ linkClasses }) => {
   return (
     <>
-      {/* <Link to="/servicii" className={linkClasses}>
+      <Link to="/servicii" className={linkClasses}>
         Servicii
       </Link>
       <Link to="/evenimente" className={linkClasses}>
@@ -53,7 +53,7 @@ export const NavbarLinks: React.FC<{ linkClasses: string }> = ({ linkClasses }) 
       </Link>
       <Link to="/contact" className={linkClasses}>
         Contact
-      </Link> */}
+      </Link>
     </>
   );
 };
