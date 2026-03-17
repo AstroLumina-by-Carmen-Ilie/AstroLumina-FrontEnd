@@ -1,121 +1,166 @@
 # AstroLumina 🌟
 
-AstroLumina is a modern web application designed for astronomy enthusiasts, providing an interactive platform for exploring the cosmos, planning observations, and connecting with fellow stargazers. Built with accessibility and user experience in mind, it offers a comprehensive suite of tools for both amateur and experienced astronomers.
+AstroLumina este o aplicație web modernă dedicată serviciilor de astrologie, oferind o platformă interactivă pentru explorarea pozițiilor astrale, crearea de hărți natale și karmice, și conectarea cu pasionații de astrologie. Construită cu accent pe accesibilitate și experiența utilizatorului, oferă un set complet de instrumente pentru atât începători cât și astrologi experimentați.
 
-## Features
+## Caracteristici
 
-- **Interactive Sky Map**: Real-time visualization of celestial objects and constellations
-- **Observation Planning**: Tools for scheduling and organizing astronomical observations
-- **Educational Content**: Comprehensive learning resources about astronomy
-- **Community Features**: Connect and share experiences with other astronomy enthusiasts
-- **Dark Theme**: Eye-friendly interface optimized for nighttime use
-- **Weather Integration**: Real-time weather data for optimal observation planning
-- **Object Database**: Extensive catalog of celestial objects with detailed information
-- **Personal Observatory**: Save and track your favorite celestial objects
-- **Mobile Responsive**: Fully optimized for both desktop and mobile devices
+- **Hărți Natale**: Calcularea și vizualizarea hărților natale detaliate
+- **Hărți Karmice**: Analiza pozițiilor karmice și a influențelor spirituale
+- **Poziții Astrale**: Determinarea pozițiilor planetare în timp real
+- **Programări**: Sistem de rezervări integrate cu Cal.com
+- **Plăți Online**: Procesare securizată a plăților cu Stripe
+- **Generare PDF**: Exportarea hărților în format PDF profesional
+- **Interfață Întunecată**: Design prietenos pentru utilizare nocturnă
+- **Responsive**: Optimizat complet pentru desktop și dispozitive mobile
+- **Multilingv**: Suport pentru limba română și engleză
 
-## Tech Stack
+## Tehnologii Utilizate
 
 - **Frontend**:
-  - React 18 with TypeScript for robust type safety
-  - Vite for blazing fast development
-  - Tailwind CSS for modern, responsive styling
-  - React Router v6 for seamless navigation
-  - React Query for efficient data fetching
-  - Framer Motion for smooth animations
+  - React 18 cu TypeScript pentru siguranță tipizată robustă
+  - Vite pentru dezvoltare ultra-rapidă
+  - Tailwind CSS pentru stilizare modernă și responsive
+  - React Router v6 pentru navigare fluidă
+  - Lucide React pentru iconuri moderne
 
-- **Backend & Services**:
-  - Supabase for backend services and real-time features
-  - Netlify for automated deployments
-  - JWT for secure authentication
+- **Servicii & Integrări**:
+  - Stripe pentru procesarea plăților
+  - Cal.com pentru gestionarea programărilor
+  - jsPDF pentru generarea documentelor PDF
+  - Axios pentru cereri HTTP
+  - Moment.js pentru manipularea datelor
 
-## Getting Started
+- **Dezvoltare**:
+  - ESLint pentru linting
+  - PostCSS pentru procesarea CSS
+  - TypeScript pentru tipizare statică
+  - Cloudflare Workers pentru deployment
 
-1. Clone the repository
+## Începutul Lucrului
+
+### Cerințe Preliminare
+
+- Node.js versiunea 22 (vezi `.nvmrc`)
+- npm sau yarn
+
+### Instalare
+
+1. Clonează repository-ul
 ```bash
-git clone https://github.com/yourusername/AstroLumina.git
+git clone https://github.com/username/AstroLumina.git
 cd AstroLumina
 ```
 
-2. Install dependencies
+2. Instalează dependențele
 ```bash
 npm install
 ```
 
-3. Set up environment variables
+3. Configurează variabilele de mediu
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+# Creează fișierul .env cu configurațiile tale
+# Vezi exemplele de variabile de mediu necesare în cod
 ```
 
-4. Start the development server
+4. Pornește serverul de dezvoltare
 ```bash
 npm run dev
 ```
 
-5. Build for production
+5. Construiește pentru producție
 ```bash
 npm run build
 ```
 
-6. Preview production build
+6. Previzualizează build-ul de producție
 ```bash
 npm run preview
 ```
 
-## Scripts 
+## Script-uri Disponibile
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
-- `npm test` - Run tests
+- `npm run dev` - Pornește serverul de dezvoltare
+- `npm run build` - Construiește pentru producție
+- `npm run preview` - Previzualizează build-ul de producție
+- `npm run lint` - Rulează ESLint pentru verificarea codului
 
-## Project Structure 
+## Structura Proiectului
 
 ```
 AstroLumina/
 ├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/         # Page components
-│   ├── hooks/         # Custom React hooks
-│   ├── services/      # API and external services
-│   ├── utils/         # Utility functions
-│   ├── types/         # TypeScript type definitions
-│   └── styles/        # Global styles and Tailwind config
-├── public/            # Static assets
-└── tests/            # Test files
+│   ├── components/                # Componente UI reutilizabile
+│   │   ├── animations/            # Animații de încărcare
+│   │   ├── navbar/                # Componente pentru navigare
+│   │   └── scroll/                # Componente pentru scroll
+│   ├── pages/                     # Pagini principale
+│   │   ├── AboutMe                # Pagina "Despre mine"
+│   │   ├── Contact                # Pagina de contact
+│   │   ├── Events                 # Pagina evenimente
+│   │   ├── NotFound               # Pagina 404
+│   │   ├── Products               # Pagina produse
+│   │   ├── Services               # Pagina servicii principale
+│   │   └── services/              # Pagini pentru servicii detaliate
+│   │       ├── AstralPositions    # Poziții astrale
+│   │       ├── Bookings           # Programări
+│   │       ├── KarmicChart        # Hartă karmică
+│   │       ├── NatalChart         # Hartă natală
+│   │       ├── astral-positions/  # Componente pentru poziții astrale
+│   │       ├── bookings/          # Componente pentru programări
+│   │       ├── karmic-chart/      # Componente pentru hartă karmică
+│   │       ├── natal-chart/       # Componente pentru hartă natală
+│   │       └── utilities/         # Funcții utilitare pentru servicii
+│   ├── constants/                 # Constante (astrologie)
+│   ├── contexts/                  # Context React
+│   ├── styles/                    # Stiluri globale și teme
+│   ├── templates/                 # Template-uri PDF
+│   ├── types/                     # Definiții TypeScript
+│   └── utils/                     # Funcții utilitare
+└── public/                        # Assets statice
 ```
 
-## Contributing 
+## Servicii Oferite
 
-We welcome contributions! Please follow these steps:
+### 1. Hartă Natală
+- Calcularea pozițiilor planetare la naștere
+- Interpretarea aspectelor și caselor astrologice
+- Generarea PDF-ului cu harta completă
+- Consultanță personalizată
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/improvement`)
-3. Make your changes
-4. Run tests and linting
-5. Commit your changes (`git commit -am 'Add new feature'`)
-6. Push to the branch (`git push origin feature/improvement`)
-7. Create a Pull Request
+### 2. Hartă Karmică
+- Analiza karmică detaliată
+- Poziții lunare și noduri
+- Interpretarea ciclurilor karmice
+- Recomandări spirituale
 
-## Environment Setup 
+### 3. Poziții Astrale
+- Poziții planetare în timp real
+- Transituri și aspecte curente
+- Compatibilitate astrologică
+- Prognoze pe termen scurt
 
-Required environment variables:
-- `VITE_SUPABASE_URL`: Your Supabase project URL
-- `VITE_SUPABASE_ANON_KEY`: Your Supabase anonymous key
+### 4. Programări
+- Sistem de rezervare online
+- Integrare cu calendarul
+- Confirmări automate
+- Remindere pentru ședințe
 
-## License 
+## Contribuții
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Suntem deschiși contribuțiilor! Te rugăm să urmezi acești pași:
 
-## Support & Community 
+1. Fork repository-ul
+2. Creează un branch nou (`git checkout -b feature/îmbunătățire`)
+3. Fă modificările tale
+4. Rulează testele și linting-ul
+5. Commit modificările (`git commit -am 'Adaugă funcționalitate nouă'`)
+6. Push către branch (`git push origin feature/îmbunătățire`)
+7. Creează un Pull Request
 
-- For bugs and feature requests, please [open an issue](https://github.com/yourusername/AstroLumina/issues)
-- Join our [Discord community](https://discord.gg/astrolumina) for discussions
-- Follow us on [Twitter](https://twitter.com/astrolumina) for updates
+## Licență
 
-## Acknowledgments 
+Acest proiect este proprietate privată și nu este disponibil sub o licență open-source.
 
-Special thanks to all contributors and the open-source community for making this project possible.
+## Contact
+
+Pentru întrebări sau colaborări, te rugăm să ne contactezi prin pagina de contact a aplicației.
