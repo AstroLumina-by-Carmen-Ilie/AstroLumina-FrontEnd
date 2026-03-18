@@ -59,29 +59,29 @@ const AstralPositionsPage: React.FC = () => {
             {/* Left Panel - Illustration and Info */}
             <div className="w-full md:w-1/2 bg-indigo-50 p-6 flex flex-col justify-center items-center">
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-indigo-900 mb-4">Pozițiile Planetelor</h1>
-                <p className="text-gray-700 mb-6">
+                <h1 className="text-3xl font-bold text-indigo-900 mb-4">Pozițiile astrelor</h1>
+                <p className="text-gray-700 p-8">
                   Descoperă pozițiile exacte ale corpurilor cerești în momentul nașterii tale
-                  și înțelege influența lor asupra căii tale de viață.
+                  și înțelege influența lor asupra căii tale de viață
                 </p>
               </div>
               
               <img 
                 src={astralChartSvg} 
                 alt="Astral Chart Illustration" 
-                className="w-64 h-64 object-contain mb-8"
+                className="object-contain mb-8"
               />
               
-              <div className="w-full">
+              <div className="w-full p-8">
                 <h3 className="text-xl font-semibold text-indigo-800 mb-4">Ce vei primi:</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>
-                    <span>Poziții planetare precise la momentul nașterii tale</span>
+                    <span>Pozițiile astrelor precise la momentul nașterii tale</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>
-                    <span>Interpretarea influenței fiecărei planete</span>
+                    <span>Semnele zodiacale în care se află casele</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-500 mr-2">✓</span>

@@ -22,7 +22,7 @@
     "express": "^4.22.1",
     "flatpickr": "^4.6.13",
     "intersection-observer": "^0.12.2",
-    "jspdf": "^4.2.0",
+    "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.7",
     "lucide-react": "^0.344.0",
     "moment": "^2.30.1",
