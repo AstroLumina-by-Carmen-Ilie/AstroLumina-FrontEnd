@@ -98,7 +98,7 @@ const ResultsDisplay: React.FC<{
                 <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Nume</th>
                 <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Semn</th>
                 {activeTab === 2 ? (
-                  <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Pozitie</th>
+                  <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Poziție</th>
                 ) : (
                   <>
                     <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Casa</th>
