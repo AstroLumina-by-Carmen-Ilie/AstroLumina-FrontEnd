@@ -164,3 +164,4 @@ Acest proiect este proprietate privată și nu este disponibil sub o licență o
 ## Contact
 
 Pentru întrebări sau colaborări, te rugăm să ne contactezi prin pagina de contact a aplicației.
+
