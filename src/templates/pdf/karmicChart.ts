@@ -264,7 +264,7 @@ const generateInterpretationPage = async (
 
   // Split text into paragraphs and render with word wrapping
   const maxWidth = doc.internal.pageSize.width - 40; // 20mm margins on each side
-  const lines = doc.splitTextToSize(interpretation.interpretation, maxWidth);
+  const lines = doc.splitTextToSize(interpretation.interpretation || "Hau Bau", maxWidth);
 
   doc.text(lines, 20, yPosition);
 };

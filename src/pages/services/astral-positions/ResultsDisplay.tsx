@@ -46,23 +46,23 @@ const ResultsDisplay: React.FC<{
   return (
     <div className="w-full text-center">
       <div className="mb-6">
-        <h3 className="text-2xl font-bold text-amber-900 mb-2">{userInfo.name}</h3>
-        <p className="text-lg text-amber-700">
+        <h3 className="text-2xl font-bold text-cosmic-100 mb-2">{userInfo.name}</h3>
+        <p className="text-lg text-cosmic-300">
           {formatDate(userInfo.birthDate)} la {formatTime(userInfo.birthHour)}
         </p>
-        <p className="text-lg text-amber-700 mb-4">{userInfo.location}</p>
+        <p className="text-lg text-cosmic-300 mb-4">{userInfo.location}</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md">
-        <h4 className="text-xl font-semibold text-amber-900 mb-4">Pozițiile astrelor</h4>
+      <div className="bg-white/5 rounded-xl border border-white/10">
+        <h4 className="text-xl font-semibold text-cosmic-100 mb-4 p-4 pb-0">Pozițiile astrelor</h4>
 
-        <div className="flex mb-4 border-b border-amber-100">
+        <div className="flex mb-4 border-b border-white/10 px-4">
           <button
             type="button"
             className={`flex-1 py-2 text-sm sm:text-base font-medium ${
               activeTab === 1
-                ? 'text-amber-900 border-b-2 border-amber-500'
-                : 'text-amber-600 hover:text-amber-800'
+                ? 'text-cosmic-100 border-b-2 border-cosmic-500'
+                : 'text-cosmic-400 hover:text-cosmic-300'
             }`}
             onClick={() => setActiveTab(1)}
           >
@@ -72,8 +72,8 @@ const ResultsDisplay: React.FC<{
             type="button"
             className={`flex-1 py-2 text-sm sm:text-base font-medium ${
               activeTab === 2
-                ? 'text-amber-900 border-b-2 border-amber-500'
-                : 'text-amber-600 hover:text-amber-800'
+                ? 'text-cosmic-100 border-b-2 border-cosmic-500'
+                : 'text-cosmic-400 hover:text-cosmic-300'
             }`}
             onClick={() => setActiveTab(2)}
           >
@@ -83,8 +83,8 @@ const ResultsDisplay: React.FC<{
             type="button"
             className={`flex-1 py-2 text-sm sm:text-base font-medium ${
               activeTab === 3
-                ? 'text-amber-900 border-b-2 border-amber-500'
-                : 'text-amber-600 hover:text-amber-800'
+                ? 'text-cosmic-100 border-b-2 border-cosmic-500'
+                : 'text-cosmic-400 hover:text-cosmic-300'
             }`}
             onClick={() => setActiveTab(3)}
           >
@@ -94,23 +94,23 @@ const ResultsDisplay: React.FC<{
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-amber-50">
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Nume</th>
-                <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Semn</th>
+              <tr className="bg-white/5">
+                <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Nume</th>
+                <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Semn</th>
                 {activeTab === 2 ? (
-                  <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Poziție</th>
+                  <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
                 ) : (
                   <>
-                    <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Casa</th>
-                    <th className="p-2 sm:p-3 font-medium text-amber-900 text-sm sm:text-base">Retrograd</th>
+                    <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Casa</th>
+                    <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Retrograd</th>
                   </>
                 )}
               </tr>
             </thead>
             <tbody>
               {displayedData.map((info: any, index: number) => (
-                <tr key={index} className="border-b border-amber-100">
-                  <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                <tr key={index} className="border-b border-white/5">
+                  <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                     {activeTab === 2 ? (
                       info.name
                     ) : (
@@ -120,20 +120,20 @@ const ResultsDisplay: React.FC<{
                       </>
                     )}
                   </td>
-                  <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                  <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                     <span className="mr-2 font-semibold">{info.emoji}</span>
                     {info.sign}
                   </td>
                   {activeTab === 2 ? (
-                    <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                    <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                       {info.position.toFixed(1)} °
                     </td>
                   ) : (
                     <>
-                      <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                      <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.house}
                       </td>
-                      <td className="p-2 sm:p-3 text-amber-700 text-sm sm:text-base whitespace-normal">
+                      <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.retrograde ? '✓' : ''}
                       </td>
                     </>
@@ -143,54 +143,38 @@ const ResultsDisplay: React.FC<{
             </tbody>
           </table>
         </div>
-        <button
-          onClick={handleDownloadPDF}
-          className="download-pdf-btn hover:bg-amber-300 transition-colors duration-300 w-full"
-          style={{
-            marginTop: '20px',
-            padding: '12px 20px',
-            backgroundColor: '#FFD700',
-            color: '#1a1a1a',
-            border: '1px solid #FFD700',
-            borderRadius: '4px',
-            cursor: isGeneratingPDF ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            fontWeight: '500',
-            boxShadow: '0 2px 4px rgba(255, 215, 0, 0.3)',
-            opacity: isGeneratingPDF ? 0.7 : 1
-          }}
-          disabled={isGeneratingPDF}
-        >
-          {isGeneratingPDF ? (
-            <svg
-              className="animate-spin"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
-            </svg>
-          ) : (
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 11v3H2v-3H0v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zm-1-4l-1.41-1.41L8 9.17V0H6v9.17L2.41 5.59 1 7l6 6 6-6z"
-                fill="currentColor"
-              />
-            </svg>
-          )}
-          {isGeneratingPDF ? 'Se generează...' : 'Descarcă PDF'}
-        </button>
+        <div className="p-4 pt-2">
+          <button
+            onClick={handleDownloadPDF}
+            disabled={isGeneratingPDF}
+            className="w-full py-3 px-6 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 font-semibold rounded-xl shadow-glow-gold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGeneratingPDF ? (
+              <svg
+                className="animate-spin w-4 h-4"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
+              </svg>
+            ) : (
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 11v3H2v-3H0v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zm-1-4l-1.41-1.41L8 9.17V0H6v9.17L2.41 5.59 1 7l6 6 6-6z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
+            {isGeneratingPDF ? 'Se generează...' : 'Descarcă PDF'}
+          </button>
+        </div>
       </div>
     </div>
   );
