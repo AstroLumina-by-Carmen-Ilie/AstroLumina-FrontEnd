@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import LogoImage from '/assets/icon/Logo_Transparent_Wide.png';
 
 export interface NavbarProps {
   isScrolled: boolean;
@@ -9,28 +8,28 @@ export interface NavbarProps {
 export const getNavbarStyles = (lightTheme: boolean) => {
   return {
     navClasses: lightTheme
-      ? `relative top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-md `
-      : `relative top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md`,
+      ? `fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-xl border-b border-gray-200/50`
+      : `fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-midnight-950/80 backdrop-blur-xl border-b border-white/5`,
 
     linkClasses: lightTheme
-      ? "text-gray-800 hover:text-amber-600 px-4 py-3 rounded-md text-lg font-semibold transition-colors"
-      : "text-white hover:text-yellow-200 px-4 py-3 rounded-md text-lg font-semibold transition-colors",
+      ? "text-gray-700 hover:text-cosmic-600 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-cosmic-50 cursor-pointer"
+      : "text-cosmic-200 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-white/10 cursor-pointer",
 
     mobileLinkClasses: lightTheme
-      ? "text-gray-800 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-semibold transition-colors"
-      : "text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-semibold transition-colors",
+      ? "text-gray-700 hover:text-cosmic-600 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 hover:bg-cosmic-50 cursor-pointer"
+      : "text-cosmic-200 hover:text-white block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 hover:bg-white/10 cursor-pointer",
 
     logoClasses: lightTheme
-      ? "text-xl font-bold text-gray-800 hover:text-amber-600 transition-colors"
-      : "text-xl font-bold text-white hover:text-yellow-200 transition-colors",
+      ? "font-display text-xl font-bold text-gray-900 hover:text-cosmic-600 transition-colors"
+      : "font-display text-xl font-bold text-white hover:text-cosmic-300 transition-colors",
   };
 };
 
 export const NavbarLogo: React.FC<{ logoClasses: string }> = ({ logoClasses }) => (
-  <div className="flex-shrink-0 flex items-center justify-center">
-    <Link to="/" className="flex items-center">
+  <div className="flex-shrink-0 flex items-center">
+    <Link to="/" className="flex items-center gap-2 cursor-pointer">
       <span className={logoClasses}>
-        <img src={LogoImage} alt="AstroLumina" className="h-auto w-auto max-h-[130px]" />
+        AstroLumina
       </span>
     </Link>
   </div>

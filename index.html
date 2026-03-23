@@ -2,114 +2,23 @@
 <html lang="ro">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/icon/Logo_Black_Wide.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AstroLumina by Carmen Ilie - Servicii profesionale de astrologie: hărți natale, hărți karmice, consultații astrologice și previziuni personalizate." />
+    <meta name="keywords" content="astrologie, hartă natală, hartă karmică, consultații astrologice, zodiac, horoscop, Carmen Ilie" />
+    <meta name="author" content="Carmen Ilie" />
+    <meta name="theme-color" content="#0a0a1a" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="AstroLumina" />
-    <meta name="theme-color" content="#000000" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>AstroLumina</title>
+
+    <link rel="icon" type="image/svg+xml" href="/assets/icon/Logo_Transparent_Wide.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>AstroLumina - Astrologie Profesionistă</title>
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // Initialize debug container immediately
-      (function() {
-        // Check if debug mode is enabled
-        const debugMode = "%VITE_DEBUG_MODE%";
-        if (debugMode !== "true") return; // Exit early if debug mode is not enabled
-        
-        window.earlyLogs = [];
-        
-        function addLog(message, type = 'info') {
-          const log = {
-            timestamp: new Date().toISOString(),
-            type: type,
-            message: message
-          };
-          window.earlyLogs.push(log);
-          
-          // Only try to update display if document.body exists
-          if (document.body) {
-            updateDebugDisplay();
-          }
-        }
-
-        function createDebugContainer() {
-          const container = document.createElement('div');
-          container.id = 'early-debug-container';
-          container.style.cssText = `
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-height: 30vh;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            font-family: monospace;
-            font-size: 12px;
-            padding: 10px;
-            overflow-y: auto;
-            z-index: 999999;
-            display: none;
-          `;
-          document.body.appendChild(container);
-          return container;
-        }
-
-        function updateDebugDisplay() {
-          let container = document.getElementById('early-debug-container');
-          if (!container && document.body) {
-            container = createDebugContainer();
-          }
-          if (container) {
-            container.style.display = 'block';
-            container.innerHTML = window.earlyLogs
-              .map(log => `<div style="color: ${log.type === 'error' ? '#ff6b6b' : '#a5d8ff'}">
-                ${log.timestamp}: ${log.message}
-              </div>`)
-              .join('');
-            container.scrollTop = container.scrollHeight;
-          }
-        }
-
-        // Make logging function globally available immediately
-        window.earlyLog = addLog;
-
-        // Add initial system info
-        addLog('🔍 Early logging initialized');
-        addLog(`📱 Device: ${navigator.userAgent}`);
-        addLog(`📐 Viewport: ${window.innerWidth}x${window.innerHeight}`);
-        addLog(`🔧 Platform: ${navigator.platform}`);
-
-        // Monitor DOM loading stages
-        document.addEventListener('DOMContentLoaded', () => {
-          addLog('✅ DOM Content Loaded');
-          updateDebugDisplay(); // Try to create container once DOM is ready
-        });
-        
-        window.addEventListener('load', () => {
-          addLog('✅ Window Loaded');
-          updateDebugDisplay(); // Ensure container is created after full load
-        });
-
-        // Catch early errors
-        window.onerror = function(msg, url, line, col, error) {
-          addLog(`❌ Error: ${msg} (${url}:${line}:${col})`, 'error');
-          if (error && error.stack) {
-            addLog(`Stack: ${error.stack}`, 'error');
-          }
-          return false;
-        };
-      })();
-    </script>
-    <script>
-      // Log that we're about to start loading the app
-      if (window.earlyLog && "%VITE_DEBUG_MODE%" === "true") {
-        window.earlyLog('🚀 Starting to load application...');
-      }
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

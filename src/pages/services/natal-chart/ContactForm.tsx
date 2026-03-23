@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ContactInfo } from '../../../types/astralChart';
+import { ContactInfo } from '../../../types';
 
 interface ContactFormProps {
   onNext: (contactInfo: ContactInfo) => void;
