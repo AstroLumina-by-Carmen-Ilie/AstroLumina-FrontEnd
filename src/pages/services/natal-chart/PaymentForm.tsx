@@ -5,21 +5,22 @@ import {
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
 
-const STRIPE_URL = import.meta.env.VITE_STRIPE_URL;
 const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
+const STRIPE_URL = import.meta.env.VITE_PAYMENT_API_URL;
 const stripePromise = loadStripe(STRIPE_PK);
 
 interface PaymentFormProps {
   onNext: (paymentStatus: boolean) => void;
   onBack: () => void;
 }
-const CheckoutForm: React.FC<{ 
+
+const CheckoutForm: React.FC<{
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({setIsComplete}) => {
+}> = ({ setIsComplete }) => {
   const handleComplete = () => setIsComplete(true);
 
   const fetchClientSecret = useCallback(() => {
-    return fetch(`${STRIPE_URL}/create-session-natal-chart`, {
+    return fetch(`${STRIPE_URL}/create-checkout-session/natal-chart`, {
       method: "POST",
     })
       .then((res) => res.json())
@@ -34,7 +35,7 @@ const CheckoutForm: React.FC<{
         stripe={stripePromise}
         options={{
           ...options,
-          onComplete: handleComplete
+          onComplete: handleComplete,
         }}
       >
         <EmbeddedCheckout />
@@ -51,23 +52,17 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onNext, onBack }) => {
     onNext(isComplete);
   };
 
-  const Tooltip = ({ message }: { message: string }) => (
-    <div className="absolute -top-8 w-full text-center px-3 py-2 bg-red-100 text-red-700 text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-      {message}
-    </div>
-  );
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="bg-amber-50 p-4 rounded-lg mb-6">
-          <CheckoutForm setIsComplete={setIsComplete}/>
+        <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
+          <CheckoutForm setIsComplete={setIsComplete} />
         </div>
         <div className="flex gap-4">
           <button
             type="button"
             onClick={onBack}
-            className="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors"
+            className="flex-1 bg-white/5 text-cosmic-200 py-3 px-6 rounded-xl hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
           >
             Înapoi
           </button>
@@ -75,15 +70,17 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onNext, onBack }) => {
             <button
               type="submit"
               disabled={!isComplete}
-              className={`group w-full bg-amber-500 text-white py-3 px-6 rounded-lg transition-colors ${
+              className={`group w-full bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
                 !isComplete
-                  ? 'opacity-70 cursor-not-allowed'
-                  : 'hover:bg-amber-600 cursor-pointer'
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple cursor-pointer'
               }`}
             >
               Finalizează plata
               {!isComplete && (
-                <Tooltip message="Plata este obligatorie pentru a putea continua" />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-full text-center px-3 py-2 bg-cosmic-900/90 text-cosmic-200 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                  Plata este obligatorie pentru a putea continua
+                </div>
               )}
             </button>
           </div>

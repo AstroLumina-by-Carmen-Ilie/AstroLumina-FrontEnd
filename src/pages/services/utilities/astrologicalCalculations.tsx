@@ -34,7 +34,7 @@ export const calculateNatalChart = async (language: string, payload: BirthDataPa
   try {
     const options_data = {
       method: 'POST',
-      url: `${ASTROLOGICAL_API_URL}/api/v1/${language}/astral-interpretations/natal`,
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data/natal`,
       headers: {
         'Accept-Language': language,
         'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export const calculateNatalChart = async (language: string, payload: BirthDataPa
 
     const options_chart = {
       method: 'POST',
-      url: `${ASTROLOGICAL_API_URL}/api/v1/${language}/astral-chart`,
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-chart`,
       headers: {
         'Accept-Language': language,
         'Content-Type': 'application/json'
@@ -56,10 +56,6 @@ export const calculateNatalChart = async (language: string, payload: BirthDataPa
 
     const response_chart = await axios.request(options_chart);
 
-    console.log('API Response:', {
-      data: response_data.data,
-      chart: response_chart.data
-    });
     return {
       data: response_data.data,
       chart: response_chart.data
@@ -75,7 +71,7 @@ export const calculateKarmicChart = async (language: string, payload: BirthDataP
   try {
     const options_data = {
       method: 'POST',
-      url: `${ASTROLOGICAL_API_URL}/api/v1/${language}/astral-interpretations/karmic`,
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data/karmic`,
       headers: {
         'Accept-Language': language,
         'Content-Type': 'application/json'
@@ -87,7 +83,7 @@ export const calculateKarmicChart = async (language: string, payload: BirthDataP
 
     const options_chart = {
       method: 'POST',
-      url: `${ASTROLOGICAL_API_URL}/api/v1/${language}/astral-chart`,
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-chart`,
       headers: {
         'Accept-Language': language,
         'Content-Type': 'application/json'
@@ -97,10 +93,6 @@ export const calculateKarmicChart = async (language: string, payload: BirthDataP
 
     const response_chart = await axios.request(options_chart);
 
-    console.log('API Response:', {
-      data: response_data.data,
-      chart: response_chart.data
-    });
     return {
       data: response_data.data,
       chart: response_chart.data

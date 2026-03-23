@@ -5,21 +5,21 @@ import {
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
 
-const STRIPE_URL = import.meta.env.VITE_STRIPE_URL;
 const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
+const STRIPE_URL = import.meta.env.VITE_PAYMENT_API_URL;
 const stripePromise = loadStripe(STRIPE_PK);
 
 interface BookingPaymentFormProps {
   onNext: (paymentStatus: boolean) => void;
 }
 
-const CheckoutForm: React.FC<{ 
+const CheckoutForm: React.FC<{
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({setIsComplete}) => {
+}> = ({ setIsComplete }) => {
   const handleComplete = () => setIsComplete(true);
 
   const fetchClientSecret = useCallback(() => {
-    return fetch(`${STRIPE_URL}/create-session-booking`, {
+    return fetch(`${STRIPE_URL}/create-checkout-session/booking`, {
       method: "POST",
     })
       .then((res) => res.json())
@@ -34,7 +34,7 @@ const CheckoutForm: React.FC<{
         stripe={stripePromise}
         options={{
           ...options,
-          onComplete: handleComplete
+          onComplete: handleComplete,
         }}
       >
         <EmbeddedCheckout />
@@ -54,23 +54,25 @@ const BookingPaymentForm: React.FC<BookingPaymentFormProps> = ({ onNext }) => {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Plată Consultație</h2>
-        <p className="text-gray-600">
+        <h2 className="font-display text-xl font-semibold text-white mb-3">Plată Consultație</h2>
+        <p className="text-cosmic-300/80 text-sm leading-relaxed">
           Pentru a programa o consultație, vă rugăm să efectuați plata. După confirmarea plății, veți putea alege data și ora dorită.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <CheckoutForm setIsComplete={setIsComplete} />
-        
-        <div className="flex justify-end mt-6">
+        <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+          <CheckoutForm setIsComplete={setIsComplete} />
+        </div>
+
+        <div className="flex justify-end">
           <button
             type="submit"
             disabled={!isComplete}
-            className={`px-6 py-2 rounded-md text-white font-medium ${
+            className={`px-6 py-3 rounded-xl text-white font-medium transition-all duration-300 ${
               isComplete
-                ? 'bg-purple-600 hover:bg-purple-700'
-                : 'bg-gray-400 cursor-not-allowed'
+                ? 'bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple cursor-pointer'
+                : 'bg-white/10 cursor-not-allowed opacity-50'
             }`}
           >
             Continuă

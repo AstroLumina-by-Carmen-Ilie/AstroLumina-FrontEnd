@@ -1,28 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import ScrollToTopButton from './components/scroll/ScrollToTopButton';
 import { useLoading } from './contexts/LoadingContext';
-import { Star, Sparkles, Clock, MessageCircle } from 'lucide-react';
+import { Star, Sparkles, Moon, Compass, Calendar, ArrowRight, ChevronDown, Check, Package, Users } from 'lucide-react';
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const { startLoading, stopLoading } = useLoading();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     startLoading();
-    const timer = setTimeout(() => {
-      stopLoading();
-    }, 1500);
+    const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const sections = document.querySelectorAll('[data-animate]');
+    sections.forEach((section) => observerRef.current?.observe(section));
+
+    return () => observerRef.current?.disconnect();
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -31,270 +47,427 @@ function App() {
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
+  const services = [
+    {
+      title: 'Poziția Astrelor',
+      description: 'Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.',
+      icon: <Star className="w-7 h-7" />,
+      link: '/servicii/pozitia-astrelor',
+      badge: 'Gratuit',
+    },
+    {
+      title: 'Lumina Natală',
+      description: 'Descoperă-ți potențialul și provocările prin analiza detaliată a hărții tale astrologice de naștere.',
+      icon: <Sparkles className="w-7 h-7" />,
+      link: '/servicii/lumina-natala',
+    },
+    {
+      title: 'Lumina Karmică',
+      description: 'Explorează ciclurile karmice și lecțiile sufletului tău prin prisma astrologiei karmice.',
+      icon: <Moon className="w-7 h-7" />,
+      link: '/servicii/lumina-karmica',
+    },
+    {
+      title: 'Previziuni și Tranzituri',
+      description: 'Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.',
+      icon: <Compass className="w-7 h-7" />,
+      link: '/servicii/lumina-previzionala',
+    },
+    {
+      title: 'Astrologie Relationala',
+      description: 'Înțelege compatibilitatea și dinamica relațiilor tale prin analiza sinastriei.',
+      icon: <Star className="w-7 h-7" />,
+      link: '/servicii/lumina-relationala',
+    },
+    {
+      title: 'Consultații Astrologice',
+      description: 'Programează o consultație personalizată pentru ghidare detaliată pe tema care te interesează.',
+      icon: <Calendar className="w-7 h-7" />,
+      link: '/servicii/consultatii',
+    },
+  ];
+
+  const features = [
+    {
+      icon: <Check className="w-5 h-5" />,
+      title: 'Interpretări Profunde',
+      description: 'Analize astrologice bazate pe tradiție și cunoștințe moderne.',
+    },
+    {
+      icon: <Compass className="w-5 h-5" />,
+      title: 'Ghidare Personalizată',
+      description: 'Fiecare hartă este unică, iar interpretarea reflectă individualitatea ta.',
+    },
+    {
+      icon: <Sparkles className="w-5 h-5" />,
+      title: 'Dezvoltare Spirituală',
+      description: 'Instrumente pentru autocunoaștere și evoluție personală.',
+    },
+    {
+      icon: <Moon className="w-5 h-5" />,
+      title: 'Conexiune Cosmică',
+      description: 'Înțelege relația dintre ciclurile cosmice și viața ta.',
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">
+    <div className="min-h-screen bg-midnight-950 text-white">
       <Navbar isScrolled={isScrolled} />
-      
+
       <main className="relative">
-        {/* Hero Section */}
+        {/* ═══════ HERO SECTION ═══════ */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
           {/* Starry background */}
           <div className="absolute inset-0 stars">
-            {/* Shooting stars */}
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            
-            {/* Subtle overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
           </div>
+
+          {/* Cosmic orbs */}
+          <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] -top-20 -right-20 animate-pulse-soft"></div>
+          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-20 -left-20 animate-pulse-soft" style={{ animationDelay: '1.5s' }}></div>
 
           {/* Content */}
           <div className="relative z-10 container mx-auto px-6 py-32 text-center">
-            <div className="mb-8 flex justify-center">
-              <Star className="w-16 h-16 text-yellow-200" />
+            <div className="animate-fade-in">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                <span className="text-white">Astro</span>
+                <span className="bg-gradient-to-r from-cosmic-400 to-gold-400 bg-clip-text text-transparent">Lumina</span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-cosmic-200 mb-4 max-w-2xl mx-auto font-display italic">
+                by Carmen Ilie
+              </p>
+
+              <p className="text-xl md:text-2xl text-cosmic-100/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Deblochează secretele propriului destin prin înțelepciunea străveche a stelelor
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => scrollToSection('services')}
+                  className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-8 py-4 rounded-full font-semibold hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple hover:shadow-glow-lg cursor-pointer"
+                >
+                  Explorează Servicii
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </button>
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="inline-flex items-center gap-2 bg-white/5 text-cosmic-200 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 cursor-pointer backdrop-blur-sm"
+                >
+                  Contactează-mă
+                </button>
+              </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
-              AstroLumina
-              <br />
-              <span className="text-3xl md:text-5xl text-yellow-200">by Carmen Ilie</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-yellow-100/90 mb-12 max-w-3xl mx-auto">
-              Deblocheaza secretele propriului destin prin intelepciunea straveche a stelelor
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="bg-yellow-400 text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 transition-all shadow-lg hover:shadow-yellow-400/25"
-              >
-                Explorează Servicii
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="bg-transparent text-yellow-200 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all border-2 border-yellow-200 hover:border-yellow-100 shadow-lg"
-              >
-                Contactează-mă
-              </button>
+
+            {/* Scroll indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+              <ChevronDown className="w-6 h-6 text-cosmic-300/50" />
             </div>
           </div>
 
-          {/* Gradient fade to content */}
-          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent"></div>
+          {/* Gradient fade */}
+          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-midnight-950 to-transparent"></div>
         </section>
-        
-        {/* Rest of the content */}
-        <div className="bg-white">
-          {/* Services Section */}
-          <section id="services" className="py-20 bg-gradient-to-br from-amber-50 to-amber-100">
-            <div className="container mx-auto px-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">Servicii</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    title: "Poziția Astrelor",
-                    description: "Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    ),
-                    link: "/servicii/pozitia-astrelor"
-                  },
-                  {
-                    title: "Lumina Natală",
-                    description: "Descoperă-ți potențialul și provocările prin analiza detaliată a hărții tale astrologice de naștere.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ),
-                    link: "/servicii/lumina-natala"
-                  },
-                  {
-                    title: "Lumina Karmică",
-                    description: "Descoperă-ți potențialul și provocările prin analiza detaliată a hărții tale astrologice de naștere.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ),
-                    link: "/servicii/lumina-karmica"
-                  },
-                  {
-                    title: "Previziuni și Tranzituri",
-                    description: "Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    ),
-                    link: "/servicii/lumina-previzionala"
-                  },
-                  {
-                    title: "Astrologie Relationala",
-                    description: "Identifică momentul perfect pentru a începe proiecte importante și a lua decizii majore.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    ),
-                    link: "/servicii/lumina-relationala"
-                  },
-                  {
-                    title: "Ghidare în Carieră",
-                    description: "Descoperă-ți potențialul profesional și direcția optimă de carieră prin astrologie.",
-                    icon: (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    ),
-                    link: "/servicii/consultatii"
-                  }
-                ].map((service, index) => (
-                  <div key={index} className="bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-transform duration-200">
-                    <div className="text-amber-500 mb-4">
-                      {service.icon}
+
+        {/* ═══════ SERVICES SECTION ═══════ */}
+        <section
+          id="services"
+          data-animate
+          className={`py-24 relative overflow-hidden transition-all duration-700 ${
+            visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>
+
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
+                Servicii Astrologice
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-2xl mx-auto">
+                Descoperă gama completă de servicii astrologice, de la analize gratuite la consultații personalizate
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service, index) => (
+                <Link
+                  key={index}
+                  to={service.link}
+                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                  {service.badge && (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                      {service.badge}
+                    </span>
+                  )}
+                  <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
+                    {service.icon}
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                    {service.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                    Află mai multe <ArrowRight className="w-3 h-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════ DIVIDER ═══════ */}
+        <div className="cosmic-divider mx-auto max-w-4xl"></div>
+
+        {/* ═══════ PRODUCTS SECTION ═══════ */}
+        <section
+          id="products-preview"
+          data-animate
+          className={`py-24 relative transition-all duration-700 ${
+            visibleSections.has('products-preview') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+              <div>
+                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                  Produse Digitale
+                </h2>
+                <p className="text-cosmic-300 text-lg max-w-xl">
+                  Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
+                </p>
+              </div>
+              <Link
+                to="/produse"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
+              >
+                Vezi toate produsele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: 'Ghidul lui Saturn în Berbec', price: '150 RON', type: 'Ghid digital' },
+                { title: 'Soarele în Harta Natală', price: '120 RON', type: 'Ghid digital' },
+                { title: 'Ce înseamnă Mercur Retrograd', price: '80 RON', type: 'Ghid digital' },
+              ].map((product, index) => (
+                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
+                  <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4">
+                    <Package className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors">{product.title}</h3>
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                    <span className="text-gold-400 font-semibold">{product.price}</span>
+                    <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full">{product.type}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════ DIVIDER ═══════ */}
+        <div className="cosmic-divider mx-auto max-w-4xl"></div>
+
+        {/* ═══════ EVENTS SECTION ═══════ */}
+        <section
+          id="events-preview"
+          data-animate
+          className={`py-24 relative transition-all duration-700 ${
+            visibleSections.has('events-preview') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] top-0 left-0 opacity-15"></div>
+
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+              <div>
+                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                  Evenimente
+                </h2>
+                <p className="text-cosmic-300 text-lg max-w-xl">
+                  Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
+                </p>
+              </div>
+              <Link
+                to="/evenimente"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
+              >
+                Vezi toate evenimentele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: 'Constelații Aprilie', date: '15 Aprilie 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
+                { title: 'Constelații Mai', date: '20 Mai 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
+              ].map((event, index) => (
+                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-cosmic-300 transition-colors">{event.title}</h3>
+                    <span className="text-gold-400 font-semibold flex-shrink-0 ml-4">{event.price}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4 text-cosmic-400" />
+                      <span>{event.date}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-amber-900 mb-2">{service.title}</h3>
-                    <p className="text-amber-700 mb-4">{service.description}</p>
-                    <Link
-                      to={service.link}
-                      className="text-amber-500 hover:text-amber-700 transition-colors"
-                    >
-                      Afla mai multe
-                    </Link>
+                    <div className="flex items-center gap-1.5">
+                      <Users className="w-4 h-4 text-cosmic-400" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Features Section */}
-          <section id="features" className="py-20">
-            <div className="container mx-auto px-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-amber-900 text-center mb-12">De ce să ne alegi</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {[
-                  {
-                    icon: <Clock className="w-8 h-8" />,
-                    title: "Interpretări Accurate",
-                    description: "Experții noștri astrologi oferă interpretări precise și pline de înțelepciune.",
-                  },
-                  {
-                    icon: <MessageCircle className="w-8 h-8" />,
-                    title: "Ghidare Personalizată",
-                    description: "Primești ghidare și sfaturi personalizate, adaptate nevoilor tale.",
-                  },
-                  {
-                    icon: <Star className="w-8 h-8" />,
-                    title: "Creștere Spirituală",
-                    description: "Obtine creștere spirituală și conștientizare de sine prin serviciile noastre.",
-                  },
-                  {
-                    icon: <Sparkles className="w-8 h-8" />,
-                    title: "Conexiune Cosmică",
-                    description: "Înțelege conexiunea cosmică dintre tine și univers.",
-                  },
-                ].map((feature, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-amber-500 mb-4 flex justify-center">{feature.icon}</div>
-                    <h3 className="text-lg font-semibold text-amber-900 mb-2">{feature.title}</h3>
-                    <p className="text-amber-700">{feature.description}</p>
+        {/* ═══════ DIVIDER ═══════ */}
+        <div className="cosmic-divider mx-auto max-w-4xl"></div>
+
+        {/* ═══════ FEATURES SECTION ═══════ */}
+        <section
+          id="features"
+          data-animate
+          className={`py-24 relative transition-all duration-700 ${
+            visibleSections.has('features') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 text-white">
+                De ce AstroLumina?
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-2xl mx-auto">
+                O abordare autentică a astrologiei, bazată pe cunoștințe profunde și dedicare
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="text-center group"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cosmic-500/20 to-gold-500/20 flex items-center justify-center text-cosmic-400 mx-auto mb-5 group-hover:from-cosmic-500/30 group-hover:to-gold-500/30 transition-all duration-300 border border-white/5">
+                    {feature.icon}
                   </div>
-                ))}
-              </div>
+                  <h3 className="font-display text-lg font-semibold text-white mb-2">{feature.title}</h3>
+                  <p className="text-cosmic-300/70 text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Contact Section */}
-          <section id="contact" className="py-16 bg-gradient-to-br from-amber-50 to-amber-100">
-            <div className="max-w-4xl mx-auto px-6">
-              <h2 className="text-4xl font-bold text-center text-amber-800 mb-12">Contact</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                {/* Contact Info */}
-                <div className="space-y-6">
-                  <div className="text-center md:text-left">
-                    <h3 className="text-2xl font-semibold text-amber-700 mb-8">Date de Contact</h3>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-center md:justify-start space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        {/* ═══════ DIVIDER ═══════ */}
+        <div className="cosmic-divider mx-auto max-w-4xl"></div>
+
+        {/* ═══════ CONTACT SECTION ═══════ */}
+        <section
+          id="contact"
+          data-animate
+          className={`py-24 relative transition-all duration-700 ${
+            visibleSections.has('contact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-0 left-0 opacity-20"></div>
+
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
+                  Contact
+                </h2>
+                <p className="text-cosmic-300 text-lg">
+                  Ai întrebări sau dorești o consultație? Ia legătura cu mine.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Contact info */}
+                <div className="glass-card p-8 space-y-6">
+                  <h3 className="font-display text-xl font-semibold text-white mb-6">Date de Contact</h3>
+
+                  <div className="space-y-4">
+                    <a href="mailto:contact@astrolumina.ro" className="flex items-center gap-3 text-cosmic-200 hover:text-white transition-colors group cursor-pointer">
+                      <div className="w-10 h-10 rounded-lg bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 group-hover:bg-cosmic-500/30 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <a href="mailto:contact@astrolumina.ro" className="text-amber-700 hover:text-amber-500 transition-colors">
-                          contact@astrolumina.ro
-                        </a>
                       </div>
-                      <div className="flex items-center justify-center md:justify-start space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      <span>contact@astrolumina.ro</span>
+                    </a>
+
+                    <a href="tel:+40123456789" className="flex items-center gap-3 text-cosmic-200 hover:text-white transition-colors group cursor-pointer">
+                      <div className="w-10 h-10 rounded-lg bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 group-hover:bg-cosmic-500/30 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
-                        <a href="tel:+40123456789" className="text-amber-700 hover:text-amber-500 transition-colors">
-                          +40 123 456 789
-                        </a>
                       </div>
-                      <div className="flex items-center justify-center md:justify-start space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <span>+40 123 456 789</span>
+                    </a>
+
+                    <div className="flex items-center gap-3 text-cosmic-200">
+                      <div className="w-10 h-10 rounded-lg bg-cosmic-500/20 flex items-center justify-center text-cosmic-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span className="text-amber-700">
-                          Program: Luni - Vineri, 10:00 - 18:00
-                        </span>
                       </div>
-                      <div className="flex items-center justify-center md:justify-start space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <span>Luni - Vineri, 10:00 - 18:00</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-cosmic-200">
+                      <div className="w-10 h-10 rounded-lg bg-cosmic-500/20 flex items-center justify-center text-cosmic-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span className="text-amber-700">
-                          București, România
-                        </span>
                       </div>
+                      <span>București, România</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Quick Contact Message */}
-                <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-semibold text-amber-700 mb-8">Hai să Discutăm</h3>
-                  <p className="text-amber-700 mb-8">
-                    Ai întrebări despre serviciile noastre sau dorești să programezi o consultație? 
+                {/* CTA card */}
+                <div className="glass-card p-8 flex flex-col justify-center">
+                  <h3 className="font-display text-xl font-semibold text-white mb-4">Hai să Discutăm</h3>
+                  <p className="text-cosmic-300/80 mb-6 leading-relaxed">
+                    Ai întrebări despre serviciile noastre sau dorești să programezi o consultație?
                     Vizitează pagina noastră de contact pentru mai multe detalii și răspunsuri la întrebările frecvente.
                   </p>
-                  <Link 
+                  <Link
                     to="/contact"
-                    className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg hover:bg-amber-700 transition-colors duration-200"
+                    className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-6 py-3 rounded-full font-semibold hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple self-start cursor-pointer"
                   >
                     Vezi Pagina de Contact
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
 
-        {/* Footer */}
-        <footer className="py-8 px-4 bg-amber-50 border-t border-amber-100">
-          <div className="max-w-6xl mx-auto text-center text-amber-900">
-            <p> 2024 AstroLumina by Carmen Ilie. Toate drepturile rezervate.</p>
+        {/* ═══════ FOOTER ═══════ */}
+        <footer className="py-8 px-6 border-t border-white/5">
+          <div className="max-w-6xl mx-auto text-center text-cosmic-400 text-sm">
+            <p>&copy; {new Date().getFullYear()} AstroLumina by Carmen Ilie. Toate drepturile rezervate.</p>
           </div>
         </footer>
 
-        {/* Scroll to Top Button */}
         <ScrollToTopButton />
       </main>
     </div>
