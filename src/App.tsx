@@ -5,6 +5,63 @@ import ScrollToTopButton from './components/scroll/ScrollToTopButton';
 import { useLoading } from './contexts/LoadingContext';
 import { Star, Sparkles, Moon, Compass, Calendar, ArrowRight, ChevronDown, Check, Package, Users } from 'lucide-react';
 
+interface ConstelatieEvent {
+  title: string;
+  date: Date;
+  time: string;
+  location: string;
+  price: string;
+}
+
+const generateConstelatiiEvents = (): ConstelatieEvent[] => {
+  const events: ConstelatieEvent[] = [];
+  const months = [
+    { year: 2027, month: 3 },
+    { year: 2027, month: 4 },
+    { year: 2027, month: 5 },
+    { year: 2027, month: 6 },
+    { year: 2027, month: 7 },
+    { year: 2027, month: 8 },
+    { year: 2027, month: 9 },
+    { year: 2027, month: 10 },
+    { year: 2027, month: 11 },
+    { year: 2027, month: 12 },
+    { year: 2028, month: 1 },
+    { year: 2028, month: 2 },
+    { year: 2028, month: 3 },
+    { year: 2028, month: 4 },
+    { year: 2028, month: 5 },
+    { year: 2028, month: 6 },
+    { year: 2028, month: 7 },
+    { year: 2028, month: 8 },
+    { year: 2028, month: 9 },
+    { year: 2028, month: 10 },
+    { year: 2028, month: 11 },
+    { year: 2028, month: 12 },
+  ];
+
+  const monthNames = [
+    'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
+    'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
+  ];
+
+  months.forEach(({ year, month }) => {
+    const day = Math.floor(Math.random() * (25 - 20 + 1)) + 20;
+    const date = new Date(year, month - 1, day);
+    events.push({
+      title: `Constelații ${monthNames[month - 1]}`,
+      date,
+      time: '19:00 - 22:00',
+      location: 'Online (Zoom)',
+      price: '120 RON',
+    });
+  });
+
+  return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+};
+
+const constelatiiEvents = generateConstelatiiEvents();
+
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -60,34 +117,32 @@ function App() {
       badge: 'Gratuit',
     },
     {
-      title: 'Lumina Natală',
-      description: 'Descoperă-ți potențialul și provocările prin analiza detaliată a hărții tale astrologice de naștere.',
+      title: 'Faza Lunara',
+      description: 'Descopera influenta fazelor lunare asupra vietii tale si profita de energia fiecarei luni.',
+      icon: <Moon className="w-7 h-7" />,
+      link: '/servicii/faza-lunara',
+      badge: 'Gratuit',
+    },
+    {
+      title: 'Astroma Natală și Karmică',
+      description: 'Analiza completă a hărții tale astrologice de naștere, inclusiv influențele karmice.',
       icon: <Sparkles className="w-7 h-7" />,
       link: '/servicii/lumina-natala',
+      price: '75 Euro',
     },
     {
-      title: 'Lumina Karmică',
-      description: 'Explorează ciclurile karmice și lecțiile sufletului tău prin prisma astrologiei karmice.',
-      icon: <Moon className="w-7 h-7" />,
-      link: '/servicii/lumina-karmica',
-    },
-    {
-      title: 'Previziuni și Tranzituri',
-      description: 'Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.',
-      icon: <Compass className="w-7 h-7" />,
-      link: '/servicii/lumina-previzionala',
-    },
-    {
-      title: 'Astrologie Relationala',
+      title: 'Astroma Relațională',
       description: 'Înțelege compatibilitatea și dinamica relațiilor tale prin analiza sinastriei.',
       icon: <Star className="w-7 h-7" />,
       link: '/servicii/lumina-relationala',
+      price: '75 Euro',
     },
     {
-      title: 'Consultații Astrologice',
-      description: 'Programează o consultație personalizată pentru ghidare detaliată pe tema care te interesează.',
-      icon: <Calendar className="w-7 h-7" />,
-      link: '/servicii/consultatii',
+      title: 'Astroma Previzională',
+      description: 'Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.',
+      icon: <Compass className="w-7 h-7" />,
+      link: '/servicii/lumina-previzionala',
+      price: '75 Euro',
     },
   ];
 
@@ -209,6 +264,11 @@ function App() {
                       {service.badge}
                     </span>
                   )}
+                  {service.price && (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                      {service.price}
+                    </span>
+                  )}
                   <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
                     {service.icon}
                   </div>
@@ -258,11 +318,15 @@ function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { title: 'Ghidul lui Saturn în Berbec', price: '150 RON', type: 'Ghid digital' },
-                { title: 'Soarele în Harta Natală', price: '120 RON', type: 'Ghid digital' },
-                { title: 'Ce înseamnă Mercur Retrograd', price: '80 RON', type: 'Ghid digital' },
+                { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'Ghid digital', badge: 'Gratuit' },
+                { title: 'Ghid Saturn în Berbec', price: '15 Euro', type: 'Ghid digital' },
               ].map((product, index) => (
-                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
+                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                  {product.badge && (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                      {product.badge}
+                    </span>
+                  )}
                   <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4">
                     <Package className="w-5 h-5" />
                   </div>
@@ -309,27 +373,30 @@ function App() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { title: 'Constelații Aprilie', date: '15 Aprilie 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
-                { title: 'Constelații Mai', date: '20 Mai 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
-              ].map((event, index) => (
-                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-cosmic-300 transition-colors">{event.title}</h3>
-                    <span className="text-gold-400 font-semibold flex-shrink-0 ml-4">{event.price}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 text-cosmic-400" />
-                      <span>{event.date}</span>
+              {(() => {
+                const now = new Date();
+                const upcomingEvents = constelatiiEvents
+                  .filter(event => event.date >= now)
+                  .slice(0, 2);
+                return upcomingEvents.map((event, index) => (
+                  <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="font-display text-lg font-semibold text-white group-hover:text-cosmic-300 transition-colors">{event.title}</h3>
+                      <span className="text-gold-400 font-semibold flex-shrink-0 ml-4">{event.price}</span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users className="w-4 h-4 text-cosmic-400" />
-                      <span>{event.location}</span>
+                    <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-cosmic-400" />
+                        <span>{event.date.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-4 h-4 text-cosmic-400" />
+                        <span>{event.location}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
         </section>
