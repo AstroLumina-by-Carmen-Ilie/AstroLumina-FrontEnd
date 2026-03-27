@@ -72,13 +72,13 @@ function App() {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isScrolled]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -96,7 +96,7 @@ function App() {
     sections.forEach((section) => observerRef.current?.observe(section));
 
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [visibleSections]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -252,37 +252,71 @@ function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <Link
-                  key={index}
-                  to={service.link}
-                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
-                >
-                  {service.badge && (
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
-                      {service.badge}
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {services.slice(0, 2).map((service, index) => (
+                  <Link
+                    key={index}
+                    to={service.link}
+                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  >
+                    {service.badge && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                        {service.badge}
+                      </span>
+                    )}
+                    {service.price && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                        {service.price}
+                      </span>
+                    )}
+                    <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                      Află mai multe <ArrowRight className="w-3 h-3" />
                     </span>
-                  )}
-                  {service.price && (
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
-                      {service.price}
+                  </Link>
+                ))}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {services.slice(2, 5).map((service, index) => (
+                  <Link
+                    key={index}
+                    to={service.link}
+                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  >
+                    {service.badge && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                        {service.badge}
+                      </span>
+                    )}
+                    {service.price && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                        {service.price}
+                      </span>
+                    )}
+                    <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                      Află mai multe <ArrowRight className="w-3 h-3" />
                     </span>
-                  )}
-                  <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
-                    {service.icon}
-                  </div>
-                  <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
-                    Află mai multe <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -299,24 +333,16 @@ function App() {
           }`}
         >
           <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-              <div>
-                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
-                  Produse Digitale
-                </h2>
-                <p className="text-cosmic-300 text-lg max-w-xl">
-                  Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
-                </p>
-              </div>
-              <Link
-                to="/produse"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
-              >
-                Vezi toate produsele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                Produse Digitale
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
+                Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'Ghid digital', badge: 'Gratuit' },
                 { title: 'Ghid Saturn în Berbec', price: '15 Euro', type: 'Ghid digital' },
@@ -355,18 +381,18 @@ function App() {
           <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] top-0 left-0 opacity-15"></div>
 
           <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-              <div>
-                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
-                  Evenimente
-                </h2>
-                <p className="text-cosmic-300 text-lg max-w-xl">
-                  Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
-                </p>
-              </div>
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                Evenimente
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
+                Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
+              </p>
+            </div>
+            <div className="flex justify-center mb-8">
               <Link
                 to="/evenimente"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
               >
                 Vezi toate evenimentele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
