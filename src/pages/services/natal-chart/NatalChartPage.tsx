@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Navbar from '../../../components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types';
-import BirthDataForm from './BirthDataForm';
-import ContactForm from './ContactForm';
-import PaymentForm from './PaymentForm';
-import FinalStep from './FinalStep';
+import React, { useState } from "react";
+import Navbar from "../../../components/navbar/Navbar";
+import { BirthDataPayload, UserInfo, ContactInfo } from "../../../types";
+import BirthDataForm from "./BirthDataForm";
+import ContactForm from "./ContactForm";
+import PaymentForm from "./PaymentForm";
+import FinalStep from "./FinalStep";
 
 const NatalChartPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -68,8 +68,12 @@ const NatalChartPage: React.FC = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Interpretare Hartă Natală
+            Astrograma Natală și Karmică
           </h1>
+          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+            Sesiune live în care aducem claritate și direcție prin înțelegerea
+            astrogramei tale!
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -78,34 +82,59 @@ const NatalChartPage: React.FC = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Descoperă Planul Tău Celestial
+                  Astrograma Natală și Karmică
                 </h2>
-                <p className="text-cosmic-200/80 leading-relaxed mb-8">
-                  Descoperă planul tău astrologic unic cu interpretarea noastră completă a hărții natale.
-                  Acest proces în mai mulți pași te va ghida în furnizarea detaliilor tale de naștere și în primirea interpretării tale personalizate.
-                </p>
+                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                  <p>
+                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
+                  </p>
+                  <p>
+                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>direcția ta profesională și resursele interioare</li>
+                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
+                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
+                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
+                    <li>linia destinului și misiunea ta personală</li>
+                  </ul>
+                  <p>
+                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
+                  </p>
+                  <p>
+                    Include și analiza transgenerațională a hărții tale.
+                  </p>
+                  <p>
+                    Consultația este oferită prin Zoom.
+                  </p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                  </p>
+                </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: 'Date naștere' },
-                    { num: 2, label: 'Date contact' },
-                    { num: 3, label: 'Plată' },
-                    { num: 4, label: 'Rezultat' },
+                    { num: 1, label: "Date naștere" },
+                    { num: 2, label: "Date contact" },
+                    { num: 3, label: "Plată" },
+                    { num: 4, label: "Rezultat" },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step.num < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step.num < currentStep ? '✓' : step.num}
+                        {step.num < currentStep ? "✓" : step.num}
                       </div>
-                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
+                      <span
+                        className={`text-sm ${step.num === currentStep ? "text-white" : "text-cosmic-400"}`}
+                      >
                         {step.label}
                       </span>
                     </div>
@@ -123,13 +152,13 @@ const NatalChartPage: React.FC = () => {
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step < currentStep ? '✓' : step}
+                        {step < currentStep ? "✓" : step}
                       </div>
                     ))}
                   </div>

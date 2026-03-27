@@ -21,86 +21,32 @@ const Products = () => {
 
   const products = [
     {
-      id: 'saturn-in-aries',
-      title: 'Ghidul lui Saturn în Berbec',
-      description: 'O analiză completă a tranzitului lui Saturn prin semnul Berbecului și impactul său asupra vieții tale.',
+      id: 'soarele-stralucirea-ta',
+      title: 'Soarele, strălucirea ta',
+      description: 'Prin care descoperi semnificația zodiei tale',
+      details: [
+        'Interpretarea poziției Soarelui în semnul tău zodiacal',
+        'Descoperirea caracteristicilor esențiale ale personalității tale solare',
+        'Înțelegerea modului în care te exprimi și strălucești',
+        'Ghid pentru valorificarea energiei solare în viața daily',
+        'PDF gratuit descărcabil',
+      ],
+      price: 'Gratuit',
+      type: 'PDF',
+      badge: 'Gratuit',
+    },
+    {
+      id: 'ghid-saturn-in-berbec',
+      title: 'Ghid Saturn în Berbec',
+      description: 'Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn',
       details: [
         'Interpretarea detaliată a tranzitului Saturn în Berbec',
         'Influența asupra fiecărui ascendent zodiacal',
-        'Lecții karmice și oportunități de creștere',
-        'Strategii pentru a naviga provocările lui Saturn',
-        'Exerciții practice și meditații specifice',
+        'Lecții karmice și oportunități de creștere personală',
+        'Strategii practice pentru a naviga provocările lui Saturn',
+        'Exerciții și meditații pentru transformarea energiilor',
       ],
-      price: '150 RON',
-      type: 'Ghid digital',
-    },
-    {
-      id: 'sun-in-natal-chart',
-      title: 'Soarele în Harta Natală',
-      description: 'O explorare profundă a semnificației Soarelui în astrologie și rolul său central în harta ta natală.',
-      details: [
-        'Analiza Soarelui în semn, casă și aspecte',
-        'Interpretarea casei Soarelui și a expresiei personale',
-        'Influența aspectelor planetare asupra identității',
-        'Soarele ca indicator al scopului vieții',
-        'Exerciții pentru integrarea energiei solare',
-      ],
-      price: '120 RON',
-      type: 'Ghid digital',
-    },
-    {
-      id: 'mercury-retrograde',
-      title: 'Ce înseamnă Mercur Retrograd',
-      description: 'Un ghid complet pentru înțelegerea și navigarea perioadelor de Mercur retrograd.',
-      details: [
-        'Explicația fenomenului de retrogradare a lui Mercur',
-        'Efecte specifice în funcție de semnul zodiacal',
-        'Strategii de comunicare în perioadele retrograde',
-        'Calendar al retrogradărilor Mercur pentru următorul an',
-      ],
-      price: '80 RON',
-      type: 'Ghid digital',
-    },
-    {
-      id: 'astral-positions-natal',
-      title: 'Poziția Elementelor Astrale în Harta Natală',
-      description: 'O analiză completă a tuturor elementelor astronomice din harta ta natală.',
-      details: [
-        'Interpretarea celor 10 planete principale',
-        'Analiza asteroizilor Chiron, Ceres, Pallas, Juno și Vesta',
-        'Semnificația Nodurilor Lunare Nord și Sud',
-        'Puncte karmice: Lilith, Vertex și altele',
-        'Grafice vizuale și tabele detaliate',
-      ],
-      price: '200 RON',
-      type: 'Raport complet',
-    },
-    {
-      id: 'moon-phases-guide',
-      title: 'Ghidul Fazelor Lunare',
-      description: 'Înțelege cum fazele lunare influențează emoțiile, energia și viața de zi cu zi.',
-      details: [
-        'Cele 8 faze lunare și semnificațiile lor',
-        'Calendar lunar pentru anul în curs',
-        'Ritualuri și practici pentru fiecare fază',
-        'Influența lunii asupra emoțiilor și relațiilor',
-        'Jurnal lunar pentru auto-observație',
-      ],
-      price: '90 RON',
-      type: 'Ghid digital',
-    },
-    {
-      id: 'venus-retrograde',
-      title: 'Venus Retrograd - Ghid de Relații',
-      description: 'O explorare a perioadelor Venus retrograd și impactul lor asupra relațiilor, valorilor și creativității.',
-      details: [
-        'Semnificația retrogradării lui Venus',
-        'Efecte asupra relațiilor și parteneriatelor',
-        'Vindecarea relațiilor din trecut',
-        'Reevaluarea valorilor personale',
-        'Exerciții de vindecare și auto-reflectare',
-      ],
-      price: '100 RON',
+      price: '15€',
       type: 'Ghid digital',
     },
   ];
@@ -133,9 +79,15 @@ const Products = () => {
                     <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400">
                       <Package className="w-5 h-5" />
                     </div>
-                    <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                      {product.type}
-                    </span>
+                    {product.badge ? (
+                      <span className="text-xs text-gold-400 bg-gold-500/20 px-2.5 py-1 rounded-full border border-gold-500/30">
+                        {product.badge}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                        {product.type}
+                      </span>
+                    )}
                   </div>
 
                   <h2 className="font-display text-lg font-bold text-white mb-2 group-hover:text-cosmic-300 transition-colors">
@@ -158,7 +110,7 @@ const Products = () => {
                   <div className="flex items-center justify-between pt-4 border-t border-white/5">
                     <span className="text-gold-400 font-semibold text-lg">{product.price}</span>
                     <button className="group inline-flex items-center gap-1.5 text-cosmic-400 text-sm font-medium hover:text-white transition-colors cursor-pointer">
-                      Comandă
+                      {product.badge ? 'Descarcă' : 'Comandă'}
                       <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>

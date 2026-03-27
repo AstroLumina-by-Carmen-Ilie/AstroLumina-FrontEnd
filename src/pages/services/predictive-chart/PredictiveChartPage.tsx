@@ -69,8 +69,11 @@ const PredictiveChartPage: React.FC = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Interpretare Hartă Relațională
+            Astrograma Previzională
           </h1>
+          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+            Sesiune live în care studiem predispozițiile tale pe anul următor
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -79,12 +82,33 @@ const PredictiveChartPage: React.FC = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Descoperă Conexiunea Voastră Celestială
+                  Astrograma Previzională
                 </h2>
-                <p className="text-cosmic-200/80 leading-relaxed mb-8">
-                  Descoperă cum planetele voastre lucrează împreună cu analiza noastră completă a hărții relaționale.
-                  Acest proces în mai mulți pași te va ghida în furnizarea detaliilor de naștere ale amândurora și în primirea interpretării voastre personalizate.
-                </p>
+                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                  <p>
+                    Această sesiune live îți oferă o privire detaliată asupra predispozițiilor și evenimentelor semnificative din următoarele 12 luni, așa cum se reflectă în harta ta natală.
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Vei înțelege ce teme sunt în prim-plan și cum să le abordezi în mod conștient</li>
+                    <li>Descoperi care sunt perioadele favorabile pentru relații, carieră, mutări, proiecte sau decizii importante</li>
+                    <li>Primești răspunsuri pentru întrebări concrete, pentru a-ți organiza cât mai bine planurile și resursele</li>
+                  </ul>
+                  <p>
+                    Dacă ai întrebări legate de un eveniment trecut din viața ta și lecțiile pe care ai nevoie să le înveți în urma sa, le putem discuta, de asemenea.
+                  </p>
+                  <p>
+                    Deși această analiză se axează, în principiu, pe tranzitele următoarelor 12 luni, dacă ai întrebări punctuale în privința unui eveniment mult mai în viitor, răspundem și acestor curiozități.
+                  </p>
+                  <p>
+                    Este o experiență prin care primești ghidaj personalizat, menită să-ți aducă claritate și încredere în pașii pe care îi ai de făcut.
+                  </p>
+                  <p>
+                    Consultația este oferită prin Zoom.
+                  </p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                  </p>
+                </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">

@@ -69,8 +69,11 @@ const SynastryChartPage: React.FC = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Interpretare Hartă Relațională
+            Astrograma Relațională
           </h1>
+          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+            Descoperă dinamiciile relației tale!
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -79,12 +82,39 @@ const SynastryChartPage: React.FC = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Descoperă Conexiunea Voastră Celestială
+                  Astrograma Relațională
                 </h2>
-                <p className="text-cosmic-200/80 leading-relaxed mb-8">
-                  Descoperă cum planetele voastre lucrează împreună cu analiza noastră completă a hărții relaționale.
-                  Acest proces în mai mulți pași te va ghida în furnizarea detaliilor de naștere ale amândurora și în primirea interpretării voastre personalizate.
-                </p>
+                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                  <p>
+                    În această sesiune live, explorăm dinamicile profunde ale relației tale cu partenerul, părinții, copiii, prietenii sau orice altă persoană de interes.
+                  </p>
+                  <p>
+                    Această sesiune este pentru tine dacă îți dorești:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Să înțelegi tiparele și dinamicile subtile ale relației</li>
+                    <li>Să afli care este potențialul vostru împreună</li>
+                    <li>Să aduci claritate asupra punctelor de vulnerabilitate</li>
+                    <li>Să clarifici care sunt lecțiile pe care le puteți învăța împreună</li>
+                    <li>Să înțelegi ce rol aveți unul în evoluția celuilalt</li>
+                    <li>Să cunoști gradul vostru de compatibilitate și căile de evoluție</li>
+                  </ul>
+                  <p>
+                    Astrologia nu oferă verdicte de compatibilitate, ci îți arată natura relației: ce vă apropie, ce vă provoacă, ce este necesar pentru ca relația să se maturizeze în mod armonios.
+                  </p>
+                  <p>
+                    Poți solicita o Astrogramă Relațională pentru orice tip de relație - romantică, familială, profesională sau de prietenie.
+                  </p>
+                  <p>
+                    Consultația este oferită prin Zoom.
+                  </p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                  </p>
+                  <p>
+                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval, notează mijlocul intervalului. Dacă ora este complet necunoscută, folosește 12:00 (PM).
+                  </p>
+                </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">

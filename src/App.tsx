@@ -118,31 +118,31 @@ function App() {
     },
     {
       title: 'Faza Lunara',
-      description: 'Descopera influenta fazelor lunare asupra vietii tale si profita de energia fiecarei luni.',
+      description: 'Descopera influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
       icon: <Moon className="w-7 h-7" />,
       link: '/servicii/faza-lunara',
       badge: 'Gratuit',
     },
     {
-      title: 'Astroma Natală și Karmică',
-      description: 'Analiza completă a hărții tale astrologice de naștere, inclusiv influențele karmice.',
+      title: 'Astrograma Natală și Karmică',
+      description: 'Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!',
       icon: <Sparkles className="w-7 h-7" />,
       link: '/servicii/lumina-natala',
-      price: '75 Euro',
+      price: '75€',
     },
     {
-      title: 'Astroma Relațională',
-      description: 'Înțelege compatibilitatea și dinamica relațiilor tale prin analiza sinastriei.',
+      title: 'Astrograma Relațională',
+      description: 'Descoperă dinamica relației tale!',
       icon: <Star className="w-7 h-7" />,
       link: '/servicii/lumina-relationala',
-      price: '75 Euro',
+      price: '75€',
     },
     {
-      title: 'Astroma Previzională',
-      description: 'Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.',
+      title: 'Astrograma Previzională',
+      description: 'Sesiune live în care studiem predispozițiile tale pe următorul an',
       icon: <Compass className="w-7 h-7" />,
       link: '/servicii/lumina-previzionala',
-      price: '75 Euro',
+      price: '75€',
     },
   ];
 
@@ -337,31 +337,42 @@ function App() {
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
                 Produse Digitale
               </h2>
-              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto mb-6">
                 Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
               </p>
+              <Link
+                to="/produse"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
+              >
+                Vezi toate produsele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'Ghid digital', badge: 'Gratuit' },
-                { title: 'Ghid Saturn în Berbec', price: '15 Euro', type: 'Ghid digital' },
+                { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'PDF', badge: 'Gratuit', description: 'Prin care descoperi semnificația zodiei tale' },
+                { title: 'Ghid Saturn în Berbec', price: '15€', type: 'Ghid digital', description: 'Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn' },
               ].map((product, index) => (
-                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                <Link
+                  key={index}
+                  to="/produse"
+                  className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer relative overflow-hidden"
+                >
                   {product.badge && (
                     <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
                       {product.badge}
                     </span>
                   )}
-                  <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors">
                     <Package className="w-5 h-5" />
                   </div>
                   <h3 className="font-display text-lg font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors">{product.title}</h3>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                  <p className="text-cosmic-300/80 text-sm mb-4">{product.description}</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
                     <span className="text-gold-400 font-semibold">{product.price}</span>
                     <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full">{product.type}</span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
