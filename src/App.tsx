@@ -337,18 +337,12 @@ function App() {
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
                 Produse Digitale
               </h2>
-              <p className="text-cosmic-300 text-lg max-w-xl mx-auto mb-6">
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
                 Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
               </p>
-              <Link
-                to="/produse"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
-              >
-                Vezi toate produsele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {[
                 { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'PDF', badge: 'Gratuit', description: 'Prin care descoperi semnificația zodiei tale' },
                 { title: 'Ghid Saturn în Berbec', price: '15€', type: 'Ghid digital', description: 'Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn' },
@@ -356,24 +350,40 @@ function App() {
                 <Link
                   key={index}
                   to="/produse"
-                  className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer relative overflow-hidden"
+                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
                 >
-                  {product.badge && (
+                  {product.badge ? (
                     <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
                       {product.badge}
                     </span>
+                  ) : (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                      {product.price}
+                    </span>
                   )}
-                  <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
                     <Package className="w-5 h-5" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors">{product.title}</h3>
-                  <p className="text-cosmic-300/80 text-sm mb-4">{product.description}</p>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                    <span className="text-gold-400 font-semibold">{product.price}</span>
-                    <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full">{product.type}</span>
-                  </div>
+                  <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                    {product.title}
+                  </h3>
+                  <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                    {product.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                    Vezi produsul <ArrowRight className="w-3 h-3" />
+                  </span>
                 </Link>
               ))}
+            </div>
+
+            <div className="text-center">
+              <Link
+                to="/produse"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
+              >
+                Vezi mai multe produse <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </div>
         </section>
@@ -400,16 +410,8 @@ function App() {
                 Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
               </p>
             </div>
-            <div className="flex justify-center mb-8">
-              <Link
-                to="/evenimente"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
-              >
-                Vezi toate evenimentele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {(() => {
                 const now = new Date();
                 const upcomingEvents = constelatiiEvents
@@ -434,6 +436,14 @@ function App() {
                   </div>
                 ));
               })()}
+            </div>
+            <div className="text-center">
+              <Link
+                to="/evenimente"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
+              >
+                Vezi toate evenimentele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </div>
         </section>

@@ -218,7 +218,7 @@ const Events = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid gap-8">
             {upcomingEvents.map((event, index) => {
               const eventInfo = getEventInfo(event.title);
               return (
@@ -226,40 +226,45 @@ const Events = () => {
                   key={index}
                   className="glass-card overflow-hidden hover:bg-white/[0.1] transition-all duration-300 group"
                 >
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <h2 className="font-display text-xl font-bold text-white group-hover:text-cosmic-300 transition-colors">
-                        {event.title}
-                      </h2>
-                      <span className="text-gold-400 font-semibold text-lg flex-shrink-0 ml-4">
-                        {event.price}
-                      </span>
+                  <div className="p-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 group-hover:bg-cosmic-500/30 transition-colors">
+                          <Calendar className="w-6 h-6" />
+                        </div>
+                        <h2 className="font-display text-2xl font-bold text-white group-hover:text-cosmic-300 transition-colors">
+                          {event.title}
+                        </h2>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-cosmic-300 text-sm">
+                          <Clock className="w-4 h-4" />
+                          <span>{event.time}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-cosmic-300 text-sm">
+                          <MapPin className="w-4 h-4" />
+                          <span>{event.location}</span>
+                        </div>
+                        <div className="text-gold-400 font-semibold text-lg">
+                          {event.price}
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 mb-4 text-sm text-cosmic-300">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4 text-cosmic-400" />
-                        <span>{event.date.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-4 h-4 text-cosmic-400" />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4 text-cosmic-400" />
-                        <span>{event.location}</span>
-                      </div>
+                    <div className="flex items-center gap-2 text-cosmic-300 text-sm mb-6">
+                      <Calendar className="w-4 h-4" />
+                      <span>{event.date.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                     </div>
 
-                    <p className="text-cosmic-200/80 text-sm leading-relaxed mb-4">
+                    <p className="text-cosmic-200/80 mb-6 leading-relaxed">
                       {eventInfo.description}
                     </p>
 
-                    <div className="mb-5">
-                      <h3 className="text-xs font-semibold text-cosmic-400 uppercase tracking-wider mb-3">Ce include</h3>
-                      <ul className="space-y-2">
-                        {eventInfo.details.slice(0, 4).map((detail, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-cosmic-200/70 text-sm">
+                    <div className="mb-8">
+                      <h3 className="text-sm font-semibold text-cosmic-400 uppercase tracking-wider mb-4">Ce include</h3>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {eventInfo.details.map((detail, idx) => (
+                          <li key={idx} className="flex items-start gap-3 text-cosmic-200/70 text-sm">
                             <div className="w-1.5 h-1.5 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>
                             <span>{detail}</span>
                           </li>
@@ -267,10 +272,10 @@ const Events = () => {
                       </ul>
                     </div>
 
-                    <button className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer">
+                    <button className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-6 py-3 rounded-full font-medium hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer">
                       <Users className="w-4 h-4" />
                       Rezervă locul
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>
                 </div>

@@ -68,52 +68,56 @@ const Products = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-8">
             {products.map((product) => (
               <div
                 key={product.id}
-                className="glass-card overflow-hidden hover:bg-white/[0.1] transition-all duration-300 group flex flex-col"
+                className="glass-card overflow-hidden hover:bg-white/[0.1] transition-all duration-300 group"
               >
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400">
-                      <Package className="w-5 h-5" />
+                <div className="p-8">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 group-hover:bg-cosmic-500/30 transition-colors">
+                        <Package className="w-6 h-6" />
+                      </div>
+                      <h2 className="font-display text-2xl font-bold text-white group-hover:text-cosmic-300 transition-colors">
+                        {product.title}
+                      </h2>
                     </div>
-                    {product.badge ? (
-                      <span className="text-xs text-gold-400 bg-gold-500/20 px-2.5 py-1 rounded-full border border-gold-500/30">
-                        {product.badge}
-                      </span>
-                    ) : (
-                      <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                        {product.type}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-4">
+                      {/* {product.badge ? (
+                        <span className="text-sm text-gold-400 bg-gold-500/20 px-3 py-1.5 rounded-full border border-gold-500/30">
+                          {product.badge}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-cosmic-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                          {product.type}
+                        </span>
+                      )} */}
+                      <span className="text-gold-400 font-semibold text-lg">{product.price}</span>
+                    </div>
                   </div>
 
-                  <h2 className="font-display text-lg font-bold text-white mb-2 group-hover:text-cosmic-300 transition-colors">
-                    {product.title}
-                  </h2>
-
-                  <p className="text-cosmic-200/70 text-sm leading-relaxed mb-4 flex-1">
+                  <p className="text-cosmic-200/80 mb-6 leading-relaxed">
                     {product.description}
                   </p>
 
-                  <ul className="space-y-1.5 mb-5">
-                    {product.details.slice(0, 3).map((detail, index) => (
-                      <li key={index} className="flex items-start gap-2 text-cosmic-200/60 text-xs">
-                        <div className="w-1 h-1 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                    <span className="text-gold-400 font-semibold text-lg">{product.price}</span>
-                    <button className="group inline-flex items-center gap-1.5 text-cosmic-400 text-sm font-medium hover:text-white transition-colors cursor-pointer">
-                      {product.badge ? 'Descarcă' : 'Comandă'}
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                    </button>
+                  <div className="mb-8">
+                    <h3 className="text-sm font-semibold text-cosmic-400 uppercase tracking-wider mb-4">Ce include</h3>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {product.details.map((detail, index) => (
+                        <li key={index} className="flex items-start gap-3 text-cosmic-200/70 text-sm">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+
+                  <button className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-6 py-3 rounded-full font-medium hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer">
+                    {product.badge ? 'Descarcă' : 'Comandă'}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </button>
                 </div>
               </div>
             ))}
