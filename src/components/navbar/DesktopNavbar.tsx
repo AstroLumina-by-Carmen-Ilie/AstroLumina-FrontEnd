@@ -6,8 +6,8 @@ import {
   NavbarLinks
 } from './NavbarCommon';
 
-const DesktopNavbar: React.FC<NavbarProps> = ({ isScrolled, lightTheme = false }) => {
-  const { navClasses, linkClasses, logoClasses } = getNavbarStyles(lightTheme);
+const DesktopNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
+  const { navClasses, linkClasses, logoClasses } = getNavbarStyles();
 
   return (
     <div className="hidden md:block">

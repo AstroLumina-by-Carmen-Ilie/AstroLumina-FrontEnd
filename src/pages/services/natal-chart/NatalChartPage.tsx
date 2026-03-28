@@ -6,7 +6,7 @@ import ContactForm from "./ContactForm";
 import PaymentForm from "./PaymentForm";
 import FinalStep from "./FinalStep";
 
-const NatalChartPage: React.FC = () => {
+const NatalChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -63,7 +63,7 @@ const NatalChartPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">
-      <Navbar isScrolled={true} lightTheme={false} />
+      <Navbar isScrolled={true} />
 
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../hooks/useLoading';
 import { Calendar, Clock, MapPin, Users, ArrowRight } from 'lucide-react';
 
-interface ConstelatieEvent {
+interface ConstelationEvent {
   title: string;
   date: Date;
   time: string;
@@ -11,8 +11,8 @@ interface ConstelatieEvent {
   price: string;
 }
 
-const generateConstelatiiEvents = (): ConstelatieEvent[] => {
-  const events: ConstelatieEvent[] = [];
+const generateConstelatiiEvents = (): ConstelationEvent[] => {
+  const events: ConstelationEvent[] = [];
   const months = [
     { year: 2027, month: 3 },
     { year: 2027, month: 4 },
@@ -180,13 +180,13 @@ const Events = () => {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setIsScrolled]);
 
   const now = new Date();
   const upcomingEvents = constelatiiEvents

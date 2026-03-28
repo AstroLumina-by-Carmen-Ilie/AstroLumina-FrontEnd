@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Moon, Star, ArrowLeft } from 'lucide-react';
 
-const NotFound: React.FC = () => {
+const NotFound = () => {
   const navigate = useNavigate();
 
   return (

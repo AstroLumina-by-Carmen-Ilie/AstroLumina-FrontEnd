@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../hooks/useLoading';
 import { Package, ArrowRight } from 'lucide-react';
 
 const Products = () => {
@@ -11,13 +11,13 @@ const Products = () => {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setIsScrolled]);
 
   const products = [
     {

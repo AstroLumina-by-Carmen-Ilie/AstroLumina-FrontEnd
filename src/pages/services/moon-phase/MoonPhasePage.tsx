@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AstralElements } from '../../../types';
 import Navbar from '../../../components/navbar/Navbar';
 import BirthDataForm from './BirthDataForm';
 import ResultsDisplay from './ResultsDisplay';
-import { useLoading } from '../../../contexts/LoadingContext';
+import { useLoading } from '../../../hooks/useLoading';
 
-const MoonPhasePage: React.FC = () => {
+const MoonPhasePage = () => {
   const [result, setResult] = useState<{ astral_elements: AstralElements; astral_houses: AstralElements } | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
@@ -37,7 +37,7 @@ const MoonPhasePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">
-      <Navbar isScrolled={true} lightTheme={false} />
+      <Navbar isScrolled={true} />
 
       <div className="relative pt-24 pb-16">
         <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>

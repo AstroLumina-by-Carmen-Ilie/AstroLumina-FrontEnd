@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../hooks/useLoading';
 import { Sparkles, Star, Compass } from 'lucide-react';
 
 const AboutMe = () => {
@@ -11,13 +11,13 @@ const AboutMe = () => {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setIsScrolled]);
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">

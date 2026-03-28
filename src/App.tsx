@@ -2,19 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import ScrollToTopButton from './components/scroll/ScrollToTopButton';
-import { useLoading } from './contexts/LoadingContext';
+import { useLoading } from './hooks/useLoading';
+import { ConstelationEvent } from './types';
 import { Star, Sparkles, Moon, Compass, Calendar, ArrowRight, ChevronDown, Check, Package, Users } from 'lucide-react';
 
-interface ConstelatieEvent {
-  title: string;
-  date: Date;
-  time: string;
-  location: string;
-  price: string;
-}
-
-const generateConstelatiiEvents = (): ConstelatieEvent[] => {
-  const events: ConstelatieEvent[] = [];
+const generateConstelatiiEvents = (): ConstelationEvent[] => {
+  const events: ConstelationEvent[] = [];
   const months = [
     { year: 2027, month: 3 },
     { year: 2027, month: 4 },
@@ -193,15 +186,15 @@ function App() {
           <div className="relative z-10 container mx-auto px-6 py-32 text-center">
             <div className="animate-fade-in">
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-                <span className="text-white">Astro</span>
-                <span className="bg-gradient-to-r from-cosmic-400 to-gold-400 bg-clip-text text-transparent">Lumina</span>
+                {/* <span className="text-white">AstroLumina</span> */}
+                <span className="bg-gradient-to-r from-cosmic-400 to-gold-400 bg-clip-text text-transparent">AstroLumina</span>
               </h1>
 
               <p className="text-lg md:text-xl text-cosmic-200 mb-4 max-w-2xl mx-auto font-display italic">
                 by Carmen Ilie
               </p>
 
-              <p className="text-xl md:text-2xl text-cosmic-100/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-l text-cosmic-100/80 mb-12 max-w-3xl mx-auto leading-relaxed font-display">
                 Deblochează secretele propriului destin prin înțelepciunea străveche a stelelor
               </p>
 

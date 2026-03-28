@@ -1,5 +1,18 @@
+name = "astrolumina"
+compatibility_flags = ["nodejs_compat"]
+
 [build]
-  node_version = "22"
+  command = "npm run build:cloudflare"
+  cwd = "."
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[pages_build]]
+  directory = "dist"
+
+[env.production]
+  name = "Astrolumina"
+
+[env.production.build]
+  command = "npm run build:cloudflare"

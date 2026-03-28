@@ -6,7 +6,7 @@ import ContactForm from './ContactForm';
 import PaymentForm from './PaymentForm';
 import FinalStep from './FinalStep';
 
-const PredictiveChartPage: React.FC = () => {
+const PredictiveChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
   const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
@@ -64,7 +64,7 @@ const PredictiveChartPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">
-      <Navbar isScrolled={true} lightTheme={false} />
+      <Navbar isScrolled={true} />
 
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../hooks/useLoading';
 import { ArrowRight, Clock, Star, Sparkles, Moon, Compass, Calendar } from 'lucide-react';
 
 const Services = () => {
@@ -12,13 +12,13 @@ const Services = () => {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setIsScrolled]);
 
   const services = [
     {
