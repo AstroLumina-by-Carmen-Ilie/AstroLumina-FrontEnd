@@ -47,7 +47,7 @@ AstroLumina/
 Creează un fișier `.env` în rădăcina proiectului:
 
 ```env
-VITE_DEBUG_MODE=false
+VITE_NODE_ENV=development
 
 VITE_ASTROLOGICAL_API_URL=http://localhost:3031
 VITE_PAYMENT_API_URL=http://localhost:3032
