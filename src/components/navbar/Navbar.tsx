@@ -3,11 +3,11 @@ import { NavbarProps } from './NavbarCommon';
 import DesktopNavbar from './DesktopNavbar';
 import MobileNavbar from './MobileNavbar';
 
-const Navbar: React.FC<NavbarProps> = ({ isScrolled, lightTheme = false }) => {
+const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   return (
     <>
-      <DesktopNavbar isScrolled={isScrolled} lightTheme={lightTheme} />
-      <MobileNavbar isScrolled={isScrolled} lightTheme={lightTheme} />
+      <DesktopNavbar isScrolled={isScrolled} />
+      <MobileNavbar isScrolled={isScrolled} />
     </>
   );
 };

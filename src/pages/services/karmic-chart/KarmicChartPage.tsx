@@ -6,7 +6,7 @@ import ContactForm from './ContactForm';
 import PaymentForm from './PaymentForm';
 import FinalStep from './FinalStep';
 
-const KarmicChartPage: React.FC = () => {
+const KarmicChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -63,13 +63,16 @@ const KarmicChartPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">
-      <Navbar isScrolled={true} lightTheme={false} />
+      <Navbar isScrolled={true} />
 
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Interpretare Hartă Karmică
+            Astrograma Natală și Karmică
           </h1>
+          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+            Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -78,12 +81,35 @@ const KarmicChartPage: React.FC = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Explorează Ciclurile Karmice
+                  Astrograma Natală și Karmică
                 </h2>
-                <p className="text-cosmic-200/80 leading-relaxed mb-8">
-                  Descoperă lecțiile sufletului tău și ciclurile karmice prin prisma astrologiei.
-                  Acest proces te va ghida în înțelegerea pattern-urilor karmice din viața ta.
-                </p>
+                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                  <p>
+                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
+                  </p>
+                  <p>
+                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>direcția ta profesională și resursele interioare</li>
+                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
+                    <li>cum îți poți valorifica talentele și câștiga bani în mod benefic</li>
+                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
+                    <li>linia destinului și misiunea ta personală</li>
+                  </ul>
+                  <p>
+                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
+                  </p>
+                  <p>
+                    Include și analiza transgenerațională a hărții tale.
+                  </p>
+                  <p>
+                    Consultația este oferită prin Zoom.
+                  </p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                  </p>
+                </div>
 
                 <div className="space-y-3">
                   {[

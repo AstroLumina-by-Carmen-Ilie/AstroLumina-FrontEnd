@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 import LoadingAnimation from '../components/animations/LoadingAnimation';
 
 interface LoadingContextType {
@@ -8,6 +8,8 @@ interface LoadingContextType {
 }
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
+
+export { LoadingContext };
 
 export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,12 +34,4 @@ export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       </div>
     </LoadingContext.Provider>
   );
-};
-
-export const useLoading = () => {
-  const context = useContext(LoadingContext);
-  if (!context) {
-    throw new Error('useLoading must be used within a LoadingProvider');
-  }
-  return context;
 };

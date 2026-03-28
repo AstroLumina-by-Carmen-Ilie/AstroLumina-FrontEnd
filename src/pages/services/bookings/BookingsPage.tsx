@@ -3,7 +3,7 @@ import Navbar from '../../../components/navbar/Navbar';
 import BookingWidget from './BookingsWidget';
 import BookingPaymentForm from './BookingPaymentForm';
 
-const BookingsPage: React.FC = () => {
+const BookingsPage = () => {
   const [currentStep, setCurrentStep] = useState(2);
   const [paymentStatus, setPaymentStatus] = useState<boolean>(false);
 
@@ -27,7 +27,7 @@ const BookingsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-midnight-950 text-white">
-      <Navbar isScrolled={true} lightTheme={false} />
+      <Navbar isScrolled={true} />
 
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">

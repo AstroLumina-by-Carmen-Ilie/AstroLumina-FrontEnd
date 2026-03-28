@@ -2,8 +2,58 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import ScrollToTopButton from './components/scroll/ScrollToTopButton';
-import { useLoading } from './contexts/LoadingContext';
+import { useLoading } from './hooks/useLoading';
+import { ConstelationEvent } from './types';
 import { Star, Sparkles, Moon, Compass, Calendar, ArrowRight, ChevronDown, Check, Package, Users } from 'lucide-react';
+
+const generateConstelatiiEvents = (): ConstelationEvent[] => {
+  const events: ConstelationEvent[] = [];
+  const months = [
+    { year: 2027, month: 3 },
+    { year: 2027, month: 4 },
+    { year: 2027, month: 5 },
+    { year: 2027, month: 6 },
+    { year: 2027, month: 7 },
+    { year: 2027, month: 8 },
+    { year: 2027, month: 9 },
+    { year: 2027, month: 10 },
+    { year: 2027, month: 11 },
+    { year: 2027, month: 12 },
+    { year: 2028, month: 1 },
+    { year: 2028, month: 2 },
+    { year: 2028, month: 3 },
+    { year: 2028, month: 4 },
+    { year: 2028, month: 5 },
+    { year: 2028, month: 6 },
+    { year: 2028, month: 7 },
+    { year: 2028, month: 8 },
+    { year: 2028, month: 9 },
+    { year: 2028, month: 10 },
+    { year: 2028, month: 11 },
+    { year: 2028, month: 12 },
+  ];
+
+  const monthNames = [
+    'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
+    'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
+  ];
+
+  months.forEach(({ year, month }) => {
+    const day = Math.floor(Math.random() * (25 - 20 + 1)) + 20;
+    const date = new Date(year, month - 1, day);
+    events.push({
+      title: `Constelații ${monthNames[month - 1]}`,
+      date,
+      time: '19:00 - 22:00',
+      location: 'Online (Zoom)',
+      price: '120 RON',
+    });
+  });
+
+  return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+};
+
+const constelatiiEvents = generateConstelatiiEvents();
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,13 +65,13 @@ function App() {
     startLoading();
     const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isScrolled]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -39,7 +89,7 @@ function App() {
     sections.forEach((section) => observerRef.current?.observe(section));
 
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [visibleSections]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -60,34 +110,32 @@ function App() {
       badge: 'Gratuit',
     },
     {
-      title: 'Lumina Natală',
-      description: 'Descoperă-ți potențialul și provocările prin analiza detaliată a hărții tale astrologice de naștere.',
+      title: 'Faza Lunara',
+      description: 'Descopera influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
+      icon: <Moon className="w-7 h-7" />,
+      link: '/servicii/faza-lunara',
+      badge: 'Gratuit',
+    },
+    {
+      title: 'Astrograma Natală și Karmică',
+      description: 'Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!',
       icon: <Sparkles className="w-7 h-7" />,
       link: '/servicii/lumina-natala',
+      price: '75€',
     },
     {
-      title: 'Lumina Karmică',
-      description: 'Explorează ciclurile karmice și lecțiile sufletului tău prin prisma astrologiei karmice.',
-      icon: <Moon className="w-7 h-7" />,
-      link: '/servicii/lumina-karmica',
-    },
-    {
-      title: 'Previziuni și Tranzituri',
-      description: 'Explorează influențele astrologice viitoare și pregătește-te pentru oportunitățile ce urmează.',
-      icon: <Compass className="w-7 h-7" />,
-      link: '/servicii/lumina-previzionala',
-    },
-    {
-      title: 'Astrologie Relationala',
-      description: 'Înțelege compatibilitatea și dinamica relațiilor tale prin analiza sinastriei.',
+      title: 'Astrograma Relațională',
+      description: 'Descoperă dinamica relației tale!',
       icon: <Star className="w-7 h-7" />,
       link: '/servicii/lumina-relationala',
+      price: '75€',
     },
     {
-      title: 'Consultații Astrologice',
-      description: 'Programează o consultație personalizată pentru ghidare detaliată pe tema care te interesează.',
-      icon: <Calendar className="w-7 h-7" />,
-      link: '/servicii/consultatii',
+      title: 'Astrograma Previzională',
+      description: 'Sesiune live în care studiem predispozițiile tale pe următorul an',
+      icon: <Compass className="w-7 h-7" />,
+      link: '/servicii/lumina-previzionala',
+      price: '75€',
     },
   ];
 
@@ -138,15 +186,15 @@ function App() {
           <div className="relative z-10 container mx-auto px-6 py-32 text-center">
             <div className="animate-fade-in">
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-                <span className="text-white">Astro</span>
-                <span className="bg-gradient-to-r from-cosmic-400 to-gold-400 bg-clip-text text-transparent">Lumina</span>
+                {/* <span className="text-white">AstroLumina</span> */}
+                <span className="bg-gradient-to-r from-cosmic-400 to-gold-400 bg-clip-text text-transparent">AstroLumina</span>
               </h1>
 
               <p className="text-lg md:text-xl text-cosmic-200 mb-4 max-w-2xl mx-auto font-display italic">
                 by Carmen Ilie
               </p>
 
-              <p className="text-xl md:text-2xl text-cosmic-100/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-l text-cosmic-100/80 mb-12 max-w-3xl mx-auto leading-relaxed font-display">
                 Deblochează secretele propriului destin prin înțelepciunea străveche a stelelor
               </p>
 
@@ -197,32 +245,71 @@ function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <Link
-                  key={index}
-                  to={service.link}
-                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
-                >
-                  {service.badge && (
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
-                      {service.badge}
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {services.slice(0, 2).map((service, index) => (
+                  <Link
+                    key={index}
+                    to={service.link}
+                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  >
+                    {service.badge && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                        {service.badge}
+                      </span>
+                    )}
+                    {service.price && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                        {service.price}
+                      </span>
+                    )}
+                    <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                      Află mai multe <ArrowRight className="w-3 h-3" />
                     </span>
-                  )}
-                  <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
-                    {service.icon}
-                  </div>
-                  <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
-                    Află mai multe <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {services.slice(2, 5).map((service, index) => (
+                  <Link
+                    key={index}
+                    to={service.link}
+                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  >
+                    {service.badge && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                        {service.badge}
+                      </span>
+                    )}
+                    {service.price && (
+                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                        {service.price}
+                      </span>
+                    )}
+                    <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                      Află mai multe <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -239,40 +326,57 @@ function App() {
           }`}
         >
           <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-              <div>
-                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
-                  Produse Digitale
-                </h2>
-                <p className="text-cosmic-300 text-lg max-w-xl">
-                  Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
-                </p>
-              </div>
-              <Link
-                to="/produse"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
-              >
-                Vezi toate produsele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                Produse Digitale
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
+                Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {[
-                { title: 'Ghidul lui Saturn în Berbec', price: '150 RON', type: 'Ghid digital' },
-                { title: 'Soarele în Harta Natală', price: '120 RON', type: 'Ghid digital' },
-                { title: 'Ce înseamnă Mercur Retrograd', price: '80 RON', type: 'Ghid digital' },
+                { title: 'Soarele, strălucirea ta', price: 'Gratuit', type: 'PDF', badge: 'Gratuit', description: 'Prin care descoperi semnificația zodiei tale' },
+                { title: 'Ghid Saturn în Berbec', price: '15€', type: 'Ghid digital', description: 'Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn' },
               ].map((product, index) => (
-                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
-                  <div className="w-10 h-10 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4">
+                <Link
+                  key={index}
+                  to="/produse"
+                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                  {product.badge ? (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-gold-500/20 text-gold-400 rounded-full border border-gold-500/30">
+                      {product.badge}
+                    </span>
+                  ) : (
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold bg-cosmic-500/20 text-cosmic-300 rounded-full border border-cosmic-500/30">
+                      {product.price}
+                    </span>
+                  )}
+                  <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 mb-4 group-hover:bg-cosmic-500/30 transition-colors duration-300">
                     <Package className="w-5 h-5" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors">{product.title}</h3>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                    <span className="text-gold-400 font-semibold">{product.price}</span>
-                    <span className="text-xs text-cosmic-400 bg-white/5 px-2.5 py-1 rounded-full">{product.type}</span>
-                  </div>
-                </div>
+                  <h3 className="font-display text-xl font-semibold text-white mb-2 group-hover:text-cosmic-300 transition-colors duration-300">
+                    {product.title}
+                  </h3>
+                  <p className="text-cosmic-300/80 text-sm leading-relaxed mb-4">
+                    {product.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-cosmic-400 text-sm font-medium group-hover:gap-2 transition-all duration-300">
+                    Vezi produsul <ArrowRight className="w-3 h-3" />
+                  </span>
+                </Link>
               ))}
+            </div>
+
+            <div className="text-center">
+              <Link
+                to="/produse"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
+              >
+                Vezi mai multe produse <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </div>
         </section>
@@ -291,45 +395,48 @@ function App() {
           <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] top-0 left-0 opacity-15"></div>
 
           <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-              <div>
-                <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
-                  Evenimente
-                </h2>
-                <p className="text-cosmic-300 text-lg max-w-xl">
-                  Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
-                </p>
-              </div>
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-3 text-white">
+                Evenimente
+              </h2>
+              <p className="text-cosmic-300 text-lg max-w-xl mx-auto">
+                Workshopuri și sesiuni de grup pentru explorarea energiilor cosmice
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {(() => {
+                const now = new Date();
+                const upcomingEvents = constelatiiEvents
+                  .filter(event => event.date >= now)
+                  .slice(0, 2);
+                return upcomingEvents.map((event, index) => (
+                  <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="font-display text-lg font-semibold text-white group-hover:text-cosmic-300 transition-colors">{event.title}</h3>
+                      <span className="text-gold-400 font-semibold flex-shrink-0 ml-4">{event.price}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-cosmic-400" />
+                        <span>{event.date.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-4 h-4 text-cosmic-400" />
+                        <span>{event.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+            <div className="text-center">
               <Link
                 to="/evenimente"
-                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors mt-4 md:mt-0 cursor-pointer"
+                className="group inline-flex items-center gap-2 text-cosmic-400 hover:text-white text-sm font-medium transition-colors cursor-pointer"
               >
                 Vezi toate evenimentele <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { title: 'Constelații Aprilie', date: '15 Aprilie 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
-                { title: 'Constelații Mai', date: '20 Mai 2026', time: '19:00 - 22:00', location: 'Online (Zoom)', price: '120 RON' },
-              ].map((event, index) => (
-                <div key={index} className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-cosmic-300 transition-colors">{event.title}</h3>
-                    <span className="text-gold-400 font-semibold flex-shrink-0 ml-4">{event.price}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 text-cosmic-400" />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users className="w-4 h-4 text-cosmic-400" />
-                      <span>{event.location}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>

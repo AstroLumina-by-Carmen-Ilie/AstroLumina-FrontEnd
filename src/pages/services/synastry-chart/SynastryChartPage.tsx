@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import Navbar from "../../../components/navbar/Navbar";
-import { BirthDataPayload, UserInfo, ContactInfo } from "../../../types";
-import BirthDataForm from "./BirthDataForm";
-import ContactForm from "./ContactForm";
-import PaymentForm from "./PaymentForm";
-import FinalStep from "./FinalStep";
+import React, { useState } from 'react';
+import Navbar from '../../../components/navbar/Navbar';
+import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types';
+import BirthDataForm from './BirthDataForm';
+import ContactForm from './ContactForm';
+import PaymentForm from './PaymentForm';
+import FinalStep from './FinalStep';
 
-const NatalChartPage = () => {
+const SynastryChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [payload, setPayload] = useState<BirthDataPayload | null>(null);
+  const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
+  const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
@@ -20,9 +21,9 @@ const NatalChartPage = () => {
       case 1:
         return (
           <BirthDataForm
-            onNext={(payload, userInfo) => {
-              setPayload(payload);
-              setUserInfo(userInfo);
+            onNext={(firstPayload, secondPayload) => {
+              setFirstPayload(firstPayload);
+              setSecondPayload(secondPayload);
               setCurrentStep(2);
             }}
           />
@@ -50,8 +51,8 @@ const NatalChartPage = () => {
       case 4:
         return (
           <FinalStep
-            payload={payload!}
-            userInfo={userInfo!}
+            firstPayload={firstPayload!}
+            secondPayload={secondPayload!}
             contactInfo={contactInfo!}
             paymentStatus={paymentStatus!}
           />
@@ -68,11 +69,10 @@ const NatalChartPage = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Astrograma Natală și Karmică
+            Astrograma Relațională
           </h1>
           <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
-            Sesiune live în care aducem claritate și direcție prin înțelegerea
-            astrogramei tale!
+            Descoperă dinamiciile relației tale!
           </p>
         </div>
 
@@ -82,27 +82,28 @@ const NatalChartPage = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Astrograma Natală și Karmică
+                  Astrograma Relațională
                 </h2>
                 <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
                   <p>
-                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
+                    În această sesiune live, explorăm dinamicile profunde ale relației tale cu partenerul, părinții, copiii, prietenii sau orice altă persoană de interes.
                   </p>
                   <p>
-                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
+                    Această sesiune este pentru tine dacă îți dorești:
                   </p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>direcția ta profesională și resursele interioare</li>
-                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
-                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
-                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
-                    <li>linia destinului și misiunea ta personală</li>
+                    <li>Să înțelegi tiparele și dinamicile subtile ale relației</li>
+                    <li>Să afli care este potențialul vostru împreună</li>
+                    <li>Să aduci claritate asupra punctelor de vulnerabilitate</li>
+                    <li>Să clarifici care sunt lecțiile pe care le puteți învăța împreună</li>
+                    <li>Să înțelegi ce rol aveți unul în evoluția celuilalt</li>
+                    <li>Să cunoști gradul vostru de compatibilitate și căile de evoluție</li>
                   </ul>
                   <p>
-                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
+                    Astrologia nu oferă verdicte de compatibilitate, ci îți arată natura relației: ce vă apropie, ce vă provoacă, ce este necesar pentru ca relația să se maturizeze în mod armonios.
                   </p>
                   <p>
-                    Include și analiza transgenerațională a hărții tale.
+                    Poți solicita o Astrogramă Relațională pentru orice tip de relație - romantică, familială, profesională sau de prietenie.
                   </p>
                   <p>
                     Consultația este oferită prin Zoom.
@@ -110,31 +111,32 @@ const NatalChartPage = () => {
                   <p>
                     Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
                   </p>
+                  <p>
+                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval, notează mijlocul intervalului. Dacă ora este complet necunoscută, folosește 12:00 (PM).
+                  </p>
                 </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: "Date naștere" },
-                    { num: 2, label: "Date contact" },
-                    { num: 3, label: "Plată" },
-                    { num: 4, label: "Rezultat" },
+                    { num: 1, label: 'Date naștere ambii' },
+                    { num: 2, label: 'Date contact' },
+                    { num: 3, label: 'Plată' },
+                    { num: 4, label: 'Rezultat' },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
-                            ? "step-active text-white"
+                            ? 'step-active text-white'
                             : step.num < currentStep
-                              ? "step-completed text-white"
-                              : "step-pending text-cosmic-400"
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
                         }`}
                       >
-                        {step.num < currentStep ? "✓" : step.num}
+                        {step.num < currentStep ? '✓' : step.num}
                       </div>
-                      <span
-                        className={`text-sm ${step.num === currentStep ? "text-white" : "text-cosmic-400"}`}
-                      >
+                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
                         {step.label}
                       </span>
                     </div>
@@ -152,13 +154,13 @@ const NatalChartPage = () => {
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step === currentStep
-                            ? "step-active text-white"
+                            ? 'step-active text-white'
                             : step < currentStep
-                              ? "step-completed text-white"
-                              : "step-pending text-cosmic-400"
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
                         }`}
                       >
-                        {step < currentStep ? "✓" : step}
+                        {step < currentStep ? '✓' : step}
                       </div>
                     ))}
                   </div>
@@ -180,4 +182,4 @@ const NatalChartPage = () => {
   );
 };
 
-export default NatalChartPage;
+export default SynastryChartPage;

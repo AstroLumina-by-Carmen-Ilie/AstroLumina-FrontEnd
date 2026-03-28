@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralPositions } from '../../../types';
 import { calculateKarmicChart } from '../utilities/astrologicalCalculations';
 import { generateKarmicChartPDF } from '../../../templates/pdf/karmicChart';
