@@ -26,12 +26,16 @@
       content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' 
-          https://js.stripe.com;
+          https://js.stripe.com
+          https://static.cloudflareinsights.com;
         style-src 'self' 'unsafe-inline' 
           https://fonts.googleapis.com;
         font-src 'self' 
           https://fonts.gstatic.com;
         img-src 'self' data: https:;
+        frame-src 
+          https://js.stripe.com
+          https://m.stripe.com;
         connect-src 'self' 
           http://localhost:3031 
           https://astrolumina-astrologyapi.onrender.com 
