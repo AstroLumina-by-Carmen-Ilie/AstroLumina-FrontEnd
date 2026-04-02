@@ -11,6 +11,12 @@ const formatTime = (date: Date): string => {
   return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
 
+const formatDegreesMinutes = (decimal: number): string => {
+  const degrees = Math.floor(Math.abs(decimal));
+  const minutes = Math.round((Math.abs(decimal) - degrees) * 60);
+  return `${degrees}° ${minutes.toString().padStart(1)}'`;
+};
+
 const ResultsDisplay: React.FC<{
   result: {astral_elements: AstralElements, astral_houses: AstralElements};
   userInfo: {
@@ -97,9 +103,8 @@ const ResultsDisplay: React.FC<{
               <tr className="bg-white/5">
                 <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Nume</th>
                 <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Semn</th>
-                {activeTab === 2 ? (
-                  <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
-                ) : (
+                <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
+                {activeTab !== 2 && (
                   <>
                     <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Casa</th>
                     <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Retrograd</th>
@@ -124,11 +129,10 @@ const ResultsDisplay: React.FC<{
                     <span className="mr-2 font-semibold">{info.emoji}</span>
                     {info.sign}
                   </td>
-                  {activeTab === 2 ? (
-                    <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
-                      {info.position.toFixed(1)} °
-                    </td>
-                  ) : (
+                  <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
+                    {formatDegreesMinutes(info.position)}
+                  </td>
+                  {activeTab !== 2 && (
                     <>
                       <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.house}

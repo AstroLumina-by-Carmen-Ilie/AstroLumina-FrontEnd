@@ -18,7 +18,6 @@ export const calculateAstralPositions = async (language: string, payload: BirthD
 
     const response = await axios.request(options);
 
-    console.log('API Response:', response.data);
     return {
       astral_elements: response.data.cosmic_elements,
       astral_houses: response.data.cosmic_houses
