@@ -9,6 +9,7 @@ interface DateInputProps {
   onChange: (date: Date | null) => void;
   placeholder?: string;
   id?: string;
+  required?: boolean;
 }
 
 const MONTHS = [
@@ -19,7 +20,7 @@ const MONTHS = [
 const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: 120 }, (_, i) => CURRENT_YEAR - i);
 
-const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'Selecteaz\u0103 data...', id }) => {
+const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'Selecteaz\u0103 data...', id, required }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value ? format(value, 'dd/MM/yyyy') : '');
   const [calendarMonth, setCalendarMonth] = useState<Date>(value || new Date());
@@ -135,6 +136,7 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
+          required={required}
           className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none transition-colors ${
             isOpen ? 'border-cosmic-500 ring-1 ring-cosmic-500' : 'border-white/15 hover:border-white/25'
           }`}

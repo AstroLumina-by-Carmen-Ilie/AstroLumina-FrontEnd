@@ -297,7 +297,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">Nume complet</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">
+          Nume complet
+        </label>
         <input
           type="text"
           id="fullName"
@@ -311,29 +313,37 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">Data nașterii</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">
+          Data nașterii
+        </label>
         <DateInput
           value={formState.birthDate}
           onChange={(date) => handleFormChange('birthDate', date)}
           placeholder="Selectează data..."
           id="birthDate"
+          required
         />
         {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">Ora nașterii</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">
+          Ora nașterii
+        </label>
         <TimeInput
           value={formState.birthHour}
           onChange={(date) => handleFormChange('birthHour', date)}
           placeholder="Selectează ora..."
           id="birthHour"
+          required
         />
         {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">Țara nașterii</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">
+          Țara nașterii
+        </label>
         <Select
           id="birthCountry"
           options={options.countryOptions}
@@ -348,7 +358,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">Județ/Regiune</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">
+          Județ/Regiune
+        </label>
         <Select
           id="birthCounty"
           options={options.stateOptions}

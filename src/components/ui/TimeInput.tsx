@@ -6,6 +6,7 @@ interface TimeInputProps {
   onChange: (date: Date | null) => void;
   placeholder?: string;
   id?: string;
+  required?: boolean;
 }
 
 const pad = (n: number) => n.toString().padStart(2, '0');
@@ -13,7 +14,7 @@ const pad = (n: number) => n.toString().padStart(2, '0');
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const MINUTES = Array.from({ length: 60 }, (_, i) => i);
 
-const TimeInput: React.FC<TimeInputProps> = ({ value, onChange, placeholder = 'Selecteaz\u0103 ora...', id }) => {
+const TimeInput: React.FC<TimeInputProps> = ({ value, onChange, placeholder = 'Selecteaz\u0103 ora...', id, required }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value ? `${pad(value.getHours())}:${pad(value.getMinutes())}` : '');
   const [selectedHour, setSelectedHour] = useState<number>(value?.getHours() ?? 0);
@@ -124,6 +125,7 @@ const TimeInput: React.FC<TimeInputProps> = ({ value, onChange, placeholder = 'S
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
+          required={required}
           className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none transition-colors ${
             isOpen ? 'border-cosmic-500 ring-1 ring-cosmic-500' : 'border-white/15 hover:border-white/25'
           }`}
