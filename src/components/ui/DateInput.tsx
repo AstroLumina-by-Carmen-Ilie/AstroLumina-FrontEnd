@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format, parse, isValid } from 'date-fns';
+import { ro } from 'date-fns/locale';
 import { Calendar, ChevronDown } from 'lucide-react';
 
 interface DateInputProps {
@@ -145,6 +146,11 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
 
       {isOpen && (
         <div className="absolute z-50 mt-2 w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
+          <style>{`
+            .rdp-month_grid { width: 100%; table-layout: fixed; border-spacing: 0; }
+            .rdp-month_grid td { padding: 0; }
+            .rdp-day_button { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+          `}</style>
           <div className="flex items-center gap-2 mb-3">
             <div className="relative flex-1">
               <select
@@ -177,18 +183,19 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
             selected={value || undefined}
             onDayClick={handleDayClick}
             month={calendarMonth}
+            locale={ro}
             showOutsideDays
             classNames={{
               months: 'flex flex-col',
               month: 'space-y-4',
               caption: 'hidden',
               nav: 'hidden',
-              table: 'w-full border-collapse space-y-1',
+              table: 'w-full table-fixed',
               head_row: 'flex',
-              head_cell: 'text-purple-400/60 rounded-md w-9 font-normal text-[0.8rem]',
-              row: 'flex w-full mt-2',
-              cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-              day: 'h-9 w-9 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer',
+              head_cell: 'text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center',
+              row: 'flex w-full mt-1',
+              cell: 'h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
+              day: 'h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer',
               day_selected: 'bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100',
               day_today: 'ring-1 ring-purple-400/50',
               day_outside: 'text-purple-400/40',
