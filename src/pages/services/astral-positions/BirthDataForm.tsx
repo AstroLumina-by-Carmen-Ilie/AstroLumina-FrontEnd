@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
-import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/themes/material_blue.css';
+import DateInput from '../../../components/ui/DateInput';
+import TimeInput from '../../../components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
@@ -312,26 +312,22 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">Data nașterii</label>
-        <Flatpickr
-          value={formState.birthDate || ''}
-          onChange={(date) => handleFormChange('birthDate', date[0])}
-          options={{ dateFormat: "d/m/Y", allowInput: true }}
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
+        <DateInput
+          value={formState.birthDate}
+          onChange={(date) => handleFormChange('birthDate', date)}
           placeholder="Selectează data..."
-          required
+          id="birthDate"
         />
         {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
       </div>
 
       <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">Ora nașterii</label>
-        <Flatpickr
-          value={formState.birthHour || ''}
-          onChange={(date) => handleFormChange('birthHour', date[0])}
-          options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, allowInput: true, minuteIncrement: 1 }}
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
+        <TimeInput
+          value={formState.birthHour}
+          onChange={(date) => handleFormChange('birthHour', date)}
           placeholder="Selectează ora..."
-          required
+          id="birthHour"
         />
         {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
       </div>
