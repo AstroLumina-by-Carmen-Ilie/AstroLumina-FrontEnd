@@ -111,4 +111,3 @@ npm run preview
 - Toate cheile secrete aparțin backend-urilor
 - CORS este configurat pe fiecare API
 - Rate limiting este activat pe API-uri
-
