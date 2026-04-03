@@ -107,35 +107,8 @@ npm run preview
 
 ## Securitate
 
-### 3. Poziții Astrale
-- Poziții planetare în timp real
-- Transituri și aspecte curente
-- Compatibilitate astrologică
-- Prognoze pe termen scurt
-
-### 4. Programări
-- Sistem de rezervare online
-- Integrare cu calendarul
-- Confirmări automate
-- Remindere pentru ședințe
-
-## Contribuții
-
-Suntem deschiși contribuțiilor! Te rugăm să urmezi acești pași:
-
-1. Fork repository-ul
-2. Creează un branch nou (`git checkout -b feature/îmbunătățire`)
-3. Fă modificările tale
-4. Rulează testele și linting-ul
-5. Commit modificările (`git commit -am 'Adaugă funcționalitate nouă'`)
-6. Push către branch (`git push origin feature/îmbunătățire`)
-7. Creează un Pull Request
-
-## Licență
-
-Acest proiect este proprietate privată și nu este disponibil sub o licență open-source.
-
-## Contact
-
-Pentru întrebări sau colaborări, te rugăm să ne contactezi prin pagina de contact a aplicației.
+- Nu expune niciodată chei secrete (`STRIPE_SK`) în codul frontend
+- Toate cheile secrete aparțin backend-urilor
+- CORS este configurat pe fiecare API
+- Rate limiting este activat pe API-uri
 
