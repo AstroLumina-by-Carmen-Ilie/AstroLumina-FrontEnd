@@ -9,6 +9,9 @@ import { LoadingProvider } from './contexts/LoadingContext';
 import AstralPositions from './pages/services/AstralPositions';
 import NatalChart from './pages/services/NatalChart';
 import KarmicChart from './pages/services/KarmicChart';
+import SynastryChart from './pages/services/SynastryChart';
+import PredictiveChart from './pages/services/PredictiveChart';
+import MoonPhase from './pages/services/MoonPhase';
 import Bookings from './pages/services/Bookings';
 import AboutMe from './pages/AboutMe';
 import Contact from './pages/Contact';
@@ -17,93 +20,33 @@ import Products from './pages/Products';
 import Events from './pages/Events';
 import NotFound from './pages/NotFound';
 
-// Declare the earlyLog property on the Window interface
-declare global {
-  interface Window {
-    earlyLog?: (message: string) => void;
-  }
-}
-
-// Use the early logging system if available
-const log = (() => {
-  let isLogging = false;
-  return (message: string) => {
-    if (isLogging) return; // Prevent recursive calls
-    isLogging = true;
-    try {
-      if (import.meta.env.VITE_DEBUG_MODE) {
-        console.log(message);
-        if (window.earlyLog) {
-          window.earlyLog(message);
-        }
-      }
-    } finally {
-      isLogging = false;
-    }
-  };
-})();
-
-// Global error handler to catch all errors
-window.onerror = (msg, url, line, column, error) => {
-  if (import.meta.env.VITE_DEBUG_MODE) {
-    console.error('Global error:', { msg, url, line, column, error });
-    log('Global error:' + msg + ' ' + url + ' ' + line + ' ' + column + ' ' + error)
-    if (error?.stack) {
-      console.error('Stack trace:', error.stack);
-      log('Stack trace:' + ' ' + error.stack)
-    }
-  }
-  return false;
-};
-
 const rootElement = document.getElementById('root');
-
-if (import.meta.env.VITE_DEBUG_MODE) {
-  log('⚛️ React initialization starting');
-}
 
 if (rootElement) {
   const root = createRoot(rootElement);
 
-  try {
-    root.render(
-      <React.StrictMode>
-        <LoadingProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<AstralPositions />} />
-              <Route path="/despre-mine" element={<NotFound />} />
-              <Route path="/contact" element={<NotFound />} />
-              <Route path="/servicii" element={<NotFound />} />
-              <Route path="/produse" element={<NotFound />} />
-              <Route path="/evenimente" element={<NotFound />} />
-              <Route path="/servicii/pozitia-astrelor" element={<NotFound />} />
-              <Route path="/servicii/pozitia-caselor" element={<NotFound />} />
-              <Route path="/servicii/lumina-natala" element={<NotFound />} />
-              <Route path="/servicii/lumina-karmica" element={<NotFound />} />
-              <Route path="/servicii/lumina-previzionala" element={<NotFound />} />
-              <Route path="/servicii/lumina-relationala" element={<NotFound />} />
-              <Route path="/servicii/consultatii" element={<NotFound />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        </LoadingProvider>
-      </React.StrictMode>
-    );
-    if (import.meta.env.VITE_DEBUG_MODE) {
-      log('✅ React rendered successfully');
-    }
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    const stackTrace = error instanceof Error ? error.stack : 'No stack trace available';
-    if (import.meta.env.VITE_DEBUG_MODE) {
-      log(`❌ React render error: ${errorMessage}`);
-      log(`Stack trace: ${stackTrace}`);
-      console.error('Full error object:', error);
-    }
-  }
-} else {
-  if (import.meta.env.VITE_DEBUG_MODE) {
-    log('❌ Root element not found');
-  }
+  root.render(
+    <React.StrictMode>
+      <LoadingProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<AstralPositions />} />
+            <Route path="/despre-mine" element={<NotFound />} />
+            <Route path="/contact" element={<NotFound />} />
+            <Route path="/servicii" element={<NotFound />} />
+            <Route path="/produse" element={<NotFound />} />
+            <Route path="/evenimente" element={<NotFound />} />
+            <Route path="/servicii/pozitia-astrelor" element={<NotFound />} />
+            <Route path="/servicii/faza-lunara" element={<NotFound />} />
+            <Route path="/servicii/lumina-natala" element={<NotFound />} />
+            <Route path="/servicii/lumina-karmica" element={<NotFound />} />
+            <Route path="/servicii/lumina-relationala" element={<NotFound />} />
+            <Route path="/servicii/lumina-previzionala" element={<NotFound />} />
+            <Route path="/servicii/consultatii" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </LoadingProvider>
+    </React.StrictMode>
+  );
 }

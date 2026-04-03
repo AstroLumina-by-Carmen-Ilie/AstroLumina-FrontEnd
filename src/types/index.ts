@@ -1,7 +1,15 @@
+export interface ConstelationEvent {
+  title: string;
+  date: Date;
+  time: string;
+  location: string;
+  price: string;
+}
+
 export interface FormErrors {
     [key: string]: string;
 }
-    
+
 export interface SelectOption {
     value: string;
     label: string;

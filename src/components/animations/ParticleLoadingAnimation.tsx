@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-const ParticleLoadingAnimation: React.FC = () => {
+const ParticleLoadingAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

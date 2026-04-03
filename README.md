@@ -1,137 +1,111 @@
-# AstroLumina 🌟
+# AstroLumina
 
-AstroLumina este o aplicație web modernă dedicată serviciilor de astrologie, oferind o platformă interactivă pentru explorarea pozițiilor astrale, crearea de hărți natale și karmice, și conectarea cu pasionații de astrologie. Construită cu accent pe accesibilitate și experiența utilizatorului, oferă un set complet de instrumente pentru atât începători cât și astrologi experimentați.
+Servicii profesionale de astrologie — hărți natale, hărți karmice, consultații și previziuni personalizate.
 
-## Caracteristici
+## Arhitectură
 
-- **Hărți Natale**: Calcularea și vizualizarea hărților natale detaliate
-- **Hărți Karmice**: Analiza pozițiilor karmice și a influențelor spirituale
-- **Poziții Astrale**: Determinarea pozițiilor planetare în timp real
-- **Programări**: Sistem de rezervări integrate cu Cal.com
-- **Plăți Online**: Procesare securizată a plăților cu Stripe
-- **Generare PDF**: Exportarea hărților în format PDF profesional
-- **Interfață Întunecată**: Design prietenos pentru utilizare nocturnă
-- **Responsive**: Optimizat complet pentru desktop și dispozitive mobile
-- **Multilingv**: Suport pentru limba română și engleză
+```
+AstroLumina/
+├── AstroLumina-Frontend/       # React SPA (port 5173)
+├── AstroLumina-AstrologyAPI/   # Express API (port 3031)
+├── AstroLumina-PaymentAPI/     # Stripe API (port 3032)
+└── AstroLumina-BookingAPI/     # Cal.com API (port 3033)
+```
 
-## Tehnologii Utilizate
+## Tech Stack
 
-- **Frontend**:
-  - React 18 cu TypeScript pentru siguranță tipizată robustă
-  - Vite pentru dezvoltare ultra-rapidă
-  - Tailwind CSS pentru stilizare modernă și responsive
-  - React Router v6 pentru navigare fluidă
-  - Lucide React pentru iconuri moderne
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18 + TypeScript + Vite |
+| Styling | Tailwind CSS + Custom CSS (cosmic/glassmorphism) |
+| Routing | React Router v6 |
+| HTTP | Axios |
+| Payments | Stripe (Embedded Checkout) |
+| Booking | Cal.com (@calcom/embed-react) |
+| PDF | jsPDF + jspdf-autotable |
+| Date | flatpickr |
+| Location | country-state-city |
+| Icons | Lucide React |
+| Fonts | Playfair Display + Inter |
+| Deployment | Cloudflare Pages |
 
-- **Servicii & Integrări**:
-  - Stripe pentru procesarea plăților
-  - Cal.com pentru gestionarea programărilor
-  - jsPDF pentru generarea documentelor PDF
-  - Axios pentru cereri HTTP
-  - Moment.js pentru manipularea datelor
+## Servicii
 
-- **Dezvoltare**:
-  - ESLint pentru linting
-  - PostCSS pentru procesarea CSS
-  - TypeScript pentru tipizare statică
-  - Cloudflare Workers pentru deployment
+| Serviciu | Ruta | Descriere | Status |
+|----------|------|-----------|--------|
+| Poziția Astrelor | `/servicii/pozitia-astrelor` | Calculator gratuit poziții planetare | ✅ Activ |
+| Lumina Natală | `/servicii/lumina-natala` | Hartă natală + PDF | ✅ Activ |
+| Lumina Karmică | `/servicii/lumina-karmica` | Hartă karmică + PDF | ✅ Activ |
+| Consultații | `/servicii/consultatii` | Programare cu Cal.com | ✅ Activ |
+| Previziuni | `/servicii/lumina-previzionala` | Tranzituri și previziuni | 🔧 În dezvoltare |
+| Relațională | `/servicii/lumina-relationala` | Sinastrie și compatibilitate | 🔧 În dezvoltare |
 
-## Începutul Lucrului
+## Configurare
 
-### Cerințe Preliminare
+### Variabile de mediu
 
-- Node.js versiunea 22 (vezi `.nvmrc`)
-- npm sau yarn
+Creează un fișier `.env` în rădăcina proiectului:
+
+```env
+VITE_NODE_ENV=development
+
+VITE_ASTROLOGICAL_API_URL=http://localhost:3031
+VITE_PAYMENT_API_URL=http://localhost:3032
+VITE_BOOKING_API_URL=http://localhost:3033
+
+VITE_STRIPE_PK=pk_test_...
+```
 
 ### Instalare
 
-1. Clonează repository-ul
-```bash
-git clone https://github.com/username/AstroLumina.git
-cd AstroLumina
-```
-
-2. Instalează dependențele
 ```bash
 npm install
 ```
 
-3. Configurează variabilele de mediu
-```bash
-# Creează fișierul .env cu configurațiile tale
-# Vezi exemplele de variabile de mediu necesare în cod
-```
+### Dezvoltare
 
-4. Pornește serverul de dezvoltare
 ```bash
 npm run dev
 ```
 
-5. Construiește pentru producție
+### Build producție
+
 ```bash
 npm run build
-```
-
-6. Previzualizează build-ul de producție
-```bash
 npm run preview
 ```
 
-## Script-uri Disponibile
+## Structura API-urilor
 
-- `npm run dev` - Pornește serverul de dezvoltare
-- `npm run build` - Construiește pentru producție
-- `npm run preview` - Previzualizează build-ul de producție
-- `npm run lint` - Rulează ESLint pentru verificarea codului
+### AstrologyAPI (3031)
+- `POST /api/v2/:lang/birth-data` — Date complete naștere
+- `POST /api/v2/:lang/astral-data` — Date astrale filtrate
+- `POST /api/v2/:lang/astral-data/:type` — Date filtrate pe tip (natal/karmic)
+- `POST /api/v2/:lang/astral-chart` — SVG hartă astrologică
+- `GET /health` — Health check
 
-## Structura Proiectului
+### PaymentAPI (3032)
+- `POST /create-checkout-session/:product` — Creare sesiune checkout Stripe
+- `GET /session-status?session_id=` — Verificare status plată
+- `GET /products` — Lista produse disponibile
+- `GET /health` — Health check
 
-```
-AstroLumina/
-├── src/
-│   ├── components/                # Componente UI reutilizabile
-│   │   ├── animations/            # Animații de încărcare
-│   │   ├── navbar/                # Componente pentru navigare
-│   │   └── scroll/                # Componente pentru scroll
-│   ├── pages/                     # Pagini principale
-│   │   ├── AboutMe                # Pagina "Despre mine"
-│   │   ├── Contact                # Pagina de contact
-│   │   ├── Events                 # Pagina evenimente
-│   │   ├── NotFound               # Pagina 404
-│   │   ├── Products               # Pagina produse
-│   │   ├── Services               # Pagina servicii principale
-│   │   └── services/              # Pagini pentru servicii detaliate
-│   │       ├── AstralPositions    # Poziții astrale
-│   │       ├── Bookings           # Programări
-│   │       ├── KarmicChart        # Hartă karmică
-│   │       ├── NatalChart         # Hartă natală
-│   │       ├── astral-positions/  # Componente pentru poziții astrale
-│   │       ├── bookings/          # Componente pentru programări
-│   │       ├── karmic-chart/      # Componente pentru hartă karmică
-│   │       ├── natal-chart/       # Componente pentru hartă natală
-│   │       └── utilities/         # Funcții utilitare pentru servicii
-│   ├── constants/                 # Constante (astrologie)
-│   ├── contexts/                  # Context React
-│   ├── styles/                    # Stiluri globale și teme
-│   ├── templates/                 # Template-uri PDF
-│   ├── types/                     # Definiții TypeScript
-│   └── utils/                     # Funcții utilitare
-└── public/                        # Assets statice
-```
+### BookingAPI (3033)
+- `GET /api/event-types` — Tipuri de evenimente Cal.com
+- `GET /api/bookings` — Lista rezervări
+- `POST /api/bookings` — Creare rezervare
+- `GET /api/availability/slots` — Sloturi disponibile
+- `GET /health` — Health check
 
-## Servicii Oferite
+## Design System
 
-### 1. Hartă Natală
-- Calcularea pozițiilor planetare la naștere
-- Interpretarea aspectelor și caselor astrologice
-- Generarea PDF-ului cu harta completă
-- Consultanță personalizată
+- **Culori primare:** Cosmic Purple (#7C3AED) + Gold (#CA8A04)
+- **Background:** Midnight Dark (#0a0a1a)
+- **Fonturi:** Playfair Display (headings) + Inter (body)
+- **Stil:** Glassmorphism cu cosmic effects
+- **Animații:** Shooting stars, floating particles, shimmer effects
 
-### 2. Hartă Karmică
-- Analiza karmică detaliată
-- Poziții lunare și noduri
-- Interpretarea ciclurilor karmice
-- Recomandări spirituale
+## Securitate
 
 ### 3. Poziții Astrale
 - Poziții planetare în timp real

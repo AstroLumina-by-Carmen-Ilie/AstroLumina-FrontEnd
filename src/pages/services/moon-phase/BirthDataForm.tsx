@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
-import DateInput from '../../../components/ui/DateInput';
-import TimeInput from '../../../components/ui/TimeInput';
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/material_blue.css';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
 
@@ -297,9 +297,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">
-          Nume complet
-        </label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">Nume complet</label>
         <input
           type="text"
           id="fullName"
@@ -313,37 +311,33 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">
-          Data nașterii
-        </label>
-        <DateInput
-          value={formState.birthDate}
-          onChange={(date) => handleFormChange('birthDate', date)}
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">Data nașterii</label>
+        <Flatpickr
+          value={formState.birthDate || ''}
+          onChange={(date) => handleFormChange('birthDate', date[0])}
+          options={{ dateFormat: "d/m/Y", allowInput: true }}
+          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
           placeholder="Selectează data..."
-          id="birthDate"
           required
         />
         {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">
-          Ora nașterii
-        </label>
-        <TimeInput
-          value={formState.birthHour}
-          onChange={(date) => handleFormChange('birthHour', date)}
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">Ora nașterii</label>
+        <Flatpickr
+          value={formState.birthHour || ''}
+          onChange={(date) => handleFormChange('birthHour', date[0])}
+          options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, allowInput: true, minuteIncrement: 1 }}
+          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
           placeholder="Selectează ora..."
-          id="birthHour"
           required
         />
         {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">
-          Țara nașterii
-        </label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">Țara nașterii</label>
         <Select
           id="birthCountry"
           options={options.countryOptions}
@@ -358,9 +352,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">
-          Județ/Regiune
-        </label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">Județ/Regiune</label>
         <Select
           id="birthCounty"
           options={options.stateOptions}

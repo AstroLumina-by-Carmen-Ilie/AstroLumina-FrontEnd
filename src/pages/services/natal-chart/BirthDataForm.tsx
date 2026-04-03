@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types/astralChart';
+import { SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types';
 
 interface BirthDataFormProps {
   onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
@@ -258,164 +258,120 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
     }
   };
 
+  const selectStyles = {
+    control: (base: any) => ({
+      ...base,
+      backgroundColor: 'rgba(255,255,255,0.05)',
+      borderColor: 'rgba(255,255,255,0.15)',
+      borderRadius: '0.75rem',
+      color: 'white',
+      minHeight: '48px',
+      '&:hover': { borderColor: 'rgba(168,85,247,0.5)' },
+    }),
+    singleValue: (base: any) => ({ ...base, color: '#e9d5ff' }),
+    input: (base: any) => ({ ...base, color: '#e9d5ff' }),
+    menu: (base: any) => ({ ...base, backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem' }),
+    option: (base: any, state: any) => ({
+      ...base,
+      backgroundColor: state.isFocused ? 'rgba(168,85,247,0.2)' : 'transparent',
+      color: state.isFocused ? '#e9d5ff' : '#a78bfa',
+      '&:hover': { backgroundColor: 'rgba(168,85,247,0.2)' },
+    }),
+    placeholder: (base: any) => ({ ...base, color: '#6b7280' }),
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="fullName">Nume complet</label>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">Nume complet</label>
         <input
           type="text"
           id="fullName"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
+          placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange('fullName', e.target.value)}
           required
         />
-        {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+        {errors.fullName && <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>}
       </div>
-      
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthDate">Data nașterii</label>
+
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">Data nașterii</label>
         <Flatpickr
           value={formState.birthDate || ''}
           onChange={(date) => handleFormChange('birthDate', date[0])}
-          options={{
-            dateFormat: "d/m/Y",
-            allowInput: true,
-          }}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          options={{ dateFormat: "d/m/Y", allowInput: true }}
+          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
           placeholder="Selectează data..."
           required
         />
-        {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
+        {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
       </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthHour">Ora nașterii</label>
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">Ora nașterii</label>
         <Flatpickr
           value={formState.birthHour || ''}
           onChange={(date) => handleFormChange('birthHour', date[0])}
-          options={{
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            time_24hr: true,
-            allowInput: true,
-            minuteIncrement: 1,
-          }}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, allowInput: true, minuteIncrement: 1 }}
+          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 transition-colors"
           placeholder="Selectează ora..."
           required
         />
-        {errors.birthHour && <p className="text-red-500 text-sm mt-1">{errors.birthHour}</p>}
+        {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
       </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCountry">Țara nașterii</label>
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">Țara nașterii</label>
         <Select
           id="birthCountry"
           options={options.countryOptions}
           value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
           onChange={handleCountryChange}
-          className="w-full"
-          classNamePrefix="select"
-          styles={{
-            control: (base) => ({
-              ...base,
-              borderColor: '#d1d5db',
-              borderRadius: '0.5rem',
-              '&:hover': {
-                borderColor: '#d1d5db'
-              }
-            }),
-            option: (base, state) => ({
-              ...base,
-              backgroundColor: state.isFocused ? '#fde68a' : 'white',
-              color: '#1f2937',
-              '&:hover': {
-                backgroundColor: '#fde68a'
-              }
-            })
-          }}
+          styles={selectStyles}
           placeholder="Selectează țara..."
           isSearchable
           required
         />
-        {errors.birthCountry && <p className="text-red-500 text-sm mt-1">{errors.birthCountry}</p>}
+        {errors.birthCountry && <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>}
       </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCounty">Județ/Regiune</label>
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">Județ/Regiune</label>
         <Select
           id="birthCounty"
           options={options.stateOptions}
           value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
           onChange={handleCountyChange}
-          className="w-full"
-          classNamePrefix="select"
-          styles={{
-            control: (base) => ({
-              ...base,
-              borderColor: '#d1d5db',
-              borderRadius: '0.5rem',
-              '&:hover': {
-                borderColor: '#d1d5db'
-              }
-            }),
-            option: (base, state) => ({
-              ...base,
-              backgroundColor: state.isFocused ? '#fde68a' : 'white',
-              color: '#1f2937',
-              '&:hover': {
-                backgroundColor: '#fde68a'
-              }
-            })
-          }}
-          placeholder="Selectează județul/regiunea..."
+          styles={selectStyles}
+          placeholder="Selectează județul..."
           isSearchable
           isDisabled={!formState.birthCountry}
           required
         />
-        {errors.birthCounty && <p className="text-red-500 text-sm mt-1">{errors.birthCounty}</p>}
+        {errors.birthCounty && <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>}
       </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-800 mb-2" htmlFor="birthCity">Orașul nașterii</label>
+      <div>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCity">Orașul nașterii</label>
         <Select
           id="birthCity"
           options={options.cityOptions}
           value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
           onChange={handleCityChange}
-          className="w-full"
-          classNamePrefix="select"
-          styles={{
-            control: (base) => ({
-              ...base,
-              borderColor: '#d1d5db',
-              borderRadius: '0.5rem',
-              '&:hover': {
-                borderColor: '#d1d5db'
-              }
-            }),
-            option: (base, state) => ({
-              ...base,
-              backgroundColor: state.isFocused ? '#fde68a' : 'white',
-              color: '#1f2937',
-              '&:hover': {
-                backgroundColor: '#fde68a'
-              }
-            })
-          }}
+          styles={selectStyles}
           placeholder="Selectează orașul..."
           isSearchable
           isDisabled={!formState.birthCounty}
           required
         />
-        {errors.birthCity && <p className="text-red-500 text-sm mt-1">{errors.birthCity}</p>}
+        {errors.birthCity && <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-amber-500 text-white py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors"
+        className="w-full py-3 px-6 bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 text-white font-semibold rounded-xl shadow-glow-purple transition-all duration-300 cursor-pointer"
       >
         Pasul următor
       </button>

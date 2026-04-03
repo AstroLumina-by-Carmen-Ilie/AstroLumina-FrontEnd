@@ -1,120 +1,70 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   NavbarProps,
   getNavbarStyles,
   NavbarLogo,
-  NavbarLinks
-} from './NavbarCommon';
+  NavbarLinks,
+} from "./NavbarCommon";
+import { Menu, X } from "lucide-react";
 
-const MobileNavbar: React.FC<NavbarProps> = ({ lightTheme = false }) => {
+const MobileNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
-  const { mobileLinkClasses, logoClasses } = getNavbarStyles(lightTheme);
+  const { mobileLinkClasses, logoClasses } = getNavbarStyles();
 
-  const navClasses = lightTheme
-    ? `relative top-0 left-0 right-0 z-50 bg-white/50 ${!isOpen ? 'backdrop-blur-md' : ''}`
-    : `relative top-0 left-0 right-0 z-50 bg-black/50 ${!isOpen ? 'backdrop-blur-md' : ''}`;
-  const navSubdivClasses = `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isOpen ? 'backdrop-blur-md' : ''}`
-
-  const buttonClasses = lightTheme
-    ? "inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-amber-600 focus:outline-none"
-    : "inline-flex items-center justify-center p-2 rounded-md text-white hover:text-yellow-200 focus:outline-none";
-
-  const mobileMenuClasses = lightTheme
-    ? `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-auto left-0 right-0 z-50 bg-white/50 backdrop-blur-md`
-    : `${isOpen ? 'block' : 'hidden'} md:hidden fixed top-auto left-0 right-0 z-50 bg-black/50 backdrop-blur-md`;
+  const navClasses =
+    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-midnight-950/80 backdrop-blur-xl border-b border-white/5";
+  const buttonClasses =
+    "inline-flex items-center justify-center p-2 rounded-lg text-cosmic-200 hover:text-white hover:bg-white/10 transition-all cursor-pointer";
+  const mobileMenuClasses = `${isOpen ? "animate-slide-down" : "hidden"} md:hidden bg-midnight-950/95 backdrop-blur-xl border-t border-white/5`;
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsOpen(false);
-      }
+      if (window.innerWidth >= 768) setIsOpen(false);
     };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const buttonElement = document.querySelector('button[aria-expanded]');
       if (
-        navbarRef.current && 
-        !navbarRef.current.contains(event.target as Node) && 
-        isOpen &&
-        buttonElement !== event.target &&
-        !buttonElement?.contains(event.target as Node)
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target as Node) &&
+        isOpen
       ) {
         setIsOpen(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
   return (
     <div className="md:hidden">
-      <nav className={navClasses}>
-        <div className={navSubdivClasses}>
-          <div className="flex items-center justify-between min-h-[100px] px-4 py-4">
-            <div className="flex-1 flex justify-center">
-              <NavbarLogo logoClasses={logoClasses} />
-            </div>
+      <nav className={`${navClasses} ${isScrolled ? "shadow-lg" : ""}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            <NavbarLogo logoClasses={logoClasses} />
 
-            {/* Mobile menu button */}
-            <div className="flex-shrink-0">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className={buttonClasses}
-                aria-expanded={isOpen}
-              >
-                <span className="sr-only">
-                  {isOpen ? 'Închide meniul principal' : 'Deschide meniul principal'}
-                </span>
-                {!isOpen ? (
-                  <svg
-                    className="block h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="block h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={buttonClasses}
+              aria-expanded={isOpen}
+              aria-label={isOpen ? "Închide meniul" : "Deschide meniul"}
+            >
+              {isOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
 
         {/* Mobile menu */}
         <div ref={navbarRef} className={mobileMenuClasses}>
-          <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="px-4 py-3 space-y-1">
             <NavbarLinks linkClasses={mobileLinkClasses} />
           </div>
         </div>

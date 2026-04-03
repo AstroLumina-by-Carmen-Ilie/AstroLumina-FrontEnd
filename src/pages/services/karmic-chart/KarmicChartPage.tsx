@@ -1,135 +1,172 @@
 import React, { useState } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types/astralChart';
-import karmicChartIllustration from '../../../assets/astral-chart.svg';
+import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types';
 import BirthDataForm from './BirthDataForm';
 import ContactForm from './ContactForm';
 import PaymentForm from './PaymentForm';
 import FinalStep from './FinalStep';
 
-const KarmicChartPage: React.FC = () => {
+const KarmicChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
 
-  const handleBack = () => {
-    setCurrentStep(prev => Math.max(1, prev - 1));
-  };
+  const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        try {
-        return <BirthDataForm onNext={(payload, userInfo) => {
-          setPayload(payload)
-          setUserInfo(userInfo);
-          setCurrentStep(2);
-        }} />;
-        } catch (error) {
-          console.error('Error rendering birth data form:', error);
-          return <div>A apărut o eroare la afișarea formularului de date naștere</div>;
-        }
+        return (
+          <BirthDataForm
+            onNext={(payload, userInfo) => {
+              setPayload(payload);
+              setUserInfo(userInfo);
+              setCurrentStep(2);
+            }}
+          />
+        );
       case 2:
-        try {
-        return <ContactForm onNext={(contactInfo) => {
-          setContactInfo(contactInfo);
-          setCurrentStep(3);
-        }} onBack={handleBack} />;
-        } catch (error) {
-          console.error('Error rendering contact form:', error);
-          return <div>A apărut o eroare la afișarea formularului de contact</div>;
-        }
+        return (
+          <ContactForm
+            onNext={(contactInfo) => {
+              setContactInfo(contactInfo);
+              setCurrentStep(3);
+            }}
+            onBack={handleBack}
+          />
+        );
       case 3:
-        try {
-        return <PaymentForm onNext={(paymentStatus) => {
-          setPaymentStatus(paymentStatus);
-          setCurrentStep(4);
-        }} onBack={handleBack} />;
-        } catch (error) {
-          console.error('Error rendering payment form:', error);
-          return <div>A apărut o eroare la afișarea formularului de plată</div>;
-        }
+        return (
+          <PaymentForm
+            onNext={(paymentStatus) => {
+              setPaymentStatus(paymentStatus);
+              setCurrentStep(4);
+            }}
+            onBack={handleBack}
+          />
+        );
       case 4:
-        try {
-          return <FinalStep
+        return (
+          <FinalStep
             payload={payload!}
             userInfo={userInfo!}
             contactInfo={contactInfo!}
-            paymentStatus={paymentStatus!} />;
-        } catch (error) {
-          console.error('Error rendering final step:', error);
-          return <div>A apărut o eroare la afișarea pasului final</div>;
-        }
+            paymentStatus={paymentStatus!}
+          />
+        );
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100">
-      <Navbar isScrolled={true} lightTheme={true} />
+    <div className="min-h-screen bg-midnight-950 text-white">
+      <Navbar isScrolled={true} />
 
-      <main className="container mx-auto px-6 pt-24">
-        <h1 className="text-4xl font-bold text-center mb-8">Interpretare Hartă Karmică</h1>
+      <main className="container mx-auto px-6 pt-24 pb-16">
+        <div className="text-center mb-8">
+          <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
+            Astrograma Natală și Karmică
+          </h1>
+          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+            Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
+          </p>
+        </div>
+
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="glass-card overflow-hidden">
             <div className="flex flex-col md:flex-row">
-              {/* Left Panel - Service Description - Hidden on mobile */}
-              <div className="hidden md:block md:w-1/2 p-8 bg-gradient-to-br from-purple-50 to-indigo-50">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Descoperă Planul Tău Celestial
+              {/* Left Panel */}
+              <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
+                <h2 className="font-display text-3xl font-bold text-white mb-6">
+                  Astrograma Natală și Karmică
                 </h2>
-                <div className="mb-8">
-                  <img
-                    src={karmicChartIllustration}
-                    alt="Karmic Chart"
-                    className="w-full max-w-md mx-auto mb-6"
-                  />
-                </div>
-                <div className="prose prose-indigo">
-                  <p className="text-lg text-gray-600 mb-4">
-                    Descoperă planul tău astrologic unic cu interpretarea noastră completă a hărții karmice.
-                    Acest proces în mai mulți pași te va ghida în furnizarea detaliilor tale de naștere și în primirea interpretării tale personalizate.
+                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                  <p>
+                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
+                  </p>
+                  <p>
+                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>direcția ta profesională și resursele interioare</li>
+                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
+                    <li>cum îți poți valorifica talentele și câștiga bani în mod benefic</li>
+                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
+                    <li>linia destinului și misiunea ta personală</li>
+                  </ul>
+                  <p>
+                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
+                  </p>
+                  <p>
+                    Include și analiza transgenerațională a hărții tale.
+                  </p>
+                  <p>
+                    Consultația este oferită prin Zoom.
+                  </p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
                   </p>
                 </div>
-              </div>
-              {/* Right Panel - Form or Results */}
-              <div className="w-full md:w-1/2 p-4 sm:p-8">
-                {/* Mobile Title */}
-                <div className="block md:hidden mb-6 text-center">
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    Descoperă Planul Tău Celestial
-                  </h2>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <div className="mb-8">
-                    <div className="flex justify-between items-center mb-4">
-                      {[1, 2, 3, 4].map((step) => (
-                        <div
-                          key={step}
-                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            step === currentStep
-                              ? 'bg-amber-500 text-white'
-                              : step < currentStep
-                              ? 'bg-green-500 text-white'
-                              : 'bg-gray-200 text-gray-600'
-                          }`}
-                        >
-                          {step < currentStep ? '✓' : step}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="h-2 bg-gray-200 rounded-full">
+
+                <div className="space-y-3">
+                  {[
+                    { num: 1, label: 'Date naștere' },
+                    { num: 2, label: 'Date contact' },
+                    { num: 3, label: 'Plată' },
+                    { num: 4, label: 'Rezultat' },
+                  ].map((step) => (
+                    <div key={step.num} className="flex items-center gap-3">
                       <div
-                        className="h-full bg-amber-500 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
-                      />
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+                          step.num === currentStep
+                            ? 'step-active text-white'
+                            : step.num < currentStep
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
+                        }`}
+                      >
+                        {step.num < currentStep ? '✓' : step.num}
+                      </div>
+                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
+                        {step.label}
+                      </span>
                     </div>
-                  </div>
-                  {renderStep()}
+                  ))}
                 </div>
+              </div>
+
+              {/* Right Panel */}
+              <div className="w-full md:w-1/2 p-8">
+                {/* Mobile step indicator */}
+                <div className="md:hidden mb-8">
+                  <div className="flex justify-between items-center mb-4">
+                    {[1, 2, 3, 4].map((step) => (
+                      <div
+                        key={step}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+                          step === currentStep
+                            ? 'step-active text-white'
+                            : step < currentStep
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
+                        }`}
+                      >
+                        {step < currentStep ? '✓' : step}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="h-1 bg-white/10 rounded-full">
+                    <div
+                      className="h-full bg-gradient-to-r from-cosmic-500 to-cosmic-400 rounded-full transition-all duration-500"
+                      style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+                    />
+                  </div>
+                </div>
+
+                {renderStep()}
               </div>
             </div>
           </div>

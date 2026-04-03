@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralPositions } from '../../../types/astralChart';
+import { useState, useEffect } from 'react';
+import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralPositions } from '../../../types';
 import { calculateKarmicChart } from '../utilities/astrologicalCalculations';
 import { generateKarmicChartPDF } from '../../../templates/pdf/karmicChart';
 
@@ -57,47 +57,29 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
 
   return (
     <div className="space-y-6 text-center">
-      <div className="bg-amber-50 p-6 rounded-lg">
-        <h2 className="text-2xl font-bold text-amber-900 mb-4">Harta ta karmică este pregătită!</h2>
+      <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+        <h2 className="text-2xl font-bold text-cosmic-100 mb-4">Harta ta karmică este pregătită!</h2>
 
         <div className="space-y-2 text-left mb-6">
-          <p className="text-amber-700"><span className="font-semibold">Nume:</span> {userInfo.name}</p>
-          <p className="text-amber-700"><span className="font-semibold">Data nașterii:</span> {formatDate(userInfo.birthDate)}</p>
-          <p className="text-amber-700"><span className="font-semibold">Ora nașterii:</span> {formatTime(userInfo.birthHour)}</p>
-          <p className="text-amber-700"><span className="font-semibold">Locație:</span> {userInfo.location}</p>
+          <p className="text-cosmic-300"><span className="font-semibold text-cosmic-200">Nume:</span> {userInfo.name}</p>
+          <p className="text-cosmic-300"><span className="font-semibold text-cosmic-200">Data nașterii:</span> {formatDate(userInfo.birthDate)}</p>
+          <p className="text-cosmic-300"><span className="font-semibold text-cosmic-200">Ora nașterii:</span> {formatTime(userInfo.birthHour)}</p>
+          <p className="text-cosmic-300"><span className="font-semibold text-cosmic-200">Locație:</span> {userInfo.location}</p>
         </div>
 
         <div className="space-y-4">
-          <p className="text-amber-600">
+          <p className="text-cosmic-400 text-sm">
             Interpretarea personalizată a hărții tale karmice a fost generată. Apasă mai jos pentru a descărca interpretarea detaliată.
           </p>
 
           <button
             onClick={handleKarmicChart}
-            className="w-full bg-amber-500 text-white py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors flex items-center justify-center gap-2"
-            style={{
-              marginTop: '20px',
-              padding: '12px 20px',
-              backgroundColor: '#FFD700',
-              color: '#1a1a1a',
-              border: '1px solid #FFD700',
-              borderRadius: '4px',
-              cursor: isGettingData ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              fontWeight: '500',
-              boxShadow: '0 2px 4px rgba(255, 215, 0, 0.3)',
-              opacity: isGettingData ? 0.7 : 1
-            }}
             disabled={isGettingData}
+            className="w-full py-3 px-6 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 font-semibold rounded-xl shadow-glow-gold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGettingData ? (
               <svg
-                className="animate-spin"
-                width="16"
-                height="16"
+                className="animate-spin w-4 h-4"
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,9 +102,9 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Ce urmează?</h3>
-        <p className="text-gray-600">
+      <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+        <h3 className="text-xl font-semibold text-cosmic-100 mb-4">Ce urmează?</h3>
+        <p className="text-cosmic-300 text-sm">
           Ia-ți timp să parcurgi în liniște interpretarea hărții tale karmice. Dacă ai întrebări sau îți dorești o consultație mai detaliată,
           mă poți contacta oricând folosind datele de contact din PDF.
         </p>

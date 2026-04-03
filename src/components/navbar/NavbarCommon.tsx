@@ -1,36 +1,23 @@
 import { Link } from 'react-router-dom';
-import LogoImage from '/assets/icon/Logo_Transparent_Wide.png';
 
 export interface NavbarProps {
   isScrolled: boolean;
-  lightTheme?: boolean;
 }
 
-export const getNavbarStyles = (lightTheme: boolean) => {
+export const getNavbarStyles = () => {
   return {
-    navClasses: lightTheme
-      ? `relative top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-md `
-      : `relative top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md`,
-
-    linkClasses: lightTheme
-      ? "text-gray-800 hover:text-amber-600 px-4 py-3 rounded-md text-lg font-semibold transition-colors"
-      : "text-white hover:text-yellow-200 px-4 py-3 rounded-md text-lg font-semibold transition-colors",
-
-    mobileLinkClasses: lightTheme
-      ? "text-gray-800 hover:text-amber-600 block px-3 py-2 rounded-md text-base font-semibold transition-colors"
-      : "text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-semibold transition-colors",
-
-    logoClasses: lightTheme
-      ? "text-xl font-bold text-gray-800 hover:text-amber-600 transition-colors"
-      : "text-xl font-bold text-white hover:text-yellow-200 transition-colors",
+    navClasses: "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-midnight-950/80 backdrop-blur-xl border-b border-white/5",
+    linkClasses: "text-cosmic-200 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-white/10 cursor-pointer",
+    mobileLinkClasses: "text-cosmic-200 hover:text-white block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 hover:bg-white/10 cursor-pointer",
+    logoClasses: "font-display text-xl font-bold text-white hover:text-cosmic-300 transition-colors",
   };
 };
 
 export const NavbarLogo: React.FC<{ logoClasses: string }> = ({ logoClasses }) => (
-  <div className="flex-shrink-0 flex items-center justify-center">
-    <Link to="/" className="flex items-center">
+  <div className="flex-shrink-0 flex items-center">
+    <Link to="/" className="flex items-center gap-2 cursor-pointer">
       <span className={logoClasses}>
-        <img src={LogoImage} alt="AstroLumina" className="h-auto w-auto max-h-[130px]" />
+        AstroLumina
       </span>
     </Link>
   </div>
@@ -42,11 +29,11 @@ export const NavbarLinks: React.FC<{ linkClasses: string }> = ({ linkClasses }) 
       {/* <Link to="/servicii" className={linkClasses}>
         Servicii
       </Link>
-      <Link to="/evenimente" className={linkClasses}>
-        Evenimente
-      </Link>
       <Link to="/produse" className={linkClasses}>
         Produse
+      </Link>
+      <Link to="/evenimente" className={linkClasses}>
+        Evenimente
       </Link>
       <Link to="/despre-mine" className={linkClasses}>
         Despre mine

@@ -1,212 +1,183 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../hooks/useLoading';
+import { ArrowRight, Clock, Star, Sparkles, Moon, Compass, Calendar } from 'lucide-react';
 
 const Services = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { startLoading, stopLoading } = useLoading();
 
-  // Loading effect
   useEffect(() => {
     startLoading();
-    const timer = setTimeout(() => {
-      stopLoading();
-    }, 1500);
+    const timer = setTimeout(() => stopLoading(), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoading, stopLoading]);
 
-  // Scroll effect for navbar
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setIsScrolled]);
 
   const services = [
     {
-      id: 'astral-positions',
-      title: 'Poziția Planetelor în Timp Real',
-      description: 'Află pozițiile exacte ale planetelor în acest moment și cum acestea influențează energia zilei. Un instrument esențial pentru planificarea activităților și înțelegerea influențelor astrologice curente.',
+      id: 'pozitia-astrelor',
+      title: 'Poziția Astrelor',
+      description: 'Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.',
       details: [
         'Poziții planetare actualizate în timp real',
         'Interpretarea influențelor planetare curente',
         'Vizualizare grafică a pozițiilor planetare',
         'Informații despre semnele zodiacale curente',
-        'Acces gratuit 24/7'
+        'Acces gratuit 24/7',
       ],
       duration: 'Acces instant',
       price: 'Gratuit',
       link: '/servicii/pozitia-astrelor',
-      highlight: true
+      icon: <Star className="w-6 h-6" />,
+      highlight: true,
     },
     {
-      id: 'natal-chart',
-      title: 'Interpretare Hartă Natală',
-      description: 'O analiză detaliată a hărții tale astrologice de naștere, care dezvăluie aspectele cheie ale personalității tale, potențialul și provocările vieții.',
+      id: 'faza-lunara',
+      title: 'Faza Lunara',
+      description: 'Descoperă influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
       details: [
-        'Analiza detaliată a poziției Soarelui, Lunii și Ascendentului',
-        'Interpretarea plasamentelor planetare în case și semne',
-        'Identificarea aspectelor majore și impactul lor',
-        'Descoperirea nodurilor lunare și a destinului personal',
-        'Recomandări pentru dezvoltare personală bazate pe hartă'
+        'Informații despre faza lunii în timp real',
+        'Interpretarea influenței fazei lunare curente',
+        'Sfaturi pentru valorificarea energiei lunare',
+        'Ritualuri și practici pentru fiecare fază',
+        'Acces gratuit 24/7',
+      ],
+      duration: 'Acces instant',
+      price: 'Gratuit',
+      link: '/servicii/faza-lunara',
+      icon: <Moon className="w-6 h-6" />,
+      highlight: true,
+    },
+    {
+      id: 'astrograma-natala-karmica',
+      title: 'Astrograma Natală și Karmică',
+      description: 'Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!',
+      details: [
+        'Analiza detaliată a hărții tale astrologice de naștere',
+        'Interpretarea poziției Soarelui, Lunii și Ascendentului',
+        'Explorarea ciclurilor karmice și a lecțiilor de viață',
+        'Identificarea nodurilor lunare și a destinului personal',
+        'Recomandări pentru dezvoltare personală și spirituală',
       ],
       duration: '90 minute',
-      price: '350 RON',
-      link: '/servicii/lumina-natala'
+      price: '75€',
+      link: '/servicii/lumina-natala',
+      icon: <Sparkles className="w-6 h-6" />,
     },
     {
-      id: 'karmic-chart',
-      title: 'Interpretare Hartă Karmica',
-      description: 'O analiză detaliată a hărții tale astrologice de naștere, care dezvăluie aspectele cheie ale personalității tale, potențialul și provocările vieții.',
+      id: 'astrograma-relationala',
+      title: 'Astrograma Relațională',
+      description: 'Descoperă dinamica relației tale!',
       details: [
-        'Analiza detaliată a poziției Soarelui, Lunii și Ascendentului',
-        'Interpretarea plasamentelor planetare în case și semne',
-        'Identificarea aspectelor majore și impactul lor',
-        'Descoperirea nodurilor lunare și a destinului personal',
-        'Recomandări pentru dezvoltare personală bazate pe hartă'
-      ],
-      duration: '90 minute',
-      price: '350 RON',
-      link: '/servicii/lumina-karmica'
-    },
-    {
-      id: 'transit-forecast',
-      title: 'Previziuni și Tranzituri',
-      description: 'O explorare a influențelor astrologice curente și viitoare în viața ta, oferind ghidare pentru decizii importante și oportunități de creștere.',
-      details: [
-        'Analiza tranzitelor planetare curente',
-        'Previziuni pentru următoarele 12 luni',
-        'Identificarea perioadelor favorabile pentru diferite activități',
-        'Strategii pentru gestionarea provocărilor',
-        'Sfaturi practice pentru maximizarea oportunităților'
-      ],
-      duration: '60 minute',
-      price: '300 RON',
-      link: '/servicii/consultatii'
-    },
-    {
-      id: 'relationship-synastry',
-      title: 'Astrologie Relațională și Sinastrie',
-      description: 'O analiză profundă a compatibilității și dinamicii dintre două persoane, ideală pentru relații romantice, parteneriate de afaceri sau relații părinte-copil.',
-      details: [
+        'Analiza compatibilității prin sinastrie',
         'Compararea hărților natale ale celor două persoane',
-        'Analiza aspectelor interplanetare',
         'Evaluarea compatibilității emoționale și intelectuale',
         'Identificarea punctelor forte și a provocărilor în relație',
-        'Sfaturi pentru îmbunătățirea comunicării și înțelegerii'
-      ],
-      duration: '120 minute',
-      price: '400 RON',
-      link: '/servicii/consultatii'
-    },
-    {
-      id: 'career-guidance',
-      title: 'Ghidare în Carieră',
-      description: 'O analiză specializată a potențialului profesional bazată pe harta natală, ajutându-te să identifici direcția optimă de carieră și oportunitățile de dezvoltare.',
-      details: [
-        'Analiza casei a 10-a și a plasamentelor profesionale',
-        'Identificarea talentelor și abilităților naturale',
-        'Evaluarea ciclurilor planetare pentru schimbări în carieră',
-        'Recomandări pentru dezvoltare profesională',
-        'Strategii de aliniere a carierei cu scopul personal'
+        'Sfaturi pentru îmbunătățirea comunicării și conexiunii',
       ],
       duration: '90 minute',
-      price: '350 RON',
-      link: '/servicii/consultatii'
+      price: '75€',
+      link: '/servicii/lumina-relationala',
+      icon: <Star className="w-6 h-6" />,
     },
     {
-      id: 'medical-astrology',
-      title: 'Astrologie Medicala',
-      description: 'O previziune detaliată pentru anul tău astrologic, începând cu ziua ta de naștere, care evidențiază temele principale și oportunitățile anului ce urmează.',
+      id: 'astrograma-previzionala',
+      title: 'Astrograma Previzională',
+      description: 'Sesiune live în care studiem predispozițiile tale pe următorul an',
       details: [
-        'Interpretarea hărții revoluției solare',
-        'Comparația cu harta natală',
-        'Identificarea temelor principale ale anului',
-        'Previziuni lunare detaliate',
-        'Recomandări pentru maximizarea potențialului anual'
+        'Analiza tranzitelor planetare pentru anul următor',
+        'Identificarea perioadelor favorabile și provocărilor',
+        'Interpretarea influențelor planetare majore',
+        'Strategii pentru maximizarea oportunităților',
+        'Recomandări personalizate pentru dezvoltare',
       ],
-      duration: '75 minute',
-      price: '325 RON',
-      link: '/servicii/consultatii'
-    }
+      duration: '90 minute',
+      price: '75€',
+      link: '/servicii/lumina-previzionala',
+      icon: <Compass className="w-6 h-6" />,
+    },
   ];
 
   return (
-    <div className="relative min-h-screen">
-      {/* Starry background - fixed position */}
-      <div className="fixed inset-0 bg-black stars">
-        {/* Shooting stars */}
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-        <div className="shooting-star"></div>
-      </div>
-
-      {/* Navbar */}
+    <div className="min-h-screen bg-midnight-950 text-white">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-28 pb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center text-amber-200 mb-12">
-          Servicii Astrologice
-        </h1>
-        
-        <div className="grid gap-12">
-          {services.map((service) => (
-            <div key={service.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="p-8">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                  <h2 className="text-3xl font-bold text-amber-800 mb-4 md:mb-0">
-                    {service.title}
-                  </h2>
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span className="text-amber-700">{service.duration}</span>
+      <div className="relative pt-24 pb-16">
+        {/* Cosmic orbs */}
+        <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] -top-20 -right-40 opacity-20"></div>
+        <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-20 -left-20 opacity-15"></div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
+              Servicii Astrologice
+            </h1>
+            <p className="text-cosmic-300 text-lg max-w-2xl mx-auto">
+              Descoperă gama completă de servicii disponibile
+            </p>
+          </div>
+
+          <div className="grid gap-8">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className="glass-card overflow-hidden hover:bg-white/[0.1] transition-all duration-300 group"
+              >
+                <div className="p-8">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-cosmic-500/20 flex items-center justify-center text-cosmic-400 group-hover:bg-cosmic-500/30 transition-colors">
+                        {service.icon}
+                      </div>
+                      <h2 className="font-display text-2xl font-bold text-white">
+                        {service.title}
+                      </h2>
                     </div>
-                    <div className="text-xl font-semibold text-amber-600">
-                      {service.price}
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2 text-cosmic-300 text-sm">
+                        <Clock className="w-4 h-4" />
+                        <span>{service.duration}</span>
+                      </div>
+                      <div className={`text-lg font-semibold ${service.highlight ? 'text-gold-400' : 'text-cosmic-300'}`}>
+                        {service.price}
+                      </div>
                     </div>
                   </div>
+
+                  <p className="text-cosmic-200/80 mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  <div className="mb-8">
+                    <h3 className="text-sm font-semibold text-cosmic-400 uppercase tracking-wider mb-4">Ce include</h3>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {service.details.map((detail, index) => (
+                        <li key={index} className="flex items-start gap-3 text-cosmic-200/70 text-sm">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <Link
+                    to={service.link}
+                    className="group inline-flex items-center gap-2 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white px-6 py-3 rounded-full font-medium hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer"
+                  >
+                    Află mai multe
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
-
-                <p className="text-lg text-amber-700 mb-6">
-                  {service.description}
-                </p>
-
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-amber-800 mb-4">Ce include:</h3>
-                  <ul className="space-y-3">
-                    {service.details.map((detail, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-amber-700">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Link
-                  to={service.link}
-                  className="inline-block bg-amber-500 text-white px-8 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
-                >
-                  Află mai multe
-                </Link>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

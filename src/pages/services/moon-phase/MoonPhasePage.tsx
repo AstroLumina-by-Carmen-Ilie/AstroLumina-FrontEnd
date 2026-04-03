@@ -5,7 +5,7 @@ import BirthDataForm from './BirthDataForm';
 import ResultsDisplay from './ResultsDisplay';
 import { useLoading } from '../../../hooks/useLoading';
 
-const AstralPositionsPage = () => {
+const MoonPhasePage = () => {
   const [result, setResult] = useState<{ astral_elements: AstralElements; astral_houses: AstralElements } | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
@@ -43,7 +43,7 @@ const AstralPositionsPage = () => {
         <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-8xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="glass-card overflow-hidden">
               <div className="flex flex-col md:flex-row">
                 {/* Left Panel */}
@@ -88,4 +88,4 @@ const AstralPositionsPage = () => {
   );
 };
 
-export default AstralPositionsPage;
+export default MoonPhasePage;
