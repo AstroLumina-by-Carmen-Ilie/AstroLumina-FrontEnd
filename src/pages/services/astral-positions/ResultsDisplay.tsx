@@ -41,7 +41,7 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
     setIsGeneratingPDF(true);
     try {
-      const doc = generateAstralPositionsPDF(result, userInfo);
+      const doc = await generateAstralPositionsPDF(result, userInfo);
       await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
     } finally {
       setTimeout(() => setIsGeneratingPDF(false), 1000);
@@ -72,7 +72,7 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(1)}
           >
-            Planete
+            Planete și Puncte Virtuale
           </button>
           <button
             type="button"
@@ -94,7 +94,7 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(3)}
           >
-            Asteroizi
+            Asteroizi și Stele Fixe
           </button>
         </div>
         <div className="overflow-x-auto">
