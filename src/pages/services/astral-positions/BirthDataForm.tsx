@@ -5,6 +5,7 @@ import DateInput from '../../../components/ui/DateInput';
 import TimeInput from '../../../components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
 import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
+import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
 
 interface BirthDataFormProps {
   setResult: React.Dispatch<React.SetStateAction<{astral_elements: AstralElements, astral_houses: AstralElements} | null>>;
@@ -17,7 +18,6 @@ interface BirthDataFormProps {
 }
 
 const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo }) => {
-  // Form state
   const [formState, setFormState] = useState({
     fullName: '',
     birthDate: null as Date | null,
@@ -29,7 +29,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     isCalculating: false
   });
 
-  // Options state - separate from form state to reduce re-renders
   const [options, setOptions] = useState({
     countryOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
     stateOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
@@ -43,14 +42,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
   };
 
-  // Initialize country options once on mount
   useEffect(() => {
-    // Initialize country options
     try {
       const defaultOptions = [{ value: '', label: 'Selectează...' }];
       const countries = Country.getAllCountries().map(country => ({
         value: country.isoCode,
-        label: country.name
+        label: COUNTRY_NAMES_RO[country.isoCode] || country.name
       }));
 
       setOptions(prev => ({
@@ -58,51 +55,44 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         countryOptions: [{ value: '', label: 'Selectează...' }, ...countries]
       }));
 
-      // Set Romania as default
-      const romania = countries.find(c => c.label === 'Romania');
+      const romania = countries.find(c => c.value === 'RO');
 
       if (romania) {
-        // Set country and immediately load its states
         setFormState(prev => ({
           ...prev,
           birthCountry: romania.value
         }));
 
-        // Pre-load states for Romania
-        const romaniaStates = State.getStatesOfCountry(romania.value).map(state => ({
-          value: state.isoCode,
-          label: formatStateName(state.name)
+        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
+          value: code,
+          label: name
         }));
 
         setOptions(prev => ({
           ...prev,
-          stateOptions: [...defaultOptions, ...romaniaStates]
+          stateOptions: [...defaultOptions, ...romaniaCounties]
         }));
       }
     } catch (error) {
       console.error('Error initializing countries:', error);
     }
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
 
-  // Simple form field change handler
   const handleFormChange = (field: string, value: any) => {
     setFormState(prev => ({ ...prev, [field]: value }));
   };
 
-  // Handle country selection - load states
   const handleCountryChange = (option: SelectOption | null) => {
     const countryCode = option?.value || '';
 
-    // Update form state with new country
     setFormState(prev => ({
       ...prev,
       birthCountry: countryCode,
-      birthCounty: '', // Reset county
-      birthCity: '',   // Reset city
-      coordinates: null // Reset coordinates
+      birthCounty: '',
+      birthCity: '',
+      coordinates: null
     }));
 
-    // If no country selected, reset state options
     if (!countryCode) {
       setOptions(prev => ({
         ...prev,
@@ -112,7 +102,20 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    // Load states for selected country
+    if (countryCode === 'RO') {
+      const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
+        value: code,
+        label: name
+      }));
+
+      setOptions(prev => ({
+        ...prev,
+        stateOptions: [{ value: '', label: 'Selectează...' }, ...romaniaCounties],
+        cityOptions: [{ value: '', label: 'Selectează...' }]
+      }));
+      return;
+    }
+
     try {
       const states = State.getStatesOfCountry(countryCode).map(state => ({
         value: state.isoCode,
@@ -129,20 +132,17 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
   };
 
-  // Handle county/state selection - load cities
   const handleCountyChange = (option: SelectOption | null) => {
     const countyCode = option?.value || '';
     const { birthCountry } = formState;
 
-    // Update form state with new county
     setFormState(prev => ({
       ...prev,
       birthCounty: countyCode,
-      birthCity: '',   // Reset city
-      coordinates: null // Reset coordinates
+      birthCity: '',
+      coordinates: null
     }));
 
-    // If no county selected or no country selected, reset city options
     if (!countyCode || !birthCountry) {
       setOptions(prev => ({
         ...prev,
@@ -151,7 +151,19 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    // Load cities for selected county
+    if (birthCountry === 'RO' && ROMANIAN_COUNTIES[countyCode]) {
+      const cities = getRomanianCities(countyCode).map(city => ({
+        value: city.name,
+        label: city.name
+      }));
+
+      setOptions(prev => ({
+        ...prev,
+        cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
+      }));
+      return;
+    }
+
     try {
       const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
         value: city.name,
@@ -167,25 +179,32 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
   };
 
-  // Handle city selection - set coordinates
   const handleCityChange = (option: SelectOption | null) => {
     const cityName = option?.value || '';
     const { birthCountry, birthCounty } = formState;
 
-    // Update form state with new city
     setFormState(prev => ({
       ...prev,
       birthCity: cityName,
-      coordinates: null // Reset coordinates initially
+      coordinates: null
     }));
 
-    // If no city selected or missing country/county, return
     if (!cityName || !birthCountry || !birthCounty) {
       return;
     }
 
-    // Set coordinates for selected city
     try {
+      if (birthCountry === 'RO' && ROMANIAN_COUNTIES[birthCounty]) {
+        const coords = getRomanianCityCoordinates(birthCounty, cityName);
+        if (coords) {
+          setFormState(prev => ({
+            ...prev,
+            coordinates: coords
+          }));
+        }
+        return;
+      }
+
       const cityData = City.getCitiesOfState(birthCountry, birthCounty)
         .find(city => city.name === cityName);
 
@@ -203,7 +222,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }
   };
 
-  // Validate all inputs
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
@@ -247,22 +265,27 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         minute: birthHour.getMinutes(),
       };
 
-      // Get the actual location names for display
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
-      const state = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
-      const cities = City.getCitiesOfState(birthCountry, birthCounty);
-      const city = cities.find(c => c.name === birthCity)?.name || birthCity;
+      
+      let stateName = birthCounty;
+      let cityName = birthCity;
+      
+      if (birthCountry === 'RO' && ROMANIAN_COUNTIES[birthCounty]) {
+        stateName = getRomanianCountyName(birthCounty);
+      } else {
+        stateName = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
+        const cities = City.getCitiesOfState(birthCountry, birthCounty);
+        cityName = cities.find(c => c.name === birthCity)?.name || birthCity;
+      }
 
-      // Calculate positions
       const result = await calculateAstralPositions('ro', payload);
 
-      // Update parent component state
       setResult(result);
       setUserInfo({
         name: fullName,
         birthDate: birthDate,
         birthHour: birthHour,
-        location: `${city}, ${formatStateName(state)}, ${country}`
+        location: `${cityName}, ${formatStateName(stateName)}, ${country}`
       });
     } catch (error) {
       console.error('Error calculating positions:', error);
