@@ -10,7 +10,7 @@ import { Menu, X } from "lucide-react";
 const MobileNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
-  const { mobileLinkClasses, logoClasses } = getNavbarStyles();
+  const { mobileLinkClasses } = getNavbarStyles();
 
   const navClasses =
     "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-midnight-950/80 backdrop-blur-xl border-b border-white/5";
@@ -45,7 +45,7 @@ const MobileNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
       <nav className={`${navClasses} ${isScrolled ? "shadow-lg" : ""}`}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <NavbarLogo logoClasses={logoClasses} />
+            <NavbarLogo />
 
             <button
               onClick={() => setIsOpen(!isOpen)}

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Astronomicon';
-  src: url('/fonts/Astronomicon.ttf') format('truetype');
+  src: url('https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/fonts/Astronomicon.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Noto Sans Symbols 2';
-  src: url('/fonts/NotoSansSymbols2-Regular.ttf') format('truetype');
+  src: url('https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/fonts/NotoSansSymbols2-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

@@ -35,7 +35,7 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
     setIsGeneratingPDF(true);
     try {
-      const doc = generateAstralPositionsPDF(result, userInfo);
+      const doc = await generateAstralPositionsPDF(result, userInfo);
       await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
     } finally {
       setTimeout(() => setIsGeneratingPDF(false), 1000);

@@ -1,6 +1,7 @@
 import { AstralElements, UserInfo } from '../../types';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { loadFontsForPDF } from '../../utils/fontLoader';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -142,15 +143,17 @@ const addTable = (doc: jsPDF, title: string, headers: string[], data: any[][], s
   });
 };
 
-export const generateAstralPositionsPDF = (result: { astral_elements: AstralElements, astral_houses: AstralElements }, userInfo: UserInfo) => {
+export const generateAstralPositionsPDF = async (result: { astral_elements: AstralElements, astral_houses: AstralElements }, userInfo: UserInfo) => {
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',
     format: 'a4'
   });
 
-  doc.addFont('/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
-  doc.addFont('/fonts/Quivira.otf', 'Quivira', 'normal');
+  await loadFontsForPDF(doc, [
+    { filename: 'NotoSans-Regular.ttf', family: 'NotoSans', style: 'normal' },
+    { filename: 'Quivira.otf', family: 'Quivira', style: 'normal' },
+  ]);
 
   // Split astral elements into planets and asteroids
   const splitIndex = result.astral_elements.findIndex((item: any) => item.name === 'Chiron');

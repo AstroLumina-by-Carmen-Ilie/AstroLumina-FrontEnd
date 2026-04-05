@@ -40,7 +40,7 @@
 .stars {
   background: #0a0a1a;
   background-image: 
-    url('/assets/BG.jpg'),
+    url('https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/images/NightSky.jpg'),
     radial-gradient(white, rgba(255,255,255,.15) 2px, transparent 3px),
     radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px),
     radial-gradient(white, rgba(255,255,255,.07) 2px, transparent 3px),
