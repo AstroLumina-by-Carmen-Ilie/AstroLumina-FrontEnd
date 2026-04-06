@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import DateInput from '../../../components/ui/DateInput';
 import TimeInput from '../../../components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
-import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
+import { calculateAstralElementsPosition } from '../utilities/astrologicalCalculations';
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
 
 interface BirthDataFormProps {
@@ -278,7 +278,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         cityName = cities.find(c => c.name === birthCity)?.name || birthCity;
       }
 
-      const result = await calculateAstralPositions('ro', payload);
+      const result = await calculateAstralElementsPosition('ro', payload);
 
       setResult(result);
       setUserInfo({
@@ -305,16 +305,23 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       minHeight: '48px',
       '&:hover': { borderColor: 'rgba(168,85,247,0.5)' },
     }),
-    singleValue: (base: any) => ({ ...base, color: '#e9d5ff' }),
-    input: (base: any) => ({ ...base, color: '#e9d5ff' }),
-    menu: (base: any) => ({ ...base, backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem' }),
+    singleValue: (base: any) => ({ ...base, color: '#f3e8ff' }),
+    input: (base: any) => ({ ...base, color: '#f3e8ff' }),
+    menu: (base: any) => ({
+      ...base,
+      backgroundColor: '#1e1b4b',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '0.75rem',
+      overflow: 'hidden',
+    }),
     option: (base: any, state: any) => ({
       ...base,
       backgroundColor: state.isFocused ? 'rgba(168,85,247,0.2)' : 'transparent',
-      color: state.isFocused ? '#e9d5ff' : '#a78bfa',
+      color: state.isFocused ? '#f3e8ff' : '#c084fc',
       '&:hover': { backgroundColor: 'rgba(168,85,247,0.2)' },
     }),
-    placeholder: (base: any) => ({ ...base, color: '#6b7280' }),
+    placeholder: (base: any) => ({ ...base, color: '#a855f7' }),
+    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
@@ -376,6 +383,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           placeholder="Selectează țara..."
           isSearchable
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCountry && <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>}
       </div>
@@ -394,6 +404,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           isSearchable
           isDisabled={!formState.birthCountry}
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCounty && <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>}
       </div>
@@ -410,6 +423,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           isSearchable
           isDisabled={!formState.birthCounty}
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCity && <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>}
       </div>

@@ -6,12 +6,12 @@ import './styles/starry-theme.css';
 import './styles/astronomy-fonts.css';
 import 'flatpickr/dist/themes/material_blue.css';
 import { LoadingProvider } from './contexts/LoadingContext';
-import AstralPositions from './pages/services/AstralPositions';
+import AstralCalculator from './pages/services/AstralCalculator';
 import NatalChart from './pages/services/NatalChart';
 import KarmicChart from './pages/services/KarmicChart';
 import SynastryChart from './pages/services/SynastryChart';
 import PredictiveChart from './pages/services/PredictiveChart';
-import MoonPhase from './pages/services/MoonPhase';
+import MoonPhaseCalculator from './pages/services/MoonPhaseCalculator';
 import Bookings from './pages/services/Bookings';
 import AboutMe from './pages/AboutMe';
 import Contact from './pages/Contact';
@@ -35,8 +35,8 @@ if (rootElement) {
             <Route path="/servicii" element={<Services />} />
             <Route path="/produse" element={<Products />} />
             <Route path="/evenimente" element={<Events />} />
-            <Route path="/servicii/pozitia-astrelor" element={<AstralPositions />} />
-            <Route path="/servicii/faza-lunara" element={<MoonPhase />} />
+            <Route path="/servicii/calculatorul-astral" element={<AstralCalculator />} />
+            <Route path="/servicii/calculatorul-fazei-lunare" element={<MoonPhaseCalculator />} />
             <Route path="/servicii/lumina-natala" element={<NatalChart />} />
             <Route path="/servicii/lumina-karmica" element={<KarmicChart />} />
             <Route path="/servicii/lumina-relationala" element={<SynastryChart />} />

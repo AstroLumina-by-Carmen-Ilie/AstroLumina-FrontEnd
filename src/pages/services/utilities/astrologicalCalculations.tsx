@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { BirthDataPayload, AstralElements } from '../../../types';
-import { InterpretedAstralPositions } from '../../../types';
+import { InterpretedAstralElements } from '../../../types';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
-export const calculateAstralPositions = async (language: string, payload: BirthDataPayload):
+export const calculateAstralElementsPosition = async (language: string, payload: BirthDataPayload):
   Promise<{astral_elements: AstralElements, astral_houses: AstralElements}> => {
   try {
     const options = {
@@ -29,7 +29,7 @@ export const calculateAstralPositions = async (language: string, payload: BirthD
 };
 
 export const calculateNatalChart = async (language: string, payload: BirthDataPayload):
-  Promise<{ data: InterpretedAstralPositions, chart: string }> => {
+  Promise<{ data: InterpretedAstralElements, chart: string }> => {
   try {
     const options_data = {
       method: 'POST',
@@ -66,7 +66,7 @@ export const calculateNatalChart = async (language: string, payload: BirthDataPa
 };
 
 export const calculateKarmicChart = async (language: string, payload: BirthDataPayload):
-  Promise<{ data: InterpretedAstralPositions, chart: string }> => {
+  Promise<{ data: InterpretedAstralElements, chart: string }> => {
   try {
     const options_data = {
       method: 'POST',

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralPositions } from '../../../types';
+import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralElements } from '../../../types';
 import { calculateNatalChart } from '../utilities/astrologicalCalculations';
 import { generateNatalChartPDF } from '../../../templates/pdf/natalChart';
 
@@ -12,7 +12,7 @@ interface FinalStepProps {
 
 const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, paymentStatus }) => {
   // const { startLoading, stopLoading } = useLoading();
-  const [result, setResult] = useState<InterpretedAstralPositions | null>(null);
+  const [result, setResult] = useState<InterpretedAstralElements | null>(null);
   const [isGettingData, setIsGettingData] = useState(false);
   const [chart, setChart] = useState('');
 
