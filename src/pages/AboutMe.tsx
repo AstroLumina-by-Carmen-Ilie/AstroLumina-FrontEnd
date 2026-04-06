@@ -23,7 +23,7 @@ const AboutMe = () => {
     <div className="min-h-screen bg-midnight-950 text-white">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative pt-24 pb-16">
+      <div className="relative pt-24 pb-16 overflow-x-hidden">
         <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] -top-20 -right-20 opacity-20"></div>
         <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-20 -left-20 opacity-15"></div>
 
