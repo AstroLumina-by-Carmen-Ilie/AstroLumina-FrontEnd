@@ -1,10 +1,11 @@
 import { AstralElements, UserInfo, ContactInfo } from '../../types';
 import { jsPDF } from 'jspdf';
 import { svgAsPngDataUrl } from '../utils/svgUtils';
+import { loadFontsForPDF } from '../../utils/fontLoader';
 
 // Import SVG watermarks
-import starryDesertSvg from '../../assets/images/starry-desert-watermark-updated.svg';
-import starrySkySvg from '../../assets/images/starry-sky-watermark-enhanced.svg';
+// import starryDesertSvg from '../../assets/images/starry-desert-watermark-updated.svg';
+// import starrySkySvg from '../../assets/images/starry-sky-watermark-enhanced.svg';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -29,10 +30,12 @@ export const generateKarmicChartPDF = async (
   });
 
   // Add fonts
-  doc.addFont('/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
-  doc.addFont('/fonts/NotoSansSymbols-Regular.ttf', 'NotoSansSymbols', 'normal');
-  doc.addFont('/fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
-  doc.addFont('/fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
+  await loadFontsForPDF(doc, [
+    { filename: 'NotoSans-Regular.ttf', family: 'NotoSans', style: 'normal' },
+    { filename: 'NotoSansSymbols-Regular.ttf', family: 'NotoSansSymbols', style: 'normal' },
+    { filename: 'NotoSans-Bold.ttf', family: 'NotoSans', style: 'bold' },
+    { filename: 'NotoSans-Italic.ttf', family: 'NotoSans', style: 'italic' },
+  ]);
 
   // Set default font
   doc.setFont('NotoSans');
@@ -236,7 +239,7 @@ const generateInterpretationPage = async (
   interpretation: any
 ): Promise<void> => {
   // Add desert sky watermark
-  await addWatermark(doc, starryDesertSvg);
+  // await addWatermark(doc, starryDesertSvg);
 
   // Set up fonts
   doc.setFont('NotoSans');

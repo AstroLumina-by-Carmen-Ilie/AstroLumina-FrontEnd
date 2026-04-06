@@ -103,17 +103,17 @@ function App() {
 
   const services = [
     {
-      title: 'Poziția Astrelor',
+      title: 'Calculatorul Astral',
       description: 'Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.',
       icon: <Star className="w-7 h-7" />,
-      link: '/servicii/pozitia-astrelor',
+      link: '/servicii/calculatorul-astral',
       badge: 'Gratuit',
     },
     {
-      title: 'Faza Lunara',
+      title: 'Calculatorul Fazei Lunare',
       description: 'Descopera influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
       icon: <Moon className="w-7 h-7" />,
-      link: '/servicii/faza-lunara',
+      link: '/servicii/calculatorul-fazei-lunare',
       badge: 'Gratuit',
     },
     {

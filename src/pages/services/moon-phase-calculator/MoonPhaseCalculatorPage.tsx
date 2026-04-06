@@ -5,7 +5,7 @@ import BirthDataForm from './BirthDataForm';
 import ResultsDisplay from './ResultsDisplay';
 import { useLoading } from '../../../hooks/useLoading';
 
-const MoonPhasePage = () => {
+const MoonPhaseCalculatorPage = () => {
   const [result, setResult] = useState<{ astral_elements: AstralElements; astral_houses: AstralElements } | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
@@ -88,4 +88,4 @@ const MoonPhasePage = () => {
   );
 };
 
-export default MoonPhasePage;
+export default MoonPhaseCalculatorPage;

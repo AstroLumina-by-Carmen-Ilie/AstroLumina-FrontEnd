@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AstralElements } from '../../../types';
-import { generateAstralPositionsPDF } from '../../../templates/pdf/astralPositions';
+import { generateAstralElementsPDF } from '../../../templates/pdf/astralCalculator';
 
 // Utility functions
 const formatDate = (date: Date): string => {
@@ -9,6 +9,12 @@ const formatDate = (date: Date): string => {
 
 const formatTime = (date: Date): string => {
   return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+};
+
+const formatDegreesMinutes = (decimal: number): string => {
+  const degrees = Math.floor(Math.abs(decimal));
+  const minutes = Math.round((Math.abs(decimal) - degrees) * 60);
+  return `${degrees}° ${minutes.toString().padStart(1)}'`;
 };
 
 const ResultsDisplay: React.FC<{
@@ -35,7 +41,7 @@ const ResultsDisplay: React.FC<{
     if (result && userInfo) {
     setIsGeneratingPDF(true);
     try {
-      const doc = generateAstralPositionsPDF(result, userInfo);
+      const doc = await generateAstralElementsPDF(result, userInfo);
       await doc.save(`Pozitia_Astrelor_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
     } finally {
       setTimeout(() => setIsGeneratingPDF(false), 1000);
@@ -66,7 +72,7 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(1)}
           >
-            Planete
+            Planete și Puncte Virtuale
           </button>
           <button
             type="button"
@@ -88,7 +94,7 @@ const ResultsDisplay: React.FC<{
             }`}
             onClick={() => setActiveTab(3)}
           >
-            Asteroizi
+            Asteroizi și Stele Fixe
           </button>
         </div>
         <div className="overflow-x-auto">
@@ -97,9 +103,8 @@ const ResultsDisplay: React.FC<{
               <tr className="bg-white/5">
                 <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Nume</th>
                 <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Semn</th>
-                {activeTab === 2 ? (
-                  <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
-                ) : (
+                <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
+                {activeTab !== 2 && (
                   <>
                     <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Casa</th>
                     <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Retrograd</th>
@@ -124,11 +129,10 @@ const ResultsDisplay: React.FC<{
                     <span className="mr-2 font-semibold">{info.emoji}</span>
                     {info.sign}
                   </td>
-                  {activeTab === 2 ? (
-                    <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
-                      {info.position.toFixed(1)} °
-                    </td>
-                  ) : (
+                  <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
+                    {formatDegreesMinutes(info.position)}
+                  </td>
+                  {activeTab !== 2 && (
                     <>
                       <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.house}

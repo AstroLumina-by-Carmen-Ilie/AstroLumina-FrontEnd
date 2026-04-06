@@ -22,8 +22,8 @@ const Services = () => {
 
   const services = [
     {
-      id: 'pozitia-astrelor',
-      title: 'Poziția Astrelor',
+      id: 'calculatorul-astral',
+      title: 'Calculatorul Astral',
       description: 'Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.',
       details: [
         'Poziții planetare actualizate în timp real',
@@ -34,13 +34,13 @@ const Services = () => {
       ],
       duration: 'Acces instant',
       price: 'Gratuit',
-      link: '/servicii/pozitia-astrelor',
+      link: '/servicii/calculatorul-astral',
       icon: <Star className="w-6 h-6" />,
       highlight: true,
     },
     {
-      id: 'faza-lunara',
-      title: 'Faza Lunara',
+      id: 'calculatorul-fazei-lunare',
+      title: 'Calculatorul Fazei Lunare',
       description: 'Descoperă influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
       details: [
         'Informații despre faza lunii în timp real',
@@ -51,7 +51,7 @@ const Services = () => {
       ],
       duration: 'Acces instant',
       price: 'Gratuit',
-      link: '/servicii/faza-lunara',
+      link: '/servicii/calculatorul-fazei-lunare',
       icon: <Moon className="w-6 h-6" />,
       highlight: true,
     },
@@ -109,7 +109,7 @@ const Services = () => {
     <div className="min-h-screen bg-midnight-950 text-white">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative pt-24 pb-16">
+      <div className="relative pt-24 pb-16 overflow-x-hidden">
         {/* Cosmic orbs */}
         <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] -top-20 -right-40 opacity-20"></div>
         <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-20 -left-20 opacity-15"></div>
