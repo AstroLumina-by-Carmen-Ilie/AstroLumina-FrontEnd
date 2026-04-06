@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import DateInput from '../../../components/ui/DateInput';
 import TimeInput from '../../../components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
-import { calculateAstralPositions } from '../utilities/astrologicalCalculations';
+import { calculateAstralElementsPosition } from '../utilities/astrologicalCalculations';
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
 
 interface BirthDataFormProps {
@@ -278,7 +278,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         cityName = cities.find(c => c.name === birthCity)?.name || birthCity;
       }
 
-      const result = await calculateAstralPositions('ro', payload);
+      const result = await calculateAstralElementsPosition('ro', payload);
 
       setResult(result);
       setUserInfo({

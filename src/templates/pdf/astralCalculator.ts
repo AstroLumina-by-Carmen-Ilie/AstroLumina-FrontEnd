@@ -143,7 +143,7 @@ const addTable = (doc: jsPDF, title: string, headers: string[], data: any[][], s
   });
 };
 
-export const generateAstralPositionsPDF = async (result: { astral_elements: AstralElements, astral_houses: AstralElements }, userInfo: UserInfo) => {
+export const generateAstralElementsPDF = async (result: { astral_elements: AstralElements, astral_houses: AstralElements }, userInfo: UserInfo) => {
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',

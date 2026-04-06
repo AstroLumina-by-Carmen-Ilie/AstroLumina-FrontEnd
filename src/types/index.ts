@@ -60,4 +60,4 @@ export interface ContactInfo {
     email: string;
 }
 
-export type InterpretedAstralPositions = AstralElement[];
+export type InterpretedAstralElements = AstralElement[];

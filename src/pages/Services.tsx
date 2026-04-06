@@ -22,8 +22,8 @@ const Services = () => {
 
   const services = [
     {
-      id: 'pozitia-astrelor',
-      title: 'Poziția Astrelor',
+      id: 'calculatorul-astral',
+      title: 'Calculatorul Astral',
       description: 'Află pozițiile exacte ale planetelor în timp real și interpretarea influențelor astrologice curente.',
       details: [
         'Poziții planetare actualizate în timp real',
@@ -34,13 +34,13 @@ const Services = () => {
       ],
       duration: 'Acces instant',
       price: 'Gratuit',
-      link: '/servicii/pozitia-astrelor',
+      link: '/servicii/calculatorul-astral',
       icon: <Star className="w-6 h-6" />,
       highlight: true,
     },
     {
-      id: 'faza-lunara',
-      title: 'Faza Lunara',
+      id: 'calculatorul-fazei-lunare',
+      title: 'Calculatorul Fazei Lunare',
       description: 'Descoperă influența fazelor lunare asupra vieții tale și profită de energia fiecărei luni.',
       details: [
         'Informații despre faza lunii în timp real',
@@ -51,7 +51,7 @@ const Services = () => {
       ],
       duration: 'Acces instant',
       price: 'Gratuit',
-      link: '/servicii/faza-lunara',
+      link: '/servicii/calculatorul-fazei-lunare',
       icon: <Moon className="w-6 h-6" />,
       highlight: true,
     },

@@ -33,7 +33,7 @@ AstroLumina/
 
 | Serviciu | Ruta | Descriere | Status |
 |----------|------|-----------|--------|
-| Poziția Astrelor | `/servicii/pozitia-astrelor` | Calculator gratuit poziții planetare | ✅ Activ |
+| Calculatorul Astral | `/servicii/calculatorul-astral` | Calculator gratuit poziții planetare | ✅ Activ |
 | Lumina Natală | `/servicii/lumina-natala` | Hartă natală + PDF | ✅ Activ |
 | Lumina Karmică | `/servicii/lumina-karmica` | Hartă karmică + PDF | ✅ Activ |
 | Consultații | `/servicii/consultatii` | Programare cu Cal.com | ✅ Activ |
