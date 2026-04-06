@@ -307,7 +307,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     }),
     singleValue: (base: any) => ({ ...base, color: '#e9d5ff' }),
     input: (base: any) => ({ ...base, color: '#e9d5ff' }),
-    menu: (base: any) => ({ ...base, backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem' }),
+    menu: (base: any) => ({
+      ...base,
+      backgroundColor: '#1e1b4b',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '0.75rem',
+      overflow: 'hidden',
+    }),
     option: (base: any, state: any) => ({
       ...base,
       backgroundColor: state.isFocused ? 'rgba(168,85,247,0.2)' : 'transparent',
@@ -315,6 +321,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       '&:hover': { backgroundColor: 'rgba(168,85,247,0.2)' },
     }),
     placeholder: (base: any) => ({ ...base, color: '#6b7280' }),
+    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
@@ -376,6 +383,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           placeholder="Selectează țara..."
           isSearchable
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCountry && <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>}
       </div>
@@ -394,6 +404,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           isSearchable
           isDisabled={!formState.birthCountry}
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCounty && <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>}
       </div>
@@ -410,6 +423,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
           isSearchable
           isDisabled={!formState.birthCounty}
           required
+          maxMenuHeight={210}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPosition="fixed"
         />
         {errors.birthCity && <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>}
       </div>
