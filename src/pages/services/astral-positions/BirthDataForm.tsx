@@ -305,8 +305,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       minHeight: '48px',
       '&:hover': { borderColor: 'rgba(168,85,247,0.5)' },
     }),
-    singleValue: (base: any) => ({ ...base, color: '#e9d5ff' }),
-    input: (base: any) => ({ ...base, color: '#e9d5ff' }),
+    singleValue: (base: any) => ({ ...base, color: '#f3e8ff' }),
+    input: (base: any) => ({ ...base, color: '#f3e8ff' }),
     menu: (base: any) => ({
       ...base,
       backgroundColor: '#1e1b4b',
@@ -317,10 +317,10 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     option: (base: any, state: any) => ({
       ...base,
       backgroundColor: state.isFocused ? 'rgba(168,85,247,0.2)' : 'transparent',
-      color: state.isFocused ? '#e9d5ff' : '#a78bfa',
+      color: state.isFocused ? '#f3e8ff' : '#c084fc',
       '&:hover': { backgroundColor: 'rgba(168,85,247,0.2)' },
     }),
-    placeholder: (base: any) => ({ ...base, color: '#6b7280' }),
+    placeholder: (base: any) => ({ ...base, color: '#a855f7' }),
     menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
   };
 
