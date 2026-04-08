@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BirthDataPayload, AstralElements } from '../../../types';
+import { BirthDataPayload, AstralElements, LunarDataPayload, LunarDataResponse } from '../../../types';
 import { InterpretedAstralElements } from '../../../types';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
@@ -62,6 +62,28 @@ export const calculateNatalChart = async (language: string, payload: BirthDataPa
   } catch (error) {
     console.error('API request error:', error);
     throw new Error('Failed to fetch reading');
+  }
+};
+
+export const calculateLunarPhasePosition = async (language: string, payload: LunarDataPayload):
+  Promise<LunarDataResponse> => {
+  try {
+    const options = {
+      method: 'POST',
+      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/lunar-data`,
+      headers: {
+        'Accept-Language': language,
+        'Content-Type': 'application/json'
+      },
+      data: payload
+    };
+
+    const response = await axios.request(options);
+
+    return response.data;
+  } catch (error) {
+    console.error('API request error:', error);
+    throw new Error('Failed to fetch lunar data');
   }
 };
 
