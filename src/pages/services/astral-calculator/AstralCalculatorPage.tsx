@@ -50,11 +50,11 @@ const AstralCalculatorPage = () => {
                 <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                   <div className="text-center mb-8">
                     <h1 className="font-display text-3xl font-bold mb-4 bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-                      Pozițiile Astrelor
+                      Calculatorul Astral
                     </h1>
                     <p className="text-cosmic-200/80 leading-relaxed">
-                      Descoperă pozițiile exacte ale corpurilor cerești în momentul nașterii tale
-                      și înțelege influența lor asupra căii tale de viață
+                      Descoperă pozițiile planetelor și asteroizilor în semnele zodiacale
+                      la momentul nașterii tale
                     </p>
                   </div>
 
@@ -62,9 +62,10 @@ const AstralCalculatorPage = () => {
                     <h3 className="font-display text-lg font-semibold text-cosmic-900 mb-4">Ce vei primi:</h3>
                     <ul className="space-y-3 text-gray-700 text-sm">
                       {[
-                        'Pozițiile astrelor precise la momentul nașterii tale',
-                        'Semnele zodiacale în care se află casele',
-                        'Înțelegerea planului tău celestial',
+                        'Pozițiile tuturor planetelor în semne zodiacale',
+                        'Pozițiile în case astrologice',
+                        'Indicii despre asteroizii importanți',
+                        'Planete retrograde în harta ta',
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>

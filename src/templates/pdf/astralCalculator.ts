@@ -12,6 +12,12 @@ const formatTime = (date: Date): string => {
   return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
 
+const formatDegreesMinutes = (decimal: number): string => {
+  const degrees = Math.floor(Math.abs(decimal));
+  const minutes = Math.round((Math.abs(decimal) - degrees) * 60);
+  return `${degrees}° ${minutes}'`;
+};
+
 const addUserInfo = (doc: jsPDF, userInfo: UserInfo) => {
   doc.setFont('NotoSans');
   doc.setFontSize(10);
@@ -70,7 +76,7 @@ const createHousesTable = (houses: AstralElements) => {
   return houses.map((h: any) => [
     h.name,
     h.sign,
-    h.position.toFixed(1) + '°'
+    formatDegreesMinutes(h.position)
   ]);
 };
 

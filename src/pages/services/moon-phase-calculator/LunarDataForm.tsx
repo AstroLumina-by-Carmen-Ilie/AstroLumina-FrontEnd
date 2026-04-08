@@ -3,23 +3,19 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import DateInput from '../../../components/ui/DateInput';
 import TimeInput from '../../../components/ui/TimeInput';
-import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
-import { calculateAstralElementsPosition } from '../utilities/astrologicalCalculations';
+import { LocationCoordinates, LunarDataPayload, SelectOption } from '../../../types';
+import { calculateLunarPhasePosition } from '../utilities/astrologicalCalculations';
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
 
-interface BirthDataFormProps {
-  setResult: React.Dispatch<React.SetStateAction<{astral_elements: AstralElements, astral_houses: AstralElements} | null>>;
+interface LunarDataFormProps {
+  setResult: React.Dispatch<React.SetStateAction<any>>;
   setUserInfo: React.Dispatch<React.SetStateAction<{
-    name: string;
-    birthDate: Date;
-    birthHour: Date;
     location: string;
   } | null>>;
 }
 
-const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo }) => {
+const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo }) => {
   const [formState, setFormState] = useState({
-    fullName: '',
     birthDate: null as Date | null,
     birthHour: null as Date | null,
     birthCountry: '',
@@ -225,19 +221,18 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formState.fullName.trim()) newErrors.fullName = 'Numele complet este obligatoriu';
-    if (!formState.birthDate) newErrors.birthDate = 'Data nașterii este obligatorie';
-    if (!formState.birthHour) newErrors.birthHour = 'Ora nașterii este obligatorie';
-    if (!formState.birthCountry) newErrors.birthCountry = 'Țara nașterii este obligatorie';
-    if (!formState.birthCounty) newErrors.birthCounty = 'Județul nașterii este obligatoriu';
-    if (!formState.birthCity) newErrors.birthCity = 'Orașul nașterii este obligatoriu';
+    if (!formState.birthDate) newErrors.birthDate = 'Data este obligatorie';
+    if (!formState.birthHour) newErrors.birthHour = 'Ora este obligatorie';
+    if (!formState.birthCountry) newErrors.birthCountry = 'Țara este obligatorie';
+    if (!formState.birthCounty) newErrors.birthCounty = 'Județul/Regiunea este obligatoriu';
+    if (!formState.birthCity) newErrors.birthCity = 'Orașul este obligatoriu';
 
     setErrors(newErrors);
     const isValid = Object.keys(newErrors).length === 0;
     return isValid;
   };
 
-  const handleCalculatePositions = async () => {
+  const handleCalculateLunarPhase = async () => {
     const isValid = validateInputs();
     if (!isValid) {
       return;
@@ -246,16 +241,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
     setFormState(prev => ({ ...prev, isCalculating: true }));
 
     try {
-      const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
+      const { birthDate, birthHour, coordinates, birthCountry, birthCounty, birthCity } = formState;
 
       if (!birthDate || !birthHour || !coordinates) {
         throw new Error('Missing required data for calculation');
       }
 
-      const payload: BirthDataPayload = {
-        name: fullName,
-        nation: birthCountry,
-        city: birthCity,
+      const payload: LunarDataPayload = {
         longitude: coordinates.lng,
         latitude: coordinates.lat,
         year: birthDate.getFullYear(),
@@ -278,18 +270,15 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         cityName = cities.find(c => c.name === birthCity)?.name || birthCity;
       }
 
-      const result = await calculateAstralElementsPosition('ro', payload);
+      const result = await calculateLunarPhasePosition('ro', payload);
 
       setResult(result);
       setUserInfo({
-        name: fullName,
-        birthDate: birthDate,
-        birthHour: birthHour,
         location: `${cityName}, ${formatStateName(stateName)}, ${country}`
       });
     } catch (error) {
-      console.error('Error calculating positions:', error);
-      setErrors(prev => ({ ...prev, calculation: 'Calcularea pozițiilor a eșuat. Încercați din nou.' }));
+      console.error('Error calculating lunar phase:', error);
+      setErrors(prev => ({ ...prev, calculation: 'Calcularea fazei lunare a eșuat. Încercați din nou.' }));
     } finally {
       setFormState(prev => ({ ...prev, isCalculating: false }));
     }
@@ -327,24 +316,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">
-          Nume complet
-        </label>
-        <input
-          type="text"
-          id="fullName"
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
-          placeholder="Introdu numele tău..."
-          value={formState.fullName}
-          onChange={(e) => handleFormChange('fullName', e.target.value)}
-          required
-        />
-        {errors.fullName && <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>}
-      </div>
-
-      <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">
-          Data nașterii
+          Data
         </label>
         <DateInput
           value={formState.birthDate}
@@ -358,7 +331,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">
-          Ora nașterii
+          Ora
         </label>
         <TimeInput
           value={formState.birthHour}
@@ -372,7 +345,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
 
       <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">
-          Țara nașterii
+          Țara
         </label>
         <Select
           id="birthCountry"
@@ -412,7 +385,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCity">Orașul nașterii</label>
+        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCity">Oraș</label>
         <Select
           id="birthCity"
           options={options.cityOptions}
@@ -440,7 +413,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
         type="button"
         className="w-full py-3 px-6 bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 text-white font-semibold rounded-xl shadow-glow-purple transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={formState.isCalculating}
-        onClick={handleCalculatePositions}
+        onClick={handleCalculateLunarPhase}
       >
         {formState.isCalculating ? (
           <>
@@ -450,11 +423,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ setResult, setUserInfo })
             Se calculează...
           </>
         ) : (
-          'Calculează Pozițiile Planetelor'
+          'Calculează Faza Lunară'
         )}
       </button>
     </div>
   );
 };
 
-export default BirthDataForm;
+export default LunarDataForm;
