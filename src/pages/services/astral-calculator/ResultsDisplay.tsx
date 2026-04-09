@@ -134,9 +134,9 @@ const ResultsDisplay: React.FC<{
                   </td>
                   {activeTab !== 2 && (
                     <>
-                      <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
+                      {/* <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.house}
-                      </td>
+                      </td> */}
                       <td className="p-2 sm:p-3 text-cosmic-200 text-sm sm:text-base whitespace-normal">
                         {info.retrograde ? '✓' : ''}
                       </td>
