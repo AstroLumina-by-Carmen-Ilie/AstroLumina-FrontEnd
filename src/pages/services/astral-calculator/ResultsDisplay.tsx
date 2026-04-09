@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AstralElements } from '../../../types';
-import { generateAstralElementsPDF } from '../../../templates/pdf/astralCalculator';
+import { AstralElements } from '@/types';
+import { generateAstralElementsPDF } from '@/templates/pdf/astralCalculator';
 
 // Utility functions
 const formatDate = (date: Date): string => {

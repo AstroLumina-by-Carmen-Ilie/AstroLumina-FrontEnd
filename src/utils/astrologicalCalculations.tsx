@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BirthDataPayload, AstralElements, AstralAspects, LunarDataPayload, LunarDataResponse } from '../types';
+import { BirthDataPayload, AstralElements, AstralAspects, LunarDataPayload, LunarDataResponse } from '@/types';
 
 const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL
 export const calculateAstralElementsPosition = async (language: string, payload: BirthDataPayload):

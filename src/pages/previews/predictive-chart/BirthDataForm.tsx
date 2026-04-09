@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BirthDataPayload, UserInfo } from '../../../types';
+import { BirthDataPayload, UserInfo } from '@/types';
 
 interface PredictiveBirthDataFormProps {
   onNext: (firstPayload: BirthDataPayload, secondPayload: BirthDataPayload) => void;

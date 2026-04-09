@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Navbar from '../../../components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types';
-import BirthDataForm from './BirthDataForm';
-import ContactForm from './ContactForm';
-import FinalStep from './FinalStep';
+import Navbar from '@/components/navbar/Navbar';
+import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
+import BirthDataForm from '@/pages/previews/karmic-chart/BirthDataForm';
+import ContactForm from '@/pages/previews/karmic-chart/ContactForm';
+import FinalStep from '@/pages/previews/karmic-chart/FinalStep';
 
 const KarmicChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);

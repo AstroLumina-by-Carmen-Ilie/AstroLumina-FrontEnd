@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, AstralElements } from '../../../types';
+import { BirthDataPayload, UserInfo, ContactInfo, AstralElements } from '@/types';
 import { calculateKarmicChart } from '../../../utils/astrologicalCalculations';
 import { generateKarmicChartPDF } from '../../../templates/pdf/karmicChart';
 

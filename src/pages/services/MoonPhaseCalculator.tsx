@@ -1,4 +1,4 @@
-import MoonPhaseCalculatorPage from './moon-phase-calculator/MoonPhaseCalculatorPage';
+import MoonPhaseCalculatorPage from '@/pages/services/moon-phase-calculator/MoonPhaseCalculatorPage';
 
 // Main Component
 const MoonPhaseCalculator = MoonPhaseCalculatorPage;

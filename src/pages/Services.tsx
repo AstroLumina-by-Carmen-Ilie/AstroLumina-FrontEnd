@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../hooks/useLoading';
+import Navbar from '@/components/navbar/Navbar';
+import { useLoading } from '@/hooks/useLoading';
 import { ArrowRight, Clock, Star, Sparkles, Moon, Compass, Calendar } from 'lucide-react';
 
 const Services = () => {

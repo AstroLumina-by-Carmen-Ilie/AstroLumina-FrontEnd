@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { AstralElements } from '../../../types';
-import Navbar from '../../../components/navbar/Navbar';
-import BirthDataForm from './BirthDataForm';
-import ResultsDisplay from './ResultsDisplay';
-import { useLoading } from '../../../hooks/useLoading';
+import { AstralElements } from '@/types';
+import Navbar from '@/components/navbar/Navbar';
+import BirthDataForm from '@/pages/services/astral-calculator/BirthDataForm';
+import ResultsDisplay from '@/pages/services/astral-calculator/ResultsDisplay';
+import { useLoading } from '@/hooks/useLoading';
 
 const AstralCalculatorPage = () => {
   const [result, setResult] = useState<{ astral_elements: AstralElements; astral_houses: AstralElements } | null>(null);

@@ -1,7 +1,7 @@
-import { AstralElements, UserInfo } from '../../types';
+import { AstralElements, UserInfo } from '@/types';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { loadFontsForPDF } from '../../utils/fontLoader';
+import { loadFontsForPDF } from '@/utils/fontLoader';
 
 // Utility functions
 const formatDate = (date: Date): string => {

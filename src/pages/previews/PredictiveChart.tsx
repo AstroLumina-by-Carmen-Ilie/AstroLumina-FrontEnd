@@ -1,4 +1,4 @@
-import PredictiveChartPage from './predictive-chart/PredictiveChartPage';
+import PredictiveChartPage from '@/pages/previews/predictive-chart/PredictiveChartPage';
 
 const PredictiveChart = PredictiveChartPage;
 export default PredictiveChart;

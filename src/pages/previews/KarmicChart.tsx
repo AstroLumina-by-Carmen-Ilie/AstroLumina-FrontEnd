@@ -1,4 +1,4 @@
-import KarmicChartPage from './karmic-chart/KarmicChartPage';
+import KarmicChartPage from '@/pages/previews/karmic-chart/KarmicChartPage';
 
 // Main Component
 const KarmicChart = KarmicChartPage;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, AstralElements, AstralAspects } from '../../../types';
+import { BirthDataPayload, UserInfo, ContactInfo, AstralElements, AstralAspects } from '@/types';
 import { calculateNatalChart } from '../../../utils/astrologicalCalculations';
 import { generateNatalChartPDF } from '../../../templates/pdf/natalChart';
 
