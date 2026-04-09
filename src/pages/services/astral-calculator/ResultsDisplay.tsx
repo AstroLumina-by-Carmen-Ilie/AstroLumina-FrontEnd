@@ -106,7 +106,7 @@ const ResultsDisplay: React.FC<{
                 <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Poziție</th>
                 {activeTab !== 2 && (
                   <>
-                    <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Casa</th>
+                    {/* <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Casa</th> */}
                     <th className="p-2 sm:p-3 font-medium text-cosmic-300 text-sm sm:text-base">Retrograd</th>
                   </>
                 )}
