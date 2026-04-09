@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralElements } from '../../../types';
-import { calculateKarmicChart } from '../utilities/astrologicalCalculations';
+import { BirthDataPayload, UserInfo, ContactInfo, AstralElements } from '../../../types';
+import { calculateKarmicChart } from '../../../utils/astrologicalCalculations';
 import { generateKarmicChartPDF } from '../../../templates/pdf/karmicChart';
 
 interface FinalStepProps {
@@ -12,7 +12,7 @@ interface FinalStepProps {
 
 const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, paymentStatus }) => {
   // const { startLoading, stopLoading } = useLoading();
-  const [result, setResult] = useState<InterpretedAstralElements | null>(null);
+  const [result, setResult] = useState<AstralElements | null>(null);
   const [isGettingData, setIsGettingData] = useState(false);
   const [chart, setChart] = useState('');
 

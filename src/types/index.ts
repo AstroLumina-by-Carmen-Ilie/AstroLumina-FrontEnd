@@ -60,6 +60,16 @@ export interface AstralElement {
 
 export type AstralElements = AstralElement[];
 
+export interface AstralAspect {
+  p1_name: string;
+  p2_name: string;
+  aspect: string;
+  orb?: number;
+  [key: string]: unknown;
+}
+
+export type AstralAspects = AstralAspect[];
+
 export interface UserInfo {
     name: string;
     birthDate: Date;
@@ -71,8 +81,6 @@ export interface ContactInfo {
     phone: string;
     email: string;
 }
-
-export type InterpretedAstralElements = AstralElement[];
 
 export interface LunarDataResponse {
     timestamp: number;

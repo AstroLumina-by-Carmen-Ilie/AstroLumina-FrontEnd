@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import DateInput from '../../../components/ui/DateInput';
 import TimeInput from '../../../components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, AstralElements } from '../../../types';
-import { calculateAstralElementsPosition } from '../utilities/astrologicalCalculations';
+import { calculateAstralElementsPosition } from '../../../utils/astrologicalCalculations';
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
 
 interface BirthDataFormProps {

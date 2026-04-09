@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
-import { BirthDataPayload, UserInfo, ContactInfo, InterpretedAstralElements } from '../../../types';
-import { calculateNatalChart } from '../utilities/astrologicalCalculations';
+import { BirthDataPayload, UserInfo, ContactInfo, AstralElements, AstralAspects } from '../../../types';
+import { calculateNatalChart } from '../../../utils/astrologicalCalculations';
 import { generateNatalChartPDF } from '../../../templates/pdf/natalChart';
 
 interface FinalStepProps {
   payload: BirthDataPayload;
   userInfo: UserInfo;
   contactInfo: ContactInfo;
-  paymentStatus: boolean;
 }
 
-const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, paymentStatus }) => {
+const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo }) => {
   // const { startLoading, stopLoading } = useLoading();
-  const [result, setResult] = useState<InterpretedAstralElements | null>(null);
+  const [result, setResult] = useState<{
+      astral_elements: AstralElements,
+      astral_houses: AstralElements,
+      astral_aspects: AstralAspects,
+      astral_chart: string
+    } | null>(null);
   const [isGettingData, setIsGettingData] = useState(false);
-  const [chart, setChart] = useState('');
 
   const formatDate = (date: Date): string => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -29,27 +32,25 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo, p
     setIsGettingData(true);
     try {
       const AstralPositions = await calculateNatalChart('ro', payload);
-      setResult(AstralPositions.data);
-      setChart(AstralPositions.chart);
+      setResult(AstralPositions);
     } catch (error) {
       console.error('Error fetching reading:', error);
       setResult(null);
-      setChart('');
     } finally {
       // stopLoading();
       setTimeout(() => setIsGettingData(false), 1500);
     }
   };
 
-  useEffect(() => {
-    if (result && chart && userInfo && contactInfo && paymentStatus) {
-      const generatePDF = async () => {
-        const doc = await generateNatalChartPDF(result, chart, userInfo, contactInfo);
-        doc.save(`Harta_Natala_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
-      };
-      generatePDF();
-    }
-  }, [result, chart, userInfo, contactInfo, paymentStatus]);
+  // useEffect(() => {
+  //   if (result && userInfo && contactInfo) {
+  //     const generatePDF = async () => {
+  //       const doc = await generateNatalChartPDF(result, userInfo, contactInfo);
+  //       doc.save(`Harta_Natala_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
+  //     };
+  //     generatePDF();
+  //   }
+  // }, [result, userInfo, contactInfo]);
 
   const handleNatalChart = async () => {
     await handleFormSubmit();

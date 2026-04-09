@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import Navbar from "../../../components/navbar/Navbar";
-import { BirthDataPayload, UserInfo, ContactInfo } from "../../../types";
-import BirthDataForm from "./BirthDataForm";
-import ContactForm from "./ContactForm";
-import PaymentForm from "./PaymentForm";
-import FinalStep from "./FinalStep";
+import React, { useState } from 'react';
+import Navbar from '../../../components/navbar/Navbar';
+import { BirthDataPayload, UserInfo, ContactInfo } from '../../../types';
+import BirthDataForm from './BirthDataForm';
+import ContactForm from './ContactForm';
+import FinalStep from './FinalStep';
 
-const NatalChartPage = () => {
+const KarmicChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -71,8 +70,7 @@ const NatalChartPage = () => {
             Astrograma Natală și Karmică
           </h1>
           <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
-            Sesiune live în care aducem claritate și direcție prin înțelegerea
-            astrogramei tale!
+            Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
           </p>
         </div>
 
@@ -94,7 +92,7 @@ const NatalChartPage = () => {
                   <ul className="list-disc list-inside space-y-1">
                     <li>direcția ta profesională și resursele interioare</li>
                     <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
-                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
+                    <li>cum îți poți valorifica talentele și câștiga bani în mod benefic</li>
                     <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
                     <li>linia destinului și misiunea ta personală</li>
                   </ul>
@@ -112,29 +110,26 @@ const NatalChartPage = () => {
                   </p>
                 </div>
 
-                {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: "Date naștere" },
-                    { num: 2, label: "Date contact" },
-                    { num: 3, label: "Plată" },
-                    { num: 4, label: "Rezultat" },
+                    { num: 1, label: 'Date naștere' },
+                    { num: 2, label: 'Date contact' },
+                    { num: 3, label: 'Plată' },
+                    { num: 4, label: 'Rezultat' },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
-                            ? "step-active text-white"
+                            ? 'step-active text-white'
                             : step.num < currentStep
-                              ? "step-completed text-white"
-                              : "step-pending text-cosmic-400"
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
                         }`}
                       >
-                        {step.num < currentStep ? "✓" : step.num}
+                        {step.num < currentStep ? '✓' : step.num}
                       </div>
-                      <span
-                        className={`text-sm ${step.num === currentStep ? "text-white" : "text-cosmic-400"}`}
-                      >
+                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
                         {step.label}
                       </span>
                     </div>
@@ -152,13 +147,13 @@ const NatalChartPage = () => {
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step === currentStep
-                            ? "step-active text-white"
+                            ? 'step-active text-white'
                             : step < currentStep
-                              ? "step-completed text-white"
-                              : "step-pending text-cosmic-400"
+                            ? 'step-completed text-white'
+                            : 'step-pending text-cosmic-400'
                         }`}
                       >
-                        {step < currentStep ? "✓" : step}
+                        {step < currentStep ? '✓' : step}
                       </div>
                     ))}
                   </div>
@@ -180,4 +175,4 @@ const NatalChartPage = () => {
   );
 };
 
-export default NatalChartPage;
+export default KarmicChartPage;
