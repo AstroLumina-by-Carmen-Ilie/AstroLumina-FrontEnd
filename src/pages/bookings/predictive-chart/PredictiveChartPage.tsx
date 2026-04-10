@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
-import BirthDataForm from '@/pages/previews/predictive-chart/BirthDataForm';
-import ContactForm from '@/pages/previews/predictive-chart/ContactForm';
-import PaymentForm from '@/pages/previews/predictive-chart/PaymentForm';
-import FinalStep from '@/pages/previews/predictive-chart/FinalStep';
+import BirthDataForm from '@/pages/bookings/predictive-chart/BirthDataForm';
+import ContactForm from '@/pages/bookings/predictive-chart/ContactForm';
+import PaymentForm from '@/pages/bookings/predictive-chart/PaymentForm';
+import FinalStep from '@/pages/bookings/predictive-chart/FinalStep';
 
 const PredictiveChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);

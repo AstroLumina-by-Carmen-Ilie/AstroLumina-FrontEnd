@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
-import BirthDataForm from '@/pages/previews/synastry-chart/BirthDataForm';
-import ContactForm from '@/pages/previews/synastry-chart/ContactForm';
-import PaymentForm from '@/pages/previews/synastry-chart/PaymentForm';
-import FinalStep from '@/pages/previews/synastry-chart/FinalStep';
+import BirthDataForm from '@/pages/bookings/synastry-chart/BirthDataForm';
+import ContactForm from '@/pages/bookings/synastry-chart/ContactForm';
+import PaymentForm from '@/pages/bookings/synastry-chart/PaymentForm';
+import FinalStep from '@/pages/bookings/synastry-chart/FinalStep';
 
 const SynastryChartPage = () => {
   const [currentStep, setCurrentStep] = useState(1);

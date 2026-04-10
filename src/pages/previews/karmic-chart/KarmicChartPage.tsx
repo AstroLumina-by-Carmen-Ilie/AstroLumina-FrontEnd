@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
+import { BirthDataPayload, UserInfo, ContactInfo, AstralElements } from '@/types';
 import BirthDataForm from '@/pages/previews/karmic-chart/BirthDataForm';
 import ContactForm from '@/pages/previews/karmic-chart/ContactForm';
 import FinalStep from '@/pages/previews/karmic-chart/FinalStep';
@@ -10,7 +10,7 @@ const KarmicChartPage = () => {
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
+  const [result, setResult] = useState<{astral_elements: AstralElements, astral_houses: AstralElements} | null>(null);
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
@@ -38,21 +38,11 @@ const KarmicChartPage = () => {
         );
       case 3:
         return (
-          <PaymentForm
-            onNext={(paymentStatus) => {
-              setPaymentStatus(paymentStatus);
-              setCurrentStep(4);
-            }}
-            onBack={handleBack}
-          />
-        );
-      case 4:
-        return (
           <FinalStep
             payload={payload!}
             userInfo={userInfo!}
             contactInfo={contactInfo!}
-            paymentStatus={paymentStatus!}
+            result={result}
           />
         );
       default:
@@ -92,7 +82,7 @@ const KarmicChartPage = () => {
                   <ul className="list-disc list-inside space-y-1">
                     <li>direcția ta profesională și resursele interioare</li>
                     <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
-                    <li>cum îți poți valorifica talentele și câștiga bani în mod benefic</li>
+                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
                     <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
                     <li>linia destinului și misiunea ta personală</li>
                   </ul>
@@ -110,12 +100,12 @@ const KarmicChartPage = () => {
                   </p>
                 </div>
 
+                {/* Step indicators */}
                 <div className="space-y-3">
                   {[
                     { num: 1, label: 'Date naștere' },
                     { num: 2, label: 'Date contact' },
-                    { num: 3, label: 'Plată' },
-                    { num: 4, label: 'Rezultat' },
+                    { num: 3, label: 'Rezultat' },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
@@ -142,7 +132,7 @@ const KarmicChartPage = () => {
                 {/* Mobile step indicator */}
                 <div className="md:hidden mb-8">
                   <div className="flex justify-between items-center mb-4">
-                    {[1, 2, 3, 4].map((step) => (
+                    {[1, 2, 3].map((step) => (
                       <div
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
@@ -160,7 +150,7 @@ const KarmicChartPage = () => {
                   <div className="h-1 bg-white/10 rounded-full">
                     <div
                       className="h-full bg-gradient-to-r from-cosmic-500 to-cosmic-400 rounded-full transition-all duration-500"
-                      style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+                      style={{ width: `${((currentStep - 1) / 2) * 100}%` }}
                     />
                   </div>
                 </div>

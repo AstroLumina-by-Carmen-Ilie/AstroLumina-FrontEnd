@@ -64,7 +64,7 @@ export interface AstralAspect {
   p1_name: string;
   p2_name: string;
   aspect: string;
-  orb?: number;
+  orbit?: number;
   [key: string]: unknown;
 }
 
