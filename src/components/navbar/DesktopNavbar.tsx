@@ -4,10 +4,10 @@ import {
   getNavbarStyles,
   NavbarLogo,
   NavbarLinks
-} from './NavbarCommon';
+} from '@/components/navbar/NavbarCommon';
 
 const DesktopNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
-  const { navClasses, linkClasses, logoClasses } = getNavbarStyles();
+  const { navClasses, linkClasses } = getNavbarStyles();
 
   return (
     <div className="hidden md:block">

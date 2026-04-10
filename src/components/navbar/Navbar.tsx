@@ -1,7 +1,7 @@
 import React from 'react';
-import { NavbarProps } from './NavbarCommon';
-import DesktopNavbar from './DesktopNavbar';
-import MobileNavbar from './MobileNavbar';
+import { NavbarProps } from '@/components/navbar/NavbarCommon';
+import DesktopNavbar from '@/components/navbar/DesktopNavbar';
+import MobileNavbar from '@/components/navbar/MobileNavbar';
 
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   return (

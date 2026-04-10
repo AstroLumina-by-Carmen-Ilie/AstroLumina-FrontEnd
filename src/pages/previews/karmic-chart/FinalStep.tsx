@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BirthDataPayload, UserInfo, ContactInfo, AstralElements } from '@/types';
-import { calculateKarmicChart } from '../../../utils/astrologicalCalculations';
-import { generateKarmicChartPDF } from '../../../templates/pdf/karmicChart';
+import { calculateKarmicChart } from '@/utils/astrologicalCalculations';
+import { generateKarmicChartPDF } from '@/templates/pdf/karmicChart';
 
 interface FinalStepProps {
   payload: BirthDataPayload;

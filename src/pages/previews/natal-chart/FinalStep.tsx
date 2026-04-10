@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BirthDataPayload, UserInfo, ContactInfo, AstralElements, AstralAspects } from '@/types';
-import { calculateNatalChart } from '../../../utils/astrologicalCalculations';
-import { generateNatalChartPDF } from '../../../templates/pdf/natalChart';
+import { calculateNatalChart } from '@/utils/astrologicalCalculations';
 
 interface FinalStepProps {
   payload: BirthDataPayload;
@@ -9,7 +8,7 @@ interface FinalStepProps {
   contactInfo: ContactInfo;
 }
 
-const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo }) => {
+const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo }) => {
   // const { startLoading, stopLoading } = useLoading();
   const [result, setResult] = useState<{
       astral_elements: AstralElements,
@@ -41,16 +40,6 @@ const FinalStep: React.FC<FinalStepProps> = ({ payload, userInfo, contactInfo })
       setTimeout(() => setIsGettingData(false), 1500);
     }
   };
-
-  // useEffect(() => {
-  //   if (result && userInfo && contactInfo) {
-  //     const generatePDF = async () => {
-  //       const doc = await generateNatalChartPDF(result, userInfo, contactInfo);
-  //       doc.save(`Harta_Natala_${userInfo.name.replace(/\s+/g, '_')}.pdf`);
-  //     };
-  //     generatePDF();
-  //   }
-  // }, [result, userInfo, contactInfo]);
 
   const handleNatalChart = async () => {
     await handleFormSubmit();

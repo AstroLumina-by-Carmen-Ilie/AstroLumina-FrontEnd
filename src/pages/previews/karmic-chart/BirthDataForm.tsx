@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
-import { SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '../../../types';
+import { SelectOption, LocationCoordinates, UserInfo, BirthDataPayload } from '@/types';
 
 interface BirthDataFormProps {
   onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
