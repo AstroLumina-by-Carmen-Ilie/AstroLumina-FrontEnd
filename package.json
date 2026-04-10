@@ -13,9 +13,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "deploy": "npm run build:cloudflare && wrangler pages deploy dist",
     "start": "npm run dev",
-    "local-build": "rm -rf node_modules && rm -rf dist && npm update && npm install --include=dev && npm run build"
+    "clean": "rm -rf node_modules && rm -rf dist",
+    "update-n-build": "npm update && npm install --include=dev --ignore-scripts && npm run build"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
