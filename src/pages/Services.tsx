@@ -56,7 +56,7 @@ const Services = () => {
       highlight: true,
     },
     {
-      id: 'astrograma-natala-karmica',
+      id: 'astrograma-natala-si-karmica',
       title: 'Astrograma Natală și Karmică',
       description: 'Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!',
       details: [
@@ -68,7 +68,7 @@ const Services = () => {
       ],
       duration: '90 minute',
       price: '75€',
-      link: '/servicii/lumina-natala',
+      link: '/astrograma/lumina-natala-si-karmica',
       icon: <Sparkles className="w-6 h-6" />,
     },
     {
@@ -84,7 +84,7 @@ const Services = () => {
       ],
       duration: '90 minute',
       price: '75€',
-      link: '/servicii/lumina-relationala',
+      link: '/astrograma/lumina-relationala',
       icon: <Star className="w-6 h-6" />,
     },
     {
@@ -100,7 +100,7 @@ const Services = () => {
       ],
       duration: '90 minute',
       price: '75€',
-      link: '/servicii/lumina-previzionala',
+      link: '/astrograma/lumina-previzionala',
       icon: <Compass className="w-6 h-6" />,
     },
   ];

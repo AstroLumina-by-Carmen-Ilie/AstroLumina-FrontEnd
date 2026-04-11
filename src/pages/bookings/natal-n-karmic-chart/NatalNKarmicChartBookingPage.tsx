@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
-import BirthDataForm from '@/pages/bookings/synastry-chart/BirthDataForm';
-import ContactForm from '@/pages/bookings/synastry-chart/ContactForm';
-import PaymentForm from '@/pages/bookings/synastry-chart/PaymentForm';
-import FinalStep from '@/pages/bookings/synastry-chart/FinalStep';
+import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions } from '@/types';
+import BirthDataForm from '@/pages/previews/natal-chart/BirthDataForm';
+import ContactForm from '@/pages/previews/natal-chart/ContactForm';
+import BookingQuestionsForm from './BookingQuestionsForm';
+import AvailabilitySelector, { AvailableSlot } from './AvailabilitySelector';
+import PaymentFormNatal from './PaymentFormNatal';
+import ConfirmationStep from './ConfirmationStep';
 
-const SynastryChartPage = () => {
+const NatalNKarmicChartBookingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
-  const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
+  const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
+  const [bookingQuestions, setBookingQuestions] = useState<BookingQuestions | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
+  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
@@ -21,9 +24,9 @@ const SynastryChartPage = () => {
       case 1:
         return (
           <BirthDataForm
-            onNext={(firstPayload, secondPayload) => {
-              setFirstPayload(firstPayload);
-              setSecondPayload(secondPayload);
+            onNext={(payload, userInfo) => {
+              setPayload(payload);
+              setUserInfo(userInfo);
               setCurrentStep(2);
             }}
           />
@@ -40,9 +43,9 @@ const SynastryChartPage = () => {
         );
       case 3:
         return (
-          <PaymentForm
-            onNext={(paymentStatus) => {
-              setPaymentStatus(paymentStatus);
+          <BookingQuestionsForm
+            onNext={(questions) => {
+              setBookingQuestions(questions);
               setCurrentStep(4);
             }}
             onBack={handleBack}
@@ -50,11 +53,45 @@ const SynastryChartPage = () => {
         );
       case 4:
         return (
-          <FinalStep
-            firstPayload={firstPayload!}
-            secondPayload={secondPayload!}
+          <AvailabilitySelector
+            onNext={(slot) => {
+              setSelectedSlot(slot);
+              setCurrentStep(5);
+            }}
+            onBack={handleBack}
+          />
+        );
+      case 5:
+        return (
+          <PaymentFormNatal
+            selectedSlot={selectedSlot!}
+            onNext={(intentId) => {
+              setPaymentIntentId(intentId);
+              setCurrentStep(6);
+            }}
+            onBack={handleBack}
+          />
+        );
+      case 6:
+        return (
+          <ConfirmationStep
+            payload={payload!}
+            userInfo={userInfo!}
             contactInfo={contactInfo!}
-            paymentStatus={paymentStatus!}
+            bookingQuestions={bookingQuestions!}
+            selectedSlot={selectedSlot!}
+            paymentIntentId={paymentIntentId}
+            onBack={handleBack}
+            onComplete={() => {
+              // Reset form for next booking
+              setCurrentStep(1);
+              setPayload(null);
+              setUserInfo(null);
+              setContactInfo(null);
+              setBookingQuestions(null);
+              setSelectedSlot(null);
+              setPaymentIntentId('');
+            }}
           />
         );
       default:
@@ -69,10 +106,10 @@ const SynastryChartPage = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Astrograma Relațională
+            Astrograma Natală și Karmică
           </h1>
           <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
-            Descoperă dinamiciile relației tale!
+            Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
           </p>
         </div>
 
@@ -82,28 +119,27 @@ const SynastryChartPage = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Astrograma Relațională
+                  Astrograma Natală și Karmică
                 </h2>
                 <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
                   <p>
-                    În această sesiune live, explorăm dinamicile profunde ale relației tale cu partenerul, părinții, copiii, prietenii sau orice altă persoană de interes.
+                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
                   </p>
                   <p>
-                    Această sesiune este pentru tine dacă îți dorești:
+                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
                   </p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Să înțelegi tiparele și dinamicile subtile ale relației</li>
-                    <li>Să afli care este potențialul vostru împreună</li>
-                    <li>Să aduci claritate asupra punctelor de vulnerabilitate</li>
-                    <li>Să clarifici care sunt lecțiile pe care le puteți învăța împreună</li>
-                    <li>Să înțelegi ce rol aveți unul în evoluția celuilalt</li>
-                    <li>Să cunoști gradul vostru de compatibilitate și căile de evoluție</li>
+                    <li>direcția ta profesională și resursele interioare</li>
+                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
+                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
+                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
+                    <li>linia destinului și misiunea ta personală</li>
                   </ul>
                   <p>
-                    Astrologia nu oferă verdicte de compatibilitate, ci îți arată natura relației: ce vă apropie, ce vă provoacă, ce este necesar pentru ca relația să se maturizeze în mod armonios.
+                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
                   </p>
                   <p>
-                    Poți solicita o Astrogramă Relațională pentru orice tip de relație - romantică, familială, profesională sau de prietenie.
+                    Include și analiza transgenerațională a hărții tale.
                   </p>
                   <p>
                     Consultația este oferită prin Zoom.
@@ -111,18 +147,17 @@ const SynastryChartPage = () => {
                   <p>
                     Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
                   </p>
-                  <p>
-                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval, notează mijlocul intervalului. Dacă ora este complet necunoscută, folosește 12:00 (PM).
-                  </p>
                 </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: 'Date naștere ambii' },
+                    { num: 1, label: 'Date naștere' },
                     { num: 2, label: 'Date contact' },
-                    { num: 3, label: 'Plată' },
-                    { num: 4, label: 'Rezultat' },
+                    { num: 3, label: 'Motivul discuției' },
+                    { num: 4, label: 'Disponibilitate' },
+                    { num: 5, label: 'Plată' },
+                    { num: 6, label: 'Confirmare' },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
@@ -149,7 +184,7 @@ const SynastryChartPage = () => {
                 {/* Mobile step indicator */}
                 <div className="md:hidden mb-8">
                   <div className="flex justify-between items-center mb-4">
-                    {[1, 2, 3, 4].map((step) => (
+                    {[1, 2, 3, 4, 5, 6].map((step) => (
                       <div
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
@@ -167,7 +202,7 @@ const SynastryChartPage = () => {
                   <div className="h-1 bg-white/10 rounded-full">
                     <div
                       className="h-full bg-gradient-to-r from-cosmic-500 to-cosmic-400 rounded-full transition-all duration-500"
-                      style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+                      style={{ width: `${((currentStep - 1) / 5) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -182,4 +217,4 @@ const SynastryChartPage = () => {
   );
 };
 
-export default SynastryChartPage;
+export default NatalNKarmicChartBookingPage;

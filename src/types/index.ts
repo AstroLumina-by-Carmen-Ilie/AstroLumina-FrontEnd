@@ -82,6 +82,10 @@ export interface ContactInfo {
     email: string;
 }
 
+export interface BookingQuestions {
+    notes: string;
+}
+
 export interface LunarDataResponse {
     timestamp: number;
     datestamp: string;

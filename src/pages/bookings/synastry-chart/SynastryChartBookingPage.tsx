@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
-import BirthDataForm from '@/pages/bookings/predictive-chart/BirthDataForm';
-import ContactForm from '@/pages/bookings/predictive-chart/ContactForm';
-import PaymentForm from '@/pages/bookings/predictive-chart/PaymentForm';
-import FinalStep from '@/pages/bookings/predictive-chart/FinalStep';
+import BirthDataForm from '@/pages/bookings/synastry-chart/BirthDataForm';
+import ContactForm from '@/pages/bookings/synastry-chart/ContactForm';
+import PaymentForm from '@/pages/bookings/synastry-chart/PaymentForm';
+import FinalStep from '@/pages/bookings/synastry-chart/FinalStep';
 
-const PredictiveChartPage = () => {
+const SynastryChartBookingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
   const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
@@ -69,10 +69,10 @@ const PredictiveChartPage = () => {
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-            Astrograma Previzională
+            Astrograma Relațională
           </h1>
           <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
-            Sesiune live în care studiem predispozițiile tale pe anul următor
+            Descoperă dinamiciile relației tale!
           </p>
         </div>
 
@@ -82,31 +82,37 @@ const PredictiveChartPage = () => {
               {/* Left Panel */}
               <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
                 <h2 className="font-display text-3xl font-bold text-white mb-6">
-                  Astrograma Previzională
+                  Astrograma Relațională
                 </h2>
                 <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
                   <p>
-                    Această sesiune live îți oferă o privire detaliată asupra predispozițiilor și evenimentelor semnificative din următoarele 12 luni, așa cum se reflectă în harta ta natală.
+                    În această sesiune live, explorăm dinamicile profunde ale relației tale cu partenerul, părinții, copiii, prietenii sau orice altă persoană de interes.
+                  </p>
+                  <p>
+                    Această sesiune este pentru tine dacă îți dorești:
                   </p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Vei înțelege ce teme sunt în prim-plan și cum să le abordezi în mod conștient</li>
-                    <li>Descoperi care sunt perioadele favorabile pentru relații, carieră, mutări, proiecte sau decizii importante</li>
-                    <li>Primești răspunsuri pentru întrebări concrete, pentru a-ți organiza cât mai bine planurile și resursele</li>
+                    <li>Să înțelegi tiparele și dinamicile subtile ale relației</li>
+                    <li>Să afli care este potențialul vostru împreună</li>
+                    <li>Să aduci claritate asupra punctelor de vulnerabilitate</li>
+                    <li>Să clarifici care sunt lecțiile pe care le puteți învăța împreună</li>
+                    <li>Să înțelegi ce rol aveți unul în evoluția celuilalt</li>
+                    <li>Să cunoști gradul vostru de compatibilitate și căile de evoluție</li>
                   </ul>
                   <p>
-                    Dacă ai întrebări legate de un eveniment trecut din viața ta și lecțiile pe care ai nevoie să le înveți în urma sa, le putem discuta, de asemenea.
+                    Astrologia nu oferă verdicte de compatibilitate, ci îți arată natura relației: ce vă apropie, ce vă provoacă, ce este necesar pentru ca relația să se maturizeze în mod armonios.
                   </p>
                   <p>
-                    Deși această analiză se axează, în principiu, pe tranzitele următoarelor 12 luni, dacă ai întrebări punctuale în privința unui eveniment mult mai în viitor, răspundem și acestor curiozități.
-                  </p>
-                  <p>
-                    Este o experiență prin care primești ghidaj personalizat, menită să-ți aducă claritate și încredere în pașii pe care îi ai de făcut.
+                    Poți solicita o Astrogramă Relațională pentru orice tip de relație - romantică, familială, profesională sau de prietenie.
                   </p>
                   <p>
                     Consultația este oferită prin Zoom.
                   </p>
                   <p>
                     Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                  </p>
+                  <p>
+                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval, notează mijlocul intervalului. Dacă ora este complet necunoscută, folosește 12:00 (PM).
                   </p>
                 </div>
 
@@ -176,4 +182,4 @@ const PredictiveChartPage = () => {
   );
 };
 
-export default PredictiveChartPage;
+export default SynastryChartBookingPage;
