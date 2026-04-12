@@ -5,7 +5,7 @@ import LunarDataForm from '@/pages/services/moon-phase-calculator/LunarDataForm'
 import LunarResultsDisplay from '@/pages/services/moon-phase-calculator/LunarResultsDisplay';
 import { useLoading } from '@/hooks/useLoading';
 import { calculateLunarPhasePosition } from '@/utils/astrologicalCalculations';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCityCoordinates } from '@/data/romanian-locations';
+import { getRomanianCityCoordinates } from '@/data/romanian-locations';
 
 type SelectionMode = 'none' | 'specific-date' | 'current-date';
 
