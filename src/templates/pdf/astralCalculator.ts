@@ -174,7 +174,7 @@ export const generateAstralElementsPDF = async (result: { astral_elements: Astra
   addElementDistribution(doc, planetElementDistribution);
 
   const planetsTableData = createPlanetsTable(planetsData);
-  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], planetsTableData, 45);
+  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Retrograd'], planetsTableData, 45);
 
   // PAGE 2: Houses
   doc.addPage();
