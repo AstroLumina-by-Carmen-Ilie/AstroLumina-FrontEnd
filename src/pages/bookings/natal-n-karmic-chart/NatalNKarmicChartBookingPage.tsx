@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/navbar/Navbar';
 import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions } from '@/types';
 import BirthDataForm from '@/pages/previews/natal-chart/BirthDataForm';
@@ -9,6 +10,7 @@ import PaymentFormNatal from './PaymentFormNatal';
 import ConfirmationStep from './ConfirmationStep';
 
 const NatalNKarmicChartBookingPage = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -82,16 +84,7 @@ const NatalNKarmicChartBookingPage = () => {
             selectedSlot={selectedSlot!}
             paymentIntentId={paymentIntentId}
             onBack={handleBack}
-            onComplete={() => {
-              // Reset form for next booking
-              setCurrentStep(1);
-              setPayload(null);
-              setUserInfo(null);
-              setContactInfo(null);
-              setBookingQuestions(null);
-              setSelectedSlot(null);
-              setPaymentIntentId('');
-            }}
+            onComplete={() => navigate('/')}
           />
         );
       default:

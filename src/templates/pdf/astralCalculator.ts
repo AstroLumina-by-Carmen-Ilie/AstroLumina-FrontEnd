@@ -67,7 +67,6 @@ const createPlanetsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
@@ -87,7 +86,6 @@ const createAsteroidsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
@@ -176,7 +174,7 @@ export const generateAstralElementsPDF = async (result: { astral_elements: Astra
   addElementDistribution(doc, planetElementDistribution);
 
   const planetsTableData = createPlanetsTable(planetsData);
-  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], planetsTableData, 45);
+  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Retrograd'], planetsTableData, 45);
 
   // PAGE 2: Houses
   doc.addPage();
