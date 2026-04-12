@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
-import DateInput from '../../../components/ui/DateInput';
-import TimeInput from '../../../components/ui/TimeInput';
-import { LocationCoordinates, LunarDataPayload, SelectOption } from '../../../types';
-import { calculateLunarPhasePosition } from '../utilities/astrologicalCalculations';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '../../../data/romanian-locations';
+import DateInput from '@/components/ui/DateInput';
+import TimeInput from '@/components/ui/TimeInput';
+import { LocationCoordinates, LunarDataPayload, SelectOption } from '@/types';
+import { calculateLunarPhasePosition } from '@/utils/astrologicalCalculations';
+import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
 
 interface LunarDataFormProps {
   setResult: React.Dispatch<React.SetStateAction<any>>;

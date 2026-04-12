@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../hooks/useLoading';
+import Navbar from '@/components/navbar/Navbar';
+import { useLoading } from '@/hooks/useLoading';
 import { Sparkles, Star, Compass } from 'lucide-react';
 
 const AboutMe = () => {

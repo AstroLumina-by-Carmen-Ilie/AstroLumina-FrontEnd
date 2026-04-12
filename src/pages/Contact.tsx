@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../hooks/useLoading';
+import Navbar from '@/components/navbar/Navbar';
+import { useLoading } from '@/hooks/useLoading';
 import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 
 const Contact = () => {
