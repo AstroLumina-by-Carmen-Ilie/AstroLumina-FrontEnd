@@ -67,7 +67,6 @@ const createPlanetsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
@@ -87,7 +86,6 @@ const createAsteroidsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
