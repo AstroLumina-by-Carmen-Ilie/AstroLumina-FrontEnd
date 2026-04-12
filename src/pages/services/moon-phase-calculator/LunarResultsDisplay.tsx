@@ -1,5 +1,5 @@
 import React from 'react';
-import { LunarDataResponse } from '../../../types';
+import { LunarDataResponse } from '@/types';
 
 const LunarResultsDisplay: React.FC<{
   result: LunarDataResponse;

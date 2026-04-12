@@ -1,11 +1,11 @@
-import { AstralElements, UserInfo, ContactInfo } from '../../types';
+import { AstralElements, UserInfo, ContactInfo } from '@/types';
 import { jsPDF } from 'jspdf';
-import { svgAsPngDataUrl } from '../utils/svgUtils';
-import { loadFontsForPDF } from '../../utils/fontLoader';
+import { svgAsPngDataUrl } from '@/templates/utils/svgUtils';
+import { loadFontsForPDF } from '@/utils/fontLoader';
 
 // Import SVG watermarks
-// import starryDesertSvg from '../../assets/images/starry-desert-watermark-updated.svg';
-// import starrySkySvg from '../../assets/images/starry-sky-watermark-enhanced.svg';
+// import starryDesertSvg from '@/assets/images/starry-desert-watermark-updated.svg';
+// import starrySkySvg from '@/assets/images/starry-sky-watermark-enhanced.svg';
 
 // Utility functions
 const formatDate = (date: Date): string => {

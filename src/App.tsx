@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from './components/navbar/Navbar';
-import ScrollToTopButton from './components/scroll/ScrollToTopButton';
-import { useLoading } from './hooks/useLoading';
-import { ConstelationEvent } from './types';
+import Navbar from '@/components/navbar/Navbar';
+import ScrollToTopButton from '@/components/scroll/ScrollToTopButton';
+import { useLoading } from '@/hooks/useLoading';
+import { ConstelationEvent } from '@/types';
 import { Star, Sparkles, Moon, Compass, Calendar, ArrowRight, ChevronDown, Check, Package, Users } from 'lucide-react';
 
 const generateConstelatiiEvents = (): ConstelationEvent[] => {

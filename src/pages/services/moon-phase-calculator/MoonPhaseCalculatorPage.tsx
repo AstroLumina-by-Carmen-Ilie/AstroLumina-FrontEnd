@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { LunarDataResponse } from '../../../types';
-import Navbar from '../../../components/navbar/Navbar';
-import LunarDataForm from './LunarDataForm';
-import LunarResultsDisplay from './LunarResultsDisplay';
-import { useLoading } from '../../../hooks/useLoading';
-import { calculateLunarPhasePosition } from '../utilities/astrologicalCalculations';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCityCoordinates } from '../../../data/romanian-locations';
+import { LunarDataResponse } from '@/types';
+import Navbar from '@/components/navbar/Navbar';
+import LunarDataForm from '@/pages/services/moon-phase-calculator/LunarDataForm';
+import LunarResultsDisplay from '@/pages/services/moon-phase-calculator/LunarResultsDisplay';
+import { useLoading } from '@/hooks/useLoading';
+import { calculateLunarPhasePosition } from '@/utils/astrologicalCalculations';
+import { getRomanianCityCoordinates } from '@/data/romanian-locations';
 
 type SelectionMode = 'none' | 'specific-date' | 'current-date';
 

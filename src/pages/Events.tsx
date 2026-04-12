@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Navbar from '../components/navbar/Navbar';
-import { useLoading } from '../hooks/useLoading';
+import Navbar from '@/components/navbar/Navbar';
+import { useLoading } from '@/hooks/useLoading';
 import { Calendar, Clock, MapPin, Users, ArrowRight } from 'lucide-react';
 
 interface ConstelationEvent {

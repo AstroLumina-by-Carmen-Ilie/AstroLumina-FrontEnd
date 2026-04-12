@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../../../components/navbar/Navbar';
-import BookingWidget from './BookingsWidget';
-import BookingPaymentForm from './BookingPaymentForm';
+import Navbar from '@/components/navbar/Navbar';
+import BookingWidget from '@/pages/services/bookings/BookingsWidget';
+import BookingPaymentForm from '@/pages/services/bookings/BookingPaymentForm';
 
 const BookingsPage = () => {
   const [currentStep, setCurrentStep] = useState(2);
