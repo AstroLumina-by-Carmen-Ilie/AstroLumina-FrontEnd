@@ -98,7 +98,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             bookingFieldsResponses: {
               attendeePhoneNumber: contactInfo.phone,
               "birth-date": `${payload.day}/${payload.month}/${payload.year}`,
-              "birth-time": `${payload.hour}:${payload.minute}`,
+              "birth-time": `${String(payload.hour).padStart(2, "0")}:${String(payload.minute).padStart(2, "0")}`,
               "birth-place": userInfo.location,
               notes: bookingQuestions.notes,
             },

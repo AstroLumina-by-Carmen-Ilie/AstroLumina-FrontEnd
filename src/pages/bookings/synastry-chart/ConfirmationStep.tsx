@@ -102,11 +102,11 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
               attendeePhoneNumber: contactInfo.phone,
               "first_member_data": 
                 `${firstPayload.day}/${firstPayload.month}/${firstPayload.year} 
-                ${firstPayload.hour}:${firstPayload.minute} 
+                ${String(firstPayload.hour).padStart(2, "0")}:${String(firstPayload.minute).padStart(2, "0")} 
                 ${firstMemberUserInfo.location}`,
               "second_member_data": 
                 `${secondPayload.day}/${secondPayload.month}/${secondPayload.year} 
-                ${secondPayload.hour}:${secondPayload.minute} 
+                ${String(secondPayload.hour).padStart(2, "0")}:${String(secondPayload.minute).padStart(2, "0")} 
                 ${secondMemberUserInfo.location}`,
               notes: bookingQuestions.notes,
             },
