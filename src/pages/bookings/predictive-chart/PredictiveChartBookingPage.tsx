@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo } from '@/types';
-import BirthDataForm from '@/pages/bookings/predictive-chart/BirthDataForm';
-import ContactForm from '@/pages/bookings/predictive-chart/ContactForm';
-import PaymentForm from '@/pages/bookings/predictive-chart/PaymentForm';
-import FinalStep from '@/pages/bookings/predictive-chart/FinalStep';
+import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions } from '@/types';
+import BirthDataForm from './BirthDataForm';
+import ContactForm from './ContactForm';
+import BookingQuestionsForm from './BookingQuestionsForm';
+import AvailabilitySelector, { AvailableSlot } from './AvailabilitySelector';
+import PaymentFormNatal from './PaymentFormNatal';
+import ConfirmationStep from './ConfirmationStep';
 
 const PredictiveChartBookingPage = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
-  const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
+  const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [paymentStatus, setPaymentStatus] = useState<boolean | null>(false);
+  const [bookingQuestions, setBookingQuestions] = useState<BookingQuestions | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
+  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
@@ -21,9 +26,9 @@ const PredictiveChartBookingPage = () => {
       case 1:
         return (
           <BirthDataForm
-            onNext={(firstPayload, secondPayload) => {
-              setFirstPayload(firstPayload);
-              setSecondPayload(secondPayload);
+            onNext={(payload, userInfo) => {
+              setPayload(payload);
+              setUserInfo(userInfo);
               setCurrentStep(2);
             }}
           />
@@ -40,9 +45,9 @@ const PredictiveChartBookingPage = () => {
         );
       case 3:
         return (
-          <PaymentForm
-            onNext={(paymentStatus) => {
-              setPaymentStatus(paymentStatus);
+          <BookingQuestionsForm
+            onNext={(questions) => {
+              setBookingQuestions(questions);
               setCurrentStep(4);
             }}
             onBack={handleBack}
@@ -50,11 +55,36 @@ const PredictiveChartBookingPage = () => {
         );
       case 4:
         return (
-          <FinalStep
-            firstPayload={firstPayload!}
-            secondPayload={secondPayload!}
+          <AvailabilitySelector
+            onNext={(slot) => {
+              setSelectedSlot(slot);
+              setCurrentStep(5);
+            }}
+            onBack={handleBack}
+          />
+        );
+      case 5:
+        return (
+          <PaymentFormNatal
+            selectedSlot={selectedSlot!}
+            onNext={(intentId) => {
+              setPaymentIntentId(intentId);
+              setCurrentStep(6);
+            }}
+            onBack={handleBack}
+          />
+        );
+      case 6:
+        return (
+          <ConfirmationStep
+            payload={payload!}
+            userInfo={userInfo!}
             contactInfo={contactInfo!}
-            paymentStatus={paymentStatus!}
+            bookingQuestions={bookingQuestions!}
+            selectedSlot={selectedSlot!}
+            paymentIntentId={paymentIntentId}
+            onBack={handleBack}
+            onComplete={() => navigate('/')}
           />
         );
       default:
@@ -86,7 +116,7 @@ const PredictiveChartBookingPage = () => {
                 </h2>
                 <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
                   <p>
-                    Această sesiune live îți oferă o privire detaliată asupra predispozițiilor și evenimentelor semnificative din următoarele 12 luni, așa cum se reflectă în harta ta natală.
+                    Această sesiune live îți oferă o privire detaliată asupra predispozițiilor și evenimentelor semnificative din următoarele 12 luni, așa cum se reflectă în harta ta previzională.
                   </p>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Vei înțelege ce teme sunt în prim-plan și cum să le abordezi în mod conștient</li>
@@ -113,10 +143,12 @@ const PredictiveChartBookingPage = () => {
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: 'Date naștere ambii' },
+                    { num: 1, label: 'Date naștere' },
                     { num: 2, label: 'Date contact' },
-                    { num: 3, label: 'Plată' },
-                    { num: 4, label: 'Rezultat' },
+                    { num: 3, label: 'Motivul discuției' },
+                    { num: 4, label: 'Disponibilitate' },
+                    { num: 5, label: 'Plată' },
+                    { num: 6, label: 'Confirmare' },
                   ].map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
                       <div
@@ -143,7 +175,7 @@ const PredictiveChartBookingPage = () => {
                 {/* Mobile step indicator */}
                 <div className="md:hidden mb-8">
                   <div className="flex justify-between items-center mb-4">
-                    {[1, 2, 3, 4].map((step) => (
+                    {[1, 2, 3, 4, 5, 6].map((step) => (
                       <div
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
@@ -161,7 +193,7 @@ const PredictiveChartBookingPage = () => {
                   <div className="h-1 bg-white/10 rounded-full">
                     <div
                       className="h-full bg-gradient-to-r from-cosmic-500 to-cosmic-400 rounded-full transition-all duration-500"
-                      style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+                      style={{ width: `${((currentStep - 1) / 5) * 100}%` }}
                     />
                   </div>
                 </div>

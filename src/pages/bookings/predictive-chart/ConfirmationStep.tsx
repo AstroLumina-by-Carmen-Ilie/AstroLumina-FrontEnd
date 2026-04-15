@@ -85,7 +85,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         const bookingResponse = await axios.post<BookingResponse>(
           `${BOOKING_API_URL}/api/bookings`,
           {
-            sessionKey: "astrograma-natala-si-karmica",
+            sessionKey: "astrograma-previzionala",
             start: selectedSlot.time,
             attendee: {
               name: userInfo.name,

@@ -9,7 +9,8 @@ import {
 import { AvailableSlot } from "./AvailabilitySelector";
 
 interface ConfirmationStepProps {
-  payload: BirthDataPayload;
+  firstPayload: BirthDataPayload;
+  secondPayload: BirthDataPayload;
   userInfo: UserInfo;
   contactInfo: ContactInfo;
   bookingQuestions: BookingQuestions;
@@ -49,7 +50,8 @@ interface BookingResponse {
 }
 
 const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
-  payload,
+  firstPayload,
+  secondPayload,
   userInfo,
   contactInfo,
   bookingQuestions,
@@ -85,7 +87,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         const bookingResponse = await axios.post<BookingResponse>(
           `${BOOKING_API_URL}/api/bookings`,
           {
-            sessionKey: "astrograma-natala-si-karmica",
+            sessionKey: "astrograma-relationala",
             start: selectedSlot.time,
             attendee: {
               name: userInfo.name,
@@ -97,9 +99,13 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             metadata,
             bookingFieldsResponses: {
               attendeePhoneNumber: contactInfo.phone,
-              "birth-date": `${payload.day}/${payload.month}/${payload.year}`,
-              "birth-time": `${payload.hour}:${payload.minute}`,
-              "birth-place": userInfo.location,
+              "first_person_data": 
+                `${firstPayload.day}/${firstPayload.month}/${firstPayload.year} 
+                ${firstPayload.hour}:${firstPayload.minute} 
+                ${firstPayload.location}`,
+              "second_person_data": `${secondPayload.day}/${secondPayload.month}/${secondPayload.year} 
+                ${secondPayload.hour}:${secondPayload.minute} 
+                ${secondPayload.location}`,
               notes: bookingQuestions.notes,
             },
           },
@@ -135,7 +141,8 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       controller.abort();
     };
   }, [
-    payload,
+    firstPayload,
+    secondPayload,
     userInfo,
     contactInfo,
     bookingQuestions,

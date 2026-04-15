@@ -442,7 +442,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
             Se calculează...
           </>
         ) : (
-          'Calculează Pozițiile Planetelor'
+          'Pasul următor'
         )}
       </button>
     </div>

@@ -82,7 +82,7 @@ const AVAILABILITY_RANGE_DAYS = 90;
 
 const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ onNext, onBack }) => {
   const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-  const SESSION_KEY = 'astrograma-natala-si-karmica';
+  const SESSION_KEY = 'astrograma-relationala';
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);

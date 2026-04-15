@@ -10,7 +10,7 @@ const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
 const PAYMENT_API_URL = import.meta.env.VITE_PAYMENT_API_URL;
 const stripePromise = loadStripe(STRIPE_PK);
 
-interface PaymentFormNatalProps {
+interface PaymentFormRelationalProps {
   selectedSlot: AvailableSlot;
   onNext: (paymentIntentId: string) => void;
   onBack: () => void;
@@ -24,7 +24,7 @@ function stripeIdFromClientSecret(clientSecret: string | undefined): string {
   return clientSecret.slice(0, i);
 }
 
-const CheckoutFormNatal: React.FC<{
+const CheckoutFormRelational: React.FC<{
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
   selectedSlot: AvailableSlot;
   setPaymentIntentId: React.Dispatch<React.SetStateAction<string>>;
@@ -33,13 +33,13 @@ const CheckoutFormNatal: React.FC<{
 
   const fetchClientSecret = useCallback(() => {
     // Send slot information to payment API
-    return fetch(`${PAYMENT_API_URL}/create-checkout-session/astrograma-natala-si-karmica`, {
+    return fetch(`${PAYMENT_API_URL}/create-checkout-session/astrograma-relationala`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        sessionType: 'astrograma-natala-si-karmica',
+        sessionType: 'astrograma-relationala',
         selectedSlot: selectedSlot.time,
       }),
     })
@@ -72,7 +72,7 @@ const CheckoutFormNatal: React.FC<{
   );
 };
 
-const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNext, onBack }) => {
+const PaymentFormRelational: React.FC<PaymentFormRelationalProps> = ({ selectedSlot, onNext, onBack }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [paymentIntentId, setPaymentIntentId] = useState<string>('');
 
@@ -90,7 +90,7 @@ const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNex
       <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
         <div className="mb-6 pb-4 border-b border-white/10">
           <p className="text-cosmic-200 text-sm">
-            <span className="font-semibold">Plată pentru:</span> Astrograma Natală și Karmică
+            <span className="font-semibold">Plată pentru:</span> Astrograma Relatională
           </p>
           <p className="text-cosmic-300 text-xs mt-2">
             {new Date(selectedSlot.time).toLocaleDateString('ro-RO')} ora{' '}
@@ -100,7 +100,7 @@ const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNex
             })}
           </p>
         </div>
-        <CheckoutFormNatal 
+        <CheckoutFormRelational 
           setIsComplete={setIsComplete} 
           selectedSlot={selectedSlot}
           setPaymentIntentId={setPaymentIntentId}
@@ -137,4 +137,4 @@ const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNex
   );
 };
 
-export default PaymentFormNatal;
+export default PaymentFormRelational;

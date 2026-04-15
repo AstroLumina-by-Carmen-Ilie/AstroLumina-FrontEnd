@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions } from '@/types';
-import BirthDataForm from '@/pages/previews/natal-chart/BirthDataForm';
-import ContactForm from '@/pages/previews/natal-chart/ContactForm';
+import BirthDataForm from './BirthDataForm';
+import ContactForm from './ContactForm';
 import BookingQuestionsForm from './BookingQuestionsForm';
 import AvailabilitySelector, { AvailableSlot } from './AvailabilitySelector';
 import PaymentFormNatal from './PaymentFormNatal';
