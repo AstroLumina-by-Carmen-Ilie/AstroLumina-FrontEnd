@@ -260,7 +260,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
 
       const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
 
-      let stateName = birthCounty;
+      let stateName: string;
       let cityName = birthCity;
 
       if (birthCountry === 'RO' && ROMANIAN_COUNTIES[birthCounty]) {
