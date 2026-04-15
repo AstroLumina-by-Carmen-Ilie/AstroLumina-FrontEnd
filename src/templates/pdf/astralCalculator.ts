@@ -67,7 +67,6 @@ const createPlanetsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
@@ -87,7 +86,6 @@ const createAsteroidsTable = (elements: AstralElements) => {
     p.sign,
     p.emoji,
     p.element,
-    p.house,
     p.retrograde ? '✓' : ''
   ]);
 };
@@ -123,8 +121,8 @@ const addTable = (doc: jsPDF, title: string, headers: string[], data: any[][], s
         if (
           (data.column.index === 1 ||
             data.column.index === 3 ||
-            data.column.index === 6
-          ) && headers.length === 7) {
+            data.column.index === 5
+          ) && headers.length === 6) {
           // Use Quivira font for symbol columns in 7-column tables
           data.cell.styles.font = 'Quivira';
         } else {
@@ -176,7 +174,7 @@ export const generateAstralElementsPDF = async (result: { astral_elements: Astra
   addElementDistribution(doc, planetElementDistribution);
 
   const planetsTableData = createPlanetsTable(planetsData);
-  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], planetsTableData, 45);
+  addTable(doc, 'Tabel Planete', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Retrograd'], planetsTableData, 45);
 
   // PAGE 2: Houses
   doc.addPage();
@@ -197,7 +195,7 @@ export const generateAstralElementsPDF = async (result: { astral_elements: Astra
     doc.text('Asteroizi și stele fixe', 148, 35, { align: 'center' });
 
     const asteroidsTableData = createAsteroidsTable(asteroidsData);
-    addTable(doc, 'Tabel Asteroizi', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Casă', 'Retrograd'], asteroidsTableData, 50);
+    addTable(doc, 'Tabel Asteroizi', ['Planetă', 'Simbol', 'Semn', 'Simbol', 'Element', 'Retrograd'], asteroidsTableData, 50);
   }
 
   // Footer
