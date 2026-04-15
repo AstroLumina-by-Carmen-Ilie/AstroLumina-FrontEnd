@@ -65,6 +65,7 @@ const NatalNKarmicChartBookingPage = () => {
         return (
           <PaymentFormNatal
             selectedSlot={selectedSlot!}
+            existingPaymentIntentId={paymentIntentId}
             onNext={(intentId) => {
               setPaymentIntentId(intentId);
               setCurrentStep(6);

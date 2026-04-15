@@ -12,6 +12,7 @@ const stripePromise = loadStripe(STRIPE_PK);
 
 interface PaymentFormNatalProps {
   selectedSlot: AvailableSlot;
+  existingPaymentIntentId?: string;
   onNext: (paymentIntentId: string) => void;
   onBack: () => void;
 }
@@ -72,14 +73,12 @@ const CheckoutFormNatal: React.FC<{
   );
 };
 
-const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNext, onBack }) => {
-  const [isComplete, setIsComplete] = useState(false);
-  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
+const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, existingPaymentIntentId, onNext, onBack }) => {
+  const [isComplete, setIsComplete] = useState(!!existingPaymentIntentId);
+  const [paymentIntentId, setPaymentIntentId] = useState<string>(existingPaymentIntentId || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // După Embedded Checkout, `onComplete` setează isComplete; API-ul poate să nu trimită paymentIntentId,
-    // dar avem deja id-ul din clientSecret (cs_… sau pi_…). Continuăm mereu după plată reușită.
     if (isComplete) {
       onNext(paymentIntentId);
     }
@@ -100,11 +99,23 @@ const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNex
             })}
           </p>
         </div>
-        <CheckoutFormNatal 
-          setIsComplete={setIsComplete} 
-          selectedSlot={selectedSlot}
-          setPaymentIntentId={setPaymentIntentId}
-        />
+        {existingPaymentIntentId ? (
+          <div className="py-8 text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 mb-4">
+              <span className="text-emerald-400 text-2xl">✓</span>
+            </div>
+            <p className="text-emerald-300 font-medium">Plata a fost realizată cu succes</p>
+            <p className="text-cosmic-400 text-xs mt-2">
+              ID tranzacție: {existingPaymentIntentId}
+            </p>
+          </div>
+        ) : (
+          <CheckoutFormNatal
+            setIsComplete={setIsComplete}
+            selectedSlot={selectedSlot}
+            setPaymentIntentId={setPaymentIntentId}
+          />
+        )}
       </div>
       <div className="flex gap-4">
         <button
