@@ -220,74 +220,72 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         </div>
 
         {/* Booking Details */}
-        {bookingConfirmation && (
-          <div className="bg-white/5 rounded-xl border border-white/10 p-6 space-y-4">
-            <h3 className="text-cosmic-200 font-semibold">Detalii sesiune</h3>
+        <div className="bg-white/5 rounded-xl border border-white/10 p-6 space-y-4">
+          <h3 className="text-cosmic-200 font-semibold">Detalii sesiune</h3>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Titlu
-                </p>
-                <p className="text-cosmic-100">
-                  {bookingConfirmation.title}
-                </p>
-              </div>
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Cand?
-                </p>
-                <p className="text-cosmic-100">
-                  {formatDate(bookingConfirmation.startTime)}
-                </p>
-                <p className="text-cosmic-100">
-                  {formatDate(bookingConfirmation.endTime)}
-                </p>
-              </div>
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Participant
-                </p>
-                <p className="text-cosmic-100">
-                  {bookingConfirmation.attendees[0].name}
-                </p>
-              </div>
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Email
-                </p>
-                <p className="text-cosmic-100 text-sm break-all">
-                  {bookingConfirmation.attendees[0].email}
-                </p>
-              </div>
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Zonă orară
-                </p>
-                <p className="text-cosmic-100">
-                  {bookingConfirmation.attendees[0].timeZone}
-                </p>
-              </div>
-              <div>
-                <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
-                  Status
-                </p>
-                <p className="text-emerald-400 capitalize">
-                  {bookingConfirmation.status}
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-white/10">
-              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-2">
-                Locatia
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Titlu
               </p>
-              <p className="text-cosmic-300 font-mono text-xs break-all">
-                {bookingConfirmation.location}
+              <p className="text-cosmic-100">
+                {bookingConfirmation.title}
+              </p>
+            </div>
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Cand?
+              </p>
+              <p className="text-cosmic-100">
+                {formatDate(bookingConfirmation.startTime)}
+              </p>
+              <p className="text-cosmic-100">
+                {formatDate(bookingConfirmation.endTime)}
+              </p>
+            </div>
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Participant
+              </p>
+              <p className="text-cosmic-100">
+                {bookingConfirmation.attendees[0].name}
+              </p>
+            </div>
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Email
+              </p>
+              <p className="text-cosmic-100 text-sm break-all">
+                {bookingConfirmation.attendees[0].email}
+              </p>
+            </div>
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Zonă orară
+              </p>
+              <p className="text-cosmic-100">
+                {bookingConfirmation.attendees[0].timeZone}
+              </p>
+            </div>
+            <div>
+              <p className="text-cosmic-400 text-xs font-semibold uppercase mb-1">
+                Status
+              </p>
+              <p className="text-emerald-400 capitalize">
+                {bookingConfirmation.status}
               </p>
             </div>
           </div>
-        )}
+
+          <div className="pt-4 border-t border-white/10">
+            <p className="text-cosmic-400 text-xs font-semibold uppercase mb-2">
+              Locatia
+            </p>
+            <p className="text-cosmic-300 font-mono text-xs break-all">
+              {bookingConfirmation.location}
+            </p>
+          </div>
+        </div>
 
         {/* What Happens Next */}
         <div className="bg-cosmic-900/30 rounded-xl border border-cosmic-700/30 p-6 space-y-4">
