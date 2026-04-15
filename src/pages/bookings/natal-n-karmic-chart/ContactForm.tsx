@@ -3,14 +3,33 @@ import { ContactInfo } from '@/types';
 import { COUNTRY_CODES } from '@/data/romanian-locations';
 
 interface ContactFormProps {
+  initialValues?: ContactInfo;
   onNext: (contactInfo: ContactInfo) => void;
   onBack: () => void;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
-  const [countryCode, setCountryCode] = useState('+40');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+const ContactForm: React.FC<ContactFormProps> = ({ initialValues, onNext, onBack }) => {
+  const getInitialCountryCode = () => {
+    if (!initialValues?.phone) return '+40';
+    for (const cc of COUNTRY_CODES) {
+      if (initialValues.phone.startsWith(cc.value)) return cc.value;
+    }
+    return '+40';
+  };
+
+  const getInitialPhone = () => {
+    if (!initialValues?.phone) return '';
+    for (const cc of COUNTRY_CODES) {
+      if (initialValues.phone.startsWith(cc.value)) {
+        return initialValues.phone.slice(cc.value.length);
+      }
+    }
+    return initialValues.phone;
+  };
+
+  const [countryCode, setCountryCode] = useState(getInitialCountryCode);
+  const [phone, setPhone] = useState(getInitialPhone);
+  const [email, setEmail] = useState(initialValues?.email || '');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateForm = () => {

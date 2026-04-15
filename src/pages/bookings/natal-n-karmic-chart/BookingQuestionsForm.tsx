@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { BookingQuestions } from '@/types';
 
 interface BookingQuestionsFormProps {
+  initialValues?: BookingQuestions;
   onNext: (questions: BookingQuestions) => void;
   onBack: () => void;
 }
 
-const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ onNext, onBack }) => {
-  const [notes, setNotes] = useState('');
+const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ initialValues, onNext, onBack }) => {
+  const [notes, setNotes] = useState(initialValues?.notes || '');
   const [error, setError] = useState<string>('');
 
   const validateForm = () => {

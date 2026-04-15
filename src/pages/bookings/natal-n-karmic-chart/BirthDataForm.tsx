@@ -7,20 +7,40 @@ import { LocationCoordinates, BirthDataPayload, SelectOption, UserInfo } from '@
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
 
 interface BirthDataFormProps {
+  initialValues?: {
+    payload: BirthDataPayload;
+    userInfo: UserInfo;
+  };
   onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
 }
 
-const BirthDataForm: React.FC<BirthDataFormProps> = ({ onNext }) => {
-  const [formState, setFormState] = useState({
+const getInitialFormState = (initial?: { payload: BirthDataPayload; userInfo: UserInfo }) => {
+  if (!initial) return {
     fullName: '',
     birthDate: null as Date | null,
     birthHour: null as Date | null,
     birthCountry: '',
     birthCounty: '',
     birthCity: '',
+    birthCoordinates: null as LocationCoordinates | null,
     coordinates: null as LocationCoordinates | null,
-    isCalculating: false
-  });
+    isCalculating: false,
+  };
+  return {
+    fullName: initial.userInfo.name,
+    birthDate: initial.userInfo.birthDate,
+    birthHour: initial.userInfo.birthHour,
+    birthCountry: initial.payload.nation || '',
+    birthCounty: '',
+    birthCity: initial.payload.city || '',
+    birthCoordinates: { lat: initial.payload.latitude, lng: initial.payload.longitude } as LocationCoordinates | null,
+    coordinates: null as LocationCoordinates | null,
+    isCalculating: false,
+  };
+};
+
+const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) => {
+  const [formState, setFormState] = useState(getInitialFormState(initialValues));
 
   const [options, setOptions] = useState({
     countryOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],

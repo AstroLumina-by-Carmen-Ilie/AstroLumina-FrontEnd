@@ -12,6 +12,7 @@ export interface AvailableSlot {
 }
 
 interface AvailabilitySelectorProps {
+  initialValues?: AvailableSlot;
   onNext: (selectedSlot: AvailableSlot) => void;
   onBack: () => void;
 }
@@ -80,17 +81,21 @@ const YEARS = Array.from({ length: 3 }, (_, i) => CURRENT_YEAR + i);
 /** Horizon for one request — availability limits come from Cal.com; widen here if needed. */
 const AVAILABILITY_RANGE_DAYS = 90;
 
-const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ onNext, onBack }) => {
+const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValues, onNext, onBack }) => {
   const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
   const SESSION_KEY = 'astrograma-natala-si-karmica';
 
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    initialValues ? new Date(initialValues.time) : undefined
+  );
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(initialValues || null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [datesWithSlots, setDatesWithSlots] = useState<Set<string>>(new Set());
-  const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
+  const [calendarMonth, setCalendarMonth] = useState<Date>(
+    initialValues ? new Date(initialValues.time) : new Date()
+  );
 
   const fetchSlotsForRange = useCallback(async (startDate: Date, endDate: Date) => {
     setIsLoading(true);

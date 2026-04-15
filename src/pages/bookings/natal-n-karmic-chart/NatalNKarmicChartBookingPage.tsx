@@ -24,6 +24,11 @@ const NatalNKarmicChartBookingPage = () => {
       case 1:
         return (
           <BirthDataForm
+            initialValues={
+              payload && userInfo
+                ? { payload, userInfo }
+                : undefined
+            }
             onNext={(payload, userInfo) => {
               setPayload(payload);
               setUserInfo(userInfo);
@@ -34,6 +39,7 @@ const NatalNKarmicChartBookingPage = () => {
       case 2:
         return (
           <ContactForm
+            initialValues={contactInfo || undefined}
             onNext={(contactInfo) => {
               setContactInfo(contactInfo);
               setCurrentStep(3);
@@ -44,6 +50,7 @@ const NatalNKarmicChartBookingPage = () => {
       case 3:
         return (
           <BookingQuestionsForm
+            initialValues={bookingQuestions || undefined}
             onNext={(questions) => {
               setBookingQuestions(questions);
               setCurrentStep(4);
@@ -54,6 +61,7 @@ const NatalNKarmicChartBookingPage = () => {
       case 4:
         return (
           <AvailabilitySelector
+            initialValues={selectedSlot || undefined}
             onNext={(slot) => {
               setSelectedSlot(slot);
               setCurrentStep(5);
