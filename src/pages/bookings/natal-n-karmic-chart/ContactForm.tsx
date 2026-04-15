@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ContactInfo } from '@/types';
+import { COUNTRY_CODES } from '@/data/romanian-locations';
 
 interface ContactFormProps {
   onNext: (contactInfo: ContactInfo) => void;
@@ -7,13 +8,14 @@ interface ContactFormProps {
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
+  const [countryCode, setCountryCode] = useState('+40');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!phone) newErrors.phone = 'Numărul de telefon este obligatoriu';
+    if (!phone.trim()) newErrors.phone = 'Numărul de telefon este obligatoriu';
     if (!email) newErrors.email = 'Emailul este obligatoriu';
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       newErrors.email = 'Te rog introdu o adresă de email validă';
@@ -25,22 +27,37 @@ const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-    onNext({ phone, email });
+    // Combine country code with phone number for international format
+    const fullPhone = `${countryCode}${phone.replace(/\D/g, '')}`;
+    onNext({ phone: fullPhone, email });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label className="block text-cosmic-300 text-sm mb-2" htmlFor="phone">Număr de telefon</label>
-        <input
-          type="tel"
-          id="phone"
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
-          placeholder="+40 123 456 789"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
+        <div className="flex gap-3">
+          <select
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+            className="w-32 p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors cursor-pointer"
+          >
+            {COUNTRY_CODES.map((cc) => (
+              <option key={cc.value} value={cc.value} className="bg-[#1e1b4b]">
+                {cc.label}
+              </option>
+            ))}
+          </select>
+          <input
+            type="tel"
+            id="phone"
+            className="flex-1 p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
+            placeholder="123 456 789"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
         {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
       </div>
 

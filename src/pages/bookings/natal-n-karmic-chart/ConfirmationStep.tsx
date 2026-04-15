@@ -190,7 +190,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             onClick={onBack}
             className="flex-1 bg-white/5 text-cosmic-200 py-3 px-6 rounded-xl hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
           >
-            Înapoi
+            Pasul anterior
           </button>
           <button
             onClick={() => window.location.reload()}
@@ -320,7 +320,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             onClick={onComplete}
             className="flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer font-medium"
           >
-            Finalizează
+            Înapoi la pagina principală
           </button>
         </div>
       </div>

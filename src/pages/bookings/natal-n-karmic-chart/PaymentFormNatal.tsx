@@ -124,7 +124,7 @@ const PaymentFormNatal: React.FC<PaymentFormNatalProps> = ({ selectedSlot, onNex
                 : 'hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple cursor-pointer'
             }`}
           >
-            Finalizează plata
+            Pasul următor
             {!isComplete && (
               <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-max text-center px-3 py-2 bg-cosmic-900/90 text-cosmic-200 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                 Plata este obligatorie pentru a continua
