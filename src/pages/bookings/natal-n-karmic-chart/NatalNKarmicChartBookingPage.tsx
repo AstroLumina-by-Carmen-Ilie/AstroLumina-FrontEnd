@@ -93,7 +93,7 @@ const NatalNKarmicChartBookingPage = () => {
             selectedSlot={selectedSlot!}
             paymentIntentId={paymentIntentId!}
             onBack={handleBack}
-            onComplete={() => { navigate('/'); }}
+            onComplete={() => navigate('/')}
           />
         );
       default:
