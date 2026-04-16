@@ -65,7 +65,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialValues, onNext, onBack
             type="tel"
             id="phone"
             className="flex-1 p-3 rounded-xl border transition-colors bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
-            placeholder="123 456 789"
+            placeholder="222333444"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required

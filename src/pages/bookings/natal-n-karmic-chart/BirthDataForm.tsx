@@ -20,9 +20,9 @@ const getInitialFormState = (initial?: { payload: BirthDataPayload; userInfo: Us
     fullName: initial.userInfo.name,
     birthDate: initial.userInfo.birthDate,
     birthHour: initial.userInfo.birthHour,
-    birthCountry: initial.userInfo.birthCountry || '',
+    birthCountry: initial.userInfo.birthCountry,
     birthCounty: initial.userInfo.birthCounty,
-    birthCity: initial.userInfo.birthCity || '',
+    birthCity: initial.userInfo.birthCity,
     coordinates: { lat: initial.payload.latitude, lng: initial.payload.longitude } as LocationCoordinates | null
   };
 };
@@ -38,10 +38,17 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const formatStateName = (stateName: string) => {
-    if (!stateName) return '';
-    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
-  };
+  const getRomanianCountyCode = (countyName: string): string | undefined => {
+  for (const [code, data] of Object.entries(ROMANIAN_COUNTIES)) {
+    if (data[0] === countyName) return code;
+  }
+  return undefined;
+};
+
+const formatStateName = (stateName: string) => {
+  if (!stateName) return '';
+  return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+};
 
   useEffect(() => {
     try {
@@ -56,28 +63,103 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
         countryOptions: [{ value: '', label: 'Selectează...' }, ...countries]
       }));
 
-      const romania = countries.find(c => c.value === 'RO');
+      if (initialValues?.userInfo.birthCountry) {
+        const { birthCountry, birthCounty, birthCity } = initialValues.userInfo;
 
-      if (romania) {
+        const allCountries = Country.getAllCountries();
+        const countryObj = allCountries.find(c => 
+          c.name === birthCountry || c.isoCode === birthCountry
+        );
+        const countryCode = countryObj?.isoCode || birthCountry;
+
+        let countyCode = birthCounty;
+        if (countryCode === 'RO') {
+          countyCode = getRomanianCountyCode(birthCounty) || birthCounty;
+        }
+
         setFormState(prev => ({
           ...prev,
-          birthCountry: romania.value
-        }));
-
-        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
-          value: code,
-          label: name
+          birthCountry: countryCode,
+          birthCounty: countyCode,
+          birthCity: birthCity || '',
         }));
 
         setOptions(prev => ({
           ...prev,
-          countyOptions: [...defaultOptions, ...romaniaCounties]
+          countryOptions: [{ value: '', label: 'Selectează...' }, ...allCountries.map(country => ({
+            value: country.isoCode,
+            label: COUNTRY_NAMES_RO[country.isoCode] || country.name
+          }))]
         }));
+
+        if (countryCode === 'RO') {
+          const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
+            value: code,
+            label: name
+          }));
+          setOptions(prev => ({
+            ...prev,
+            countyOptions: [...defaultOptions, ...romaniaCounties]
+          }));
+
+          if (countyCode && ROMANIAN_COUNTIES[countyCode]) {
+            const cities = getRomanianCities(countyCode).map(city => ({
+              value: city.name,
+              label: city.name
+            }));
+            setOptions(prev => ({
+              ...prev,
+              cityOptions: [...defaultOptions, ...cities]
+            }));
+          }
+        } else {
+          try {
+            const counties = State.getStatesOfCountry(birthCountry).map(state => ({
+              value: state.isoCode,
+              label: formatStateName(state.name)
+            }));
+            setOptions(prev => ({
+              ...prev,
+              countyOptions: [...defaultOptions, ...counties]
+            }));
+
+            if (birthCounty) {
+              const cities = City.getCitiesOfState(birthCountry, birthCounty).map(city => ({
+                value: city.name,
+                label: city.name
+              }));
+              setOptions(prev => ({
+                ...prev,
+                cityOptions: [...defaultOptions, ...cities]
+              }));
+            }
+          } catch (error) {
+            console.error('Error loading counties for non-RO country:', error);
+          }
+        }
+      } else {
+        const romania = countries.find(c => c.value === 'RO');
+        if (romania) {
+          setFormState(prev => ({
+            ...prev,
+            birthCountry: romania.value
+          }));
+
+          const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
+            value: code,
+            label: name
+          }));
+
+          setOptions(prev => ({
+            ...prev,
+            countyOptions: [...defaultOptions, ...romaniaCounties]
+          }));
+        }
       }
     } catch (error) {
       console.error('Error initializing countries:', error);
     }
-  }, []);
+  }, [initialValues]);
 
   const handleFormChange = (field: string, value: any) => {
     setFormState(prev => ({ ...prev, [field]: value }));

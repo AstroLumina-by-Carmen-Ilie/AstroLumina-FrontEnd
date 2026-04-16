@@ -98,9 +98,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ selectedSlot, existingPayment
               <span className="text-2xl text-emerald-400">✓</span>
             </div>
             <p className="font-medium text-emerald-300">Plata a fost realizată cu succes</p>
-            <p className="mt-2 text-xs text-cosmic-400">
-              ID tranzacție: {existingPaymentIntentId}
-            </p>
           </div>
         ) : (
           <CheckoutForm
@@ -118,24 +115,22 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ selectedSlot, existingPayment
         >
           Pasul anterior
         </button>
-        <div className="relative flex-1">
-          <button
-            type="submit"
-            disabled={!isComplete}
-            className={`group w-full bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
-              !isComplete
-                ? 'opacity-50 cursor-not-allowed'
-                : 'cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple'
-            }`}
-          >
-            Pasul următor
-            {!isComplete && (
-              <div className="absolute -top-10 left-1/2 px-3 py-2 w-max text-xs text-center whitespace-nowrap rounded-lg opacity-0 transition-opacity -translate-x-1/2 pointer-events-none bg-cosmic-900/90 text-cosmic-200 group-hover:opacity-100">
-                Plata este obligatorie pentru a continua
-              </div>
-            )}
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={!isComplete}
+          className={`group flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
+            !isComplete
+              ? 'opacity-50 cursor-not-allowed'
+              : 'cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple'
+          }`}
+        >
+          Pasul următor
+          {!isComplete && (
+            <div className="absolute -top-10 left-1/2 px-3 py-2 w-max text-xs text-center whitespace-nowrap rounded-lg opacity-0 transition-opacity -translate-x-1/2 pointer-events-none bg-cosmic-900/90 text-cosmic-200 group-hover:opacity-100">
+              Plata este obligatorie pentru a continua
+            </div>
+          )}
+        </button>
       </div>
     </form>
   );
