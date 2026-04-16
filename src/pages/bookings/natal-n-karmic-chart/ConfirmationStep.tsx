@@ -1,52 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  BirthDataPayload,
-  UserInfo,
-  ContactInfo,
-  BookingQuestions,
-} from "@/types";
-import { AvailableSlot } from "./AvailabilitySelector";
-
-interface ConfirmationStepProps {
-  payload: BirthDataPayload;
-  userInfo: UserInfo;
-  contactInfo: ContactInfo;
-  bookingQuestions: BookingQuestions;
-  selectedSlot: AvailableSlot;
-  paymentIntentId: string;
-  onBack: () => void;
-  onComplete: () => void;
-}
-
-interface BookingResponse {
-  booking: {
-    uid: string;
-    eventTypeId: number;
-    title: string;
-    startTime: string;
-    endTime: string;
-    attendees: [
-      {
-        name: string;
-        phoneNumber: string;
-        email: string;
-        timeZone: string;
-        [key: string]: unknown;
-      },
-    ];
-    status: string;
-    location: string;
-    bookingFieldsResponses: {
-      "birth-date": string;
-      "birth-place": string;
-      "birth-time": string;
-      notes: string;
-      [key: string]: unknown;
-    };
-    [key: string]: unknown;
-  };
-}
+import { BookingResponse, ConfirmationStepProps } from "@/types";
 
 const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   payload,

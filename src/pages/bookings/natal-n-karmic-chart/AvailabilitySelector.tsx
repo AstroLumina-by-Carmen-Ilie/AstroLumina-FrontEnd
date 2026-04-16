@@ -4,18 +4,7 @@ import 'react-day-picker/dist/style.css';
 import { ro } from 'date-fns/locale';
 import { ChevronDown } from 'lucide-react';
 import axios from 'axios';
-
-export interface AvailableSlot {
-  time: string;
-  date: string;
-  timezone: string;
-}
-
-interface AvailabilitySelectorProps {
-  initialValues?: AvailableSlot;
-  onNext: (selectedSlot: AvailableSlot) => void;
-  onBack: () => void;
-}
+import { AvailableSlot, AvailabilitySelectorProps } from '@/types';
 
 /** Local YYYY-MM-DD (avoids UTC shift from toISOString). */
 function toLocalYmd(d: Date): string {
@@ -187,11 +176,11 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h3 className="text-cosmic-200 text-sm font-semibold mb-4">
+        <h3 className="mb-4 text-sm font-semibold text-cosmic-200">
           Selectează data și ora disponibilă
         </h3>
 
-        <div className="grid md:grid-cols-2 gap-6 min-w-0">
+        <div className="grid gap-6 min-w-0 md:grid-cols-2">
           <div className="min-w-0">
             <div className="w-full max-w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10 overflow-hidden">
               <style>{`
@@ -199,7 +188,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                 .availability-rdp .rdp-month_grid td { padding: 0; }
                 .availability-rdp .rdp-day_button { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
               `}</style>
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex gap-2 items-center mb-3">
                 <div className="relative flex-1 min-w-0">
                   <select
                     value={calendarMonth.getMonth()}
@@ -230,7 +219,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                 </div>
               </div>
 
-              <div className="w-full min-w-0 overflow-x-auto">
+              <div className="overflow-x-auto w-full min-w-0">
                 <DayPicker
                   mode="single"
                   selected={selectedDate}
@@ -240,7 +229,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                   disabled={disabledDates}
                   locale={ro}
                   showOutsideDays
-                  className="availability-rdp w-full"
+                  className="w-full availability-rdp"
                   classNames={{
                     months: 'flex flex-col',
                     month: 'space-y-4 w-full',
@@ -267,14 +256,14 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
             </div>
           </div>
 
-          <div className="min-w-0 bg-white/5 p-4 rounded-xl border border-white/10">
+          <div className="p-4 min-w-0 rounded-xl border bg-white/5 border-white/10">
             {selectedDate ? (
               <>
-                <p className="text-cosmic-200 text-sm font-semibold mb-4">
+                <p className="mb-4 text-sm font-semibold text-cosmic-200">
                   Orar disponibil pentru {selectedDate.toLocaleDateString('ro-RO')}
                 </p>
                 {isLoading ? (
-                  <p className="text-cosmic-400 text-sm">Se încarcă...</p>
+                  <p className="text-sm text-cosmic-400">Se încarcă...</p>
                 ) : slotsForSelectedDate.length > 0 ? (
                   <div className="grid grid-cols-2 gap-3 max-h-[min(320px,50vh)] overflow-y-auto pr-1">
                     {slotsForSelectedDate.map((slot, idx) => (
@@ -296,25 +285,25 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                     ))}
                   </div>
                 ) : (
-                  <p className="text-cosmic-400 text-sm">
+                  <p className="text-sm text-cosmic-400">
                     Nu sunt sloturi disponibile în această dată. Te rog alege altă dată.
                   </p>
                 )}
               </>
             ) : (
-              <p className="text-cosmic-400 text-sm">
+              <p className="text-sm text-cosmic-400">
                 Selectează o dată pentru a vedea orarul disponibil
               </p>
             )}
           </div>
         </div>
 
-        {error && <p className="text-red-400 text-xs mt-4">{error}</p>}
+        {error && <p className="mt-4 text-xs text-red-400">{error}</p>}
       </div>
 
       {selectedSlot && (
-        <div className="bg-cosmic-600/20 p-4 rounded-xl border border-cosmic-600/50">
-          <p className="text-cosmic-200 text-sm">
+        <div className="p-4 rounded-xl border bg-cosmic-600/20 border-cosmic-600/50">
+          <p className="text-sm text-cosmic-200">
             <span className="font-semibold">Slot selectat:</span>{' '}
             {new Date(selectedSlot.time).toLocaleDateString('ro-RO')} ora{' '}
             {new Date(selectedSlot.time).toLocaleTimeString('ro-RO', {
@@ -329,7 +318,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 bg-white/5 text-cosmic-200 py-3 px-6 rounded-xl hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
+          className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Pasul anterior
         </button>
@@ -339,7 +328,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
           className={`flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
             !selectedSlot
               ? 'opacity-50 cursor-not-allowed'
-              : 'hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple cursor-pointer'
+              : 'cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple'
           } font-medium`}
         >
           Pasul următor

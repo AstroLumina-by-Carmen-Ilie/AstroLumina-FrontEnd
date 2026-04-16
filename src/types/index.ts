@@ -75,6 +75,9 @@ export interface UserInfo {
     birthDate: Date;
     birthHour: Date;
     location: string;
+    birthCity?: string;
+    birthCounty?: string;
+    birthCountry?: string;
 }
 
 export interface ContactInfo {
@@ -223,4 +226,111 @@ export interface LunarDataResponse {
         using_default_location: boolean;
         note: string | null;
     };
+}
+
+export interface AvailableSlot {
+  time: string;
+  date: string;
+  timezone: string;
+}
+
+export interface AvailabilitySelectorProps {
+  initialValues?: AvailableSlot;
+  onNext: (selectedSlot: AvailableSlot) => void;
+  onBack: () => void;
+}
+
+export interface BirthDataFormProps {
+  initialValues?: {
+    payload: BirthDataPayload;
+    userInfo: UserInfo;
+  };
+  onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
+}
+
+export interface BookingQuestionsFormProps {
+  initialValues?: BookingQuestions;
+  onNext: (questions: BookingQuestions) => void;
+  onBack: () => void;
+}
+
+export interface ConfirmationStepProps {
+  payload: BirthDataPayload;
+  userInfo: UserInfo;
+  contactInfo: ContactInfo;
+  bookingQuestions: BookingQuestions;
+  selectedSlot: AvailableSlot;
+  paymentIntentId: string;
+  onBack: () => void;
+  onComplete: () => void;
+}
+
+export interface OnePersonBookingResponse {
+  booking: {
+    uid: string;
+    eventTypeId: number;
+    title: string;
+    startTime: string;
+    endTime: string;
+    attendees: [
+      {
+        name: string;
+        phoneNumber: string;
+        email: string;
+        timeZone: string;
+        [key: string]: unknown;
+      },
+    ];
+    status: string;
+    location: string;
+    bookingFieldsResponses: {
+      "birth-date": string;
+      "birth-place": string;
+      "birth-time": string;
+      notes: string;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  };
+}
+
+export interface TwoPersonsBookingResponse {
+  booking: {
+    uid: string;
+    eventTypeId: number;
+    title: string;
+    startTime: string;
+    endTime: string;
+    attendees: [
+      {
+        name: string;
+        phoneNumber: string;
+        email: string;
+        timeZone: string;
+        [key: string]: unknown;
+      },
+    ];
+    status: string;
+    location: string;
+    bookingFieldsResponses: {
+      "first_member_data": string;
+      "second_member_data": string;
+      notes: string;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  };
+}
+
+export interface ContactFormProps {
+  initialValues?: ContactInfo;
+  onNext: (contactInfo: ContactInfo) => void;
+  onBack: () => void;
+}
+
+export interface PaymentFormProps {
+  selectedSlot?: AvailableSlot;
+  existingPaymentIntentId?: string;
+  onNext: (paymentIntentId: string) => void;
+  onBack: () => void;
 }

@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import { BookingQuestions } from '@/types';
-
-interface BookingQuestionsFormProps {
-  initialValues?: BookingQuestions;
-  onNext: (questions: BookingQuestions) => void;
-  onBack: () => void;
-}
+import { BookingQuestionsFormProps } from '@/types';
 
 const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ initialValues, onNext, onBack }) => {
   const [notes, setNotes] = useState(initialValues?.notes || '');

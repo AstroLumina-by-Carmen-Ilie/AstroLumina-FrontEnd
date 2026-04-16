@@ -3,16 +3,8 @@ import Select from 'react-select';
 import { Country, State, City } from 'country-state-city';
 import DateInput from '@/components/ui/DateInput';
 import TimeInput from '@/components/ui/TimeInput';
-import { LocationCoordinates, BirthDataPayload, SelectOption, UserInfo } from '@/types';
+import { LocationCoordinates, BirthDataPayload, SelectOption, UserInfo, BirthDataFormProps } from '@/types';
 import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
-
-interface BirthDataFormProps {
-  initialValues?: {
-    payload: BirthDataPayload;
-    userInfo: UserInfo;
-  };
-  onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
-}
 
 const getInitialFormState = (initial?: { payload: BirthDataPayload; userInfo: UserInfo }) => {
   if (!initial) return {
@@ -250,7 +242,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
     return isValid;
   };
 
-  const handleCalculatePositions = async () => {
+  const handleSaveBirthData = async () => {
     const isValid = validateInputs();
     if (!isValid) {
       return;
@@ -339,23 +331,23 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="fullName">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="fullName">
           Nume complet
         </label>
         <input
           type="text"
           id="fullName"
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
+          className="p-3 w-full rounded-xl border transition-colors bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange('fullName', e.target.value)}
           required
         />
-        {errors.fullName && <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>}
+        {errors.fullName && <p className="mt-1 text-xs text-red-400">{errors.fullName}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="birthDate">
           Data nașterii
         </label>
         <DateInput
@@ -365,11 +357,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
           id="birthDate"
           required
         />
-        {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
+        {errors.birthDate && <p className="mt-1 text-xs text-red-400">{errors.birthDate}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="birthHour">
           Ora nașterii
         </label>
         <TimeInput
@@ -379,11 +371,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
           id="birthHour"
           required
         />
-        {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
+        {errors.birthHour && <p className="mt-1 text-xs text-red-400">{errors.birthHour}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="birthCountry">
           Țara nașterii
         </label>
         <Select
@@ -399,11 +391,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
           menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
           menuPosition="fixed"
         />
-        {errors.birthCountry && <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>}
+        {errors.birthCountry && <p className="mt-1 text-xs text-red-400">{errors.birthCountry}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="birthCounty">
           Județ/Regiune
         </label>
         <Select
@@ -420,11 +412,11 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
           menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
           menuPosition="fixed"
         />
-        {errors.birthCounty && <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>}
+        {errors.birthCounty && <p className="mt-1 text-xs text-red-400">{errors.birthCounty}</p>}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCity">Orașul nașterii</label>
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="birthCity">Orașul nașterii</label>
         <Select
           id="birthCity"
           options={options.cityOptions}
@@ -439,24 +431,24 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
           menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
           menuPosition="fixed"
         />
-        {errors.birthCity && <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>}
+        {errors.birthCity && <p className="mt-1 text-xs text-red-400">{errors.birthCity}</p>}
       </div>
 
       {errors.calculation && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm">
+        <div className="p-3 text-sm text-red-400 rounded-xl border bg-red-500/10 border-red-500/20">
           {errors.calculation}
         </div>
       )}
 
       <button
         type="button"
-        className="w-full py-3 px-6 bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 text-white font-semibold rounded-xl shadow-glow-purple transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex justify-center items-center px-6 py-3 w-full font-semibold text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={formState.isCalculating}
-        onClick={handleCalculatePositions}
+        onClick={handleSaveBirthData}
       >
         {formState.isCalculating ? (
           <>
-            <svg className="animate-spin w-4 h-4 mr-2" viewBox="0 0 16 16" fill="none">
+            <svg className="mr-2 w-4 h-4 animate-spin" viewBox="0 0 16 16" fill="none">
               <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
             </svg>
             Se calculează...

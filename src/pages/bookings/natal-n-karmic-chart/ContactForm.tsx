@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { ContactInfo } from '@/types';
+import { ContactFormProps } from '@/types';
 import { COUNTRY_CODES } from '@/data/romanian-locations';
-
-interface ContactFormProps {
-  initialValues?: ContactInfo;
-  onNext: (contactInfo: ContactInfo) => void;
-  onBack: () => void;
-}
 
 const ContactForm: React.FC<ContactFormProps> = ({ initialValues, onNext, onBack }) => {
   const getInitialCountryCode = () => {
