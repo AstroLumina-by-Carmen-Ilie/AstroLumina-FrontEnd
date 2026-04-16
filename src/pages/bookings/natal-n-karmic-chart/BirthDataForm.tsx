@@ -14,20 +14,16 @@ const getInitialFormState = (initial?: { payload: BirthDataPayload; userInfo: Us
     birthCountry: '',
     birthCounty: '',
     birthCity: '',
-    birthCoordinates: null as LocationCoordinates | null,
-    coordinates: null as LocationCoordinates | null,
-    isCalculating: false,
+    coordinates: null as LocationCoordinates | null
   };
   return {
     fullName: initial.userInfo.name,
     birthDate: initial.userInfo.birthDate,
     birthHour: initial.userInfo.birthHour,
-    birthCountry: initial.payload.nation || '',
-    birthCounty: '',
-    birthCity: initial.payload.city || '',
-    birthCoordinates: { lat: initial.payload.latitude, lng: initial.payload.longitude } as LocationCoordinates | null,
-    coordinates: null as LocationCoordinates | null,
-    isCalculating: false,
+    birthCountry: initial.userInfo.birthCountry || '',
+    birthCounty: initial.userInfo.birthCounty,
+    birthCity: initial.userInfo.birthCity || '',
+    coordinates: { lat: initial.payload.latitude, lng: initial.payload.longitude } as LocationCoordinates | null
   };
 };
 
@@ -36,7 +32,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
 
   const [options, setOptions] = useState({
     countryOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
-    stateOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
+    countyOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
     cityOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[]
   });
 
@@ -75,7 +71,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
 
         setOptions(prev => ({
           ...prev,
-          stateOptions: [...defaultOptions, ...romaniaCounties]
+          countyOptions: [...defaultOptions, ...romaniaCounties]
         }));
       }
     } catch (error) {
@@ -101,7 +97,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
     if (!countryCode) {
       setOptions(prev => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }],
+        countyOptions: [{ value: '', label: 'Selectează...' }],
         cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
       return;
@@ -115,25 +111,25 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
 
       setOptions(prev => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }, ...romaniaCounties],
+        countyOptions: [{ value: '', label: 'Selectează...' }, ...romaniaCounties],
         cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
       return;
     }
 
     try {
-      const states = State.getStatesOfCountry(countryCode).map(state => ({
+      const counties = State.getStatesOfCountry(countryCode).map(state => ({
         value: state.isoCode,
         label: formatStateName(state.name)
       }));
 
       setOptions(prev => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }, ...states],
+        countyOptions: [{ value: '', label: 'Selectează...' }, ...counties],
         cityOptions: [{ value: '', label: 'Selectează...' }]
       }));
     } catch (error) {
-      console.error('Error loading states:', error);
+      console.error('Error loading counties:', error);
     }
   };
 
@@ -248,10 +244,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
       return;
     }
 
-    setFormState(prev => ({ ...prev, isCalculating: true }));
-
     try {
-      const { birthDate, birthHour, coordinates, fullName, birthCountry, birthCounty, birthCity } = formState;
+      const { fullName, birthDate, birthHour, birthCountry, birthCounty, birthCity, coordinates } = formState;
 
       if (!birthDate || !birthHour || !coordinates) {
         throw new Error('Missing required data for calculation');
@@ -259,18 +253,18 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
 
       const payload: BirthDataPayload = {
         name: fullName,
-        nation: birthCountry,
-        city: birthCity,
-        longitude: coordinates.lng,
-        latitude: coordinates.lat,
-        year: birthDate.getFullYear(),
-        month: birthDate.getMonth() + 1,
         day: birthDate.getDate(),
+        month: birthDate.getMonth() + 1,
+        year: birthDate.getFullYear(),
         hour: birthHour.getHours(),
         minute: birthHour.getMinutes(),
+        city: birthCity,
+        nation: birthCountry,
+        longitude: coordinates.lng,
+        latitude: coordinates.lat,
       };
 
-      const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
+      const countryName = Country.getCountryByCode(birthCountry)?.name || birthCountry;
 
       let stateName = birthCounty;
       let cityName = birthCity;
@@ -287,15 +281,16 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
         name: fullName,
         birthDate: birthDate,
         birthHour: birthHour,
-        location: `${cityName}, ${formatStateName(stateName)}, ${country}`
+        location: `${cityName}, ${formatStateName(stateName)}, ${countryName}`,
+        birthCountry: countryName,
+        birthCounty: stateName,
+        birthCity: cityName
       };
 
       onNext(payload, userInfo);
     } catch (error) {
-      console.error('Error calculating positions:', error);
-      setErrors(prev => ({ ...prev, calculation: 'Calcularea pozițiilor a eșuat. Încercați din nou.' }));
-    } finally {
-      setFormState(prev => ({ ...prev, isCalculating: false }));
+      console.error('Error saving data:', error);
+      setErrors(prev => ({ ...prev, calculation: 'Salvarea datelor a eșuat. Încercați din nou.' }));
     }
   };
 
@@ -400,8 +395,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
         </label>
         <Select
           id="birthCounty"
-          options={options.stateOptions}
-          value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
+          options={options.countyOptions}
+          value={options.countyOptions.find(option => option.value === formState.birthCounty) || null}
           onChange={handleCountyChange}
           styles={selectStyles}
           placeholder="Selectează județul..."
@@ -443,19 +438,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ initialValues, onNext }) 
       <button
         type="button"
         className="flex justify-center items-center px-6 py-3 w-full font-semibold text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={formState.isCalculating}
         onClick={handleSaveBirthData}
       >
-        {formState.isCalculating ? (
-          <>
-            <svg className="mr-2 w-4 h-4 animate-spin" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
-            </svg>
-            Se calculează...
-          </>
-        ) : (
-          'Pasul următor'
-        )}
+        Pasul următor
       </button>
     </div>
   );

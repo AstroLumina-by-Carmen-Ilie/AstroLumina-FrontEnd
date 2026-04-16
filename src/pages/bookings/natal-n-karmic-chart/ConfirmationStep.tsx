@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BookingResponse, ConfirmationStepProps } from "@/types";
+import { OnePersonBookingResponse, ConfirmationStepProps } from "@/types";
 
 const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   payload,
@@ -18,7 +18,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookingConfirmation, setBookingConfirmation] = useState<
-    BookingResponse["booking"] | null
+    OnePersonBookingResponse["booking"] | null
   >(null);
 
   const formatDate = (dateString: string): string => {
@@ -46,7 +46,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         metadata.paymentIntentId = paymentIntentId;
       }
 
-      const bookingResponse = await axios.post<BookingResponse>(
+      const OnePersonBookingResponse = await axios.post<OnePersonBookingResponse>(
         `${BOOKING_API_URL}/api/bookings`,
         {
           sessionKey: "astrograma-natala-si-karmica",
@@ -69,7 +69,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         }
       );
 
-      setBookingConfirmation(bookingResponse.data.booking);
+      setBookingConfirmation(OnePersonBookingResponse.data.booking);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const data = err.response?.data as { error?: unknown } | undefined;
