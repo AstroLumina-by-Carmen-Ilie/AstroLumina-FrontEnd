@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import DateInput from '@/components/ui/DateInput';
 import TimeInput from '@/components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, UserInfo } from '@/types';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
+import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data';
 
 interface BirthDataFormProps {
   onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;

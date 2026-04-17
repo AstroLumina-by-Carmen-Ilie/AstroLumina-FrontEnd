@@ -4,7 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import DateInput from '@/components/ui/DateInput';
 import TimeInput from '@/components/ui/TimeInput';
 import { LocationCoordinates, BirthDataPayload, SelectOption, UserInfo, BirthDataFormProps } from '@/types';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
+import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data';
 
 const getInitialFormState = (initial?: { payload: BirthDataPayload; userInfo: UserInfo }) => {
   if (!initial) return {
