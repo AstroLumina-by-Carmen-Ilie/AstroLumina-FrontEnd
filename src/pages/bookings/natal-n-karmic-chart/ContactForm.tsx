@@ -100,63 +100,65 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialValues, onNext, onBack
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
-        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="countryCode">Codul țării</label>
-        <select
-          id="countryCode"
-          value={countryCode.value}
-          onChange={(e) => handleCountryCodeChange(e.target.value)}
-          className="p-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 border-white/15 text-cosmic-100 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
-          style={{
-            backgroundColor: 'rgba(255,255,255,0.05)',
-            color: '#e9d5ff',
-            appearance: 'none',
-            WebkitAppearance: 'none',
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23a855f7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 0.75rem center',
-            backgroundSize: '1.25rem 1.25rem',
-            paddingRight: '2.5rem',
-          }}
-        >
-          {COUNTRY_CODES.map((cc) => (
-            <option 
-              key={`${cc.value}-${cc.isoCode}`} 
-              value={cc.value}
-              style={{ backgroundColor: '#1e1b4b', color: '#c084fc' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(236,72,153,0.3)';
-                e.currentTarget.style.color = '#fce7f3';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#1e1b4b';
-                e.currentTarget.style.color = '#c084fc';
-              }}
-            >
-              {cc.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="sm:w-1/3">
+          <label className="block mb-2 text-sm text-cosmic-300" htmlFor="countryCode">Codul țării</label>
+          <select
+            id="countryCode"
+            value={countryCode.value}
+            onChange={(e) => handleCountryCodeChange(e.target.value)}
+            className="p-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 border-white/15 text-cosmic-100 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.05)',
+              color: '#e9d5ff',
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23a855f7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+              backgroundSize: '1.25rem 1.25rem',
+              paddingRight: '2.5rem',
+            }}
+          >
+            {COUNTRY_CODES.map((cc) => (
+              <option 
+                key={`${cc.value}-${cc.isoCode}`} 
+                value={cc.value}
+                style={{ backgroundColor: '#1e1b4b', color: '#c084fc' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(236,72,153,0.3)';
+                  e.currentTarget.style.color = '#fce7f3';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#1e1b4b';
+                  e.currentTarget.style.color = '#c084fc';
+                }}
+              >
+                {cc.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="phone">
-          Număr de telefon <span className="text-cosmic-500">(fără prefix)</span>
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
-            phoneError
-              ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-              : 'border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500'
-          }`}
-          placeholder={`${countryCode.digitCount} cifre`}
-          value={formatPhoneDisplay(phone)}
-          onChange={handlePhoneChange}
-          required
-        />
-        {phoneError && <p className="mt-1 text-xs text-red-400">{phoneError}</p>}
+        <div className="sm:flex-1">
+          <label className="block mb-2 text-sm text-cosmic-300" htmlFor="phone">
+            Număr de telefon <span className="text-cosmic-500">(fără prefix)</span>
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
+              phoneError
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                : 'border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500'
+            }`}
+            placeholder={`${countryCode.digitCount} cifre`}
+            value={formatPhoneDisplay(phone)}
+            onChange={handlePhoneChange}
+            required
+          />
+          {phoneError && <p className="mt-1 text-xs text-red-400">{phoneError}</p>}
+        </div>
       </div>
 
       <div>
