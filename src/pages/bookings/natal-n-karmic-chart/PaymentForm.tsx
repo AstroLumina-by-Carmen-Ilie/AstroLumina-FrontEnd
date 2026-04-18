@@ -28,14 +28,14 @@ const CheckoutForm: React.FC<{
   const fetchClientSecret = useCallback(() => {
     // Send slot information to payment API
     return fetch(
-      `${PAYMENT_API_URL}/create-checkout-session/astrograma-relationala`,
+      `${PAYMENT_API_URL}/create-checkout-session/astrograma-natala-si-karmica`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sessionType: "astrograma-relationala",
+          sessionType: "astrograma-natala-si-karmica",
           selectedSlot: selectedSlot.time,
         }),
       },

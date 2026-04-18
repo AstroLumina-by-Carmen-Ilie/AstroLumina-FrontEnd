@@ -1,188 +1,211 @@
-import { useState, useEffect } from 'react';
-import Select from 'react-select';
-import { Country, State, City } from 'country-state-city';
-import DateInput from '@/components/ui/DateInput';
-import TimeInput from '@/components/ui/TimeInput';
-import { LocationCoordinates, LunarDataPayload, SelectOption } from '@/types';
-import { calculateLunarPhasePosition } from '@/utils/astrologicalCalculations';
-import { ROMANIAN_COUNTIES, getRomanianCountyName, getRomanianCities, getRomanianCityCoordinates, COUNTRY_NAMES_RO } from '@/data/romanian-locations';
+import { useState, useEffect } from "react";
+import Select from "react-select";
+import { Country, State, City } from "country-state-city";
+import DateInput from "@/components/ui/DateInput";
+import TimeInput from "@/components/ui/TimeInput";
+import { LocationCoordinates, LunarDataPayload, SelectOption } from "@/types";
+import { calculateLunarPhasePosition } from "@/utils/astrologicalCalculations";
+import {
+  ROMANIAN_COUNTIES,
+  getRomanianCountyName,
+  getRomanianCities,
+  getRomanianCityCoordinates,
+  COUNTRY_NAMES_RO,
+} from "@/data";
 
 interface LunarDataFormProps {
   setResult: React.Dispatch<React.SetStateAction<any>>;
-  setUserInfo: React.Dispatch<React.SetStateAction<{
-    location: string;
-  } | null>>;
+  setUserInfo: React.Dispatch<
+    React.SetStateAction<{
+      location: string;
+    } | null>
+  >;
 }
 
-const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo }) => {
+const LunarDataForm: React.FC<LunarDataFormProps> = ({
+  setResult,
+  setUserInfo,
+}) => {
   const [formState, setFormState] = useState({
     birthDate: null as Date | null,
     birthHour: null as Date | null,
-    birthCountry: '',
-    birthCounty: '',
-    birthCity: '',
+    birthCountry: "",
+    birthCounty: "",
+    birthCity: "",
     coordinates: null as LocationCoordinates | null,
-    isCalculating: false
+    isCalculating: false,
   });
 
   const [options, setOptions] = useState({
-    countryOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
-    stateOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[],
-    cityOptions: [{ value: '', label: 'Selectează...' }] as SelectOption[]
+    countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
+    stateOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
+    cityOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const formatStateName = (stateName: string) => {
-    if (!stateName) return '';
-    return stateName.replace(/ County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/, '');
+    if (!stateName) return "";
+    return stateName.replace(
+      / County$| State$| Municipality$| Province$| Region$| District$| Voivodeship$| Oblast$| Quarter$| Governorate$/,
+      "",
+    );
   };
 
   useEffect(() => {
     try {
-      const defaultOptions = [{ value: '', label: 'Selectează...' }];
-      const countries = Country.getAllCountries().map(country => ({
+      const defaultOptions = [{ value: "", label: "Selectează..." }];
+      const countries = Country.getAllCountries().map((country) => ({
         value: country.isoCode,
-        label: COUNTRY_NAMES_RO[country.isoCode] || country.name
+        label: COUNTRY_NAMES_RO[country.isoCode] || country.name,
       }));
 
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        countryOptions: [{ value: '', label: 'Selectează...' }, ...countries]
+        countryOptions: [{ value: "", label: "Selectează..." }, ...countries],
       }));
 
-      const romania = countries.find(c => c.value === 'RO');
+      const romania = countries.find((c) => c.value === "RO");
 
       if (romania) {
-        setFormState(prev => ({
+        setFormState((prev) => ({
           ...prev,
-          birthCountry: romania.value
+          birthCountry: romania.value,
         }));
 
-        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
-          value: code,
-          label: name
-        }));
+        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
+          ([code, [name]]) => ({
+            value: code,
+            label: name,
+          }),
+        );
 
-        setOptions(prev => ({
+        setOptions((prev) => ({
           ...prev,
-          stateOptions: [...defaultOptions, ...romaniaCounties]
+          stateOptions: [...defaultOptions, ...romaniaCounties],
         }));
       }
     } catch (error) {
-      console.error('Error initializing countries:', error);
+      console.error("Error initializing countries:", error);
     }
   }, []);
 
   const handleFormChange = (field: string, value: any) => {
-    setFormState(prev => ({ ...prev, [field]: value }));
+    setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleCountryChange = (option: SelectOption | null) => {
-    const countryCode = option?.value || '';
+    const countryCode = option?.value || "";
 
-    setFormState(prev => ({
+    setFormState((prev) => ({
       ...prev,
       birthCountry: countryCode,
-      birthCounty: '',
-      birthCity: '',
-      coordinates: null
+      birthCounty: "",
+      birthCity: "",
+      coordinates: null,
     }));
 
     if (!countryCode) {
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }],
-        cityOptions: [{ value: '', label: 'Selectează...' }]
+        stateOptions: [{ value: "", label: "Selectează..." }],
+        cityOptions: [{ value: "", label: "Selectează..." }],
       }));
       return;
     }
 
-    if (countryCode === 'RO') {
-      const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(([code, [name]]) => ({
-        value: code,
-        label: name
-      }));
+    if (countryCode === "RO") {
+      const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
+        ([code, [name]]) => ({
+          value: code,
+          label: name,
+        }),
+      );
 
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }, ...romaniaCounties],
-        cityOptions: [{ value: '', label: 'Selectează...' }]
+        stateOptions: [
+          { value: "", label: "Selectează..." },
+          ...romaniaCounties,
+        ],
+        cityOptions: [{ value: "", label: "Selectează..." }],
       }));
       return;
     }
 
     try {
-      const states = State.getStatesOfCountry(countryCode).map(state => ({
+      const states = State.getStatesOfCountry(countryCode).map((state) => ({
         value: state.isoCode,
-        label: formatStateName(state.name)
+        label: formatStateName(state.name),
       }));
 
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        stateOptions: [{ value: '', label: 'Selectează...' }, ...states],
-        cityOptions: [{ value: '', label: 'Selectează...' }]
+        stateOptions: [{ value: "", label: "Selectează..." }, ...states],
+        cityOptions: [{ value: "", label: "Selectează..." }],
       }));
     } catch (error) {
-      console.error('Error loading states:', error);
+      console.error("Error loading states:", error);
     }
   };
 
   const handleCountyChange = (option: SelectOption | null) => {
-    const countyCode = option?.value || '';
+    const countyCode = option?.value || "";
     const { birthCountry } = formState;
 
-    setFormState(prev => ({
+    setFormState((prev) => ({
       ...prev,
       birthCounty: countyCode,
-      birthCity: '',
-      coordinates: null
+      birthCity: "",
+      coordinates: null,
     }));
 
     if (!countyCode || !birthCountry) {
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        cityOptions: [{ value: '', label: 'Selectează...' }]
+        cityOptions: [{ value: "", label: "Selectează..." }],
       }));
       return;
     }
 
-    if (birthCountry === 'RO' && ROMANIAN_COUNTIES[countyCode]) {
-      const cities = getRomanianCities(countyCode).map(city => ({
+    if (birthCountry === "RO" && ROMANIAN_COUNTIES[countyCode]) {
+      const cities = getRomanianCities(countyCode).map((city) => ({
         value: city.name,
-        label: city.name
+        label: city.name,
       }));
 
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
+        cityOptions: [{ value: "", label: "Selectează..." }, ...cities],
       }));
       return;
     }
 
     try {
-      const cities = City.getCitiesOfState(birthCountry, countyCode).map(city => ({
-        value: city.name,
-        label: city.name
-      }));
+      const cities = City.getCitiesOfState(birthCountry, countyCode).map(
+        (city) => ({
+          value: city.name,
+          label: city.name,
+        }),
+      );
 
-      setOptions(prev => ({
+      setOptions((prev) => ({
         ...prev,
-        cityOptions: [{ value: '', label: 'Selectează...' }, ...cities]
+        cityOptions: [{ value: "", label: "Selectează..." }, ...cities],
       }));
     } catch (error) {
-      console.error('Error loading cities:', error);
+      console.error("Error loading cities:", error);
     }
   };
 
   const handleCityChange = (option: SelectOption | null) => {
-    const cityName = option?.value || '';
+    const cityName = option?.value || "";
     const { birthCountry, birthCounty } = formState;
 
-    setFormState(prev => ({
+    setFormState((prev) => ({
       ...prev,
       birthCity: cityName,
-      coordinates: null
+      coordinates: null,
     }));
 
     if (!cityName || !birthCountry || !birthCounty) {
@@ -190,42 +213,45 @@ const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo })
     }
 
     try {
-      if (birthCountry === 'RO' && ROMANIAN_COUNTIES[birthCounty]) {
+      if (birthCountry === "RO" && ROMANIAN_COUNTIES[birthCounty]) {
         const coords = getRomanianCityCoordinates(birthCounty, cityName);
         if (coords) {
-          setFormState(prev => ({
+          setFormState((prev) => ({
             ...prev,
-            coordinates: coords
+            coordinates: coords,
           }));
         }
         return;
       }
 
-      const cityData = City.getCitiesOfState(birthCountry, birthCounty)
-        .find(city => city.name === cityName);
+      const cityData = City.getCitiesOfState(birthCountry, birthCounty).find(
+        (city) => city.name === cityName,
+      );
 
       if (cityData && cityData.latitude && cityData.longitude) {
-        setFormState(prev => ({
+        setFormState((prev) => ({
           ...prev,
           coordinates: {
             lat: Number(cityData.latitude),
-            lng: Number(cityData.longitude)
-          }
+            lng: Number(cityData.longitude),
+          },
         }));
       }
     } catch (error) {
-      console.error('Error setting coordinates:', error);
+      console.error("Error setting coordinates:", error);
     }
   };
 
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formState.birthDate) newErrors.birthDate = 'Data este obligatorie';
-    if (!formState.birthHour) newErrors.birthHour = 'Ora este obligatorie';
-    if (!formState.birthCountry) newErrors.birthCountry = 'Țara este obligatorie';
-    if (!formState.birthCounty) newErrors.birthCounty = 'Județul/Regiunea este obligatoriu';
-    if (!formState.birthCity) newErrors.birthCity = 'Orașul este obligatoriu';
+    if (!formState.birthDate) newErrors.birthDate = "Data este obligatorie";
+    if (!formState.birthHour) newErrors.birthHour = "Ora este obligatorie";
+    if (!formState.birthCountry)
+      newErrors.birthCountry = "Țara este obligatorie";
+    if (!formState.birthCounty)
+      newErrors.birthCounty = "Județul/Regiunea este obligatoriu";
+    if (!formState.birthCity) newErrors.birthCity = "Orașul este obligatoriu";
 
     setErrors(newErrors);
     const isValid = Object.keys(newErrors).length === 0;
@@ -238,13 +264,20 @@ const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo })
       return;
     }
 
-    setFormState(prev => ({ ...prev, isCalculating: true }));
+    setFormState((prev) => ({ ...prev, isCalculating: true }));
 
     try {
-      const { birthDate, birthHour, coordinates, birthCountry, birthCounty, birthCity } = formState;
+      const {
+        birthDate,
+        birthHour,
+        coordinates,
+        birthCountry,
+        birthCounty,
+        birthCity,
+      } = formState;
 
       if (!birthDate || !birthHour || !coordinates) {
-        throw new Error('Missing required data for calculation');
+        throw new Error("Missing required data for calculation");
       }
 
       const payload: LunarDataPayload = {
@@ -257,120 +290,154 @@ const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo })
         minute: birthHour.getMinutes(),
       };
 
-      const country = Country.getCountryByCode(birthCountry)?.name || birthCountry;
-      
+      const country =
+        Country.getCountryByCode(birthCountry)?.name || birthCountry;
+
       let stateName = birthCounty;
       let cityName = birthCity;
-      
-      if (birthCountry === 'RO' && ROMANIAN_COUNTIES[birthCounty]) {
+
+      if (birthCountry === "RO" && ROMANIAN_COUNTIES[birthCounty]) {
         stateName = getRomanianCountyName(birthCounty);
       } else {
-        stateName = State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name || birthCounty;
+        stateName =
+          State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name ||
+          birthCounty;
         const cities = City.getCitiesOfState(birthCountry, birthCounty);
-        cityName = cities.find(c => c.name === birthCity)?.name || birthCity;
+        cityName = cities.find((c) => c.name === birthCity)?.name || birthCity;
       }
 
-      const result = await calculateLunarPhasePosition('ro', payload);
+      const result = await calculateLunarPhasePosition("ro", payload);
 
       setResult(result);
       setUserInfo({
-        location: `${cityName}, ${formatStateName(stateName)}, ${country}`
+        location: `${cityName}, ${formatStateName(stateName)}, ${country}`,
       });
     } catch (error) {
-      console.error('Error calculating lunar phase:', error);
-      setErrors(prev => ({ ...prev, calculation: 'Calcularea fazei lunare a eșuat. Încercați din nou.' }));
+      console.error("Error calculating lunar phase:", error);
+      setErrors((prev) => ({
+        ...prev,
+        calculation: "Calcularea fazei lunare a eșuat. Încercați din nou.",
+      }));
     } finally {
-      setFormState(prev => ({ ...prev, isCalculating: false }));
+      setFormState((prev) => ({ ...prev, isCalculating: false }));
     }
   };
 
   const selectStyles = {
     control: (base: any) => ({
       ...base,
-      backgroundColor: 'rgba(255,255,255,0.05)',
-      borderColor: 'rgba(255,255,255,0.15)',
-      borderRadius: '0.75rem',
-      color: 'white',
-      minHeight: '48px',
-      '&:hover': { borderColor: 'rgba(168,85,247,0.5)' },
+      backgroundColor: "rgba(255,255,255,0.05)",
+      borderColor: "rgba(255,255,255,0.15)",
+      borderRadius: "0.75rem",
+      color: "white",
+      minHeight: "48px",
+      "&:hover": { borderColor: "rgba(168,85,247,0.5)" },
     }),
-    singleValue: (base: any) => ({ ...base, color: '#f3e8ff' }),
-    input: (base: any) => ({ ...base, color: '#f3e8ff' }),
+    singleValue: (base: any) => ({ ...base, color: "#f3e8ff" }),
+    input: (base: any) => ({ ...base, color: "#f3e8ff" }),
     menu: (base: any) => ({
       ...base,
-      backgroundColor: '#1e1b4b',
-      border: '1px solid rgba(255,255,255,0.1)',
-      borderRadius: '0.75rem',
-      overflow: 'hidden',
+      backgroundColor: "#1e1b4b",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: "0.75rem",
+      overflow: "hidden",
     }),
     option: (base: any, state: any) => ({
       ...base,
-      backgroundColor: state.isFocused ? 'rgba(168,85,247,0.2)' : 'transparent',
-      color: state.isFocused ? '#f3e8ff' : '#c084fc',
-      '&:hover': { backgroundColor: 'rgba(168,85,247,0.2)' },
+      backgroundColor: state.isFocused ? "rgba(168,85,247,0.2)" : "transparent",
+      color: state.isFocused ? "#f3e8ff" : "#c084fc",
+      "&:hover": { backgroundColor: "rgba(168,85,247,0.2)" },
     }),
-    placeholder: (base: any) => ({ ...base, color: '#a855f7' }),
+    placeholder: (base: any) => ({ ...base, color: "#a855f7" }),
     menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthDate">
+        <label
+          className="block mb-2 text-sm text-cosmic-300"
+          htmlFor="birthDate"
+        >
           Data
         </label>
         <DateInput
           value={formState.birthDate}
-          onChange={(date) => handleFormChange('birthDate', date)}
+          onChange={(date) => handleFormChange("birthDate", date)}
           placeholder="Selectează data..."
           id="birthDate"
           required
         />
-        {errors.birthDate && <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>}
+        {errors.birthDate && (
+          <p className="mt-1 text-xs text-red-400">{errors.birthDate}</p>
+        )}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthHour">
+        <label
+          className="block mb-2 text-sm text-cosmic-300"
+          htmlFor="birthHour"
+        >
           Ora
         </label>
         <TimeInput
           value={formState.birthHour}
-          onChange={(date) => handleFormChange('birthHour', date)}
+          onChange={(date) => handleFormChange("birthHour", date)}
           placeholder="Selectează ora..."
           id="birthHour"
           required
         />
-        {errors.birthHour && <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>}
+        {errors.birthHour && (
+          <p className="mt-1 text-xs text-red-400">{errors.birthHour}</p>
+        )}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCountry">
+        <label
+          className="block mb-2 text-sm text-cosmic-300"
+          htmlFor="birthCountry"
+        >
           Țara
         </label>
         <Select
           id="birthCountry"
           options={options.countryOptions}
-          value={options.countryOptions.find(option => option.value === formState.birthCountry) || null}
+          value={
+            options.countryOptions.find(
+              (option) => option.value === formState.birthCountry,
+            ) || null
+          }
           onChange={handleCountryChange}
           styles={selectStyles}
           placeholder="Selectează țara..."
           isSearchable
           required
           maxMenuHeight={210}
-          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPortalTarget={
+            typeof document !== "undefined" ? document.body : null
+          }
           menuPosition="fixed"
         />
-        {errors.birthCountry && <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>}
+        {errors.birthCountry && (
+          <p className="mt-1 text-xs text-red-400">{errors.birthCountry}</p>
+        )}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCounty">
+        <label
+          className="block mb-2 text-sm text-cosmic-300"
+          htmlFor="birthCounty"
+        >
           Județ/Regiune
         </label>
         <Select
           id="birthCounty"
           options={options.stateOptions}
-          value={options.stateOptions.find(option => option.value === formState.birthCounty) || null}
+          value={
+            options.stateOptions.find(
+              (option) => option.value === formState.birthCounty,
+            ) || null
+          }
           onChange={handleCountyChange}
           styles={selectStyles}
           placeholder="Selectează județul..."
@@ -378,18 +445,31 @@ const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo })
           isDisabled={!formState.birthCountry}
           required
           maxMenuHeight={210}
-          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPortalTarget={
+            typeof document !== "undefined" ? document.body : null
+          }
           menuPosition="fixed"
         />
-        {errors.birthCounty && <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>}
+        {errors.birthCounty && (
+          <p className="mt-1 text-xs text-red-400">{errors.birthCounty}</p>
+        )}
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="birthCity">Oraș</label>
+        <label
+          className="block mb-2 text-sm text-cosmic-300"
+          htmlFor="birthCity"
+        >
+          Oraș
+        </label>
         <Select
           id="birthCity"
           options={options.cityOptions}
-          value={options.cityOptions.find(option => option.value === formState.birthCity) || null}
+          value={
+            options.cityOptions.find(
+              (option) => option.value === formState.birthCity,
+            ) || null
+          }
           onChange={handleCityChange}
           styles={selectStyles}
           placeholder="Selectează orașul..."
@@ -397,33 +477,49 @@ const LunarDataForm: React.FC<LunarDataFormProps> = ({ setResult, setUserInfo })
           isDisabled={!formState.birthCounty}
           required
           maxMenuHeight={210}
-          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPortalTarget={
+            typeof document !== "undefined" ? document.body : null
+          }
           menuPosition="fixed"
         />
-        {errors.birthCity && <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>}
+        {errors.birthCity && (
+          <p className="mt-1 text-xs text-red-400">{errors.birthCity}</p>
+        )}
       </div>
 
       {errors.calculation && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm">
+        <div className="p-3 text-sm text-red-400 rounded-xl border bg-red-500/10 border-red-500/20">
           {errors.calculation}
         </div>
       )}
 
       <button
         type="button"
-        className="w-full py-3 px-6 bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 text-white font-semibold rounded-xl shadow-glow-purple transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex justify-center items-center px-6 py-3 w-full font-semibold text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={formState.isCalculating}
         onClick={handleCalculateLunarPhase}
       >
         {formState.isCalculating ? (
           <>
-            <svg className="animate-spin w-4 h-4 mr-2" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" strokeDasharray="22" strokeDashoffset="0" />
+            <svg
+              className="mr-2 w-4 h-4 animate-spin"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <circle
+                cx="8"
+                cy="8"
+                r="7"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="22"
+                strokeDashoffset="0"
+              />
             </svg>
             Se calculează...
           </>
         ) : (
-          'Calculează Faza Lunară'
+          "Calculează Faza Lunară"
         )}
       </button>
     </div>

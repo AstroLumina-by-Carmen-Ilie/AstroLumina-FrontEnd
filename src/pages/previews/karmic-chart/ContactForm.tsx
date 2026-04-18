@@ -64,7 +64,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onNext, onBack }) => {
           onClick={onBack}
           className="flex-1 bg-white/5 text-cosmic-200 py-3 px-6 rounded-xl hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
         >
-          Înapoi
+          Pasul anterior
         </button>
         <button
           type="submit"

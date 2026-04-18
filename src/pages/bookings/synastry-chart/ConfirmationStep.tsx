@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import {
-  OnePersonBookingResponse,
-  OnePersonConfirmationStepProps,
+  TwoPersonsBookingResponse,
+  TwoPersonsConfirmationStepProps,
 } from "@/types";
 
-const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
-  payload,
-  userInfo,
+const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
+  firstPayload,
+  secondPayload,
+  firstMemberUserInfo,
+  secondMemberUserInfo,
   contactInfo,
   bookingQuestions,
   selectedSlot,
@@ -21,7 +23,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookingConfirmation, setBookingConfirmation] = useState<
-    OnePersonBookingResponse["booking"] | null
+    TwoPersonsBookingResponse["booking"] | null
   >(null);
 
   const formatDate = (dateString: string): string => {
@@ -49,14 +51,14 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         metadata.paymentIntentId = paymentIntentId;
       }
 
-      const OnePersonBookingResponse =
-        await axios.post<OnePersonBookingResponse>(
+      const TwoPersonsBookingResponse =
+        await axios.post<TwoPersonsBookingResponse>(
           `${BOOKING_API_URL}/api/bookings`,
           {
-            sessionKey: "astrograma-natala-si-karmica",
+            sessionKey: "astrograma-relationala",
             start: selectedSlot.time,
             attendee: {
-              name: userInfo.name,
+              name: firstMemberUserInfo.name,
               email: contactInfo.email,
               timeZone: "Europe/Bucharest",
               phoneNumber: contactInfo.phone,
@@ -65,15 +67,18 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
             metadata,
             bookingFieldsResponses: {
               attendeePhoneNumber: contactInfo.phone,
-              birth_date: `${payload.day}/${payload.month}/${payload.year}`,
-              birth_time: `${String(payload.hour).padStart(2, "0")}:${String(payload.minute).padStart(2, "0")}`,
-              birth_place: userInfo.location,
+              first_member_data: `${firstPayload.day}/${firstPayload.month}/${firstPayload.year} 
+                ${String(firstPayload.hour).padStart(2, "0")}:${String(firstPayload.minute).padStart(2, "0")} 
+                ${firstMemberUserInfo.location}`,
+              second_member_data: `${secondPayload.day}/${secondPayload.month}/${secondPayload.year} 
+                ${String(secondPayload.hour).padStart(2, "0")}:${String(secondPayload.minute).padStart(2, "0")} 
+                ${secondMemberUserInfo.location}`,
               notes: bookingQuestions.notes,
             },
           },
         );
 
-      setBookingConfirmation(OnePersonBookingResponse.data.booking);
+      setBookingConfirmation(TwoPersonsBookingResponse.data.booking);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const data = err.response?.data as { error?: unknown } | undefined;
@@ -280,7 +285,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-cosmic-100">{userInfo.name}</p>
+            <p className="text-cosmic-100">{firstMemberUserInfo.name}</p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Email</p>
@@ -292,18 +297,18 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">
-              Data nașterii
+              Data nașterii membrului 1
             </p>
             <p className="text-cosmic-100">
-              {userInfo.birthDate.toLocaleDateString("ro-RO")}
+              {firstMemberUserInfo.birthDate.toLocaleDateString("ro-RO")}
             </p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">
-              Ora nașterii
+              Ora nașterii membrului 1
             </p>
             <p className="text-cosmic-100">
-              {userInfo.birthHour.toLocaleTimeString("ro-RO", {
+              {firstMemberUserInfo.birthHour.toLocaleTimeString("ro-RO", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
@@ -311,9 +316,34 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
           </div>
           <div className="col-span-2">
             <p className="mb-1 text-xs uppercase text-cosmic-400">
-              Locul nașterii
+              Locul nașterii membrului 1
             </p>
-            <p className="text-cosmic-100">{userInfo.location}</p>
+            <p className="text-cosmic-100">{firstMemberUserInfo.location}</p>
+          </div>
+          <div>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Data nașterii membrului 2
+            </p>
+            <p className="text-cosmic-100">
+              {secondMemberUserInfo.birthDate.toLocaleDateString("ro-RO")}
+            </p>
+          </div>
+          <div>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Ora nașterii membrului 2
+            </p>
+            <p className="text-cosmic-100">
+              {secondMemberUserInfo.birthHour.toLocaleTimeString("ro-RO", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+          </div>
+          <div className="col-span-2">
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Locul nașterii membrului 2
+            </p>
+            <p className="text-cosmic-100">{secondMemberUserInfo.location}</p>
           </div>
         </div>
       </div>

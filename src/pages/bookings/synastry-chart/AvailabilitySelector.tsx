@@ -94,7 +94,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   onBack,
 }) => {
   const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-  const SESSION_KEY = "astrograma-natala-si-karmica";
+  const SESSION_KEY = "astrograma-relationala";
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     initialValues ? new Date(initialValues.time) : undefined,
