@@ -63,22 +63,6 @@ const LunarResultsDisplay: React.FC<{
                 {result.moon.illumination}
               </p>
             </div>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
-                Vârsta
-              </p>
-              <p className="font-semibold text-cosmic-100">
-                {result.moon.age_days} zile
-              </p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
-                Ciclul Lunar
-              </p>
-              <p className="font-semibold text-cosmic-100">
-                {result.moon.lunar_cycle}
-              </p>
-            </div>
           </div>
         </div>
       </div>

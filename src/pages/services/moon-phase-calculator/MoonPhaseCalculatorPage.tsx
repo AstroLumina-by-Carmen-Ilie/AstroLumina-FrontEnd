@@ -46,7 +46,6 @@ const MoonPhaseCalculatorPage = () => {
       };
 
       const lunarResult = await calculateLunarPhasePosition("ro", payload);
-      console.log("lunarResult", lunarResult);
       setResult(lunarResult);
       setUserInfo({
         location: "București, România",
