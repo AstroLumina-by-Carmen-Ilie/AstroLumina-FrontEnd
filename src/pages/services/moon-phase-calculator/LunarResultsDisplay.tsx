@@ -7,20 +7,6 @@ const LunarResultsDisplay: React.FC<{
     location: string;
   };
 }> = ({ result, userInfo }) => {
-  const getMoonPhaseImage = (phaseName: string, emoji: string): string => {
-    const phaseImages: Record<string, string> = {
-      "Lună nouă": "🌑",
-      "Lună plină": "🌕",
-      "Primul pătrar": "🌓",
-      "Ultimul pătrar": "🌗",
-      "New Moon": "🌑",
-      "Full Moon": "🌕",
-      "First Quarter": "🌓",
-      "Last Quarter": "🌗",
-    };
-    return phaseImages[phaseName] || emoji;
-  };
-
   const formatDateFromDatestamp = (datestamp: string): string => {
     try {
       const date = new Date(datestamp);
@@ -36,190 +22,143 @@ const LunarResultsDisplay: React.FC<{
     }
   };
 
-  const moonPhaseEmoji = getMoonPhaseImage(
-    result.moon.major_phase,
-    result.moon.emoji,
-  );
-
   return (
     <div className="w-full text-center">
       <div className="mb-6">
-        <p className="text-lg text-cosmic-300 mb-1">{userInfo.location}</p>
+        <p className="mb-1 text-lg text-cosmic-300">{userInfo.location}</p>
         <p className="text-lg text-cosmic-300">
           {formatDateFromDatestamp(result.datestamp)}
         </p>
       </div>
 
-      <div className="bg-white/5 rounded-xl border border-white/10 mb-4">
-        <h4 className="text-xl font-semibold text-cosmic-100 mb-4 p-4 pb-0">
-          🌙 Fază Lună
+      <div className="mb-4 rounded-xl border bg-white/5 border-white/10">
+        <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
+          🌙 Faza lunară
         </h4>
 
         <div className="p-4 pt-0">
           <div className="flex flex-col items-center mb-6">
-            <div className="text-8xl mb-4 filter drop-shadow-lg">
-              {moonPhaseEmoji}
+            <div className="mb-4 text-8xl filter drop-shadow-lg">
+              {result.moon.emoji}
             </div>
-            <h3 className="text-2xl font-bold text-cosmic-100 mb-1">
+            <h3 className="mb-1 text-2xl font-bold text-cosmic-100">
               {result.moon.phase_name}
             </h3>
-            <p className="text-lg text-cosmic-300">{result.moon.major_phase}</p>
-            <p className="text-sm text-cosmic-400 mt-2">
-              Iluminare: {result.moon.illumination}
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-left">
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 Semn Zodiacal
               </p>
-              <p className="text-cosmic-100 font-semibold">
+              <p className="font-semibold text-cosmic-100">
                 {result.moon.zodiac.moon_sign}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
-                Etapa
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
+                Iluminare
               </p>
-              <p className="text-cosmic-100 font-semibold capitalize">
-                {result.moon.stage}
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
-                Vârsta
-              </p>
-              <p className="text-cosmic-100 font-semibold">
-                {result.moon.age_days} zile
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
-                Ciclul Lunar
-              </p>
-              <p className="text-cosmic-100 font-semibold">
-                {result.moon.lunar_cycle}
+              <p className="font-semibold capitalize text-cosmic-100">
+                {result.moon.illumination}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white/5 rounded-xl border border-white/10 mb-4">
-        <h4 className="text-xl font-semibold text-cosmic-100 mb-4 p-4 pb-0">
+      <div className="mb-4 rounded-xl border bg-white/5 border-white/10">
+        <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
           ☀️ Soare
         </h4>
 
         <div className="p-4 pt-0">
           <div className="grid grid-cols-2 gap-4 text-left">
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 Răsărit
               </p>
-              <p className="text-cosmic-100 font-semibold text-lg">
+              <p className="text-lg font-semibold text-cosmic-100">
                 {result.sun.sunrise_timestamp}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 Apus
               </p>
-              <p className="text-cosmic-100 font-semibold text-lg">
+              <p className="text-lg font-semibold text-cosmic-100">
                 {result.sun.sunset_timestamp}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3 col-span-2">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="col-span-2 p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 Semn Zodiacal
               </p>
-              <p className="text-cosmic-100 font-semibold">
+              <p className="font-semibold text-cosmic-100">
                 {result.moon.zodiac.sun_sign}
               </p>
             </div>
           </div>
 
-          <div className="mt-4 bg-white/5 rounded-lg p-3">
-            <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+          <div className="p-3 mt-4 rounded-lg bg-white/5">
+            <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
               Durata Zilei
             </p>
-            <p className="text-cosmic-100 font-semibold">
+            <p className="font-semibold text-cosmic-100">
               {result.sun.day_length}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white/5 rounded-xl border border-white/10">
-        <h4 className="text-xl font-semibold text-cosmic-100 mb-4 p-4 pb-0">
+      <div className="rounded-xl border bg-white/5 border-white/10">
+        <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
           🔮 Fazele Lunii
         </h4>
 
         <div className="p-4 pt-0">
-          <div className="grid grid-cols-2 gap-3 text-left">
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+          <div className="grid grid-cols-2 gap-3 text-left">      
+            <div className="col-span-2 p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 🌑 Ultima Lună Nouă
               </p>
-              <p className="text-cosmic-100 text-sm">
-                {result.moon.detailed?.upcoming_phases?.new_moon?.last
-                  ?.days_ago !== null
-                  ? `Acum ${result.moon.detailed.upcoming_phases.new_moon.last.days_ago} zile`
+              <p className="text-sm text-cosmic-100">
+                {result.moon.detailed?.upcoming_phases?.full_moon?.last
+                  ?.datestamp !== null
+                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.full_moon.last.datestamp)
                   : "N/A"}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="col-span-2 p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 🌑 Următoarea Lună Nouă
               </p>
-              <p className="text-cosmic-100 text-sm">
+              <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.new_moon?.next
-                  ?.days_ahead !== null
-                  ? `În ${result.moon.detailed.upcoming_phases.new_moon.next.days_ahead} zile`
+                  ?.datestamp !== null
+                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.new_moon.next.datestamp)
                   : "N/A"}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
-                🌓 Ultimul Pătrar
-              </p>
-              <p className="text-cosmic-100 text-sm">
-                {result.moon.detailed?.upcoming_phases?.last_quarter?.last
-                  ?.days_ago !== null
-                  ? `Acum ${result.moon.detailed.upcoming_phases.last_quarter.last.days_ago} zile`
-                  : "N/A"}
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
-                🌓 Primul Pătrar
-              </p>
-              <p className="text-cosmic-100 text-sm">
-                {result.moon.detailed?.upcoming_phases?.first_quarter?.next
-                  ?.days_ahead !== null
-                  ? `În ${result.moon.detailed.upcoming_phases.first_quarter.next.days_ahead} zile`
-                  : "N/A"}
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 col-span-2">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="col-span-2 p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 🌕 Ultima Lună Plină
               </p>
-              <p className="text-cosmic-100 text-sm">
-                {result.moon.detailed?.upcoming_phases?.full_moon?.last
-                  ?.days_ago !== null
-                  ? `Acum ${result.moon.detailed.upcoming_phases.full_moon.last.days_ago} zile`
+              <p className="text-sm text-cosmic-100">
+                {result.moon.detailed?.upcoming_phases?.new_moon?.last
+                  ?.datestamp !== null
+                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.new_moon.last.datestamp)
                   : "N/A"}
               </p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3 col-span-2">
-              <p className="text-xs text-cosmic-400 uppercase tracking-wide mb-1">
+            <div className="col-span-2 p-3 rounded-lg bg-white/5">
+              <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 🌕 Următoarea Lună Plină
               </p>
-              <p className="text-cosmic-100 text-sm">
+              <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.full_moon?.next
-                  ?.days_ahead !== null
-                  ? `În ${result.moon.detailed.upcoming_phases.full_moon.next.days_ahead} zile`
+                  ?.datestamp !== null
+                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.full_moon.next.datestamp)
                   : "N/A"}
               </p>
             </div>

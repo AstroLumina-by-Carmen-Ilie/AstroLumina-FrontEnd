@@ -41,6 +41,7 @@ const SynastryChartBookingPage = () => {
       case 1:
         return (
           <BirthDataForm
+            key="step1"
             initialValues={
               firstPayload && firstMemberUserInfo
                 ? { payload: firstPayload, userInfo: firstMemberUserInfo }
@@ -56,6 +57,7 @@ const SynastryChartBookingPage = () => {
       case 2:
         return (
           <BirthDataForm
+            key="step2"
             initialValues={
               secondPayload && secondMemberUserInfo
                 ? { payload: secondPayload, userInfo: secondMemberUserInfo }
