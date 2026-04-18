@@ -56,6 +56,22 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     getInitialFormState(initialValues),
   );
 
+  useEffect(() => {
+    if (!initialValues) {
+      setFormState({
+        fullName: "",
+        birthDate: null as Date | null,
+        birthHour: null as Date | null,
+        birthCountry: "",
+        birthCounty: "",
+        birthCity: "",
+        coordinates: null as LocationCoordinates | null,
+      });
+    } else {
+      setFormState(getInitialFormState(initialValues));
+    }
+  }, [initialValues]);
+
   const [options, setOptions] = useState({
     countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
     countyOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
