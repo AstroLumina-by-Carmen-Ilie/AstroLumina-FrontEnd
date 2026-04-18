@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
-import { ro } from 'date-fns/locale';
-import { ChevronDown } from 'lucide-react';
-import axios from 'axios';
-import { AvailableSlot, AvailabilitySelectorProps } from '@/types';
+import React, { useState, useEffect, useCallback } from "react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import { ro } from "date-fns/locale";
+import { ChevronDown } from "lucide-react";
+import axios from "axios";
+import { AvailableSlot, AvailabilitySelectorProps } from "@/types";
 
 /** Local YYYY-MM-DD (avoids UTC shift from toISOString). */
 function toLocalYmd(d: Date): string {
   const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
 
@@ -21,36 +21,44 @@ function normalizeSlotsFromApi(slotsRaw: unknown): AvailableSlot[] {
   if (!slotsRaw) return [];
 
   if (Array.isArray(slotsRaw)) {
-    return slotsRaw.map((slot: { time?: string; start?: string; date?: string } | string) => {
-      const raw = typeof slot === 'string' ? slot : slot.start ?? slot.time;
-      if (!raw) return null;
-      const d = new Date(raw);
-      return {
-        time: raw,
-        date: typeof slot === 'object' && slot.date ? slot.date : toLocalYmd(d),
-        timezone: 'Europe/Bucharest',
-      };
-    }).filter(Boolean) as AvailableSlot[];
+    return slotsRaw
+      .map(
+        (slot: { time?: string; start?: string; date?: string } | string) => {
+          const raw =
+            typeof slot === "string" ? slot : (slot.start ?? slot.time);
+          if (!raw) return null;
+          const d = new Date(raw);
+          return {
+            time: raw,
+            date:
+              typeof slot === "object" && slot.date ? slot.date : toLocalYmd(d),
+            timezone: "Europe/Bucharest",
+          };
+        },
+      )
+      .filter(Boolean) as AvailableSlot[];
   }
 
-  if (typeof slotsRaw === 'object') {
+  if (typeof slotsRaw === "object") {
     const out: AvailableSlot[] = [];
-    for (const [dateKey, slotList] of Object.entries(slotsRaw as Record<string, unknown>)) {
+    for (const [dateKey, slotList] of Object.entries(
+      slotsRaw as Record<string, unknown>,
+    )) {
       if (!Array.isArray(slotList)) continue;
       for (const item of slotList) {
         const start =
-          typeof item === 'string'
+          typeof item === "string"
             ? item
-            : item && typeof item === 'object' && 'start' in item
+            : item && typeof item === "object" && "start" in item
               ? String((item as { start: string }).start)
               : null;
         if (!start) continue;
         const d = new Date(start);
         const date =
-          /^\d{4}-\d{2}-\d{2}$/.test(dateKey) && !dateKey.includes('T')
+          /^\d{4}-\d{2}-\d{2}$/.test(dateKey) && !dateKey.includes("T")
             ? dateKey
             : toLocalYmd(d);
-        out.push({ time: start, date, timezone: 'Europe/Bucharest' });
+        out.push({ time: start, date, timezone: "Europe/Bucharest" });
       }
     }
     return out;
@@ -60,8 +68,18 @@ function normalizeSlotsFromApi(slotsRaw: unknown): AvailableSlot[] {
 }
 
 const MONTHS = [
-  'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
-  'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie',
+  "Ianuarie",
+  "Februarie",
+  "Martie",
+  "Aprilie",
+  "Mai",
+  "Iunie",
+  "Iulie",
+  "August",
+  "Septembrie",
+  "Octombrie",
+  "Noiembrie",
+  "Decembrie",
 ];
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -70,57 +88,68 @@ const YEARS = Array.from({ length: 3 }, (_, i) => CURRENT_YEAR + i);
 /** Horizon for one request — availability limits come from Cal.com; widen here if needed. */
 const AVAILABILITY_RANGE_DAYS = 90;
 
-const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValues, onNext, onBack }) => {
+const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
+  initialValues,
+  onNext,
+  onBack,
+}) => {
   const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-  const SESSION_KEY = 'astrograma-natala-si-karmica';
+  const SESSION_KEY = "astrograma-natala-si-karmica";
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    initialValues ? new Date(initialValues.time) : undefined
+    initialValues ? new Date(initialValues.time) : undefined,
   );
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(initialValues || null);
+  const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(
+    initialValues || null,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [datesWithSlots, setDatesWithSlots] = useState<Set<string>>(new Set());
   const [calendarMonth, setCalendarMonth] = useState<Date>(
-    initialValues ? new Date(initialValues.time) : new Date()
+    initialValues ? new Date(initialValues.time) : new Date(),
   );
 
-  const fetchSlotsForRange = useCallback(async (startDate: Date, endDate: Date) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const startTime = startDate.toISOString();
-      const endTime = new Date(endDate.getTime() + 86400000).toISOString();
+  const fetchSlotsForRange = useCallback(
+    async (startDate: Date, endDate: Date) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const startTime = startDate.toISOString();
+        const endTime = new Date(endDate.getTime() + 86400000).toISOString();
 
-      const response = await axios.get(
-        `${BOOKING_API_URL}/api/availability/slots/session/${SESSION_KEY}`,
-        {
-          params: {
-            startTime,
-            endTime,
-            timeZone: 'Europe/Bucharest',
+        const response = await axios.get(
+          `${BOOKING_API_URL}/api/availability/slots/session/${SESSION_KEY}`,
+          {
+            params: {
+              startTime,
+              endTime,
+              timeZone: "Europe/Bucharest",
+            },
           },
-        }
-      );
+        );
 
-      const slots = normalizeSlotsFromApi(response.data.slots);
-      setAvailableSlots(slots);
+        const slots = normalizeSlotsFromApi(response.data.slots);
+        setAvailableSlots(slots);
 
-      const dateSet = new Set<string>();
-      slots.forEach((slot) => {
-        dateSet.add(slot.date);
-      });
-      setDatesWithSlots(dateSet);
-    } catch (err) {
-      console.error('Error fetching availability slots:', err);
-      setError('Nu am putut încărca disponibilitatea. Te rog încearcă din nou.');
-      setAvailableSlots([]);
-      setDatesWithSlots(new Set());
-    } finally {
-      setIsLoading(false);
-    }
-  }, [BOOKING_API_URL]);
+        const dateSet = new Set<string>();
+        slots.forEach((slot) => {
+          dateSet.add(slot.date);
+        });
+        setDatesWithSlots(dateSet);
+      } catch (err) {
+        console.error("Error fetching availability slots:", err);
+        setError(
+          "Nu am putut încărca disponibilitatea. Te rog încearcă din nou.",
+        );
+        setAvailableSlots([]);
+        setDatesWithSlots(new Set());
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [BOOKING_API_URL],
+  );
 
   useEffect(() => {
     const today = new Date();
@@ -139,9 +168,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
 
   const slotsForSelectedDate = selectedDate
     ? availableSlots.filter((slot) => {
-        const ymd = toLocalYmd(
-          new Date(slot.time)
-        );
+        const ymd = toLocalYmd(new Date(slot.time));
         const sel = toLocalYmd(selectedDate);
         return ymd === sel;
       })
@@ -167,7 +194,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedSlot) {
-      setError('Te rog selectează un slot disponibil');
+      setError("Te rog selectează un slot disponibil");
       return;
     }
     onNext(selectedSlot);
@@ -196,7 +223,11 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                     className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
                   >
                     {MONTHS.map((m, i) => (
-                      <option key={i} value={i} className="bg-[#1e1b4b] text-purple-200">
+                      <option
+                        key={i}
+                        value={i}
+                        className="bg-[#1e1b4b] text-purple-200"
+                      >
                         {m}
                       </option>
                     ))}
@@ -210,7 +241,11 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                     className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
                   >
                     {YEARS.map((y) => (
-                      <option key={y} value={y} className="bg-[#1e1b4b] text-purple-200">
+                      <option
+                        key={y}
+                        value={y}
+                        className="bg-[#1e1b4b] text-purple-200"
+                      >
                         {y}
                       </option>
                     ))}
@@ -231,25 +266,26 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                   showOutsideDays
                   className="w-full availability-rdp"
                   classNames={{
-                    months: 'flex flex-col',
-                    month: 'space-y-4 w-full',
-                    caption: 'hidden',
-                    nav: 'hidden',
-                    month_caption: 'hidden',
-                    table: 'w-full table-fixed',
-                    head_row: 'flex',
+                    months: "flex flex-col",
+                    month: "space-y-4 w-full",
+                    caption: "hidden",
+                    nav: "hidden",
+                    month_caption: "hidden",
+                    table: "w-full table-fixed",
+                    head_row: "flex",
                     head_cell:
-                      'text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center',
-                    row: 'flex w-full mt-1',
-                    cell: 'h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-                    day: 'h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer',
+                      "text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center",
+                    row: "flex w-full mt-1",
+                    cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                    day: "h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer",
                     day_selected:
-                      'bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100',
-                    day_today: 'ring-1 ring-purple-400/50',
-                    day_outside: 'text-purple-400/40',
-                    day_disabled: 'text-purple-400/30 opacity-50 cursor-not-allowed',
-                    day_range_middle: 'bg-purple-500/20 text-purple-200',
-                    day_hidden: 'invisible',
+                      "bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100",
+                    day_today: "ring-1 ring-purple-400/50",
+                    day_outside: "text-purple-400/40",
+                    day_disabled:
+                      "text-purple-400/30 opacity-50 cursor-not-allowed",
+                    day_range_middle: "bg-purple-500/20 text-purple-200",
+                    day_hidden: "invisible",
                   }}
                 />
               </div>
@@ -260,7 +296,8 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
             {selectedDate ? (
               <>
                 <p className="mb-4 text-sm font-semibold text-cosmic-200">
-                  Orar disponibil pentru {selectedDate.toLocaleDateString('ro-RO')}
+                  Orar disponibil pentru{" "}
+                  {selectedDate.toLocaleDateString("ro-RO")}
                 </p>
                 {isLoading ? (
                   <p className="text-sm text-cosmic-400">Se încarcă...</p>
@@ -273,20 +310,21 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
                         onClick={() => setSelectedSlot(slot)}
                         className={`p-3 rounded-lg text-sm font-medium transition-all ${
                           selectedSlot?.time === slot.time
-                            ? 'bg-cosmic-600 text-white ring-2 ring-cosmic-500'
-                            : 'bg-white/5 text-cosmic-200 hover:bg-white/10'
+                            ? "bg-cosmic-600 text-white ring-2 ring-cosmic-500"
+                            : "bg-white/5 text-cosmic-200 hover:bg-white/10"
                         }`}
                       >
-                        {new Date(slot.time).toLocaleTimeString('ro-RO', {
-                          hour: '2-digit',
-                          minute: '2-digit',
+                        {new Date(slot.time).toLocaleTimeString("ro-RO", {
+                          hour: "2-digit",
+                          minute: "2-digit",
                         })}
                       </button>
                     ))}
                   </div>
                 ) : (
                   <p className="text-sm text-cosmic-400">
-                    Nu sunt sloturi disponibile în această dată. Te rog alege altă dată.
+                    Nu sunt sloturi disponibile în această dată. Te rog alege
+                    altă dată.
                   </p>
                 )}
               </>
@@ -304,11 +342,11 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
       {selectedSlot && (
         <div className="p-4 rounded-xl border bg-cosmic-600/20 border-cosmic-600/50">
           <p className="text-sm text-cosmic-200">
-            <span className="font-semibold">Slot selectat:</span>{' '}
-            {new Date(selectedSlot.time).toLocaleDateString('ro-RO')} ora{' '}
-            {new Date(selectedSlot.time).toLocaleTimeString('ro-RO', {
-              hour: '2-digit',
-              minute: '2-digit',
+            <span className="font-semibold">Slot selectat:</span>{" "}
+            {new Date(selectedSlot.time).toLocaleDateString("ro-RO")} ora{" "}
+            {new Date(selectedSlot.time).toLocaleTimeString("ro-RO", {
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </p>
         </div>
@@ -327,8 +365,8 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({ initialValu
           disabled={!selectedSlot}
           className={`flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
             !selectedSlot
-              ? 'opacity-50 cursor-not-allowed'
-              : 'cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple'
+              ? "opacity-50 cursor-not-allowed"
+              : "cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
           } font-medium`}
         >
           Pasul următor

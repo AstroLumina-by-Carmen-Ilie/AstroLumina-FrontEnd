@@ -1,10 +1,10 @@
 export interface FormErrors {
-    [key: string]: string;
+  [key: string]: string;
 }
 
 export interface SelectOption {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 }
 
 export interface LocationCoordinates {
@@ -44,11 +44,13 @@ export interface UserInfo {
 }
 
 export interface BirthDataFormProps {
-initialValues?: {
-  payload: BirthDataPayload;
-  userInfo: UserInfo;
-};
-onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
+  initialValues?: {
+    payload: BirthDataPayload;
+    userInfo: UserInfo;
+  };
+  onNext: (payload: BirthDataPayload, userInfo: UserInfo) => void;
+  onBack?: () => void;
+  showBackButton?: boolean;
 }
 
 export interface LunarDataPayload {
@@ -67,138 +69,138 @@ export interface LunarDataResponse {
   timestamp: number;
   datestamp: string;
   sun: {
-      sunrise: number;
-      sunrise_timestamp: string;
-      sunset: number;
-      sunset_timestamp: string;
-      solar_noon: string;
-      day_length: string;
-      position: {
-          altitude: number;
-          azimuth: number;
-          distance: number;
-      };
-      next_solar_eclipse: {
-          timestamp: number;
-          datestamp: string;
-          type: string;
-          visibility_regions: string | null;
-      } | null;
+    sunrise: number;
+    sunrise_timestamp: string;
+    sunset: number;
+    sunset_timestamp: string;
+    solar_noon: string;
+    day_length: string;
+    position: {
+      altitude: number;
+      azimuth: number;
+      distance: number;
+    };
+    next_solar_eclipse: {
+      timestamp: number;
+      datestamp: string;
+      type: string;
+      visibility_regions: string | null;
+    } | null;
   };
   moon: {
-      phase: number;
-      phase_name: string;
-      major_phase: string;
-      stage: string;
-      illumination: string;
-      age_days: number;
-      lunar_cycle: string;
-      emoji: string;
-      zodiac: {
-          sun_sign: string;
-          moon_sign: string;
-      };
-      moonrise: string | null;
-      moonrise_timestamp: string | null;
-      moonset: string | null;
-      moonset_timestamp: string | null;
-      next_lunar_eclipse: {
-          timestamp: number;
-          datestamp: string;
-          type: string;
-          visibility_regions: string | null;
-      } | null;
-      detailed: {
-          position: string | null;
-          visibility: string | null;
-          upcoming_phases: {
-              new_moon: {
-                  last: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-                  next: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-              };
-              first_quarter: {
-                  last: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-                  next: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-              };
-              full_moon: {
-                  last: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-                  next: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-              };
-              last_quarter: {
-                  last: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-                  next: {
-                      timestamp: number;
-                      datestamp: string;
-                      days_ago: number | null;
-                      days_ahead: number | null;
-                      name: string | null;
-                      description: string | null;
-                  };
-              };
+    phase: number;
+    phase_name: string;
+    major_phase: string;
+    stage: string;
+    illumination: string;
+    age_days: number;
+    lunar_cycle: string;
+    emoji: string;
+    zodiac: {
+      sun_sign: string;
+      moon_sign: string;
+    };
+    moonrise: string | null;
+    moonrise_timestamp: string | null;
+    moonset: string | null;
+    moonset_timestamp: string | null;
+    next_lunar_eclipse: {
+      timestamp: number;
+      datestamp: string;
+      type: string;
+      visibility_regions: string | null;
+    } | null;
+    detailed: {
+      position: string | null;
+      visibility: string | null;
+      upcoming_phases: {
+        new_moon: {
+          last: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
           };
-          illumination_details: {
-              percentage: number;
-              visible_fraction: number;
-              phase_angle: number;
+          next: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
           };
+        };
+        first_quarter: {
+          last: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+          next: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+        };
+        full_moon: {
+          last: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+          next: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+        };
+        last_quarter: {
+          last: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+          next: {
+            timestamp: number;
+            datestamp: string;
+            days_ago: number | null;
+            days_ahead: number | null;
+            name: string | null;
+            description: string | null;
+          };
+        };
       };
-      events: string | null;
+      illumination_details: {
+        percentage: number;
+        visible_fraction: number;
+        phase_angle: number;
+      };
+    };
+    events: string | null;
   };
   location: {
-      latitude: string;
-      longitude: string;
-      precision: number;
-      using_default_location: boolean;
-      note: string | null;
+    latitude: string;
+    longitude: string;
+    precision: number;
+    using_default_location: boolean;
+    note: string | null;
   };
 }
 
@@ -228,8 +230,8 @@ export interface AstralAspect {
 export type AstralAspects = AstralAspect[];
 
 export interface ContactInfo {
-    phone: string;
-    email: string;
+  phone: string;
+  email: string;
 }
 
 export interface ContactFormProps {
@@ -239,7 +241,7 @@ export interface ContactFormProps {
 }
 
 export interface BookingQuestions {
-    notes: string;
+  notes: string;
 }
 
 export interface BookingQuestionsFormProps {
@@ -279,9 +281,9 @@ export interface OnePersonBookingResponse {
     status: string;
     location: string;
     bookingFieldsResponses: {
-      "birth-date": string;
-      "birth-place": string;
-      "birth-time": string;
+      birth_date: string;
+      birth_place: string;
+      birth_time: string;
       notes: string;
       [key: string]: unknown;
     };
@@ -308,8 +310,8 @@ export interface TwoPersonsBookingResponse {
     status: string;
     location: string;
     bookingFieldsResponses: {
-      "first_member_data": string;
-      "second_member_data": string;
+      first_member_data: string;
+      second_member_data: string;
       notes: string;
       [key: string]: unknown;
     };
@@ -324,9 +326,22 @@ export interface PaymentFormProps {
   onBack: () => void;
 }
 
-export interface ConfirmationStepProps {
+export interface OnePersonConfirmationStepProps {
   payload: BirthDataPayload;
   userInfo: UserInfo;
+  contactInfo: ContactInfo;
+  bookingQuestions: BookingQuestions;
+  selectedSlot: AvailableSlot;
+  paymentIntentId: string;
+  onBack: () => void;
+  onComplete: () => void;
+}
+
+export interface TwoPersonsConfirmationStepProps {
+  firstPayload: BirthDataPayload;
+  secondPayload: BirthDataPayload;
+  firstMemberUserInfo: UserInfo;
+  secondMemberUserInfo: UserInfo;
   contactInfo: ContactInfo;
   bookingQuestions: BookingQuestions;
   selectedSlot: AvailableSlot;

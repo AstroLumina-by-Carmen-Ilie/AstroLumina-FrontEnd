@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const ParticleLoadingAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +7,7 @@ const ParticleLoadingAnimation = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const setCanvasSize = () => {
@@ -16,22 +16,22 @@ const ParticleLoadingAnimation = () => {
     };
 
     setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    window.addEventListener("resize", setCanvasSize);
 
     const points = Array.from({ length: 50 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5
+      vy: (Math.random() - 0.5) * 0.5,
     }));
 
     let animationId: number;
 
     const animate = () => {
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = "#0f172a";
       ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-      points.forEach(point => {
+      points.forEach((point) => {
         point.x += point.vx;
         point.y += point.vy;
 
@@ -40,12 +40,12 @@ const ParticleLoadingAnimation = () => {
 
         ctx.beginPath();
         ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#fef08a';
+        ctx.fillStyle = "#fef08a";
         ctx.fill();
       });
 
       points.forEach((point, i) => {
-        points.slice(i + 1).forEach(otherPoint => {
+        points.slice(i + 1).forEach((otherPoint) => {
           const dx = point.x - otherPoint.x;
           const dy = point.y - otherPoint.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -67,7 +67,7 @@ const ParticleLoadingAnimation = () => {
 
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', setCanvasSize);
+      window.removeEventListener("resize", setCanvasSize);
     };
   }, []);
 
@@ -75,7 +75,7 @@ const ParticleLoadingAnimation = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full"
-      style={{ touchAction: 'none' }}
+      style={{ touchAction: "none" }}
     />
   );
 };

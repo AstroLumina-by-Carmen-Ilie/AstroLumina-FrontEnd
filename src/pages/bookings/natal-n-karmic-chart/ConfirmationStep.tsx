@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { OnePersonBookingResponse, ConfirmationStepProps } from "@/types";
+import {
+  OnePersonBookingResponse,
+  OnePersonConfirmationStepProps,
+} from "@/types";
 
-const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
+const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   payload,
   userInfo,
   contactInfo,
@@ -46,28 +49,29 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         metadata.paymentIntentId = paymentIntentId;
       }
 
-      const OnePersonBookingResponse = await axios.post<OnePersonBookingResponse>(
-        `${BOOKING_API_URL}/api/bookings`,
-        {
-          sessionKey: "astrograma-natala-si-karmica",
-          start: selectedSlot.time,
-          attendee: {
-            name: userInfo.name,
-            email: contactInfo.email,
-            timeZone: "Europe/Bucharest",
-            phoneNumber: contactInfo.phone,
-            language: "ro",
+      const OnePersonBookingResponse =
+        await axios.post<OnePersonBookingResponse>(
+          `${BOOKING_API_URL}/api/bookings`,
+          {
+            sessionKey: "astrograma-natala-si-karmica",
+            start: selectedSlot.time,
+            attendee: {
+              name: userInfo.name,
+              email: contactInfo.email,
+              timeZone: "Europe/Bucharest",
+              phoneNumber: contactInfo.phone,
+              language: "ro",
+            },
+            metadata,
+            bookingFieldsResponses: {
+              attendeePhoneNumber: contactInfo.phone,
+              birth_date: `${payload.day}/${payload.month}/${payload.year}`,
+              birth_time: `${String(payload.hour).padStart(2, "0")}:${String(payload.minute).padStart(2, "0")}`,
+              birth_place: userInfo.location,
+              notes: bookingQuestions.notes,
+            },
           },
-          metadata,
-          bookingFieldsResponses: {
-            attendeePhoneNumber: contactInfo.phone,
-            "birth-date": `${payload.day}/${payload.month}/${payload.year}`,
-            "birth-time": `${String(payload.hour).padStart(2, "0")}:${String(payload.minute).padStart(2, "0")}`,
-            "birth-place": userInfo.location,
-            notes: bookingQuestions.notes,
-          },
-        }
-      );
+        );
 
       setBookingConfirmation(OnePersonBookingResponse.data.booking);
     } catch (err) {
@@ -164,9 +168,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
               <p className="mb-1 text-xs font-semibold uppercase text-cosmic-400">
                 Titlu
               </p>
-              <p className="text-cosmic-100">
-                {bookingConfirmation.title}
-              </p>
+              <p className="text-cosmic-100">{bookingConfirmation.title}</p>
             </div>
             <div>
               <p className="mb-1 text-xs font-semibold uppercase text-cosmic-400">
@@ -229,19 +231,22 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             <li className="flex gap-3">
               <span className="font-bold text-cosmic-400">1.</span>
               <span className="text-sm text-cosmic-300">
-                Vei primi o confirmare pe email cu link-ul Zoom și toate detaliile sesiunii
+                Vei primi o confirmare pe email cu link-ul Zoom și toate
+                detaliile sesiunii
               </span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-cosmic-400">2.</span>
               <span className="text-sm text-cosmic-300">
-                În ziua sesiunii, conectează-te 10 minute mai devreme prin link-ul din email
+                În ziua sesiunii, conectează-te 10 minute mai devreme prin
+                link-ul din email
               </span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-cosmic-400">3.</span>
               <span className="text-sm text-cosmic-300">
-                După sesiune, vei primi o înregistrare dacă ai acordat consimțământul
+                După sesiune, vei primi o înregistrare dacă ai acordat
+                consimțământul
               </span>
             </li>
           </ul>
@@ -286,13 +291,17 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             <p className="text-cosmic-100">{contactInfo.phone}</p>
           </div>
           <div>
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Dată naștere</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Data nașterii
+            </p>
             <p className="text-cosmic-100">
               {userInfo.birthDate.toLocaleDateString("ro-RO")}
             </p>
           </div>
           <div>
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Oră naștere</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Ora nașterii
+            </p>
             <p className="text-cosmic-100">
               {userInfo.birthHour.toLocaleTimeString("ro-RO", {
                 hour: "2-digit",
@@ -301,7 +310,9 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
             </p>
           </div>
           <div className="col-span-2">
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Locație</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Locul nașterii
+            </p>
             <p className="text-cosmic-100">{userInfo.location}</p>
           </div>
         </div>

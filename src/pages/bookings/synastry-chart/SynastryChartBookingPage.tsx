@@ -1,25 +1,38 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '@/components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions } from '@/types';
-import BirthDataForm from './BirthDataForm';
-import ContactForm from './ContactForm';
-import BookingQuestionsForm from './BookingQuestionsForm';
-import AvailabilitySelector, { AvailableSlot } from './AvailabilitySelector';
-import PaymentFormNatal from './PaymentFormNatal';
-import ConfirmationStep from './ConfirmationStep';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "@/components/navbar/Navbar";
+import {
+  BirthDataPayload,
+  UserInfo,
+  ContactInfo,
+  BookingQuestions,
+  AvailableSlot,
+} from "@/types";
+import BirthDataForm from "@/pages/bookings/synastry-chart/BirthDataForm";
+import ContactForm from "@/pages/bookings/synastry-chart/ContactForm";
+import BookingQuestionsForm from "@/pages/bookings/synastry-chart/BookingQuestionsForm";
+import AvailabilitySelector from "@/pages/bookings/synastry-chart/AvailabilitySelector";
+import PaymentForm from "@/pages/bookings/synastry-chart/PaymentForm";
+import ConfirmationStep from "@/pages/bookings/synastry-chart/ConfirmationStep";
 
 const SynastryChartBookingPage = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(null);
-  const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(null);
-  const [firstMemberUserInfo, setFirstMemberUserInfo] = useState<UserInfo | null>(null);
-  const [secondMemberUserInfo, setSecondMemberUserInfo] = useState<UserInfo | null>(null);
+  const [firstPayload, setFirstPayload] = useState<BirthDataPayload | null>(
+    null,
+  );
+  const [secondPayload, setSecondPayload] = useState<BirthDataPayload | null>(
+    null,
+  );
+  const [firstMemberUserInfo, setFirstMemberUserInfo] =
+    useState<UserInfo | null>(null);
+  const [secondMemberUserInfo, setSecondMemberUserInfo] =
+    useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [bookingQuestions, setBookingQuestions] = useState<BookingQuestions | null>(null);
+  const [bookingQuestions, setBookingQuestions] =
+    useState<BookingQuestions | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
-  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
+  const [paymentIntentId, setPaymentIntentId] = useState<string>("");
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
@@ -28,6 +41,11 @@ const SynastryChartBookingPage = () => {
       case 1:
         return (
           <BirthDataForm
+            initialValues={
+              firstPayload && firstMemberUserInfo
+                ? { payload: firstPayload, userInfo: firstMemberUserInfo }
+                : undefined
+            }
             onNext={(payload, userInfo) => {
               setFirstPayload(payload);
               setFirstMemberUserInfo(userInfo);
@@ -36,18 +54,26 @@ const SynastryChartBookingPage = () => {
           />
         );
       case 2:
-          return (
-            <BirthDataForm
-              onNext={(payload, userInfo) => {
-                setSecondPayload(payload);
-                setSecondMemberUserInfo(userInfo);
-                setCurrentStep(3);
-              }}
-            />
-          );
+        return (
+          <BirthDataForm
+            initialValues={
+              secondPayload && secondMemberUserInfo
+                ? { payload: secondPayload, userInfo: secondMemberUserInfo }
+                : undefined
+            }
+            onNext={(payload, userInfo) => {
+              setSecondPayload(payload);
+              setSecondMemberUserInfo(userInfo);
+              setCurrentStep(3);
+            }}
+            onBack={handleBack}
+            showBackButton
+          />
+        );
       case 3:
         return (
           <ContactForm
+            initialValues={contactInfo || undefined}
             onNext={(contactInfo) => {
               setContactInfo(contactInfo);
               setCurrentStep(4);
@@ -58,6 +84,8 @@ const SynastryChartBookingPage = () => {
       case 4:
         return (
           <BookingQuestionsForm
+
+            initialValues={bookingQuestions || undefined}
             onNext={(questions) => {
               setBookingQuestions(questions);
               setCurrentStep(5);
@@ -68,6 +96,8 @@ const SynastryChartBookingPage = () => {
       case 5:
         return (
           <AvailabilitySelector
+          
+            initialValues={selectedSlot || undefined}
             onNext={(slot) => {
               setSelectedSlot(slot);
               setCurrentStep(6);
@@ -77,8 +107,9 @@ const SynastryChartBookingPage = () => {
         );
       case 6:
         return (
-          <PaymentFormNatal
+          <PaymentForm
             selectedSlot={selectedSlot!}
+            existingPaymentIntentId={paymentIntentId!}
             onNext={(intentId) => {
               setPaymentIntentId(intentId);
               setCurrentStep(7);
@@ -98,7 +129,7 @@ const SynastryChartBookingPage = () => {
             selectedSlot={selectedSlot!}
             paymentIntentId={paymentIntentId}
             onBack={handleBack}
-            onComplete={() => navigate('/')}
+            onComplete={() => navigate("/")}
           />
         );
       default:
@@ -130,60 +161,79 @@ const SynastryChartBookingPage = () => {
                 </h2>
                 <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
                   <p>
-                    În această sesiune live, explorăm dinamicile profunde ale relației tale cu partenerul, părinții, copiii, prietenii sau orice altă persoană de interes.
+                    În această sesiune live, explorăm dinamicile profunde ale
+                    relației tale cu partenerul, părinții, copiii, prietenii sau
+                    orice altă persoană de interes.
                   </p>
-                  <p>
-                    Această sesiune este pentru tine dacă îți dorești:
-                  </p>
+                  <p>Această sesiune este pentru tine dacă îți dorești:</p>
                   <ul className="space-y-1 list-disc list-inside">
-                    <li>Să înțelegi tiparele și dinamicile subtile ale relației</li>
+                    <li>
+                      Să înțelegi tiparele și dinamicile subtile ale relației
+                    </li>
                     <li>Să afli care este potențialul vostru împreună</li>
-                    <li>Să aduci claritate asupra punctelor de vulnerabilitate</li>
-                    <li>Să clarifici care sunt lecțiile pe care le puteți învăța împreună</li>
+                    <li>
+                      Să aduci claritate asupra punctelor de vulnerabilitate
+                    </li>
+                    <li>
+                      Să clarifici care sunt lecțiile pe care le puteți învăța
+                      împreună
+                    </li>
                     <li>Să înțelegi ce rol aveți unul în evoluția celuilalt</li>
-                    <li>Să cunoști gradul vostru de compatibilitate și căile de evoluție</li>
+                    <li>
+                      Să cunoști gradul vostru de compatibilitate și căile de
+                      evoluție
+                    </li>
                   </ul>
                   <p>
-                    Astrologia nu oferă verdicte de compatibilitate, ci îți arată natura relației: ce vă apropie, ce vă provoacă, ce este necesar pentru ca relația să se maturizeze în mod armonios.
+                    Astrologia nu oferă verdicte de compatibilitate, ci îți
+                    arată natura relației: ce vă apropie, ce vă provoacă, ce
+                    este necesar pentru ca relația să se maturizeze în mod
+                    armonios.
                   </p>
                   <p>
-                    Poți solicita o Astrogramă Relațională pentru orice tip de relație - romantică, familială, profesională sau de prietenie.
+                    Poți solicita o Astrogramă Relațională pentru orice tip de
+                    relație - romantică, familială, profesională sau de
+                    prietenie.
+                  </p>
+                  <p>Consultația este oferită prin Zoom.</p>
+                  <p>
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi
+                    înregistrată, cu acordul tău, pentru ca tu să o primești
+                    ulterior și să o poți reasculta.
                   </p>
                   <p>
-                    Consultația este oferită prin Zoom.
-                  </p>
-                  <p>
-                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
-                  </p>
-                  <p>
-                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval, notează mijlocul intervalului. Dacă ora este complet necunoscută, folosește 12:00 (PM).
+                    Notă: Dacă nu cunoști ora nașterii, dar știi un interval,
+                    notează mijlocul intervalului. Dacă ora este complet
+                    necunoscută, folosește 12:00 (PM).
                   </p>
                 </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: 'Date naștere 1' },
-                    { num: 2, label: 'Date naștere 2' },
-                    { num: 3, label: 'Date contact' },
-                    { num: 4, label: 'Motivul discuției' },
-                    { num: 5, label: 'Disponibilitate' },
-                    { num: 6, label: 'Plată' },
-                    { num: 7, label: 'Confirmare' },
+                    { num: 1, label: "Date naștere 1" },
+                    { num: 2, label: "Date naștere 2" },
+                    { num: 3, label: "Date contact" },
+                    { num: 4, label: "Motivul discuției" },
+                    { num: 5, label: "Disponibilitate" },
+                    { num: 6, label: "Plată" },
+                    { num: 7, label: "Confirmare" },
                   ].map((step) => (
                     <div key={step.num} className="flex gap-3 items-center">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step.num < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step.num < currentStep ? '✓' : step.num}
+                        {step.num < currentStep ? "✓" : step.num}
                       </div>
-                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
+                      <span
+                        className={`text-sm ${step.num === currentStep ? "text-white" : "text-cosmic-400"}`}
+                      >
                         {step.label}
                       </span>
                     </div>
@@ -201,13 +251,13 @@ const SynastryChartBookingPage = () => {
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step < currentStep ? '✓' : step}
+                        {step < currentStep ? "✓" : step}
                       </div>
                     ))}
                   </div>

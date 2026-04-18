@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { BookingQuestionsFormProps } from '@/types';
+import React, { useState } from "react";
+import { BookingQuestionsFormProps } from "@/types";
 
-const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ initialValues, onNext, onBack }) => {
-  const [notes, setNotes] = useState(initialValues?.notes || '');
-  const [error, setError] = useState<string>('');
+const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({
+  initialValues,
+  onNext,
+  onBack,
+}) => {
+  const [notes, setNotes] = useState(initialValues?.notes || "");
+  const [error, setError] = useState<string>("");
 
   const validateForm = () => {
     if (!notes.trim()) {
-      setError('Te rog descrie motivul discuției');
+      setError("Te rog descrie motivul discuției");
       return false;
     }
     return true;
@@ -42,7 +46,7 @@ const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ initialValu
           value={notes}
           onChange={(e) => {
             setNotes(e.target.value);
-            if (error) setError('');
+            if (error) setError("");
           }}
           required
         />

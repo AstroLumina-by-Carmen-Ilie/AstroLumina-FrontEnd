@@ -1,13 +1,19 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '@/components/navbar/Navbar';
-import { BirthDataPayload, UserInfo, ContactInfo, BookingQuestions, AvailableSlot } from '@/types';
-import BirthDataForm from '@/pages/bookings/natal-n-karmic-chart/BirthDataForm';
-import ContactForm from '@/pages/bookings/natal-n-karmic-chart/ContactForm';
-import BookingQuestionsForm from '@/pages/bookings/natal-n-karmic-chart/BookingQuestionsForm';
-import AvailabilitySelector from '@/pages/bookings/natal-n-karmic-chart/AvailabilitySelector';
-import PaymentForm from '@/pages/bookings/natal-n-karmic-chart/PaymentForm';
-import ConfirmationStep from '@/pages/bookings/natal-n-karmic-chart/ConfirmationStep';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "@/components/navbar/Navbar";
+import {
+  BirthDataPayload,
+  UserInfo,
+  ContactInfo,
+  BookingQuestions,
+  AvailableSlot,
+} from "@/types";
+import BirthDataForm from "@/pages/bookings/natal-n-karmic-chart/BirthDataForm";
+import ContactForm from "@/pages/bookings/natal-n-karmic-chart/ContactForm";
+import BookingQuestionsForm from "@/pages/bookings/natal-n-karmic-chart/BookingQuestionsForm";
+import AvailabilitySelector from "@/pages/bookings/natal-n-karmic-chart/AvailabilitySelector";
+import PaymentForm from "@/pages/bookings/natal-n-karmic-chart/PaymentForm";
+import ConfirmationStep from "@/pages/bookings/natal-n-karmic-chart/ConfirmationStep";
 
 const NatalNKarmicChartBookingPage = () => {
   const navigate = useNavigate();
@@ -15,9 +21,10 @@ const NatalNKarmicChartBookingPage = () => {
   const [payload, setPayload] = useState<BirthDataPayload | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [bookingQuestions, setBookingQuestions] = useState<BookingQuestions | null>(null);
+  const [bookingQuestions, setBookingQuestions] =
+    useState<BookingQuestions | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
-  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
+  const [paymentIntentId, setPaymentIntentId] = useState<string>("");
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
@@ -27,9 +34,7 @@ const NatalNKarmicChartBookingPage = () => {
         return (
           <BirthDataForm
             initialValues={
-              payload && userInfo
-                ? { payload, userInfo }
-                : undefined
+              payload && userInfo ? { payload, userInfo } : undefined
             }
             onNext={(payload, userInfo) => {
               setPayload(payload);
@@ -93,7 +98,7 @@ const NatalNKarmicChartBookingPage = () => {
             selectedSlot={selectedSlot!}
             paymentIntentId={paymentIntentId!}
             onBack={handleBack}
-            onComplete={() => navigate('/')}
+            onComplete={() => navigate("/")}
           />
         );
       default:
@@ -111,7 +116,8 @@ const NatalNKarmicChartBookingPage = () => {
             Astrograma Natală și Karmică
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
-            Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
+            Sesiune live în care aducem claritate și direcție prin înțelegerea
+            astrogramei tale!
           </p>
         </div>
 
@@ -125,55 +131,70 @@ const NatalNKarmicChartBookingPage = () => {
                 </h2>
                 <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
                   <p>
-                    În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
+                    În această sesiune live, explorăm împreună harta ta natală –
+                    "poza cerului" din momentul nașterii tale. Fiecare planetă
+                    vorbește despre o parte din tine, de la felul în care
+                    iubești, până la cum îți exprimi talentele sau ce tipare te
+                    pot bloca.
                   </p>
                   <p>
-                    Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
+                    Astrograma este mai mult decât o hartă - ea este un
+                    instrument profund de autocunoaștere care îți oferă
+                    răspunsuri clare despre:
                   </p>
                   <ul className="space-y-1 list-disc list-inside">
                     <li>direcția ta profesională și resursele interioare</li>
-                    <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
-                    <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
-                    <li>lecțiile și blocajele personale, dar și cum le poți depăși</li>
+                    <li>
+                      tiparele în iubire și ce tip de partener ți se potrivește
+                    </li>
+                    <li>
+                      cum îți poți valorifica talentele și câștiga banii în mod
+                      benefic
+                    </li>
+                    <li>
+                      lecțiile și blocajele personale, dar și cum le poți depăși
+                    </li>
                     <li>linia destinului și misiunea ta personală</li>
                   </ul>
                   <p>
-                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce atragi anumite provocări și cum îți poți folosi potențialul la maximum, această sesiune îți aduce claritate și direcție.
+                    Dacă simți că e timpul să înțelegi mai bine cine ești, de ce
+                    atragi anumite provocări și cum îți poți folosi potențialul
+                    la maximum, această sesiune îți aduce claritate și direcție.
                   </p>
+                  <p>Include și analiza transgenerațională a hărții tale.</p>
+                  <p>Consultația este oferită prin Zoom.</p>
                   <p>
-                    Include și analiza transgenerațională a hărții tale.
-                  </p>
-                  <p>
-                    Consultația este oferită prin Zoom.
-                  </p>
-                  <p>
-                    Poți lua notițe, dacă dorești, iar sesiunea va fi înregistrată, cu acordul tău, pentru ca tu să o primești ulterior și să o poți reasculta.
+                    Poți lua notițe, dacă dorești, iar sesiunea va fi
+                    înregistrată, cu acordul tău, pentru ca tu să o primești
+                    ulterior și să o poți reasculta.
                   </p>
                 </div>
 
                 {/* Step indicators */}
                 <div className="space-y-3">
                   {[
-                    { num: 1, label: 'Date naștere' },
-                    { num: 2, label: 'Date contact' },
-                    { num: 3, label: 'Motivul discuției' },
-                    { num: 4, label: 'Disponibilitate' },
-                    { num: 5, label: 'Plată' },
-                    { num: 6, label: 'Confirmare' },
+                    { num: 1, label: "Date naștere" },
+                    { num: 2, label: "Date contact" },
+                    { num: 3, label: "Motivul discuției" },
+                    { num: 4, label: "Disponibilitate" },
+                    { num: 5, label: "Plată" },
+                    { num: 6, label: "Confirmare" },
                   ].map((step) => (
                     <div key={step.num} className="flex gap-3 items-center">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step.num < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step.num < currentStep ? '✓' : step.num}
+                        {step.num < currentStep ? "✓" : step.num}
                       </div>
-                      <span className={`text-sm ${step.num === currentStep ? 'text-white' : 'text-cosmic-400'}`}>
+                      <span
+                        className={`text-sm ${step.num === currentStep ? "text-white" : "text-cosmic-400"}`}
+                      >
                         {step.label}
                       </span>
                     </div>
@@ -191,13 +212,13 @@ const NatalNKarmicChartBookingPage = () => {
                         key={step}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step === currentStep
-                            ? 'step-active text-white'
+                            ? "step-active text-white"
                             : step < currentStep
-                            ? 'step-completed text-white'
-                            : 'step-pending text-cosmic-400'
+                              ? "step-completed text-white"
+                              : "step-pending text-cosmic-400"
                         }`}
                       >
-                        {step < currentStep ? '✓' : step}
+                        {step < currentStep ? "✓" : step}
                       </div>
                     ))}
                   </div>

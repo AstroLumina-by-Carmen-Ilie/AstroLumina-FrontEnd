@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -41,15 +41,19 @@
    ═══════════════════════════════════════════════════════════════ */
 .stars {
   background: #0a0a1a;
-  background-image: 
-    url('https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/images/NightSky.jpg'),
-    radial-gradient(white, rgba(255,255,255,.15) 2px, transparent 3px),
-    radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.07) 2px, transparent 3px),
-    radial-gradient(rgba(255,255,255,.3), rgba(255,255,255,.07) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.07) 2px, transparent 3px);
-  background-size: 
+  background-image:
+    url("https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/images/NightSky.jpg"),
+    radial-gradient(white, rgba(255, 255, 255, 0.15) 2px, transparent 3px),
+    radial-gradient(white, rgba(255, 255, 255, 0.1) 1px, transparent 2px),
+    radial-gradient(white, rgba(255, 255, 255, 0.07) 2px, transparent 3px),
+    radial-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.07) 1px,
+      transparent 2px
+    ),
+    radial-gradient(white, rgba(255, 255, 255, 0.1) 1px, transparent 2px),
+    radial-gradient(white, rgba(255, 255, 255, 0.07) 2px, transparent 3px);
+  background-size:
     cover,
     550px 550px,
     350px 350px,
@@ -57,7 +61,7 @@
     150px 150px,
     130px 130px,
     100px 100px;
-  background-position: 
+  background-position:
     center,
     0 0,
     40px 60px,
@@ -65,14 +69,7 @@
     70px 100px,
     200px 200px,
     300px 300px;
-  background-repeat: 
-    no-repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat;
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -99,31 +96,33 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  background: radial-gradient(circle at center,
-    rgba(255,255,255,0.8) 0%,
-    rgba(255,255,255,0.6) 20%,
-    rgba(255,255,255,0.4) 40%,
-    rgba(255,255,255,0.2) 60%,
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.2) 60%,
     transparent 100%
   );
   animation: shooting-star 4s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.7)) 
-          drop-shadow(0 0 16px rgba(255,255,255,0.5))
-          drop-shadow(0 0 24px rgba(255,255,255,0.3));
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7))
+    drop-shadow(0 0 16px rgba(255, 255, 255, 0.5))
+    drop-shadow(0 0 24px rgba(255, 255, 255, 0.3));
   border-radius: 50%;
 }
 
 .shooting-star::before,
 .shooting-star::after {
-  content: '';
+  content: "";
   position: absolute;
-  background: radial-gradient(circle at center,
-    rgba(255,255,255,0.7) 0%,
-    rgba(255,255,255,0.5) 30%,
-    rgba(255,255,255,0.3) 60%,
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.3) 60%,
     transparent 100%
   );
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
 
 .shooting-star::before {
@@ -144,23 +143,68 @@
   border-radius: 1.5px;
 }
 
-.shooting-star:nth-child(1) { top: -15%; left: 8%; animation-delay: 0s; }
-.shooting-star:nth-child(2) { top: -10%; right: 25%; animation-delay: 2.1s; }
-.shooting-star:nth-child(3) { top: 15%; right: -12%; animation-delay: 4.2s; }
-.shooting-star:nth-child(4) { top: 35%; right: -8%; animation-delay: 1.3s; }
-.shooting-star:nth-child(5) { top: 55%; right: -15%; animation-delay: 3.4s; }
-.shooting-star:nth-child(6) { top: 75%; right: -5%; animation-delay: 0.7s; }
-.shooting-star:nth-child(7) { bottom: -12%; right: 35%; animation-delay: 2.8s; }
-.shooting-star:nth-child(8) { bottom: -8%; left: 28%; animation-delay: 1.9s; }
-.shooting-star:nth-child(9) { bottom: 15%; left: -10%; animation-delay: 3.6s; }
-.shooting-star:nth-child(10) { bottom: 40%; left: -6%; animation-delay: 0.4s; }
+.shooting-star:nth-child(1) {
+  top: -15%;
+  left: 8%;
+  animation-delay: 0s;
+}
+.shooting-star:nth-child(2) {
+  top: -10%;
+  right: 25%;
+  animation-delay: 2.1s;
+}
+.shooting-star:nth-child(3) {
+  top: 15%;
+  right: -12%;
+  animation-delay: 4.2s;
+}
+.shooting-star:nth-child(4) {
+  top: 35%;
+  right: -8%;
+  animation-delay: 1.3s;
+}
+.shooting-star:nth-child(5) {
+  top: 55%;
+  right: -15%;
+  animation-delay: 3.4s;
+}
+.shooting-star:nth-child(6) {
+  top: 75%;
+  right: -5%;
+  animation-delay: 0.7s;
+}
+.shooting-star:nth-child(7) {
+  bottom: -12%;
+  right: 35%;
+  animation-delay: 2.8s;
+}
+.shooting-star:nth-child(8) {
+  bottom: -8%;
+  left: 28%;
+  animation-delay: 1.9s;
+}
+.shooting-star:nth-child(9) {
+  bottom: 15%;
+  left: -10%;
+  animation-delay: 3.6s;
+}
+.shooting-star:nth-child(10) {
+  bottom: 40%;
+  left: -6%;
+  animation-delay: 0.4s;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    TWINKLING STARS
    ═══════════════════════════════════════════════════════════════ */
 @keyframes twinkle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .animate-twinkle {
@@ -171,7 +215,8 @@
    FLOATING PARTICLES
    ═══════════════════════════════════════════════════════════════ */
 @keyframes float-particle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: 0.6;
   }
@@ -222,23 +267,27 @@
    COSMIC GLOW EFFECTS
    ═══════════════════════════════════════════════════════════════ */
 .glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3),
-              0 0 40px rgba(168, 85, 247, 0.1);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.3),
+    0 0 40px rgba(168, 85, 247, 0.1);
 }
 
 .glow-gold {
-  box-shadow: 0 0 20px rgba(234, 179, 8, 0.3),
-              0 0 40px rgba(234, 179, 8, 0.1);
+  box-shadow:
+    0 0 20px rgba(234, 179, 8, 0.3),
+    0 0 40px rgba(234, 179, 8, 0.1);
 }
 
 .text-glow-purple {
-  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5),
-               0 0 40px rgba(168, 85, 247, 0.3);
+  text-shadow:
+    0 0 20px rgba(168, 85, 247, 0.5),
+    0 0 40px rgba(168, 85, 247, 0.3);
 }
 
 .text-glow-gold {
-  text-shadow: 0 0 20px rgba(234, 179, 8, 0.5),
-               0 0 40px rgba(234, 179, 8, 0.3);
+  text-shadow:
+    0 0 20px rgba(234, 179, 8, 0.5),
+    0 0 40px rgba(234, 179, 8, 0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -250,13 +299,19 @@
 }
 
 .gradient-border::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   padding: 1px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(234, 179, 8, 0.5));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.5),
+    rgba(234, 179, 8, 0.5)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -276,8 +331,12 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

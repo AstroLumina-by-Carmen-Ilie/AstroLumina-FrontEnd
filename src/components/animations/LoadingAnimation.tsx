@@ -1,4 +1,4 @@
-import ParticleLoadingAnimation from '@/components/animations/ParticleLoadingAnimation';
+import ParticleLoadingAnimation from "@/components/animations/ParticleLoadingAnimation";
 
 const LoadingAnimation = () => {
   return <ParticleLoadingAnimation />;

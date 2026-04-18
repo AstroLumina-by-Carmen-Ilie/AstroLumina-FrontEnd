@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import { BookingQuestions } from '@/types';
+import React, { useState } from "react";
+import { BookingQuestionsFormProps } from "@/types";
 
-interface BookingQuestionsFormProps {
-  onNext: (questions: BookingQuestions) => void;
-  onBack: () => void;
-}
-
-const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ onNext, onBack }) => {
-  const [notes, setNotes] = useState('');
-  const [error, setError] = useState<string>('');
+const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({
+  initialValues,
+  onNext,
+  onBack,
+}) => {
+  const [notes, setNotes] = useState(initialValues?.notes || "");
+  const [error, setError] = useState<string>("");
 
   const validateForm = () => {
     if (!notes.trim()) {
-      setError('Te rog descriei motivul discuției');
+      setError("Te rog descrie motivul discuției");
       return false;
     }
     return true;
@@ -27,44 +26,44 @@ const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({ onNext, onB
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h3 className="text-cosmic-200 text-lg font-semibold mb-4">
+        <h3 className="mb-4 text-lg font-semibold text-cosmic-200">
           Motivul discuției
         </h3>
-        <p className="text-cosmic-300 text-sm mb-6">
+        <p className="mb-6 text-sm text-cosmic-300">
           Descrie pe scurt care este subiectul pe care vrei să îl explorezi.
         </p>
       </div>
 
       <div>
-        <label className="block text-cosmic-300 text-sm mb-2" htmlFor="notes">
+        <label className="block mb-2 text-sm text-cosmic-300" htmlFor="notes">
           Care este motivul discuției? *
         </label>
         <textarea
           id="notes"
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors resize-none"
+          className="p-3 w-full rounded-xl border transition-colors resize-none bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Descrie subiectul pe care vrei să îl explorezi în consultație..."
           rows={4}
           value={notes}
           onChange={(e) => {
             setNotes(e.target.value);
-            if (error) setError('');
+            if (error) setError("");
           }}
           required
         />
-        {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
+        {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
       </div>
 
       <div className="flex gap-4 pt-2">
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 bg-white/5 text-cosmic-200 py-3 px-6 rounded-xl hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
+          className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Pasul anterior
         </button>
         <button
           type="submit"
-          className="flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl hover:from-cosmic-500 hover:to-cosmic-400 transition-all duration-300 shadow-glow-purple cursor-pointer font-medium"
+          className="flex-1 px-6 py-3 font-medium text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Pasul următor
         </button>

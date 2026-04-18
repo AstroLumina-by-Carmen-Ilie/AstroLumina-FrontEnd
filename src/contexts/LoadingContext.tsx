@@ -1,5 +1,5 @@
-import React, { createContext, useState, useCallback } from 'react';
-import LoadingAnimation from '@/components/animations/LoadingAnimation';
+import React, { createContext, useState, useCallback } from "react";
+import LoadingAnimation from "@/components/animations/LoadingAnimation";
 
 interface LoadingContextType {
   isLoading: boolean;
@@ -11,7 +11,9 @@ const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export { LoadingContext };
 
-export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const startLoading = useCallback(() => {
