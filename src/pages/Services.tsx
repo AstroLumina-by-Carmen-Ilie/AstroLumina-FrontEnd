@@ -9,7 +9,6 @@ import {
   Sparkles,
   Moon,
   Compass,
-  Calendar,
 } from "lucide-react";
 
 const Services = () => {
