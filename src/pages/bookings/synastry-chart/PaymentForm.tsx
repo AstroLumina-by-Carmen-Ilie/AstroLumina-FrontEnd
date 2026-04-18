@@ -93,7 +93,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         <div className="pb-4 mb-6 border-b border-white/10">
           <p className="text-sm text-cosmic-200">
             <span className="font-semibold">Plată pentru:</span> Astrograma
-            Natală și Karmică
+            Relațională
           </p>
           <p className="mt-2 text-xs text-cosmic-300">
             {new Date(selectedSlot.time).toLocaleDateString("ro-RO")} ora{" "}
