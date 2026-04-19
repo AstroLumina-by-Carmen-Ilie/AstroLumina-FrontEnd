@@ -34,11 +34,11 @@ AstroLumina/
 | Serviciu | Ruta | Descriere | Status |
 |----------|------|-----------|--------|
 | Calculatorul Astral | `/servicii/calculatorul-astral` | Calculator gratuit poziții planetare | ✅ Activ |
-| Lumina Natală | `/servicii/lumina-natala` | Hartă natală + PDF | ✅ Activ |
+| Lumina Natală | `/astrograma/lumina-natala-si-karmica` | Hartă natală + PDF | ✅ Activ |
 | Lumina Karmică | `/servicii/lumina-karmica` | Hartă karmică + PDF | ✅ Activ |
 | Consultații | `/servicii/consultatii` | Programare cu Cal.com | ✅ Activ |
-| Previziuni | `/servicii/lumina-previzionala` | Tranzituri și previziuni | 🔧 În dezvoltare |
-| Relațională | `/servicii/lumina-relationala` | Sinastrie și compatibilitate | 🔧 În dezvoltare |
+| Previziuni | `/astrograma/lumina-previzionala` | Tranzituri și previziuni | 🔧 În dezvoltare |
+| Relațională | `/astrograma/lumina-relationala` | Sinastrie și compatibilitate | 🔧 În dezvoltare |
 
 ## Configurare
 

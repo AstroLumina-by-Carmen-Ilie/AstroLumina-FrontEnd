@@ -13,11 +13,13 @@ import KarmicChart from "@/pages/previews/KarmicChart";
 import NatalNKarmicChartBooking from "@/pages/bookings/NatalNKarmicChartBooking";
 import SynastryChartBooking from "@/pages/bookings/SynastryChartBooking";
 import PredictiveChartBooking from "@/pages/bookings/PredictiveChartBooking";
+import GhidulLuiSaturnInBerbec from "@/pages/products/GhidulLuiSaturnInBerbec";
+import SoareleStralucireaMea from "@/pages/products/SoareleStralucireaMea";
 import AboutMe from "@/pages/AboutMe";
 import Contact from "@/pages/Contact";
 import Services from "@/pages/Services";
 import Products from "@/pages/Products";
-import Events from "@/pages/Events";
+// import Events from "@/pages/Events";
 import NotFound from "@/pages/NotFound";
 
 const rootElement = document.getElementById("root");
@@ -34,7 +36,8 @@ if (rootElement) {
             <Route path="/contact" element={<Contact />} />
             <Route path="/servicii" element={<Services />} />
             <Route path="/produse" element={<Products />} />
-            <Route path="/evenimente" element={<Events />} />
+            {/* <Route path="/evenimente" element={<Events />} /> */}
+            {/* Calculators */}
             <Route
               path="/servicii/calculatorul-astral"
               element={<AstralCalculator />}
@@ -43,6 +46,7 @@ if (rootElement) {
               path="/servicii/calculatorul-fazei-lunare"
               element={<MoonPhaseCalculator />}
             />
+            {/* Previews */}
             <Route
               path="/servicii/calculator-lumina-natala"
               element={<NatalChart />}
@@ -51,6 +55,7 @@ if (rootElement) {
               path="/servicii/calculator-lumina-karmica"
               element={<KarmicChart />}
             />
+            {/* Astrograme */}
             <Route
               path="/astrograma/lumina-natala-si-karmica"
               element={<NatalNKarmicChartBooking />}
@@ -63,6 +68,16 @@ if (rootElement) {
               path="/astrograma/lumina-previzionala"
               element={<PredictiveChartBooking />}
             />
+            {/* Produse */}
+            <Route
+              path="/produse/ghidul-lui-saturn-in-berbec"
+              element={<GhidulLuiSaturnInBerbec />}
+            />
+            <Route
+              path="/produse/soarele-stralucirea-mea"
+              element={<SoareleStralucireaMea />}
+            />
+            {/*  */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

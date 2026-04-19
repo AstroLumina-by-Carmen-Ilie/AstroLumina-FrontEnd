@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import { useLoading } from "@/hooks/useLoading";
 import { Package, ArrowRight } from "lucide-react";
@@ -32,12 +33,11 @@ const Products = () => {
         "PDF gratuit descărcabil",
       ],
       price: "Gratuit",
-      type: "PDF",
-      badge: "Gratuit",
+      type: "PDF"
     },
     {
-      id: "ghid-saturn-in-berbec",
-      title: "Ghid Saturn în Berbec",
+      id: "ghidul-lui-saturn-in-berbec",
+      title: "Ghidul lui Saturn în Berbec",
       description:
         "Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn",
       details: [
@@ -48,7 +48,7 @@ const Products = () => {
         "Exerciții și meditații pentru transformarea energiilor",
       ],
       price: "15€",
-      type: "Ghid digital",
+      type: "Ghid digital"
     },
   ];
 
@@ -87,15 +87,6 @@ const Products = () => {
                       </h2>
                     </div>
                     <div className="flex gap-4 items-center">
-                      {/* {product.badge ? (
-                        <span className="text-sm text-gold-400 bg-gold-500/20 px-3 py-1.5 rounded-full border border-gold-500/30">
-                          {product.badge}
-                        </span>
-                      ) : (
-                        <span className="text-sm text-cosmic-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
-                          {product.type}
-                        </span>
-                      )} */}
                       <span className="text-lg font-semibold text-gold-400">
                         {product.price}
                       </span>
@@ -123,10 +114,10 @@ const Products = () => {
                     </ul>
                   </div>
 
-                  <button className="inline-flex gap-2 items-center px-6 py-3 font-medium text-white bg-gradient-to-r rounded-full transition-all duration-300 cursor-pointer group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple">
-                    {product.badge ? "Descarcă" : "Comandă"}
+                  <Link to={`/produse/${product.id}`} className="inline-flex gap-2 items-center px-6 py-3 font-medium text-white bg-gradient-to-r rounded-full transition-all duration-300 cursor-pointer group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple">
+                    Vezi detalii
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
