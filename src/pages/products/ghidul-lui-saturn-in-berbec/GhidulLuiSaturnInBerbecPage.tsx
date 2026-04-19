@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import PaymentStep from "./PaymentStep";
 import EmailStep from "./EmailStep";
 
 const GhidulLuiSaturnInBerbecPage = () => {
-  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
