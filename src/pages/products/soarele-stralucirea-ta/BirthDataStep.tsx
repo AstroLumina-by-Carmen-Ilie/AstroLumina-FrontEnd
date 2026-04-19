@@ -18,9 +18,7 @@ interface BirthDataStepProps {
   onNext: (sunSign: string) => void;
 }
 
-const BirthDataStep: React.FC<BirthDataStepProps> = ({
-  onNext
-}) => {
+const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
   const [formState, setFormState] = useState({
     fullName: "",
     birthDate: null as Date | null,
@@ -251,12 +249,12 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({
       };
 
       const response = await axios.post(
-        `${ASTROLOGICAL_API_URL}/api/v2/ro/birth-data`,
+        `${ASTROLOGICAL_API_URL}/api/v2/ro/astral-data`,
         payload,
         { headers: { "Content-Type": "application/json" } },
       );
 
-      const sunData = response.data?.chart_data?.subject?.Sun;
+      const sunData = response.data?.cosmic_elements?.[0];
       if (sunData?.sign) {
         onNext(sunData.sign);
       } else {

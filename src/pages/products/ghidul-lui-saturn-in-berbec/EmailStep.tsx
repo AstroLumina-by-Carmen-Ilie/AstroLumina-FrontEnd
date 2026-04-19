@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { sendGhidulSaturnEmail } from "@/utils/email";
 
 interface EmailStepProps {
@@ -6,6 +7,7 @@ interface EmailStepProps {
 }
 
 const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [customerEmail, setCustomerEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -47,6 +49,12 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         <p className="mb-8 text-cosmic-300">
           Verifică-ți inbox-ul (și spam-ul) - acolo vei găsi ghidul.
         </p>
+        <button
+          onClick={() => navigate("/produse")}
+          className="px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+        >
+          Înapoi la produse
+        </button>
       </div>
     );
   }
