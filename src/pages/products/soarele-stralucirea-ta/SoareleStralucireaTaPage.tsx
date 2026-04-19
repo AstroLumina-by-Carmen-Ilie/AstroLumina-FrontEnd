@@ -3,7 +3,7 @@ import Navbar from "@/components/navbar/Navbar";
 import BirthDataStep from "./BirthDataStep";
 import EmailStep from "./EmailStep";
 
-const SoareleStralucireaMeaPage = () => {
+const SoareleStralucireaTaPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [sunSign, setSunSign] = useState("");
 
@@ -139,4 +139,4 @@ const SoareleStralucireaMeaPage = () => {
   );
 };
 
-export default SoareleStralucireaMeaPage;
+export default SoareleStralucireaTaPage;

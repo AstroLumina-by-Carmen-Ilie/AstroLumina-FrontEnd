@@ -14,7 +14,7 @@ import NatalNKarmicChartBooking from "@/pages/bookings/NatalNKarmicChartBooking"
 import SynastryChartBooking from "@/pages/bookings/SynastryChartBooking";
 import PredictiveChartBooking from "@/pages/bookings/PredictiveChartBooking";
 import GhidulLuiSaturnInBerbec from "@/pages/products/GhidulLuiSaturnInBerbec";
-import SoareleStralucireaMea from "@/pages/products/SoareleStralucireaMea";
+import SoareleStralucireaTa from "@/pages/products/SoareleStralucireaTa";
 import AboutMe from "@/pages/AboutMe";
 import Contact from "@/pages/Contact";
 import Services from "@/pages/Services";
@@ -74,8 +74,8 @@ if (rootElement) {
               element={<GhidulLuiSaturnInBerbec />}
             />
             <Route
-              path="/produse/soarele-stralucirea-mea"
-              element={<SoareleStralucireaMea />}
+              path="/produse/soarele-stralucirea-ta"
+              element={<SoareleStralucireaTa />}
             />
             {/*  */}
             <Route path="*" element={<NotFound />} />

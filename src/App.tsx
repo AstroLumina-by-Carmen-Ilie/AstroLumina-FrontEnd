@@ -171,7 +171,7 @@ function App() {
       type: "PDF",
       badge: "Gratuit",
       description: "Prin care descoperi semnificația zodiei tale",
-      link: "/produse/soarele-stralucirea-mea",
+      link: "/produse/soarele-stralucirea-ta",
     },
     {
       title: "Ghid Saturn în Berbec",
