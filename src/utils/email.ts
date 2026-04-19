@@ -6,14 +6,7 @@ const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 const FROM_EMAIL = "AstroLumina <carmen.ilie@astrolumina.ro>";
 
-interface SendEmailParams {
-  to: string;
-  subject: string;
-  html: string;
-  text?: string;
-}
-
-export async function sendEmail({ to, subject, html, text }: SendEmailParams) {
+export async function sendEmail(to: string, subject: string, html: string) {
   if (!resend) {
     console.error("Resend not configured - email not sent");
     return { success: false, error: "Resend not configured" };
@@ -25,7 +18,6 @@ export async function sendEmail({ to, subject, html, text }: SendEmailParams) {
       to,
       subject,
       html,
-      text: text || html.replace(/<[^>]*>/g, ""),
     });
 
     console.log(`Email sent to ${to}:`, data);
@@ -47,7 +39,7 @@ export async function sendGhidulSaturnEmail(to: string) {
     </div>
   `;
 
-  return sendEmail({ to, subject, html });
+  return sendEmail(to, subject, html);
 }
 
 export async function sendSoareleStralucireaEmail(to: string) {
@@ -62,5 +54,5 @@ export async function sendSoareleStralucireaEmail(to: string) {
     </div>
   `;
 
-  return sendEmail({ to, subject, html });
+  return sendEmail(to, subject, html);
 }
