@@ -182,9 +182,6 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
               <p className="text-cosmic-100">
                 {formatDate(bookingConfirmation.startTime)}
               </p>
-              <p className="text-cosmic-100">
-                {formatDate(bookingConfirmation.endTime)}
-              </p>
             </div>
             <div>
               <p className="mb-1 text-xs font-semibold uppercase text-cosmic-400">

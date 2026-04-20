@@ -177,9 +177,6 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
               <p className="text-cosmic-100">
                 {formatDate(bookingConfirmation.startTime)}
               </p>
-              <p className="text-cosmic-100">
-                {formatDate(bookingConfirmation.endTime)}
-              </p>
             </div>
             <div>
               <p className="mb-1 text-xs font-semibold uppercase text-cosmic-400">
@@ -275,16 +272,16 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         </p>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 rounded-xl border sm:p-6 bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Date personale</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-words">{userInfo.name}</p>
+            <p className="text-sm break-words sm:text-base text-cosmic-100">{userInfo.name}</p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Email</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-all">{contactInfo.email}</p>
+            <p className="text-sm break-all sm:text-base text-cosmic-100">{contactInfo.email}</p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Telefon</p>
@@ -293,9 +290,9 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         </div>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 rounded-xl border sm:p-6 bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Date naștere</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Data nașterii</p>
             <p className="text-sm sm:text-base text-cosmic-100">
@@ -313,19 +310,19 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
           </div>
           <div className="sm:col-span-2">
             <p className="mb-1 text-xs uppercase text-cosmic-400">Locul nașterii</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-words">{userInfo.location}</p>
+            <p className="text-sm break-words sm:text-base text-cosmic-100">{userInfo.location}</p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 rounded-xl border sm:p-6 bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Motivul discuției</h4>
         <p className="text-sm text-cosmic-100">{bookingQuestions.notes}</p>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 rounded-xl border sm:p-6 bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Programare</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Data</p>
             <p className="text-sm sm:text-base text-cosmic-100">
