@@ -3,78 +3,76 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import ScrollToTopButton from "@/components/scroll/ScrollToTopButton";
 import { useLoading } from "@/hooks/useLoading";
-import { ConstelationEvent } from "@/types";
+// import { ConstelationEvent } from "@/types";
 import {
   Star,
   Sparkles,
   Moon,
   Compass,
-  Calendar,
   ArrowRight,
   ChevronDown,
   Check,
   Package,
-  Users,
 } from "lucide-react";
 
-const generateConstelatiiEvents = (): ConstelationEvent[] => {
-  const events: ConstelationEvent[] = [];
-  const months = [
-    { year: 2027, month: 3 },
-    { year: 2027, month: 4 },
-    { year: 2027, month: 5 },
-    { year: 2027, month: 6 },
-    { year: 2027, month: 7 },
-    { year: 2027, month: 8 },
-    { year: 2027, month: 9 },
-    { year: 2027, month: 10 },
-    { year: 2027, month: 11 },
-    { year: 2027, month: 12 },
-    { year: 2028, month: 1 },
-    { year: 2028, month: 2 },
-    { year: 2028, month: 3 },
-    { year: 2028, month: 4 },
-    { year: 2028, month: 5 },
-    { year: 2028, month: 6 },
-    { year: 2028, month: 7 },
-    { year: 2028, month: 8 },
-    { year: 2028, month: 9 },
-    { year: 2028, month: 10 },
-    { year: 2028, month: 11 },
-    { year: 2028, month: 12 },
-  ];
+// const generateConstelatiiEvents = (): ConstelationEvent[] => {
+//   const events: ConstelationEvent[] = [];
+//   const months = [
+//     { year: 2027, month: 3 },
+//     { year: 2027, month: 4 },
+//     { year: 2027, month: 5 },
+//     { year: 2027, month: 6 },
+//     { year: 2027, month: 7 },
+//     { year: 2027, month: 8 },
+//     { year: 2027, month: 9 },
+//     { year: 2027, month: 10 },
+//     { year: 2027, month: 11 },
+//     { year: 2027, month: 12 },
+//     { year: 2028, month: 1 },
+//     { year: 2028, month: 2 },
+//     { year: 2028, month: 3 },
+//     { year: 2028, month: 4 },
+//     { year: 2028, month: 5 },
+//     { year: 2028, month: 6 },
+//     { year: 2028, month: 7 },
+//     { year: 2028, month: 8 },
+//     { year: 2028, month: 9 },
+//     { year: 2028, month: 10 },
+//     { year: 2028, month: 11 },
+//     { year: 2028, month: 12 },
+//   ];
 
-  const monthNames = [
-    "Ianuarie",
-    "Februarie",
-    "Martie",
-    "Aprilie",
-    "Mai",
-    "Iunie",
-    "Iulie",
-    "August",
-    "Septembrie",
-    "Octombrie",
-    "Noiembrie",
-    "Decembrie",
-  ];
+//   const monthNames = [
+//     "Ianuarie",
+//     "Februarie",
+//     "Martie",
+//     "Aprilie",
+//     "Mai",
+//     "Iunie",
+//     "Iulie",
+//     "August",
+//     "Septembrie",
+//     "Octombrie",
+//     "Noiembrie",
+//     "Decembrie",
+//   ];
 
-  months.forEach(({ year, month }) => {
-    const day = Math.floor(Math.random() * (25 - 20 + 1)) + 20;
-    const date = new Date(year, month - 1, day);
-    events.push({
-      title: `Constelații ${monthNames[month - 1]}`,
-      date,
-      time: "19:00 - 22:00",
-      location: "Online (Zoom)",
-      price: "120 RON",
-    });
-  });
+//   months.forEach(({ year, month }) => {
+//     const day = Math.floor(Math.random() * (25 - 20 + 1)) + 20;
+//     const date = new Date(year, month - 1, day);
+//     events.push({
+//       title: `Constelații ${monthNames[month - 1]}`,
+//       date,
+//       time: "19:00 - 22:00",
+//       location: "Online (Zoom)",
+//       price: "120 RON",
+//     });
+//   });
 
-  return events.sort((a, b) => a.date.getTime() - b.date.getTime());
-};
+//   return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+// };
 
-const constelatiiEvents = generateConstelatiiEvents();
+// const constelatiiEvents = generateConstelatiiEvents();
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -146,14 +144,14 @@ function App() {
       description:
         "Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!",
       icon: <Sparkles className="w-7 h-7" />,
-      link: "/servicii/lumina-natala",
+      link: "/astrograma/lumina-natala-si-karmica",
       price: "75€",
     },
     {
       title: "Astrograma Relațională",
       description: "Descoperă dinamica relației tale!",
       icon: <Star className="w-7 h-7" />,
-      link: "/servicii/lumina-relationala",
+      link: "/astrograma/lumina-relationala",
       price: "75€",
     },
     {
@@ -161,8 +159,27 @@ function App() {
       description:
         "Sesiune live în care studiem predispozițiile tale pe următorul an",
       icon: <Compass className="w-7 h-7" />,
-      link: "/servicii/lumina-previzionala",
+      link: "/astrograma/lumina-previzionala",
       price: "75€",
+    },
+  ];
+
+  const products = [
+    {
+      title: "Soarele, strălucirea ta",
+      price: "Gratuit",
+      type: "PDF",
+      badge: "Gratuit",
+      description: "Prin care descoperi semnificația zodiei tale",
+      link: "/produse/soarele-stralucirea-ta",
+    },
+    {
+      title: "Ghid Saturn în Berbec",
+      price: "15€",
+      type: "Ghid digital",
+      description:
+        "Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn",
+      link: "/produse/ghidul-lui-saturn-in-berbec",
     },
   ];
 
@@ -376,25 +393,10 @@ function App() {
             </div>
 
             <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
-              {[
-                {
-                  title: "Soarele, strălucirea ta",
-                  price: "Gratuit",
-                  type: "PDF",
-                  badge: "Gratuit",
-                  description: "Prin care descoperi semnificația zodiei tale",
-                },
-                {
-                  title: "Ghid Saturn în Berbec",
-                  price: "15€",
-                  type: "Ghid digital",
-                  description:
-                    "Un ghid complet cu tot ce ai nevoie să știi despre tranzitul lui Saturn",
-                },
-              ].map((product, index) => (
+              {products.map((product, index) => (
                 <Link
                   key={index}
-                  to="/produse"
+                  to={product.link}
                   className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
                 >
                   {product.badge ? (
@@ -421,24 +423,14 @@ function App() {
                 </Link>
               ))}
             </div>
-
-            <div className="text-center">
-              <Link
-                to="/produse"
-                className="inline-flex gap-2 items-center text-sm font-medium transition-colors cursor-pointer group text-cosmic-400 hover:text-white"
-              >
-                Vezi mai multe produse{" "}
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
           </div>
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        <div className="mx-auto max-w-4xl cosmic-divider"></div>
+        {/* <div className="mx-auto max-w-4xl cosmic-divider"></div> */}
 
         {/* ═══════ EVENTS SECTION ═══════ */}
-        <section
+        {/* <section
           id="events-preview"
           data-animate
           className={`py-24 relative transition-all duration-700 ${
@@ -509,7 +501,7 @@ function App() {
               </Link>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* ═══════ DIVIDER ═══════ */}
         <div className="mx-auto max-w-4xl cosmic-divider"></div>
