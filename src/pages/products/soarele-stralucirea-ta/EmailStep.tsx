@@ -24,7 +24,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ sunSign, onBack }) => {
     setError("");
 
     try {
-      const result = await sendSoareleStralucireaEmail(customerEmail);
+      const result = await sendSoareleStralucireaEmail(customerEmail, sunSign);
       if (result.success) {
         setEmailSent(true);
       } else {
