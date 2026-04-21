@@ -3,12 +3,12 @@ const R2_PDF_BASE = 'https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/pdfs';
 
 export async function sendGhidulSaturnEmail(to: string) {
   try {
-    const response = await fetch(`${BOOKING_API_URL}/api/send-email-with-attachments`, {
+    const response = await fetch(`${BOOKING_API_URL}/send-email-with-attachments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         to,
-        subject: 'Ghidul lui Saturn în Berbec | Download',
+        subject: 'Ghidul lui Saturn în Berbec',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a1a; color: #f3e8ff;">
             <h1 style="color: #a855f7;">Bine ai venit!</h1>
@@ -40,12 +40,12 @@ export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
   try {
     const attachmentFileName = `${sunSign}, Stralucirea Ta.pdf`;
     
-    const response = await fetch(`${BOOKING_API_URL}/api/send-email-with-attachments`, {
+    const response = await fetch(`${BOOKING_API_URL}/send-email-with-attachments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         to,
-        subject: 'Soarele, Strălucirea Ta | Cadoul tău',
+        subject: 'Soarele, Strălucirea Ta',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a1a; color: #f3e8ff;">
             <h1 style="color: #fbbf24;">Soarele, Strălucirea Ta</h1>
