@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, Mail, User, Phone } from "lucide-react";
+import { Mail, User, Phone } from "lucide-react";
 import { ConstellationEvent } from "@/data/events";
 
 interface TicketHolder {
@@ -30,7 +30,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
   onBack,
 }) => {
   const [fullNames, setFullNames] = useState<string[]>(
-    Array(ticketCount).fill("")
+    Array(ticketCount).fill(""),
   );
   const [sharedEmail, setSharedEmail] = useState("");
   const [sharedPhone, setSharedPhone] = useState("");
@@ -90,31 +90,9 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
   };
 
   return (
-    <div className="container px-6 pt-24 pb-16 mx-auto max-w-2xl">
-      <button
-        onClick={onBack}
-        className="mb-6 text-sm text-cosmic-400 hover:text-white transition-colors"
-      >
-        <ArrowLeft className="inline w-4 h-4 mr-1" />
-        Înapoi la plată
-      </button>
-
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white font-display">
-          Completează datele
-        </h1>
-        <p className="mt-2 text-cosmic-300">
-          {event?.title || "Eveniment Constelații"} -{" "}
-          {event?.date.toLocaleDateString("ro-RO", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-      </div>
-
+    <div>
       <form onSubmit={handleSubmit}>
-        <div className="mb-6 p-4 rounded-xl border bg-white/5 border-white/10">
+        <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
           <h3 className="mb-4 text-lg font-semibold text-white">
             Persoane care vor participa
           </h3>
@@ -135,11 +113,13 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                     value={name}
                     onChange={(e) => updateFullName(index, e.target.value)}
                     placeholder="Nume Prenume"
-                    className="w-full py-3 pl-10 pr-4 rounded-lg bg-white/10 border border-white/10 text-white placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                    className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                   />
                 </div>
                 {nameErrors[index] && (
-                  <p className="mt-1 text-sm text-red-400">{nameErrors[index]}</p>
+                  <p className="mt-1 text-sm text-red-400">
+                    {nameErrors[index]}
+                  </p>
                 )}
               </div>
             ))}
@@ -151,7 +131,8 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
             Date de contact principale
           </h3>
           <p className="mb-4 text-sm text-cosmic-400">
-            Email sau telefon este necesar - le vom folosi pentru a trimite detaliile evenimentului
+            Email sau telefon este necesar - le vom folosi pentru a trimite
+            detaliile evenimentului
           </p>
 
           <div className="space-y-4">
@@ -166,7 +147,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                   value={sharedEmail}
                   onChange={(e) => setSharedEmail(e.target.value)}
                   placeholder="email@example.com"
-                  className="w-full py-3 pl-10 pr-4 rounded-lg bg-white/10 border border-white/10 text-white placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                  className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                 />
               </div>
             </div>
@@ -182,7 +163,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                   value={sharedPhone}
                   onChange={(e) => setSharedPhone(e.target.value)}
                   placeholder="+40 123 456 789"
-                  className="w-full py-3 pl-10 pr-4 rounded-lg bg-white/10 border border-white/10 text-white placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                  className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                 />
               </div>
             </div>
@@ -199,11 +180,11 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
             onClick={onBack}
             className="flex-1 py-4 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
-            Anulează
+            Înapoi
           </button>
           <button
             type="submit"
-            className="flex-1 py-4 rounded-xl font-semibold transition-all bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white hover:from-cosmic-500 hover:to-cosmic-400 cursor-pointer"
+            className="flex-1 py-4 font-semibold text-white bg-gradient-to-r rounded-xl transition-all cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
           >
             Confirmă rezervarea
           </button>

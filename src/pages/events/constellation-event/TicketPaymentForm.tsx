@@ -16,7 +16,6 @@ interface TicketPaymentFormProps {
   ticketCount: number;
   onTicketCountChange: (count: number) => void;
   onPaymentComplete: (paymentIntentId: string) => void;
-  onBack: () => void;
 }
 
 const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
@@ -24,7 +23,6 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
   ticketCount,
   onTicketCountChange,
   onPaymentComplete,
-  onBack,
 }) => {
   const { getAvailableSeats } = useEventSeats();
 
@@ -33,18 +31,21 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
 
   const eventId = event?.id || "";
   const availableSeats = getAvailableSeats(eventId);
-  const totalPrice = ticketCount * (event?.price || 120);
+  const totalPrice = ticketCount * (event?.price || 70);
 
   const fetchClientSecret = useCallback(() => {
-    return fetch(`${PAYMENT_API_URL}/create-checkout-session/eveniment-constelatii`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sessionType: "eveniment-constelatii",
-        ticketCount,
-        eventId,
-      }),
-    })
+    return fetch(
+      `${PAYMENT_API_URL}/create-checkout-session/eveniment-constelatii`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionType: "eveniment-constelatii",
+          ticketCount,
+          eventId,
+        }),
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         const paymentId = data.paymentIntentId || data.payment_intent || "";
@@ -60,28 +61,7 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
   };
 
   return (
-    <div className="container px-6 pt-24 pb-16 mx-auto max-w-2xl">
-      <button
-        onClick={onBack}
-        className="mb-6 text-sm transition-colors text-cosmic-400 hover:text-white"
-      >
-        ← Înapoi la evenimente
-      </button>
-
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white font-display">
-          Rezervă locul
-        </h1>
-        <p className="mt-2 text-cosmic-300">
-          {event?.title || "Eveniment Constelații"} -{" "}
-          {event?.date.toLocaleDateString("ro-RO", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-      </div>
-
+    <div>
       <div className="p-6 mb-6 rounded-xl border bg-white/5 border-white/10">
         <label className="block mb-3 text-sm font-medium text-cosmic-200">
           Număr de bilete
@@ -114,11 +94,11 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
       <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
         <div className="pb-4 mb-4 border-b border-white/10">
           <p className="text-sm text-cosmic-200">
-            <span className="font-semibold">Plată pentru:</span> {ticketCount} bilet(e) x{" "}
-            {event?.price || 120} RON
+            <span className="font-semibold">Plată pentru:</span> {ticketCount}{" "}
+            bilet(e) x {event?.price || 70} €
           </p>
           <p className="mt-2 text-lg font-bold text-gold-400">
-            Total: {totalPrice} RON
+            Total: {totalPrice} €
           </p>
         </div>
 

@@ -14,9 +14,9 @@ export const CONSTELLATION_EVENTS: ConstellationEvent[] = [
     id: "constelatie-mai-2026",
     title: "Constelații Mai 2026",
     date: new Date(2026, 4, 20),
-    time: "19:00 - 22:00",
-    location: "Online (Zoom)",
-    price: 120,
+    time: "14:00 - 21:00",
+    location: "Sambodhi Studio",
+    price: 70,
     description:
       "O seară magică de explorare a energiilor cosmice ale lunii mai. Vom analiza configurațiile astrale curente și impactul lor asupra evoluției noastre spirituale.",
     details: [
@@ -32,9 +32,9 @@ export const CONSTELLATION_EVENTS: ConstellationEvent[] = [
     id: "constelatie-iunie-2026",
     title: "Constelații Iunie 2026",
     date: new Date(2026, 5, 22),
-    time: "19:00 - 22:00",
-    location: "Online (Zoom)",
-    price: 120,
+    time: "14:00 - 21:00",
+    location: "Sambodhi Studio",
+    price: 70,
     description:
       "Explorăm energiile de transformare ale verii. Un workshop intensiv despre cum să folosim influențele planetare pentru creștere personală și spirituală.",
     details: [
@@ -50,9 +50,9 @@ export const CONSTELLATION_EVENTS: ConstellationEvent[] = [
     id: "constelatie-iulie-2026",
     title: "Constelații Iulie 2026",
     date: new Date(2026, 6, 21),
-    time: "19:00 - 22:00",
-    location: "Online (Zoom)",
-    price: 120,
+    time: "14:00 - 21:00",
+    location: "Sambodhi Studio",
+    price: 70,
     description:
       "Luna iulie ne invită la explorarea emoțiilor profunde și a intuiției. Un workshop despre cum să navigăm apele emoționale cu înțelepciune și grație.",
     details: [
@@ -68,9 +68,9 @@ export const CONSTELLATION_EVENTS: ConstellationEvent[] = [
     id: "constelatie-august-2026",
     title: "Constelații August 2026",
     date: new Date(2026, 7, 18),
-    time: "19:00 - 22:00",
-    location: "Online (Zoom)",
-    price: 120,
+    time: "14:00 - 21:00",
+    location: "Sambodhi Studio",
+    price: 70,
     description:
       "Luna august aduce energii de manifestare și recoltare. Vom explora cum să folosim aceste influențe pentru a materializa visele și a ne bucura de roadele muncii noastre.",
     details: [
@@ -86,9 +86,9 @@ export const CONSTELLATION_EVENTS: ConstellationEvent[] = [
     id: "constelatie-septembrie-2026",
     title: "Constelații Septembrie 2026",
     date: new Date(2026, 8, 23),
-    time: "19:00 - 22:00",
-    location: "Online (Zoom)",
-    price: 120,
+    time: "14:00 - 21:00",
+    location: "Sambodhi Studio",
+    price: 70,
     description:
       "Luna septembrie aduce energii de bilanț și evaluare. Vom explora cum să ne analizăm progresul și să ne pregătim pentru noi obiective.",
     details: [

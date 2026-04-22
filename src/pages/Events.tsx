@@ -77,7 +77,7 @@ const Events = () => {
                           <span>{event.location}</span>
                         </div>
                         <div className="text-lg font-semibold text-gold-400">
-                          {event.price} RON
+                          {event.price} €
                         </div>
                       </div>
                     </div>
