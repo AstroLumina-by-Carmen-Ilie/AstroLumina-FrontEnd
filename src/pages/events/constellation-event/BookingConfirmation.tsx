@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CheckCircle, Mail, ArrowRight } from "lucide-react";
 import { useEventSeats } from "@/hooks/useEventSeats";
 import { ConstellationEvent } from "@/data/events";
@@ -26,6 +27,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   onBack,
   onComplete,
 }) => {
+  const navigate = useNavigate();
   const { getBookedSeats, bookSeats } = useEventSeats();
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -72,7 +74,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     return (
       <div className="p-8 text-center">
         <div className="inline-block">
-          <div className="w-12 h-12 rounded-full border-4 border-cosmic-600 border-t-cosmic-300 animate-spin"></div>
+          <div className="w-12 h-12 rounded-full border-4 animate-spin border-cosmic-600 border-t-cosmic-300"></div>
         </div>
         <p className="mt-4 text-cosmic-200">Se confirmă rezervarea...</p>
       </div>
@@ -109,7 +111,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
           </li>
           <li>Număr bilete: {ticketCount}</li>
           <li>Total: {ticketCount * (event?.price || 70)} €</li>
-          <li>Locuri rămase: {20 - bookedSeats}</li>
         </ul>
       </div>
 
@@ -129,7 +130,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <div className="space-y-3">
         <button
           onClick={onComplete}
-          className="py-3 w-full font-medium text-white bg-gradient-to-r rounded-xl transition-all from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 cursor-pointer"
+          className="py-3 w-full font-medium text-white bg-gradient-to-r rounded-xl transition-all cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
         >
           Înapoi la pagina principală
           <ArrowRight className="inline ml-2 w-4 h-4" />
@@ -137,7 +138,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
         {onBack && (
           <button
-            onClick={onBack}
+            onClick={() => navigate("/events")}
             className="py-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Vezi toate evenimentele

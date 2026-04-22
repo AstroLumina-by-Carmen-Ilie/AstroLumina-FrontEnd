@@ -51,7 +51,7 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
   }, [ticketCount, eventId]);
 
   const handleContinue = () => {
-    if (paymentComplete && paymentIntentId) {
+    if (paymentComplete) {
       onPaymentComplete(paymentIntentId);
     }
   };
