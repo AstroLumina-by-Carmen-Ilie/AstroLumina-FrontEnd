@@ -31,23 +31,24 @@ const ConstellationBookingPage: React.FC = () => {
     switch (currentStep) {
       case 1:
         return (
-          <TicketPaymentForm
-            event={event}
+          <AttendeesForm
             ticketCount={ticketCount}
+            event={event}
             onTicketCountChange={setTicketCount}
-            onPaymentComplete={(paymentId) => {
-              setPaymentIntentId(paymentId);
+            onComplete={(holders) => {
+              setTicketHolders(holders);
               setCurrentStep(2);
             }}
+            onBack={handleBack}
           />
         );
       case 2:
         return (
-          <AttendeesForm
-            ticketCount={ticketCount}
+          <TicketPaymentForm
             event={event}
-            onComplete={(holders) => {
-              setTicketHolders(holders);
+            ticketCount={ticketCount}
+            onPaymentComplete={(paymentId) => {
+              setPaymentIntentId(paymentId);
               setCurrentStep(3);
             }}
             onBack={handleBack}
@@ -68,6 +69,12 @@ const ConstellationBookingPage: React.FC = () => {
         return null;
     }
   };
+
+  const stepLabels = [
+    { num: 1, label: "Date participanți" },
+    { num: 2, label: "Platã" },
+    { num: 3, label: "Confirmare" },
+  ];
 
   if (currentStep === 1 && eventFull) {
     return (
@@ -146,9 +153,9 @@ const ConstellationBookingPage: React.FC = () => {
                 </h2>
                 <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
                   <p>
-                    O seară magică de explorare a energiilor cosmice. Vom
-                    analiza configurațiile astrale curente și impactul lor
-                    asupra evoluției noastre spirituale.
+                    O seară magică de explorare a energiilor cosmice. Vom analiza
+                    configurațiile astrale curente și impactul lor asupra evoluției
+                    noastre spirituale.
                   </p>
                   <p>Ce include workshop-ul:</p>
                   <ul className="space-y-1 list-disc list-inside">
@@ -165,11 +172,7 @@ const ConstellationBookingPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-3">
-                  {[
-                    { num: 1, label: "Rezervare bilete" },
-                    { num: 2, label: "Date participanți" },
-                    { num: 3, label: "Confirmare" },
-                  ].map((step) => (
+                  {stepLabels.map((step) => (
                     <div key={step.num} className="flex gap-3 items-center">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
@@ -184,9 +187,7 @@ const ConstellationBookingPage: React.FC = () => {
                       </div>
                       <span
                         className={`text-sm ${
-                          step.num === currentStep
-                            ? "text-white"
-                            : "text-cosmic-400"
+                          step.num === currentStep ? "text-white" : "text-cosmic-400"
                         }`}
                       >
                         {step.label}
@@ -199,11 +200,7 @@ const ConstellationBookingPage: React.FC = () => {
               <div className="p-8 w-full md:w-1/2">
                 <div className="mb-8 md:hidden">
                   <div className="flex justify-between items-center mb-4">
-                    {[
-                      { num: 1, label: "Rezervare bilete" },
-                      { num: 2, label: "Date participanți" },
-                      { num: 3, label: "Confirmare" },
-                    ].map((step) => (
+                    {stepLabels.map((step) => (
                       <div
                         key={step.num}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
