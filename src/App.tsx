@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import ScrollToTopButton from "@/components/scroll/ScrollToTopButton";
 import { useLoading } from "@/hooks/useLoading";
-// import { ConstelationEvent } from "@/types";
+import { CONSTELLATION_EVENTS } from "@/data/events";
 import {
   Star,
   Sparkles,
@@ -13,66 +13,9 @@ import {
   ChevronDown,
   Check,
   Package,
+  Calendar,
+  Users,
 } from "lucide-react";
-
-// const generateConstelatiiEvents = (): ConstelationEvent[] => {
-//   const events: ConstelationEvent[] = [];
-//   const months = [
-//     { year: 2027, month: 3 },
-//     { year: 2027, month: 4 },
-//     { year: 2027, month: 5 },
-//     { year: 2027, month: 6 },
-//     { year: 2027, month: 7 },
-//     { year: 2027, month: 8 },
-//     { year: 2027, month: 9 },
-//     { year: 2027, month: 10 },
-//     { year: 2027, month: 11 },
-//     { year: 2027, month: 12 },
-//     { year: 2028, month: 1 },
-//     { year: 2028, month: 2 },
-//     { year: 2028, month: 3 },
-//     { year: 2028, month: 4 },
-//     { year: 2028, month: 5 },
-//     { year: 2028, month: 6 },
-//     { year: 2028, month: 7 },
-//     { year: 2028, month: 8 },
-//     { year: 2028, month: 9 },
-//     { year: 2028, month: 10 },
-//     { year: 2028, month: 11 },
-//     { year: 2028, month: 12 },
-//   ];
-
-//   const monthNames = [
-//     "Ianuarie",
-//     "Februarie",
-//     "Martie",
-//     "Aprilie",
-//     "Mai",
-//     "Iunie",
-//     "Iulie",
-//     "August",
-//     "Septembrie",
-//     "Octombrie",
-//     "Noiembrie",
-//     "Decembrie",
-//   ];
-
-//   months.forEach(({ year, month }) => {
-//     const day = Math.floor(Math.random() * (25 - 20 + 1)) + 20;
-//     const date = new Date(year, month - 1, day);
-//     events.push({
-//       title: `Constelații ${monthNames[month - 1]}`,
-//       date,
-//       time: "19:00 - 22:00",
-//       location: "Online (Zoom)",
-//       price: "120 RON",
-//     });
-//   });
-
-//   return events.sort((a, b) => a.date.getTime() - b.date.getTime());
-// };
-
-// const constelatiiEvents = generateConstelatiiEvents();
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -430,7 +373,7 @@ function App() {
         {/* <div className="mx-auto max-w-4xl cosmic-divider"></div> */}
 
         {/* ═══════ EVENTS SECTION ═══════ */}
-        {/* <section
+        <section
           id="events-preview"
           data-animate
           className={`py-24 relative transition-all duration-700 ${
@@ -455,23 +398,25 @@ function App() {
             <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
               {(() => {
                 const now = new Date();
-                const upcomingEvents = constelatiiEvents
-                  .filter((event) => event.date >= now)
-                  .slice(0, 2);
+                const upcomingEvents = CONSTELLATION_EVENTS.filter(
+                  (event) => event.date >= now,
+                ).slice(0, 2);
                 return upcomingEvents.map((event, index) => (
-                  <div
+                  <Link
                     key={index}
-                    className="glass-card p-6 hover:bg-white/[0.1] transition-all duration-300 group cursor-pointer"
+                    to={`/evenimente/rezervare/${event.id}`}
+                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
                   >
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-lg font-semibold text-white transition-colors font-display group-hover:text-cosmic-300">
-                        {event.title}
-                      </h3>
-                      <span className="flex-shrink-0 ml-4 font-semibold text-gold-400">
-                        {event.price}
-                      </span>
+                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                      {event.price} €
+                    </span>
+                    <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-xl transition-colors duration-300 bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
+                      <Calendar className="w-5 h-5" />
                     </div>
-                    <div className="flex flex-wrap gap-4 text-sm text-cosmic-300">
+                    <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300 font-display group-hover:text-cosmic-300">
+                      {event.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-4 mb-4 text-sm text-cosmic-300">
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-4 h-4 text-cosmic-400" />
                         <span>
@@ -487,21 +432,15 @@ function App() {
                         <span>{event.location}</span>
                       </div>
                     </div>
-                  </div>
+                    <span className="inline-flex gap-1 items-center text-sm font-medium transition-all duration-300 text-cosmic-400 group-hover:gap-2">
+                      Rezervă <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </Link>
                 ));
               })()}
             </div>
-            <div className="text-center">
-              <Link
-                to="/evenimente"
-                className="inline-flex gap-2 items-center text-sm font-medium transition-colors cursor-pointer group text-cosmic-400 hover:text-white"
-              >
-                Vezi toate evenimentele{" "}
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
           </div>
-        </section> */}
+        </section>
 
         {/* ═══════ DIVIDER ═══════ */}
         <div className="mx-auto max-w-4xl cosmic-divider"></div>

@@ -6,6 +6,10 @@ import "./styles/starry-theme.css";
 import "./styles/astronomy-fonts.css";
 import "flatpickr/dist/themes/material_blue.css";
 import { LoadingProvider } from "@/contexts/LoadingContext";
+import NotFound from "@/pages/NotFound";
+import AboutMe from "@/pages/AboutMe";
+import Contact from "@/pages/Contact";
+import Services from "@/pages/Services";
 import AstralCalculator from "@/pages/services/AstralCalculator";
 import MoonPhaseCalculator from "@/pages/services/MoonPhaseCalculator";
 import NatalChart from "@/pages/previews/NatalChart";
@@ -13,14 +17,11 @@ import KarmicChart from "@/pages/previews/KarmicChart";
 import NatalNKarmicChartBooking from "@/pages/bookings/NatalNKarmicChartBooking";
 import SynastryChartBooking from "@/pages/bookings/SynastryChartBooking";
 import PredictiveChartBooking from "@/pages/bookings/PredictiveChartBooking";
+import Products from "@/pages/Products";
 import GhidulLuiSaturnInBerbec from "@/pages/products/GhidulLuiSaturnInBerbec";
 import SoareleStralucireaTa from "@/pages/products/SoareleStralucireaTa";
-import AboutMe from "@/pages/AboutMe";
-import Contact from "@/pages/Contact";
-import Services from "@/pages/Services";
-import Products from "@/pages/Products";
-// import Events from "@/pages/Events";
-import NotFound from "@/pages/NotFound";
+import Events from "@/pages/Events";
+import ConstellationEvent from "@/pages/events/ConstellationEvent";
 
 const rootElement = document.getElementById("root");
 
@@ -35,8 +36,6 @@ if (rootElement) {
             <Route path="/despre-mine" element={<AboutMe />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/servicii" element={<Services />} />
-            <Route path="/produse" element={<Products />} />
-            {/* <Route path="/evenimente" element={<Events />} /> */}
             {/* Calculators */}
             <Route
               path="/servicii/calculatorul-astral"
@@ -69,6 +68,7 @@ if (rootElement) {
               element={<PredictiveChartBooking />}
             />
             {/* Produse */}
+            <Route path="/produse" element={<Products />} />
             <Route
               path="/produse/ghidul-lui-saturn-in-berbec"
               element={<GhidulLuiSaturnInBerbec />}
@@ -77,6 +77,9 @@ if (rootElement) {
               path="/produse/soarele-stralucirea-ta"
               element={<SoareleStralucireaTa />}
             />
+            {/* Evenimente */}
+            <Route path="/evenimente" element={<Events />} />
+            <Route path="/evenimente/rezervare/:id" element={<ConstellationEvent />} />
             {/*  */}
             <Route path="*" element={<NotFound />} />
           </Routes>
