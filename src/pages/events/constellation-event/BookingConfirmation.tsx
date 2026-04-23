@@ -28,17 +28,20 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   onComplete,
 }) => {
   const navigate = useNavigate();
-  const { bookSeats, fetchSeats } = useEventSeats();
+  const { bookSeats } = useEventSeats();
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(true);
 
   const eventId = event?.id || "";
 
+  const [bookingDone, setBookingDone] = useState(false);
+
   useEffect(() => {
+    if (bookingDone) return;
+
     const confirmBooking = async () => {
       try {
-        // Filter out holders without name and use their individual email/phone
         const holders = ticketHolders.filter((h) => h.fullName.trim());
 
         const success = await bookSeats(
@@ -51,7 +54,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         );
         if (success) {
           setEmailSent(true);
-          await fetchSeats(eventId);
         }
       } catch (error) {
         console.error("Failed to confirm booking:", error);
@@ -64,7 +66,8 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     };
 
     confirmBooking();
-  }, [eventId, ticketCount, ticketHolders, paymentIntentId, bookSeats, fetchSeats, event]);
+    setBookingDone(true);
+  }, [eventId, ticketCount, ticketHolders, paymentIntentId, bookSeats, event]);
 
   if (isConfirming) {
     return (
