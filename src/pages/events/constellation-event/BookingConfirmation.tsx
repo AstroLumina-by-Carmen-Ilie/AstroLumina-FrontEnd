@@ -6,6 +6,8 @@ import { ConstellationEvent } from "@/data/events";
 
 interface TicketHolder {
   fullName: string;
+  email?: string;
+  phone?: string;
 }
 
 interface BookingConfirmationProps {
@@ -17,8 +19,6 @@ interface BookingConfirmationProps {
   onComplete: () => void;
 }
 
-const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-
 const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   event,
   ticketCount,
@@ -28,39 +28,37 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   onComplete,
 }) => {
   const navigate = useNavigate();
-  const { getBookedSeats, bookSeats } = useEventSeats();
+  const { bookSeats } = useEventSeats();
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(true);
 
   const eventId = event?.id || "";
-  const bookedSeats = getBookedSeats(eventId);
+
+  const [bookingDone, setBookingDone] = useState(false);
 
   useEffect(() => {
+    if (bookingDone) return;
+
     const confirmBooking = async () => {
       try {
-        bookSeats(eventId, ticketCount);
+        const holders = ticketHolders.filter((h) => h.fullName.trim());
 
-        const validHolders = ticketHolders.filter((h) => h.fullName.trim());
-
-        await fetch(`${BOOKING_API_URL}/api/send-event-confirmation`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            eventId,
-            eventTitle: event?.title,
-            eventDate: event?.date.toISOString(),
-            ticketCount,
-            holders: validHolders,
-            paymentIntentId,
-          }),
-        });
-
-        setEmailSent(true);
+        const success = await bookSeats(
+          eventId,
+          holders,
+          ticketCount,
+          paymentIntentId,
+          event?.title,
+          event?.date?.toISOString()
+        );
+        if (success) {
+          setEmailSent(true);
+        }
       } catch (error) {
-        console.error("Failed to send email:", error);
+        console.error("Failed to confirm booking:", error);
         setEmailError(
-          "Notificările nu au putut fi trimise, dar rezervarea a fost confirmată.",
+          "Notificările nu au putut fi trimise, dar rezervarea a fost confirmată."
         );
       } finally {
         setIsConfirming(false);
@@ -68,6 +66,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     };
 
     confirmBooking();
+    setBookingDone(true);
   }, [eventId, ticketCount, ticketHolders, paymentIntentId, bookSeats, event]);
 
   if (isConfirming) {
@@ -138,7 +137,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
         {onBack && (
           <button
-            onClick={() => navigate("/events")}
+            onClick={() => navigate("/evenimente")}
             className="py-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Vezi toate evenimentele

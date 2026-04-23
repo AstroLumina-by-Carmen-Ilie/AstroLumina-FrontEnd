@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import { useEventSeats } from "@/hooks/useEventSeats";
@@ -9,12 +9,14 @@ import BookingConfirmation from "./BookingConfirmation";
 
 interface TicketHolder {
   fullName: string;
+  email?: string;
+  phone?: string;
 }
 
 const ConstellationBookingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isEventFull } = useEventSeats();
+  const { fetchSeats, getAvailableSeats } = useEventSeats();
 
   const eventId = id || "";
   const event = getEventById(eventId);
@@ -24,7 +26,12 @@ const ConstellationBookingPage: React.FC = () => {
   const [paymentIntentId, setPaymentIntentId] = useState("");
   const [ticketHolders, setTicketHolders] = useState<TicketHolder[]>([]);
 
-  const eventFull = isEventFull(eventId);
+  useEffect(() => {
+    fetchSeats(eventId);
+  }, [eventId, fetchSeats]);
+
+  const availableSeats = getAvailableSeats(eventId);
+  const eventFull = availableSeats <= 0;
   const handleBack = () => setCurrentStep((prev) => Math.max(1, prev - 1));
 
   const renderStep = () => {
@@ -34,6 +41,7 @@ const ConstellationBookingPage: React.FC = () => {
           <AttendeesForm
             ticketCount={ticketCount}
             event={event}
+            availableSeats={availableSeats}
             onTicketCountChange={setTicketCount}
             onComplete={(holders) => {
               setTicketHolders(holders);
