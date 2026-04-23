@@ -4,54 +4,68 @@ import { ConstellationEvent } from "@/data/events";
 
 interface TicketHolder {
   fullName: string;
+  email?: string;
+  phone?: string;
 }
 
 interface AttendeesFormProps {
   ticketCount: number;
   event?: ConstellationEvent;
+  availableSeats?: number;
   onTicketCountChange: (count: number) => void;
   onComplete: (holders: TicketHolder[]) => void;
   onBack: () => void;
 }
 
 const validateEmail = (email: string): boolean => {
+  if (!email.trim()) return true; // Optional, so empty is valid
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 };
 
 const validatePhone = (phone: string): boolean => {
+  if (!phone.trim()) return true; // Optional, so empty is valid
   const cleaned = phone.replace(/\D/g, "");
   return cleaned.length >= 10;
 };
 
+interface HolderData {
+  fullName: string;
+  email: string;
+  phone: string;
+}
+
 const AttendeesForm: React.FC<AttendeesFormProps> = ({
   ticketCount,
   event,
+  availableSeats = 20,
   onTicketCountChange,
   onComplete,
   onBack,
 }) => {
-  const [fullNames, setFullNames] = useState<string[]>(
-    Array(ticketCount).fill("")
+  const [holders, setHolders] = useState<HolderData[]>(
+    Array(ticketCount).fill(null).map(() => ({ fullName: "", email: "", phone: "" }))
   );
-  const [sharedEmail, setSharedEmail] = useState("");
-  const [sharedPhone, setSharedPhone] = useState("");
   const [nameErrors, setNameErrors] = useState<Record<number, string>>({});
-  const [contactError, setContactError] = useState<string | null>(null);
 
   const handleTicketCountChange = (newCount: number) => {
     onTicketCountChange(newCount);
-    setFullNames(Array(newCount).fill(""));
+    setHolders(
+      Array(newCount).fill(null).map((_, i) =>
+        holders[i] || { fullName: "", email: "", phone: "" }
+      )
+    );
+    setNameErrors({});
   };
 
-  const updateFullName = (index: number, value: string) => {
-    setFullNames((prev) => {
-      const newNames = [...prev];
-      newNames[index] = value;
-      return newNames;
+  const updateHolder = (index: number, field: keyof HolderData, value: string) => {
+    setHolders((prev) => {
+      const newHolders = [...prev];
+      newHolders[index] = { ...newHolders[index], [field]: value };
+      return newHolders;
     });
 
-    if (nameErrors[index]) {
+    if (field === "fullName" && nameErrors[index]) {
       setNameErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[index];
@@ -62,37 +76,32 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
 
   const validate = (): boolean => {
     const newErrors: Record<number, string> = {};
-    let allNamesValid = true;
+    let allValid = true;
 
-    fullNames.forEach((name, index) => {
-      if (!name.trim()) {
+    holders.forEach((holder, index) => {
+      if (!holder.fullName.trim()) {
         newErrors[index] = "Numele complet este obligatoriu";
-        allNamesValid = false;
+        allValid = false;
       }
     });
 
-    if (!allNamesValid) {
+    if (!allValid) {
       setNameErrors(newErrors);
       return false;
     }
 
-    const emailValid = sharedEmail.trim() === "" || validateEmail(sharedEmail);
-    const phoneValid = sharedPhone.trim() === "" || validatePhone(sharedPhone);
-
-    if (!emailValid && !phoneValid) {
-      setContactError("Trebuie să introduci un email sau telefon valid");
-      return false;
-    }
-
-    setContactError(null);
     return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      const holders = fullNames.map((fullName) => ({ fullName }));
-      onComplete(holders);
+      const result: TicketHolder[] = holders.map((holder) => ({
+        fullName: holder.fullName.trim(),
+        email: holder.email.trim() || undefined,
+        phone: holder.phone.trim() || undefined,
+      }));
+      onComplete(result);
     }
   };
 
@@ -118,104 +127,95 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
             </span>
             <button
               type="button"
-              onClick={() => handleTicketCountChange(Math.min(20, ticketCount + 1))}
-              disabled={ticketCount >= 20}
-              className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors cursor-pointer bg-white/10 hover:bg-white/20 disabled:opacity-50"
+              onClick={() => handleTicketCountChange(Math.min(availableSeats, ticketCount + 1))}
+              disabled={ticketCount >= availableSeats}
+              className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors cursor-pointer bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               +
             </button>
           </div>
+          <p className="mt-2 text-sm text-cosmic-400 text-center">
+            {availableSeats} locuri disponibile
+          </p>
         </div>
 
-        <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Persoane care vor participa
-          </h3>
-          <p className="mb-4 text-sm text-cosmic-400">
-            Completează numele complet pentru fiecare persoană
-          </p>
+        <div className="space-y-6">
+          {holders.map((holder, index) => (
+            <div
+              key={index}
+              className="p-4 rounded-xl border bg-white/5 border-white/10"
+            >
+              <h3 className="mb-4 text-lg font-semibold text-white">
+                Persoana {index + 1}
+              </h3>
 
-          <div className="space-y-4">
-            {fullNames.map((name, index) => (
-              <div key={index}>
-                <label className="block mb-2 text-sm text-cosmic-300">
-                  Persoana {index + 1} - Nume complet *
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => updateFullName(index, e.target.value)}
-                    placeholder="Nume Prenume"
-                    className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
-                  />
+              <div className="space-y-4">
+                {/* Full Name - REQUIRED */}
+                <div>
+                  <label className="block mb-2 text-sm text-cosmic-300">
+                    Nume complet <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <input
+                      type="text"
+                      value={holder.fullName}
+                      onChange={(e) => updateHolder(index, "fullName", e.target.value)}
+                      placeholder="Nume Prenume"
+                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                    />
+                  </div>
+                  {nameErrors[index] && (
+                    <p className="mt-1 text-sm text-red-400">{nameErrors[index]}</p>
+                  )}
                 </div>
-                {nameErrors[index] && (
-                  <p className="mt-1 text-sm text-red-400">
-                    {nameErrors[index]}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
 
-        <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Date de contact
-          </h3>
-          <p className="mb-4 text-sm text-cosmic-400">
-            Email sau telefon necesar pentru confirmare
-          </p>
+                {/* Email - OPTIONAL */}
+                <div>
+                  <label className="block mb-2 text-sm text-cosmic-300">
+                    Email <span className="text-cosmic-500">(opțional)</span>
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <input
+                      type="email"
+                      value={holder.email}
+                      onChange={(e) => updateHolder(index, "email", e.target.value)}
+                      placeholder="email@example.com"
+                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                    />
+                  </div>
+                </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block mb-2 text-sm text-cosmic-300">
-                Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
-                <input
-                  type="email"
-                  value={sharedEmail}
-                  onChange={(e) => setSharedEmail(e.target.value)}
-                  placeholder="email@example.com"
-                  className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block mb-2 text-sm text-cosmic-300">
-                Telefon
-              </label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
-                <input
-                  type="tel"
-                  value={sharedPhone}
-                  onChange={(e) => setSharedPhone(e.target.value)}
-                  placeholder="+40 123 456 789"
-                  className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
-                />
+                {/* Phone - OPTIONAL */}
+                <div>
+                  <label className="block mb-2 text-sm text-cosmic-300">
+                    Telefon <span className="text-cosmic-500">(opțional)</span>
+                  </label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <input
+                      type="tel"
+                      value={holder.phone}
+                      onChange={(e) => updateHolder(index, "phone", e.target.value)}
+                      placeholder="+40 123 456 789"
+                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          {contactError && (
-            <p className="mt-3 text-sm text-red-400">{contactError}</p>
-          )}
+          ))}
         </div>
 
-        <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
+        <div className="p-4 mt-6 rounded-xl border bg-white/5 border-white/10">
           <div className="flex justify-between items-center">
             <span className="text-cosmic-200">Total de plată:</span>
             <span className="text-xl font-bold text-gold-400">{totalPrice} €</span>
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 mt-6">
           <button
             type="button"
             onClick={onBack}

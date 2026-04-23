@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import { useLoading } from "@/hooks/useLoading";
 import { useEventSeats } from "@/hooks/useEventSeats";
@@ -10,13 +10,15 @@ const Events = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
-  const { getAvailableSeats, isEventFull } = useEventSeats();
+  const { fetchSeatsForEvents, getAvailableSeats, isEventFull } = useEventSeats();
 
   useEffect(() => {
     startLoading();
-    const timer = setTimeout(() => stopLoading(), 1500);
+    const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
+    fetchSeatsForEvents(eventIds);
+    const timer = setTimeout(() => stopLoading(), 500);
     return () => clearTimeout(timer);
-  }, [startLoading, stopLoading]);
+  }, [startLoading, fetchSeatsForEvents]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
