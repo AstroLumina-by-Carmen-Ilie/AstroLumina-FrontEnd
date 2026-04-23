@@ -8,17 +8,24 @@ import { Calendar, Clock, MapPin, Users, ArrowRight } from "lucide-react";
 
 const Events = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
-  const { fetchSeatsForEvents, getAvailableSeats, isEventFull } = useEventSeats();
+  const { seatsCache, fetchSeatsForEvents, getAvailableSeats, isEventFull } = useEventSeats();
 
   useEffect(() => {
     startLoading();
-    const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
-    fetchSeatsForEvents(eventIds);
-    const timer = setTimeout(() => stopLoading(), 500);
+    
+    const fetchData = async () => {
+      const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
+      await fetchSeatsForEvents(eventIds);
+      setIsInitialLoadComplete(true);
+    };
+    
+    fetchData();
+    const timer = setTimeout(() => stopLoading(), 800);
     return () => clearTimeout(timer);
-  }, [startLoading, fetchSeatsForEvents]);
+  }, [startLoading]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -50,13 +57,14 @@ const Events = () => {
           </div>
 
           <div className="grid gap-8">
-            {upcomingEvents.map((event, index) => {
-              const availableSeats = getAvailableSeats(event.id);
-              const eventFull = isEventFull(event.id);
+            {upcomingEvents.map((event) => {
+              const seatInfo = seatsCache[event.id];
+              const availableSeats = seatInfo?.availableSeats ?? 20;
+              const eventFull = availableSeats <= 0;
 
               return (
                 <div
-                  key={index}
+                  key={event.id}
                   className="glass-card overflow-hidden hover:bg-white/[0.1] transition-all duration-300 group"
                 >
                   <div className="p-8">

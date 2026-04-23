@@ -134,7 +134,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
         {onBack && (
           <button
-            onClick={() => navigate("/events")}
+            onClick={() => navigate("/evenimente")}
             className="py-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Vezi toate evenimentele
