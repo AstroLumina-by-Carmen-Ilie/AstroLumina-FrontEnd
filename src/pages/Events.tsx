@@ -8,24 +8,18 @@ import { Calendar, Clock, MapPin, Users, ArrowRight } from "lucide-react";
 
 const Events = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
-  const { seatsCache, fetchSeatsForEvents, getAvailableSeats, isEventFull } = useEventSeats();
+  const { seatsCache, loading, fetchSeatsForEvents } = useEventSeats();
 
   useEffect(() => {
     startLoading();
     
-    const fetchData = async () => {
-      const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
-      await fetchSeatsForEvents(eventIds);
-      setIsInitialLoadComplete(true);
-    };
-    
-    fetchData();
-    const timer = setTimeout(() => stopLoading(), 800);
-    return () => clearTimeout(timer);
-  }, [startLoading]);
+    const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
+    fetchSeatsForEvents(eventIds).finally(() => {
+      stopLoading();
+    });
+  }, [startLoading, fetchSeatsForEvents]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -37,6 +31,17 @@ const Events = () => {
   const upcomingEvents = CONSTELLATION_EVENTS.filter(
     (event) => event.date >= now
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen text-white bg-midnight-950">
+        <Navbar isScrolled={isScrolled} />
+        <div className="flex justify-center items-center pt-48">
+          <div className="w-12 h-12 rounded-full border-4 animate-spin border-cosmic-600 border-t-cosmic-300"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen text-white bg-midnight-950">
@@ -59,8 +64,8 @@ const Events = () => {
           <div className="grid gap-8">
             {upcomingEvents.map((event) => {
               const seatInfo = seatsCache[event.id];
-              const availableSeats = seatInfo.availableSeats;
-              const eventFull = availableSeats <= 0;
+              const availableSeats = seatInfo?.availableSeats;
+              const eventFull = availableSeats && availableSeats <= 0;
 
               return (
                 <div
@@ -130,7 +135,7 @@ const Events = () => {
                         disabled={eventFull}
                         className={`inline-flex gap-2 items-center px-6 py-3 font-medium rounded-full transition-all duration-300 cursor-pointer ${
                           eventFull
-                            ? "bg-white/5 text-cosmic-400 cursor-not-allowed"
+                            ? "cursor-not-allowed bg-white/5 text-cosmic-400"
                             : "text-white bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
                         }`}
                       >
