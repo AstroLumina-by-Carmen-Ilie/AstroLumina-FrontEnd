@@ -58,8 +58,8 @@ const Events = () => {
 
           <div className="grid gap-8">
             {upcomingEvents.map((event) => {
-              const seatInfo = seatsCache?.[event.id];
-              const availableSeats = seatInfo?.availableSeats ?? 20;
+              const seatInfo = seatsCache[event.id];
+              const availableSeats = seatInfo.availableSeats;
               const eventFull = availableSeats <= 0;
 
               return (
