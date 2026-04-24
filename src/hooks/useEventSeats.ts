@@ -175,6 +175,8 @@ export const useEventSeats = () => {
     eventTitle?: string,
     eventDate?: string
   ): Promise<boolean> => {
+    if (loading) return false;
+    
     setLoading(true);
     setError(null);
 
@@ -202,13 +204,20 @@ export const useEventSeats = () => {
         throw new Error(data.message || 'Booking failed');
       }
 
-      const current = globalSeatsCache[eventId];
-      if (current) {
-        globalSeatsCache[eventId] = {
-          ...current,
-          availableSeats: Math.max(0, current.availableSeats - ticketCount),
-          bookedSeats: current.bookedSeats + ticketCount,
-        };
+      // Immediately refresh seats from API after successful booking
+      try {
+        const seatsResponse = await fetch(`${BOOKING_API_URL}/events/seats/${eventId}`);
+        if (seatsResponse.ok) {
+          const data = await seatsResponse.json();
+          globalSeatsCache[eventId] = {
+            eventId,
+            availableSeats: data.availableSeats ?? MAX_SEATS,
+            maxSeats: data.maxSeats ?? MAX_SEATS,
+            bookedSeats: data.bookedSeats ?? 0,
+          };
+        }
+      } catch (refreshError) {
+        console.warn('Failed to refresh seats after booking:', refreshError);
       }
 
       return true;
@@ -219,7 +228,7 @@ export const useEventSeats = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loading]);
 
   const refreshEventSeats = useCallback((eventId: string) => {
     delete globalSeatsCache[eventId];
@@ -227,6 +236,7 @@ export const useEventSeats = () => {
   }, []);
 
   return {
+    seatsCache: globalSeatsCache,
     loading,
     error,
     fetchSeats,

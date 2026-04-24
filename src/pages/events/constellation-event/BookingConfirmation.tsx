@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, Mail, ArrowRight } from "lucide-react";
 import { useEventSeats } from "@/hooks/useEventSeats";
@@ -34,11 +34,14 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const [isConfirming, setIsConfirming] = useState(true);
 
   const eventId = event?.id || "";
-
-  const [bookingDone, setBookingDone] = useState(false);
+  
+  // Use ref to prevent double execution
+  const isConfirmedRef = useRef(false);
 
   useEffect(() => {
-    if (bookingDone) return;
+    // Prevent double execution
+    if (isConfirmedRef.current) return;
+    isConfirmedRef.current = true;
 
     const confirmBooking = async () => {
       try {
@@ -66,8 +69,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     };
 
     confirmBooking();
-    setBookingDone(true);
-  }, [eventId, ticketCount, ticketHolders, paymentIntentId, bookSeats, event]);
+  }, []); // Empty deps - run once on mount
 
   if (isConfirming) {
     return (
