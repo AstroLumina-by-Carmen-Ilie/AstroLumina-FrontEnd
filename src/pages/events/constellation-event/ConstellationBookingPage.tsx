@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingAnimation from "@/components/animations/LoadingAnimation";
 import Navbar from "@/components/navbar/Navbar";
 import { useEventSeats } from "@/hooks/useEventSeats";
 import { getEventById } from "@/data/events";
@@ -16,7 +17,8 @@ interface TicketHolder {
 const ConstellationBookingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { fetchSeats, getAvailableSeats } = useEventSeats();
+  const { fetchSeats, getAvailableSeats, loading, seatsCache } =
+    useEventSeats();
 
   const eventId = id || "";
   const event = getEventById(eventId);
@@ -28,7 +30,7 @@ const ConstellationBookingPage: React.FC = () => {
 
   useEffect(() => {
     fetchSeats(eventId);
-  }, [eventId, fetchSeats]);
+  }, [eventId]);
 
   const availableSeats = getAvailableSeats(eventId);
   const eventFull = availableSeats <= 0;
@@ -83,6 +85,16 @@ const ConstellationBookingPage: React.FC = () => {
     { num: 2, label: "Platã" },
     { num: 3, label: "Confirmare" },
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen text-white bg-midnight-950">
+        <div className="flex justify-center items-center pt-48">
+          <LoadingAnimation />
+        </div>
+      </div>
+    );
+  }
 
   if (currentStep === 1 && eventFull) {
     return (
@@ -161,9 +173,9 @@ const ConstellationBookingPage: React.FC = () => {
                 </h2>
                 <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
                   <p>
-                    O seară magică de explorare a energiilor cosmice. Vom analiza
-                    configurațiile astrale curente și impactul lor asupra evoluției
-                    noastre spirituale.
+                    O seară magică de explorare a energiilor cosmice. Vom
+                    analiza configurațiile astrale curente și impactul lor
+                    asupra evoluției noastre spirituale.
                   </p>
                   <p>Ce include workshop-ul:</p>
                   <ul className="space-y-1 list-disc list-inside">
@@ -195,7 +207,9 @@ const ConstellationBookingPage: React.FC = () => {
                       </div>
                       <span
                         className={`text-sm ${
-                          step.num === currentStep ? "text-white" : "text-cosmic-400"
+                          step.num === currentStep
+                            ? "text-white"
+                            : "text-cosmic-400"
                         }`}
                       >
                         {step.label}

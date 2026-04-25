@@ -1,25 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
-import { useLoading } from "@/hooks/useLoading";
+import LoadingAnimation from "@/components/animations/LoadingAnimation";
 import { useEventSeats } from "@/hooks/useEventSeats";
 import { CONSTELLATION_EVENTS } from "@/data/events";
 import { Calendar, Clock, MapPin, Users, ArrowRight } from "lucide-react";
 
 const Events = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
   const { seatsCache, loading, fetchSeatsForEvents } = useEventSeats();
 
   useEffect(() => {
-    startLoading();
-    
-    const eventIds = CONSTELLATION_EVENTS.map(e => e.id);
-    fetchSeatsForEvents(eventIds).finally(() => {
-      stopLoading();
-    });
-  }, [startLoading, fetchSeatsForEvents]);
+    const eventIds = CONSTELLATION_EVENTS.map((e) => e.id);
+    fetchSeatsForEvents(eventIds);
+  }, [fetchSeatsForEvents]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -29,15 +24,14 @@ const Events = () => {
 
   const now = new Date();
   const upcomingEvents = CONSTELLATION_EVENTS.filter(
-    (event) => event.date >= now
+    (event) => event.date >= now,
   );
 
   if (loading) {
     return (
       <div className="min-h-screen text-white bg-midnight-950">
-        <Navbar isScrolled={isScrolled} />
         <div className="flex justify-center items-center pt-48">
-          <div className="w-12 h-12 rounded-full border-4 animate-spin border-cosmic-600 border-t-cosmic-300"></div>
+          <LoadingAnimation />
         </div>
       </div>
     );
@@ -131,7 +125,9 @@ const Events = () => {
 
                     <div className="flex gap-4 items-center">
                       <button
-                        onClick={() => navigate(`/evenimente/rezervare/${event.id}`)}
+                        onClick={() =>
+                          navigate(`/evenimente/rezervare/${event.id}`)
+                        }
                         disabled={eventFull}
                         className={`inline-flex gap-2 items-center px-6 py-3 font-medium rounded-full transition-all duration-300 cursor-pointer ${
                           eventFull
