@@ -46,11 +46,6 @@ export const useEventSeats = () => {
   );
 
   const fetchSeats = useCallback(async (eventId: string): Promise<SeatInfo> => {
-    // If already in cache, return it without loading state
-    if (seatsCache[eventId]) {
-      return seatsCache[eventId];
-    }
-
     setLoading(true);
 
     const response = await fetch(`${BOOKING_API_URL}/events/seats/${eventId}`);
@@ -71,7 +66,7 @@ export const useEventSeats = () => {
     setSeatsCache((prev) => ({ ...prev, [eventId]: info }));
     setLoading(false);
     return info;
-  }, [seatsCache]);
+  }, []);
 
   const getAvailableSeats = useCallback(
     (eventId: string): number => {
@@ -106,9 +101,6 @@ export const useEventSeats = () => {
     ): Promise<boolean> => {
       setLoading(true);
 
-      const contactEmail = holders[0]?.email;
-      const contactPhone = holders[0]?.phone;
-
       const response = await fetch(
         `${BOOKING_API_URL}/events/send-event-confirmation`,
         {
@@ -121,8 +113,6 @@ export const useEventSeats = () => {
             ticketCount,
             holders,
             paymentIntentId,
-            email: contactEmail,
-            phone: contactPhone,
           }),
         },
       );

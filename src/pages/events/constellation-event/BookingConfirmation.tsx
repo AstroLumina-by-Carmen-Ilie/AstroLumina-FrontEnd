@@ -35,13 +35,18 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
   const eventId = event?.id || "";
   const hasConfirmedRef = useRef(false);
+  const confirmationRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (hasConfirmedRef.current) return;
+    if (confirmationRef.current === paymentIntentId) return;
 
     hasConfirmedRef.current = true;
+    confirmationRef.current = paymentIntentId;
 
     const confirmBooking = async () => {
+      if (confirmationRef.current !== paymentIntentId) return;
+
       try {
         const holders = ticketHolders.filter((h) => h.fullName.trim());
 
