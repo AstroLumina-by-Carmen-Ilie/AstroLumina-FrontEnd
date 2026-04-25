@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingAnimation from "@/components/animations/LoadingAnimation";
 import Navbar from "@/components/navbar/Navbar";
@@ -17,7 +17,7 @@ interface TicketHolder {
 const ConstellationBookingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { fetchSeats, getAvailableSeats, loading, seatsCache } =
+  const { fetchSeats, getAvailableSeats, loading } =
     useEventSeats();
 
   const eventId = id || "";
@@ -27,8 +27,11 @@ const ConstellationBookingPage: React.FC = () => {
   const [ticketCount, setTicketCount] = useState(1);
   const [paymentIntentId, setPaymentIntentId] = useState("");
   const [ticketHolders, setTicketHolders] = useState<TicketHolder[]>([]);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
     fetchSeats(eventId);
   }, [eventId]);
 

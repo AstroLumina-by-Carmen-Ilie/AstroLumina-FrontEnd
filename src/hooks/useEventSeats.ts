@@ -11,7 +11,7 @@ interface SeatInfo {
 }
 
 export const useEventSeats = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [seatsCache, setSeatsCache] = useState<Record<string, SeatInfo>>({});
 
   const fetchSeatsForEvents = useCallback(
@@ -46,10 +46,16 @@ export const useEventSeats = () => {
   );
 
   const fetchSeats = useCallback(async (eventId: string): Promise<SeatInfo> => {
+    // If already in cache, return it without loading state
+    if (seatsCache[eventId]) {
+      return seatsCache[eventId];
+    }
+
     setLoading(true);
 
     const response = await fetch(`${BOOKING_API_URL}/events/seats/${eventId}`);
     if (!response.ok) {
+      setLoading(false);
       throw new Error("Failed to fetch seats");
     }
 
@@ -65,7 +71,7 @@ export const useEventSeats = () => {
     setSeatsCache((prev) => ({ ...prev, [eventId]: info }));
     setLoading(false);
     return info;
-  }, []);
+  }, [seatsCache]);
 
   const getAvailableSeats = useCallback(
     (eventId: string): number => {

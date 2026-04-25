@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import LoadingAnimation from "@/components/animations/LoadingAnimation";
@@ -10,8 +10,11 @@ const Events = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const { seatsCache, loading, fetchSeatsForEvents } = useEventSeats();
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
     const eventIds = CONSTELLATION_EVENTS.map((e) => e.id);
     fetchSeatsForEvents(eventIds);
   }, [fetchSeatsForEvents]);
@@ -59,7 +62,7 @@ const Events = () => {
             {upcomingEvents.map((event) => {
               const seatInfo = seatsCache[event.id];
               const availableSeats = seatInfo?.availableSeats;
-              const eventFull = availableSeats && availableSeats <= 0;
+              const eventFull = availableSeats !== undefined ? availableSeats <= 0 : false;
 
               return (
                 <div

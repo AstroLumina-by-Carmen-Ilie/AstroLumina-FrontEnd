@@ -34,14 +34,12 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const [isConfirming, setIsConfirming] = useState(true);
 
   const eventId = event?.id || "";
-  
-  // Use ref to prevent double execution
-  const isConfirmedRef = useRef(false);
+  const hasConfirmedRef = useRef(false);
 
   useEffect(() => {
-    // Prevent double execution
-    if (isConfirmedRef.current) return;
-    isConfirmedRef.current = true;
+    if (hasConfirmedRef.current) return;
+
+    hasConfirmedRef.current = true;
 
     const confirmBooking = async () => {
       try {
@@ -69,7 +67,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     };
 
     confirmBooking();
-  }, []); // Empty deps - run once on mount
+  }, [eventId, ticketCount, ticketHolders, paymentIntentId, bookSeats, event]);
 
   if (isConfirming) {
     return (
