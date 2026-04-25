@@ -1,15 +1,17 @@
 const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-const R2_PDF_BASE = 'https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/pdfs';
+const R2_PDF_BASE = "https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/pdfs";
 
 export async function sendGhidulSaturnEmail(to: string) {
   try {
-    const response = await fetch(`${BOOKING_API_URL}/send-email-with-attachments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to,
-        subject: 'Ghidul lui Saturn în Berbec',
-        html: `
+    const response = await fetch(
+      `${BOOKING_API_URL}/send-email-with-attachments`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to,
+          subject: "Ghidul lui Saturn în Berbec",
+          html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a1a; color: #f3e8ff;">
             <h1 style="color: #a855f7;">Bine ai venit!</h1>
             <p>Eu sunt <strong>Ghidul lui Saturn în Berbec</strong> - ghidul tău personal pentru această perioadă intensă.</p>
@@ -17,9 +19,10 @@ export async function sendGhidulSaturnEmail(to: string) {
             <p style="margin-top: 30px;">Cu drag,<br>Echipa AstroLumina</p>
           </div>
         `,
-        attachments: [`${R2_PDF_BASE}/Ghidul-lui-Saturn-in-Berbec.pdf`],
-      }),
-    });
+          attachments: [`${R2_PDF_BASE}/Ghidul-lui-Saturn-in-Berbec.pdf`],
+        }),
+      },
+    );
 
     const data = await response.json();
 
@@ -28,7 +31,6 @@ export async function sendGhidulSaturnEmail(to: string) {
       return { success: false, error: data };
     }
 
-    console.log(`Email sent to ${to}:`, data);
     return { success: true, data };
   } catch (error) {
     console.error("Failed to send email:", error);
@@ -39,14 +41,16 @@ export async function sendGhidulSaturnEmail(to: string) {
 export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
   try {
     const attachmentFileName = `${sunSign}, Stralucirea Ta.pdf`;
-    
-    const response = await fetch(`${BOOKING_API_URL}/send-email-with-attachments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to,
-        subject: 'Soarele, Strălucirea Ta',
-        html: `
+
+    const response = await fetch(
+      `${BOOKING_API_URL}/send-email-with-attachments`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to,
+          subject: "Soarele, Strălucirea Ta",
+          html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a1a; color: #f3e8ff;">
             <h1 style="color: #fbbf24;">Soarele, Strălucirea Ta</h1>
             <p>Felicitări! Ai primit cadoul gratuit de la AstroLumina.</p>
@@ -55,9 +59,10 @@ export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
             <p style="margin-top: 30px;">Cu drag,<br>Echipa AstroLumina</p>
           </div>
         `,
-        attachments: [`${R2_PDF_BASE}/${attachmentFileName}`],
-      }),
-    });
+          attachments: [`${R2_PDF_BASE}/${attachmentFileName}`],
+        }),
+      },
+    );
 
     const data = await response.json();
 
@@ -66,7 +71,6 @@ export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
       return { success: false, error: data };
     }
 
-    console.log(`Email sent to ${to}:`, data);
     return { success: true, data };
   } catch (error) {
     console.error("Failed to send email:", error);

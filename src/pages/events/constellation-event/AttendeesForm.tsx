@@ -134,7 +134,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
               +
             </button>
           </div>
-          <p className="mt-2 text-sm text-cosmic-400 text-center">
+          <p className="mt-2 text-sm text-center text-cosmic-400">
             {availableSeats} locuri disponibile
           </p>
         </div>
@@ -216,13 +216,6 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
         </div>
 
         <div className="flex gap-4 mt-6">
-          <button
-            type="button"
-            onClick={onBack}
-            className="flex-1 py-4 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
-          >
-            Înapoi
-          </button>
           <button
             type="submit"
             className="flex-1 py-4 font-semibold text-white bg-gradient-to-r rounded-xl transition-all cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   EmbeddedCheckoutProvider,
@@ -25,6 +25,15 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
 }) => {
   const [paymentComplete, setPaymentComplete] = useState(false);
   const [paymentIntentId, setPaymentIntentId] = useState("");
+  const hasNavigatedRef = useRef(false);
+
+  useEffect(() => {
+    if (hasNavigatedRef.current) return;
+    if (paymentComplete) {
+      hasNavigatedRef.current = true;
+      onPaymentComplete(paymentIntentId);
+    }
+  }, [paymentComplete, paymentIntentId, onPaymentComplete]);
 
   const eventId = event?.id || "";
   const totalPrice = ticketCount * (event?.price || 120);
@@ -50,11 +59,7 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
       });
   }, [ticketCount, eventId]);
 
-  const handleContinue = () => {
-    if (paymentComplete) {
-      onPaymentComplete(paymentIntentId);
-    }
-  };
+  
 
   return (
     <div>
@@ -92,27 +97,7 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
         )}
       </div>
 
-      <div className="flex gap-4">
-        <button
-          type="button"
-          onClick={onBack}
-          className="flex-1 py-4 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
-        >
-          Înapoi
-        </button>
-        <button
-          type="button"
-          onClick={handleContinue}
-          disabled={!paymentComplete}
-          className={`flex-1 py-4 rounded-xl font-semibold transition-all ${
-            paymentComplete
-              ? "text-white bg-gradient-to-r cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
-              : "opacity-50 cursor-not-allowed bg-white/10 text-cosmic-300"
-          }`}
-        >
-          Confirmă rezervarea
-        </button>
-      </div>
+      
     </div>
   );
 };
