@@ -158,7 +158,6 @@ function App() {
       <main className="relative">
         {/* ═══════ HERO SECTION ═══════ */}
         <section className="flex overflow-hidden relative justify-center items-center min-h-screen">
-          {/* Starry background */}
           <div className="absolute inset-0 stars">
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
@@ -167,143 +166,184 @@ function App() {
             <div className="shooting-star"></div>
           </div>
 
-          {/* Cosmic orbs */}
-          <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] -top-20 -right-20 animate-pulse-soft"></div>
+          <div className="cosmic-orb cosmic-orb-purple w-[600px] h-[600px] -top-40 -right-40 opacity-25 animate-pulse-soft"></div>
           <div
-            className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-20 -left-20 animate-pulse-soft"
-            style={{ animationDelay: "1.5s" }}
+            className="cosmic-orb cosmic-orb-gold w-[400px] h-[400px] bottom-20 -left-40 opacity-20 animate-pulse-soft"
+            style={{ animationDelay: "2s" }}
+          ></div>
+          <div
+            className="cosmic-orb cosmic-orb-purple w-[200px] h-[200px] top-1/3 left-1/4 opacity-15 animate-pulse-soft"
+            style={{ animationDelay: "1s" }}
           ></div>
 
-          {/* Content */}
           <div className="container relative z-10 px-6 py-32 mx-auto text-center">
-            <div className="animate-fade-in">
-              <h1 className="mb-6 text-5xl font-bold leading-tight font-display md:text-7xl lg:text-8xl">
-                {/* <span className="text-white">AstroLumina</span> */}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cosmic-400 to-gold-400">
-                  AstroLumina
+            <div className="mx-auto max-w-4xl">
+              <p className="mb-6 text-sm font-medium tracking-[0.3em] uppercase text-gold-400/80 font-display animate-fade-in-down">
+                Servicii de Astrologie
+              </p>
+
+              <h1
+                className="mb-8 text-6xl font-bold leading-tight font-display md:text-7xl lg:text-8xl animate-fade-in-up"
+                style={{ animationDelay: "0.15s" }}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cosmic-200 to-cosmic-300">
+                  Astro
+                </span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-300">
+                  Lumin
+                </span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-cosmic-400">
+                  a
                 </span>
               </h1>
 
-              <p className="mx-auto mb-4 max-w-2xl text-lg italic md:text-xl text-cosmic-200 font-display">
+              <p
+                className="mx-auto mb-4 max-w-2xl text-lg italic md:text-xl text-cosmic-200/70 font-display animate-fade-in-up"
+                style={{ animationDelay: "0.3s" }}
+              >
                 by Carmen Ilie
               </p>
 
-              <p className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed md:text-l text-cosmic-100/80 font-display">
+              <p
+                className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed md:text-2xl text-cosmic-100/60 font-body animate-fade-in-up"
+                style={{ animationDelay: "0.45s" }}
+              >
                 Deblochează secretele propriului destin prin înțelepciunea
                 străveche a stelelor
               </p>
 
-              <div className="flex flex-col gap-4 justify-center sm:flex-row">
+              <div
+                className="flex flex-col gap-5 justify-center sm:flex-row animate-fade-in-up"
+                style={{ animationDelay: "0.6s" }}
+              >
                 <button
                   onClick={() => scrollToSection("services")}
-                  className="inline-flex gap-2 items-center px-8 py-4 font-semibold text-white bg-gradient-to-r rounded-full transition-all duration-300 cursor-pointer group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple hover:shadow-glow-lg"
+                  className="inline-flex relative gap-3 items-center px-10 py-5 font-semibold text-white bg-gradient-to-r rounded-full luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                 >
-                  Explorează Servicii
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <span>Explorează Servicii</span>
+                  <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />
                 </button>
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="inline-flex gap-2 items-center px-8 py-4 font-semibold rounded-full border backdrop-blur-sm transition-all duration-300 cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10 hover:border-white/20"
+                  className="inline-flex gap-3 items-center px-10 py-5 font-semibold rounded-full glass-luxury-hover text-cosmic-100 hover:text-white"
                 >
-                  Contactează-mă
+                  <span>Contactează-mă</span>
                 </button>
               </div>
             </div>
 
-            {/* Scroll indicator */}
-            <div className="absolute bottom-10 left-1/2 animate-bounce -translate-x-1/2">
-              <ChevronDown className="w-6 h-6 text-cosmic-300/50" />
+            <div className="flex absolute bottom-12 left-1/2 flex-col gap-3 items-center -translate-x-1/2 animate-float-gentle">
+              <span className="text-xs tracking-widest uppercase text-cosmic-400/50">
+                Descoperă
+              </span>
+              <div className="flex justify-center pt-2 w-6 h-10 rounded-full border border-cosmic-400/30">
+                <div className="w-1.5 h-3 bg-cosmic-400/50 rounded-full animate-pulse"></div>
+              </div>
             </div>
           </div>
 
-          {/* Gradient fade */}
-          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t to-transparent from-midnight-950"></div>
+          <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t to-transparent pointer-events-none from-midnight-950 via-midnight-950/80"></div>
         </section>
 
         {/* ═══════ SERVICES SECTION ═══════ */}
         <section
           id="services"
           data-animate
-          className={`py-24 relative overflow-hidden transition-all duration-700 ${
+          className={`py-28 relative overflow-hidden transition-all duration-700 ${
             visibleSections.has("services")
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>
+          <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] top-0 right-0 opacity-15"></div>
+          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-0 left-0 opacity-10"></div>
 
           <div className="container relative z-10 px-6 mx-auto">
-            <div className="mb-16 text-center">
-              <h2 className="mb-4 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-cosmic-300 to-gold-400">
+            <div className="mb-20 text-center">
+              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+                Ofertele Noastre
+              </p>
+              <h2 className="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                 Servicii Astrologice
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300">
+              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
                 Descoperă gama completă de servicii astrologice, de la analize
                 gratuite la consultații personalizate
               </p>
             </div>
 
             <div className="space-y-8">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 {services.slice(0, 2).map((service, index) => (
                   <Link
                     key={index}
                     to={service.link}
-                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                    className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
                   >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br to-transparent rounded-bl-full from-cosmic-500/10"></div>
+
                     {service.badge && (
-                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-gold-500/20 text-gold-400 border-gold-500/30">
+                      <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
                         {service.badge}
                       </span>
                     )}
                     {service.price && (
-                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                      <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30">
                         {service.price}
                       </span>
                     )}
-                    <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-xl transition-colors duration-300 bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
+
+                    <div className="flex justify-center items-center mb-6 w-14 h-14 bg-gradient-to-br rounded-2xl transition-transform duration-500 from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
                       {service.icon}
                     </div>
-                    <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300 font-display group-hover:text-cosmic-300">
+
+                    <h3 className="mb-3 text-2xl font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                       {service.title}
                     </h3>
-                    <p className="mb-4 text-sm leading-relaxed text-cosmic-300/80">
+                    <p className="mb-6 text-base leading-relaxed text-cosmic-300/70">
                       {service.description}
                     </p>
-                    <span className="inline-flex gap-1 items-center text-sm font-medium transition-all duration-300 text-cosmic-400 group-hover:gap-2">
-                      Află mai multe <ArrowRight className="w-3 h-3" />
+
+                    <span className="text-sm font-medium luxury-link text-cosmic-400 group-hover:text-gold-300">
+                      Află mai multe <ArrowRight className="w-4 h-4" />
                     </span>
                   </Link>
                 ))}
               </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                 {services.slice(2, 5).map((service, index) => (
                   <Link
                     key={index}
                     to={service.link}
-                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                    className="overflow-hidden relative p-7 cursor-pointer group glass-luxury-hover"
                   >
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl to-transparent rounded-bl-full from-gold-500/10"></div>
+
                     {service.badge && (
-                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-gold-500/20 text-gold-400 border-gold-500/30">
+                      <span className="absolute top-5 right-5 px-3 py-1 text-xs font-semibold rounded-full border bg-gold-500/20 text-gold-400 border-gold-500/30">
                         {service.badge}
                       </span>
                     )}
                     {service.price && (
-                      <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                      <span className="absolute top-5 right-5 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
                         {service.price}
                       </span>
                     )}
-                    <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-xl transition-colors duration-300 bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
+
+                    <div className="flex justify-center items-center mb-5 w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                       {service.icon}
                     </div>
-                    <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300 font-display group-hover:text-cosmic-300">
+
+                    <h3 className="mb-2 text-xl font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                       {service.title}
                     </h3>
-                    <p className="mb-4 text-sm leading-relaxed text-cosmic-300/80">
+                    <p className="mb-5 text-sm leading-relaxed text-cosmic-300/70">
                       {service.description}
                     </p>
-                    <span className="inline-flex gap-1 items-center text-sm font-medium transition-all duration-300 text-cosmic-400 group-hover:gap-2">
-                      Află mai multe <ArrowRight className="w-3 h-3" />
+
+                    <span className="text-sm font-medium luxury-link text-cosmic-400 group-hover:text-gold-300">
+                      Descoperă <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </Link>
                 ))}
@@ -319,49 +359,59 @@ function App() {
         <section
           id="products-preview"
           data-animate
-          className={`py-24 relative transition-all duration-700 ${
+          className={`py-28 relative transition-all duration-700 ${
             visibleSections.has("products-preview")
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
         >
+          <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] bottom-0 right-0 opacity-10"></div>
+
           <div className="container relative z-10 px-6 mx-auto">
-            <div className="mb-16 text-center">
-              <h2 className="mb-3 text-4xl font-bold text-white font-display md:text-5xl">
+            <div className="mb-20 text-center">
+              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+                Resurse Exclusive
+              </p>
+              <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Produse Digitale
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300">
+              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70">
                 Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-4xl md:grid-cols-2">
               {products.map((product, index) => (
                 <Link
                   key={index}
                   to={product.link}
-                  className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
                 >
+                  <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl to-transparent rounded-bl-full from-gold-500/10"></div>
+
                   {product.badge ? (
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-gold-500/20 text-gold-400 border-gold-500/30">
+                    <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
                       {product.badge}
                     </span>
                   ) : (
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                    <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30">
                       {product.price}
                     </span>
                   )}
-                  <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-xl transition-colors duration-300 bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
-                    <Package className="w-5 h-5" />
+
+                  <div className="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl transition-all duration-500 bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
+                    <Package className="w-6 h-6" />
                   </div>
-                  <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300 font-display group-hover:text-cosmic-300">
+
+                  <h3 className="mb-3 text-xl font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                     {product.title}
                   </h3>
-                  <p className="mb-4 text-sm leading-relaxed text-cosmic-300/80">
+                  <p className="mb-6 text-base leading-relaxed text-cosmic-300/70">
                     {product.description}
                   </p>
-                  <span className="inline-flex gap-1 items-center text-sm font-medium transition-all duration-300 text-cosmic-400 group-hover:gap-2">
-                    Vezi produsul <ArrowRight className="w-3 h-3" />
+
+                  <span className="text-sm font-medium luxury-link text-cosmic-400 group-hover:text-gold-300">
+                    Vezi produsul <ArrowRight className="w-4 h-4" />
                   </span>
                 </Link>
               ))}
@@ -370,32 +420,36 @@ function App() {
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        {/* <div className="mx-auto max-w-4xl cosmic-divider"></div> */}
+        <div className="mx-auto max-w-4xl cosmic-divider"></div>
 
         {/* ═══════ EVENTS SECTION ═══════ */}
         <section
           id="events-preview"
           data-animate
-          className={`py-24 relative transition-all duration-700 ${
+          className={`py-28 relative transition-all duration-700 ${
             visibleSections.has("events-preview")
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] top-0 left-0 opacity-15"></div>
+          <div className="cosmic-orb cosmic-orb-gold w-[400px] h-[400px] top-0 left-0 opacity-10"></div>
+          <div className="cosmic-orb cosmic-orb-purple w-[300px] h-[300px] bottom-0 right-0 opacity-10"></div>
 
           <div className="container relative z-10 px-6 mx-auto">
-            <div className="mb-16 text-center">
-              <h2 className="mb-3 text-4xl font-bold text-white font-display md:text-5xl">
+            <div className="mb-20 text-center">
+              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+                Experiențe Unice
+              </p>
+              <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Evenimente
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300">
+              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70">
                 Workshopuri și sesiuni de grup pentru explorarea energiilor
                 cosmice
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-4xl md:grid-cols-2">
               {(() => {
                 const now = new Date();
                 const upcomingEvents = CONSTELLATION_EVENTS.filter(
@@ -405,20 +459,25 @@ function App() {
                   <Link
                     key={index}
                     to={`/evenimente/rezervare/${event.id}`}
-                    className="group glass-card p-6 hover:bg-white/[0.12] transition-all duration-300 cursor-pointer relative overflow-hidden"
+                    className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
                   >
-                    <span className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                    <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl to-transparent rounded-bl-full from-cosmic-500/10"></div>
+
+                    <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30">
                       {event.price} €
                     </span>
-                    <div className="flex justify-center items-center mb-4 w-12 h-12 rounded-xl transition-colors duration-300 bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
-                      <Calendar className="w-5 h-5" />
+
+                    <div className="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl transition-all duration-500 bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
+                      <Calendar className="w-6 h-6" />
                     </div>
-                    <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300 font-display group-hover:text-cosmic-300">
+
+                    <h3 className="mb-4 text-xl font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                       {event.title}
                     </h3>
-                    <div className="flex flex-wrap gap-4 mb-4 text-sm text-cosmic-300">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4 text-cosmic-400" />
+
+                    <div className="flex flex-wrap gap-5 mb-6 text-sm text-cosmic-300/70">
+                      <div className="flex gap-2 items-center">
+                        <Calendar className="w-4 h-4 text-gold-400" />
                         <span>
                           {event.date.toLocaleDateString("ro-RO", {
                             day: "numeric",
@@ -427,13 +486,14 @@ function App() {
                           })}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Users className="w-4 h-4 text-cosmic-400" />
+                      <div className="flex gap-2 items-center">
+                        <Users className="w-4 h-4 text-gold-400" />
                         <span>{event.location}</span>
                       </div>
                     </div>
-                    <span className="inline-flex gap-1 items-center text-sm font-medium transition-all duration-300 text-cosmic-400 group-hover:gap-2">
-                      Rezervă <ArrowRight className="w-3 h-3" />
+
+                    <span className="text-sm font-medium luxury-link text-cosmic-400 group-hover:text-gold-300">
+                      Rezervă <ArrowRight className="w-4 h-4" />
                     </span>
                   </Link>
                 ));
@@ -449,18 +509,23 @@ function App() {
         <section
           id="features"
           data-animate
-          className={`py-24 relative transition-all duration-700 ${
+          className={`py-28 relative transition-all duration-700 ${
             visibleSections.has("features")
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
         >
+          <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+
           <div className="container px-6 mx-auto">
-            <div className="mb-16 text-center">
-              <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
+            <div className="mb-20 text-center">
+              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+                De Ce Să Ne Alegi
+              </p>
+              <h2 className="mb-5 text-4xl font-bold text-white font-display md:text-5xl">
                 De ce AstroLumina?
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300">
+              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
                 O abordare autentică a astrologiei, bazată pe cunoștințe
                 profunde și dedicare
               </p>
@@ -469,10 +534,10 @@ function App() {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {features.map((feature, index) => (
                 <div key={index} className="text-center group">
-                  <div className="flex justify-center items-center mx-auto mb-5 w-14 h-14 bg-gradient-to-br rounded-2xl border transition-all duration-300 from-cosmic-500/20 to-gold-500/20 text-cosmic-400 group-hover:from-cosmic-500/30 group-hover:to-gold-500/30 border-white/5">
+                  <div className="flex justify-center items-center mx-auto mb-6 w-16 h-16 bg-gradient-to-br rounded-2xl transition-all duration-500 glass-luxury-hover from-cosmic-500/20 to-gold-500/10 text-cosmic-400 group-hover:scale-110 group-hover:from-cosmic-500/30 group-hover:to-gold-500/20">
                     {feature.icon}
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold text-white font-display">
+                  <h3 className="mb-3 text-lg font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                     {feature.title}
                   </h3>
                   <p className="text-sm leading-relaxed text-cosmic-300/70">
@@ -491,38 +556,41 @@ function App() {
         <section
           id="contact"
           data-animate
-          className={`py-24 relative transition-all duration-700 ${
+          className={`py-28 relative transition-all duration-700 ${
             visibleSections.has("contact")
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="cosmic-orb cosmic-orb-gold w-[300px] h-[300px] bottom-0 left-0 opacity-20"></div>
+          <div className="cosmic-orb cosmic-orb-gold w-[400px] h-[400px] bottom-0 left-0 opacity-15"></div>
+          <div className="cosmic-orb cosmic-orb-purple w-[300px] h-[300px] top-0 right-0 opacity-10"></div>
 
           <div className="container relative z-10 px-6 mx-auto">
-            <div className="mx-auto max-w-4xl">
+            <div className="mx-auto max-w-5xl">
               <div className="mb-16 text-center">
-                <h2 className="mb-4 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-cosmic-300 to-gold-400">
+                <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+                  Legătura Cu Noi
+                </p>
+                <h2 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                   Contact
                 </h2>
-                <p className="text-lg text-cosmic-300">
+                <p className="text-lg text-cosmic-300/70">
                   Ai întrebări sau dorești o consultație? Ia legătura cu mine.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                {/* Contact info */}
-                <div className="p-8 space-y-6 glass-card">
-                  <h3 className="mb-6 text-xl font-semibold text-white font-display">
+                <div className="p-10 space-y-8 glass-luxury-hover">
+                  <h3 className="mb-8 text-2xl font-semibold text-white font-display">
                     Date de Contact
                   </h3>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <a
                       href="mailto:contact@astrolumina.ro"
-                      className="flex gap-3 items-center transition-colors cursor-pointer text-cosmic-200 hover:text-white group"
+                      className="flex gap-4 items-center transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
                     >
-                      <div className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
+                      <div className="flex justify-center items-center w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -538,14 +606,21 @@ function App() {
                           />
                         </svg>
                       </div>
-                      <span>contact@astrolumina.ro</span>
+                      <div>
+                        <p className="mb-1 text-xs tracking-wider uppercase text-cosmic-400/60">
+                          Email
+                        </p>
+                        <span className="text-base transition-transform group-hover:translate-x-1 duration-400">
+                          contact@astrolumina.ro
+                        </span>
+                      </div>
                     </a>
 
                     <a
                       href="tel:+40123456789"
-                      className="flex gap-3 items-center transition-colors cursor-pointer text-cosmic-200 hover:text-white group"
+                      className="flex gap-4 items-center transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
                     >
-                      <div className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors bg-cosmic-500/20 text-cosmic-400 group-hover:bg-cosmic-500/30">
+                      <div className="flex justify-center items-center w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -561,11 +636,18 @@ function App() {
                           />
                         </svg>
                       </div>
-                      <span>+40 123 456 789</span>
+                      <div>
+                        <p className="mb-1 text-xs tracking-wider uppercase text-cosmic-400/60">
+                          Telefon
+                        </p>
+                        <span className="text-base transition-transform group-hover:translate-x-1 duration-400">
+                          +40 123 456 789
+                        </span>
+                      </div>
                     </a>
 
-                    <div className="flex gap-3 items-center text-cosmic-200">
-                      <div className="flex justify-center items-center w-10 h-10 rounded-lg bg-cosmic-500/20 text-cosmic-400">
+                    <div className="flex gap-4 items-center text-cosmic-200">
+                      <div className="flex justify-center items-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -581,11 +663,18 @@ function App() {
                           />
                         </svg>
                       </div>
-                      <span>Luni - Vineri, 10:00 - 18:00</span>
+                      <div>
+                        <p className="mb-1 text-xs tracking-wider uppercase text-cosmic-400/60">
+                          Program
+                        </p>
+                        <span className="text-base">
+                          Luni - Vineri, 10:00 - 18:00
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="flex gap-3 items-center text-cosmic-200">
-                      <div className="flex justify-center items-center w-10 h-10 rounded-lg bg-cosmic-500/20 text-cosmic-400">
+                    <div className="flex gap-4 items-center text-cosmic-200">
+                      <div className="flex justify-center items-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -607,17 +696,21 @@ function App() {
                           />
                         </svg>
                       </div>
-                      <span>București, România</span>
+                      <div>
+                        <p className="mb-1 text-xs tracking-wider uppercase text-cosmic-400/60">
+                          Locație
+                        </p>
+                        <span className="text-base">București, România</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* CTA card */}
-                <div className="flex flex-col justify-center p-8 glass-card">
-                  <h3 className="mb-4 text-xl font-semibold text-white font-display">
+                <div className="flex flex-col justify-center p-10 glass-luxury-hover">
+                  <h3 className="mb-5 text-2xl font-semibold text-white font-display">
                     Hai să Discutăm
                   </h3>
-                  <p className="mb-6 leading-relaxed text-cosmic-300/80">
+                  <p className="mb-8 text-base leading-relaxed text-cosmic-300/70">
                     Ai întrebări despre serviciile noastre sau dorești să
                     programezi o consultație? Vizitează pagina noastră de
                     contact pentru mai multe detalii și răspunsuri la
@@ -625,10 +718,10 @@ function App() {
                   </p>
                   <Link
                     to="/contact"
-                    className="inline-flex gap-2 items-center self-start px-6 py-3 font-semibold text-white bg-gradient-to-r rounded-full transition-all duration-300 cursor-pointer group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+                    className="inline-flex gap-3 items-center self-start px-8 py-4 font-semibold text-white bg-gradient-to-r rounded-full luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                   >
-                    Vezi Pagina de Contact
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <span>Vezi Pagina de Contact</span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />
                   </Link>
                 </div>
               </div>

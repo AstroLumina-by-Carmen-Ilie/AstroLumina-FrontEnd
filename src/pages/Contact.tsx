@@ -81,37 +81,40 @@ const Contact = () => {
     <div className="min-h-screen text-white bg-midnight-950">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative pt-24 pb-16">
-        <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>
+      <div className="relative pt-28 pb-20">
+        <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] top-0 right-0 opacity-15"></div>
+        <div className="cosmic-orb cosmic-orb-gold w-[400px] h-[400px] bottom-0 left-0 opacity-10"></div>
 
         <div className="relative z-10 px-6 mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h1 className="mb-4 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-cosmic-300 to-gold-400">
+          <div className="mb-20 text-center">
+            <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
+              Legătura Cu Noi
+            </p>
+            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-white via-cosmic-100 to-cosmic-200">
               Contact
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-cosmic-300">
+            <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
               Ai întrebări sau dorești o consultație? Trimite-mi un mesaj.
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {/* Contact Form */}
-            <div className="p-8 glass-card">
-              <h2 className="mb-6 text-xl font-semibold text-white font-display">
+            <div className="glass-luxury-hover p-10">
+              <h2 className="mb-8 text-2xl font-semibold text-white font-display">
                 Trimite un mesaj
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm text-cosmic-300"
+                    className="block mb-3 text-sm font-medium text-cosmic-300"
                   >
                     Nume complet
                   </label>
                   <input
                     type="text"
                     id="name"
-                    className="p-3 w-full text-white rounded-xl border transition-colors bg-white/5 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Numele tău"
                     required
                   />
@@ -119,14 +122,14 @@ const Contact = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm text-cosmic-300"
+                    className="block mb-3 text-sm font-medium text-cosmic-300"
                   >
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="p-3 w-full text-white rounded-xl border transition-colors bg-white/5 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="email@exemplu.ro"
                     required
                   />
@@ -134,14 +137,14 @@ const Contact = () => {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block mb-2 text-sm text-cosmic-300"
+                    className="block mb-3 text-sm font-medium text-cosmic-300"
                   >
                     Subiect
                   </label>
                   <input
                     type="text"
                     id="subject"
-                    className="p-3 w-full text-white rounded-xl border transition-colors bg-white/5 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Despre ce dorești să discutăm?"
                     required
                   />
@@ -149,56 +152,55 @@ const Contact = () => {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block mb-2 text-sm text-cosmic-300"
+                    className="block mb-3 text-sm font-medium text-cosmic-300"
                   >
                     Mesaj
                   </label>
                   <textarea
                     id="message"
                     rows={5}
-                    className="p-3 w-full text-white rounded-xl border transition-colors resize-none bg-white/5 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 resize-none bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Scrie mesajul tău aici..."
                     required
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="flex gap-2 justify-center items-center px-6 py-3 w-full font-medium text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+                  className="luxury-button flex gap-3 justify-center items-center px-8 py-4 w-full font-semibold text-white bg-gradient-to-r rounded-full from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                 >
-                  <Send className="w-4 h-4" />
-                  Trimite mesaj
+                  <Send className="w-5 h-5" />
+                  <span>Trimite mesaj</span>
                 </button>
               </form>
             </div>
 
-            {/* FAQ Section */}
-            <div className="p-8 glass-card">
-              <h2 className="mb-6 text-xl font-semibold text-white font-display">
+            <div className="glass-luxury-hover p-10">
+              <h2 className="mb-8 text-2xl font-semibold text-white font-display">
                 Întrebări frecvente
               </h2>
-              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+              <div className="space-y-2 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar">
                 {faqItems.map((item, index) => (
                   <div
                     key={index}
                     className="border-b border-white/5 last:border-0"
                   >
                     <button
-                      className="flex justify-between items-center py-4 w-full text-left transition-colors cursor-pointer text-cosmic-200 hover:text-white"
+                      className="flex justify-between items-center py-5 w-full text-left transition-colors cursor-pointer text-cosmic-200 hover:text-white group"
                       onClick={() =>
                         setOpenFaq(openFaq === index ? null : index)
                       }
                     >
-                      <span className="pr-4 text-sm font-medium">
+                      <span className="pr-4 text-base font-medium">
                         {item.question}
                       </span>
                       {openFaq === index ? (
-                        <ChevronUp className="flex-shrink-0 w-4 h-4 text-cosmic-400" />
+                        <ChevronUp className="flex-shrink-0 w-5 h-5 text-gold-400 transition-transform duration-300" />
                       ) : (
-                        <ChevronDown className="flex-shrink-0 w-4 h-4 text-cosmic-400" />
+                        <ChevronDown className="flex-shrink-0 w-5 h-5 text-cosmic-400 group-hover:text-gold-400 transition-colors duration-300" />
                       )}
                     </button>
                     {openFaq === index && (
-                      <div className="pb-4 text-sm leading-relaxed text-cosmic-300/80 animate-slide-down">
+                      <div className="pb-6 text-base leading-relaxed text-cosmic-300/80 animate-fade-in-down">
                         {item.answer}
                       </div>
                     )}
