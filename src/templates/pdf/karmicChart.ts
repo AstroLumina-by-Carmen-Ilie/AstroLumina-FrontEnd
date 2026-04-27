@@ -1,7 +1,7 @@
-import { AstralElements, UserInfo, ContactInfo } from '@/types';
-import { jsPDF } from 'jspdf';
-import { svgAsPngDataUrl } from '@/templates/utils/svgUtils';
-import { loadFontsForPDF } from '@/utils/fontLoader';
+import { AstralElements, UserInfo, ContactInfo } from "@/types";
+import { jsPDF } from "jspdf";
+import { svgAsPngDataUrl } from "@/templates/utils/svgUtils";
+import { loadFontsForPDF } from "@/utils/fontLoader";
 
 // Import SVG watermarks
 // import starryDesertSvg from '@/assets/images/starry-desert-watermark-updated.svg';
@@ -13,32 +13,36 @@ const formatDate = (date: Date): string => {
 };
 
 const formatTime = (date: Date): string => {
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 };
 
 export const generateKarmicChartPDF = async (
   result: AstralElements,
   chart: string,
   userInfo: UserInfo,
-  contactInfo: ContactInfo
+  contactInfo: ContactInfo,
 ): Promise<jsPDF> => {
   // Create a new jsPDF instance with portrait orientation
   const doc = new jsPDF({
-    orientation: 'portrait',
-    unit: 'mm',
-    format: 'a4'
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4",
   });
 
   // Add fonts
   await loadFontsForPDF(doc, [
-    { filename: 'NotoSans-Regular.ttf', family: 'NotoSans', style: 'normal' },
-    { filename: 'NotoSansSymbols-Regular.ttf', family: 'NotoSansSymbols', style: 'normal' },
-    { filename: 'NotoSans-Bold.ttf', family: 'NotoSans', style: 'bold' },
-    { filename: 'NotoSans-Italic.ttf', family: 'NotoSans', style: 'italic' },
+    { filename: "NotoSans-Regular.ttf", family: "NotoSans", style: "normal" },
+    {
+      filename: "NotoSansSymbols-Regular.ttf",
+      family: "NotoSansSymbols",
+      style: "normal",
+    },
+    { filename: "NotoSans-Bold.ttf", family: "NotoSans", style: "bold" },
+    { filename: "NotoSans-Italic.ttf", family: "NotoSans", style: "italic" },
   ]);
 
   // Set default font
-  doc.setFont('NotoSans');
+  doc.setFont("NotoSans");
 
   // Generate cover page with starry sky watermark
   await generateCoverPage(doc);
@@ -66,7 +70,12 @@ export const generateKarmicChartPDF = async (
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setFontSize(10);
-    doc.text(`Pagina ${i} din ${totalPages}`, doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 10, { align: 'center' });
+    doc.text(
+      `Pagina ${i} din ${totalPages}`,
+      doc.internal.pageSize.width / 2,
+      doc.internal.pageSize.height - 10,
+      { align: "center" },
+    );
   }
 
   return doc;
@@ -81,21 +90,19 @@ const addWatermark = async (doc: jsPDF, svgUrl: string): Promise<void> => {
     // Add the image
     doc.addImage(
       dataUrl,
-      'PNG',
+      "PNG",
       0,
       0,
       doc.internal.pageSize.width,
-      doc.internal.pageSize.height
+      doc.internal.pageSize.height,
     );
   } catch (error) {
-    console.error('Error adding watermark:', error);
+    console.error("Error adding watermark:", error);
   }
 };
 
 // Function to generate the cover page
-const generateCoverPage = async (
-  doc: jsPDF
-): Promise<void> => {
+const generateCoverPage = async (doc: jsPDF): Promise<void> => {
   // Add starry sky watermark
   await addWatermark(doc, starrySkySvg);
 
@@ -110,17 +117,17 @@ const generateCoverPage = async (
 
   // Main title with shadow effect
   doc.setFontSize(36);
-  doc.setFont('NotoSans', 'bold');
+  doc.setFont("NotoSans", "bold");
   doc.setTextColor(255, 255, 255); // White color for shadow
-  doc.text('Harta Karmică', pageCenter + 0.5, 80.5, { align: 'center' });
+  doc.text("Harta Karmică", pageCenter + 0.5, 80.5, { align: "center" });
   doc.setTextColor(218, 165, 32); // Gold color for title
-  doc.text('Harta Karmică', pageCenter, 80, { align: 'center' });
+  doc.text("Harta Karmică", pageCenter, 80, { align: "center" });
 
   // Subtitle with elegant styling
   doc.setFontSize(18);
-  doc.setFont('NotoSans', 'italic');
+  doc.setFont("NotoSans", "italic");
   doc.setTextColor(255, 255, 255);
-  doc.text('Analiză personalizată', pageCenter, 100, { align: 'center' });
+  doc.text("Analiză personalizată", pageCenter, 100, { align: "center" });
 
   // Add decorative line below subtitle
   doc.setDrawColor(255, 215, 0); // Gold color
@@ -131,7 +138,7 @@ const generateCoverPage = async (
 const generateThankYouPage = async (
   doc: jsPDF,
   userInfo: UserInfo,
-  contactInfo: ContactInfo
+  contactInfo: ContactInfo,
 ): Promise<void> => {
   // Add starry sky watermark
   await addWatermark(doc, starrySkySvg);
@@ -144,39 +151,49 @@ const generateThankYouPage = async (
 
   // Thank you header
   doc.setFontSize(24);
-  doc.setFont('NotoSans', 'bold');
+  doc.setFont("NotoSans", "bold");
   doc.setTextColor(218, 165, 32); // Gold color
-  doc.text('Mulțumim pentru achiziție!', pageCenter, yPosition, { align: 'center' });
+  doc.text("Mulțumim pentru achiziție!", pageCenter, yPosition, {
+    align: "center",
+  });
 
   yPosition += 20;
 
   // User information box
   doc.setDrawColor(255, 215, 0); // Gold color
   doc.setFillColor(10, 14, 42, 0.3); // Dark blue with transparency
-  doc.roundedRect(leftMargin, yPosition, pageWidth - 40, 50, 3, 3, 'FD');
+  doc.roundedRect(leftMargin, yPosition, pageWidth - 40, 50, 3, 3, "FD");
 
   // User details
   doc.setFontSize(12);
-  doc.setFont('NotoSans', 'bold');
+  doc.setFont("NotoSans", "bold");
   doc.setTextColor(255, 255, 255);
   yPosition += 10;
-  doc.text('Date personale:', leftMargin + 10, yPosition);
+  doc.text("Date personale:", leftMargin + 10, yPosition);
 
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   yPosition += 10;
   doc.text(`Nume: ${userInfo.name}`, leftMargin + 10, yPosition);
   yPosition += 8;
-  doc.text(`Data nașterii: ${formatDate(userInfo.birthDate)}`, leftMargin + 10, yPosition);
+  doc.text(
+    `Data nașterii: ${formatDate(userInfo.birthDate)}`,
+    leftMargin + 10,
+    yPosition,
+  );
   yPosition += 8;
-  doc.text(`Ora nașterii: ${formatTime(userInfo.birthHour)}`, leftMargin + 10, yPosition);
+  doc.text(
+    `Ora nașterii: ${formatTime(userInfo.birthHour)}`,
+    leftMargin + 10,
+    yPosition,
+  );
   yPosition += 8;
   doc.text(`Locație: ${userInfo.location}`, leftMargin + 10, yPosition);
 
   // Contact information
-  doc.setFont('NotoSans', 'bold');
-  doc.text('Date de contact:', rightMargin - 80, yPosition - 24);
+  doc.setFont("NotoSans", "bold");
+  doc.text("Date de contact:", rightMargin - 80, yPosition - 24);
 
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   doc.text(`Email: ${contactInfo.email}`, rightMargin - 80, yPosition - 16);
   doc.text(`Telefon: ${contactInfo.phone}`, rightMargin - 80, yPosition - 8);
 
@@ -184,43 +201,40 @@ const generateThankYouPage = async (
 
   // Explanation text
   doc.setFontSize(12);
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   doc.setTextColor(255, 255, 255);
 
   const explanationText = [
-    'Dragă client,',
-    '',
-    'Îți mulțumim pentru că ai ales serviciile AstroLumina! Acest document conține',
-    'interpretarea astrologică personalizată a hărții tale karmice, ',
-    'bazată pe poziția planetelor la momentul nașterii tale.',
-    '',
-    'Harta Karmică pe care ai primit-o include:',
-    '• Interpretarea detaliată a planetelor în semne zodiacale din perspectivă karmică',
-    '• Poziționarea planetelor în casele astrologice și impactul lor asupra vieților anterioare',
-    '• Aspectele principale și influența lor asupra lecțiilor sufletești în această viață',
-    '',
-    'Acest PDF ți-a fost trimis și pe adresa de email furnizată în formularul de comandă.',
-    'Pentru orice întrebări suplimentare sau clarificări, nu ezita să ne contactezi folosind',
-    'informațiile de la sfârșitul documentului.',
-    '',
-    'Îți dorim o experiență transformatoare explorând karma ta prin intermediul astrologiei!',
-    '',
-    'Cu recunoștință,',
-    'Echipa AstroLumina'
+    "Dragă client,",
+    "",
+    "Îți mulțumim pentru că ai ales serviciile AstroLumina! Acest document conține",
+    "interpretarea astrologică personalizată a hărții tale karmice, ",
+    "bazată pe poziția planetelor la momentul nașterii tale.",
+    "",
+    "Harta Karmică pe care ai primit-o include:",
+    "• Interpretarea detaliată a planetelor în semne zodiacale din perspectivă karmică",
+    "• Poziționarea planetelor în casele astrologice și impactul lor asupra vieților anterioare",
+    "• Aspectele principale și influența lor asupra lecțiilor sufletești în această viață",
+    "",
+    "Acest PDF ți-a fost trimis și pe adresa de email furnizată în formularul de comandă.",
+    "Pentru orice întrebări suplimentare sau clarificări, nu ezita să ne contactezi folosind",
+    "informațiile de la sfârșitul documentului.",
+    "",
+    "Îți dorim o experiență transformatoare explorând karma ta prin intermediul astrologiei!",
+    "",
+    "Cu recunoștință,",
+    "Echipa AstroLumina",
   ];
 
   // Add the explanation text
-  explanationText.forEach(line => {
-    doc.text(line, pageCenter, yPosition, { align: 'center' });
+  explanationText.forEach((line) => {
+    doc.text(line, pageCenter, yPosition, { align: "center" });
     yPosition += 7;
   });
 };
 
 // Function to generate the chart page
-const generateChartPage = async (
-  doc: jsPDF,
-  chart: string
-): Promise<void> => {
+const generateChartPage = async (doc: jsPDF, chart: string): Promise<void> => {
   // Add starry sky watermark
   await addWatermark(doc, starrySkySvg);
 
@@ -229,53 +243,61 @@ const generateChartPage = async (
 
   // Contact information in bottom right corner
   doc.setFontSize(10);
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   doc.setTextColor(255, 255, 255);
 };
 
 // Function to generate an interpretation page
 const generateInterpretationPage = async (
   doc: jsPDF,
-  interpretation: any
+  interpretation: any,
 ): Promise<void> => {
   // Add desert sky watermark
   // await addWatermark(doc, starryDesertSvg);
 
   // Set up fonts
-  doc.setFont('NotoSans');
+  doc.setFont("NotoSans");
 
   // Header
   let yPosition = 20;
 
   // Planet name and sign - centered
   doc.setFontSize(18);
-  doc.setFont('NotoSans', 'bold');
+  doc.setFont("NotoSans", "bold");
   doc.setTextColor(218, 165, 32); // Gold color
-  doc.text(`${interpretation.name} în ${interpretation.sign}`, doc.internal.pageSize.width / 2, yPosition, { align: 'center' });
+  doc.text(
+    `${interpretation.name} în ${interpretation.sign}`,
+    doc.internal.pageSize.width / 2,
+    yPosition,
+    { align: "center" },
+  );
 
   // House - centered
   yPosition += 10;
   doc.setFontSize(14);
-  doc.setFont('NotoSans', 'italic');
-  doc.text(interpretation.house, doc.internal.pageSize.width / 2, yPosition, { align: 'center' });
+  doc.setFont("NotoSans", "italic");
+  doc.text(interpretation.house, doc.internal.pageSize.width / 2, yPosition, {
+    align: "center",
+  });
 
   // Interpretation text
   yPosition += 40;
   doc.setFontSize(12);
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   doc.setTextColor(0, 0, 0); // Black color for text
 
   // Split text into paragraphs and render with word wrapping
   const maxWidth = doc.internal.pageSize.width - 40; // 20mm margins on each side
-  const lines = doc.splitTextToSize(interpretation.interpretation || "Hau Bau", maxWidth);
+  const lines = doc.splitTextToSize(
+    interpretation.interpretation || "Hau Bau",
+    maxWidth,
+  );
 
   doc.text(lines, 20, yPosition);
 };
 
 // Function to generate the final cover page
-const generateFinalCoverPage = async (
-  doc: jsPDF
-): Promise<void> => {
+const generateFinalCoverPage = async (doc: jsPDF): Promise<void> => {
   // Add starry sky watermark
   await addWatermark(doc, starrySkySvg);
 
@@ -284,15 +306,19 @@ const generateFinalCoverPage = async (
 
   // Contact information in bottom right corner
   doc.setFontSize(10);
-  doc.setFont('NotoSans', 'normal');
+  doc.setFont("NotoSans", "normal");
   doc.setTextColor(255, 255, 255);
 
   let yPosition = pageHeight - 40;
-  doc.text('AstroLumina', pageWidth - 20, yPosition, { align: 'right' });
+  doc.text("AstroLumina", pageWidth - 20, yPosition, { align: "right" });
   yPosition += 6;
-  doc.text(`Email: astrolumina@gmail.com`, pageWidth - 20, yPosition, { align: 'right' });
+  doc.text(`Email: astrolumina@gmail.com`, pageWidth - 20, yPosition, {
+    align: "right",
+  });
   yPosition += 6;
-  doc.text(`Telefon: 0722 123 456`, pageWidth - 20, yPosition, { align: 'right' });
+  doc.text(`Telefon: 0722 123 456`, pageWidth - 20, yPosition, {
+    align: "right",
+  });
   yPosition += 6;
-  doc.text('www.astrolumina.ro', pageWidth - 20, yPosition, { align: 'right' });
+  doc.text("www.astrolumina.ro", pageWidth - 20, yPosition, { align: "right" });
 };

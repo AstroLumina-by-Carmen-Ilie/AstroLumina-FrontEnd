@@ -1,4 +1,4 @@
-const R2_BASE_URL = 'https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/fonts';
+const R2_BASE_URL = "https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/fonts";
 
 const fontCache = new Map<string, string>();
 
@@ -16,7 +16,7 @@ export async function loadFontAsBase64(filename: string): Promise<string> {
   const arrayBuffer = await response.arrayBuffer();
   const bytes = new Uint8Array(arrayBuffer);
   // Chunk to avoid call stack overflow with large font files
-  let binary = '';
+  let binary = "";
   const chunkSize = 8192;
   for (let i = 0; i < bytes.length; i += chunkSize) {
     const chunk = bytes.subarray(i, i + chunkSize);
@@ -27,7 +27,10 @@ export async function loadFontAsBase64(filename: string): Promise<string> {
   return base64;
 }
 
-export async function loadFontsForPDF(doc: any, fonts: { filename: string, family: string, style: string }[]): Promise<void> {
+export async function loadFontsForPDF(
+  doc: any,
+  fonts: { filename: string; family: string; style: string }[],
+): Promise<void> {
   for (const font of fonts) {
     const base64 = await loadFontAsBase64(font.filename);
     doc.addFileToVFS(font.filename, base64);

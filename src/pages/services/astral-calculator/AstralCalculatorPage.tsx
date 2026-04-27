@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
-import { AstralElements } from '@/types';
-import Navbar from '@/components/navbar/Navbar';
-import BirthDataForm from '@/pages/services/astral-calculator/BirthDataForm';
-import ResultsDisplay from '@/pages/services/astral-calculator/ResultsDisplay';
-import { useLoading } from '@/hooks/useLoading';
+import { useState, useEffect } from "react";
+import { AstralElements } from "@/types";
+import Navbar from "@/components/navbar/Navbar";
+import BirthDataForm from "@/pages/services/astral-calculator/BirthDataForm";
+import ResultsDisplay from "@/pages/services/astral-calculator/ResultsDisplay";
+import { useLoading } from "@/hooks/useLoading";
 
 const AstralCalculatorPage = () => {
-  const [result, setResult] = useState<{ astral_elements: AstralElements; astral_houses: AstralElements } | null>(null);
+  const [result, setResult] = useState<{
+    astral_elements: AstralElements;
+    astral_houses: AstralElements;
+  } | null>(null);
   const [userInfo, setUserInfo] = useState<{
     name: string;
     birthDate: Date;
@@ -36,50 +39,53 @@ const AstralCalculatorPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-midnight-950 text-white">
+    <div className="min-h-screen text-white bg-midnight-950">
       <Navbar isScrolled={true} />
 
       <div className="relative pt-24 pb-16">
         <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] top-0 right-0 opacity-20"></div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-8xl mx-auto">
-            <div className="glass-card overflow-hidden">
+        <div className="container relative z-10 px-6 mx-auto">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-8 text-center">
+              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
+                Calculatorul Astral
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
+                Află pozițiile exacte ale planetelor în timp real și
+                interpretarea influențelor astrologice curente
+              </p>
+            </div>
+            <div className="overflow-hidden glass-card">
               <div className="flex flex-col md:flex-row">
                 {/* Left Panel */}
-                <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
-                  <div className="text-center mb-8">
-                    <h1 className="font-display text-3xl font-bold mb-4 bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
-                      Calculatorul Astral
-                    </h1>
-                    <p className="text-cosmic-200/80 leading-relaxed">
-                      Descoperă pozițiile planetelor și asteroizilor în semnele zodiacale
-                      la momentul nașterii tale
+                <div className="flex flex-col justify-center p-10 bg-gradient-to-br to-transparent from-cosmic-900/40 via-cosmic-800/20 md:w-1/2">
+                  <h2 className="mb-6 text-3xl font-bold text-white font-display">
+                    Calculatorul Astral
+                  </h2>
+                  <div className="space-y-4 leading-relaxed text-cosmic-200/80">
+                    <p>
+                      Descoperă pozițiile planetelor și asteroizilor în semnele
+                      zodiacale la momentul nașterii tale. Această hartă astrală
+                      îți oferă o imagine completă a cerului din momentul în
+                      care te-ai născut.
                     </p>
-                  </div>
-
-                  <div className="w-full p-6 glass-card-light">
-                    <h3 className="font-display text-lg font-semibold text-cosmic-900 mb-4">Ce vei primi:</h3>
-                    <ul className="space-y-3 text-gray-700 text-sm">
-                      {[
-                        'Pozițiile tuturor planetelor în semne zodiacale',
-                        'Pozițiile în case astrologice',
-                        'Indicii despre asteroizii importanți',
-                        'Planete retrograde în harta ta',
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-cosmic-500 mt-1.5 flex-shrink-0"></div>
-                          <span>{item}</span>
-                        </li>
-                      ))}
+                    <p>Ce vei primi:</p>
+                    <ul className="space-y-1 list-disc list-inside">
+                      <li>Pozițiile tuturor planetelor în semne zodiacale</li>
+                      <li>Pozițiile în case astrologice</li>
+                      <li>Indicii despre asteroizii importanți</li>
+                      <li>Planete retrograde în harta ta</li>
                     </ul>
+                    <p>
+                      Completează formularul și vei primi o analiză detaliată a
+                      astrogramei tale.
+                    </p>
                   </div>
                 </div>
 
                 {/* Right Panel */}
-                <div className="w-full md:w-1/2 p-8">
-                  {renderContent()}
-                </div>
+                <div className="p-10 w-full md:w-1/2">{renderContent()}</div>
               </div>
             </div>
           </div>

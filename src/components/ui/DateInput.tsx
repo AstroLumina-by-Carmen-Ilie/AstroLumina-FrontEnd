@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
-import { format, parse, isValid } from 'date-fns';
-import { ro } from 'date-fns/locale';
-import { Calendar, ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import { format, parse, isValid } from "date-fns";
+import { ro } from "date-fns/locale";
+import { Calendar, ChevronDown } from "lucide-react";
 
 interface DateInputProps {
   value: Date | null;
@@ -14,26 +14,44 @@ interface DateInputProps {
 }
 
 const MONTHS = [
-  'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
-  'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
+  "Ianuarie",
+  "Februarie",
+  "Martie",
+  "Aprilie",
+  "Mai",
+  "Iunie",
+  "Iulie",
+  "August",
+  "Septembrie",
+  "Octombrie",
+  "Noiembrie",
+  "Decembrie",
 ];
 
 const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: 120 }, (_, i) => CURRENT_YEAR - i);
 
-const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'Selecteaz\u0103 data...', id, required }) => {
+const DateInput: React.FC<DateInputProps> = ({
+  value,
+  onChange,
+  placeholder = "Selectează data...",
+  id,
+  required,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(value ? format(value, 'dd/MM/yyyy') : '');
+  const [inputValue, setInputValue] = useState(
+    value ? format(value, "dd/MM/yyyy") : "",
+  );
   const [calendarMonth, setCalendarMonth] = useState<Date>(value || new Date());
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (value) {
-      setInputValue(format(value, 'dd/MM/yyyy'));
+      setInputValue(format(value, "dd/MM/yyyy"));
       setCalendarMonth(value);
     } else {
-      setInputValue('');
+      setInputValue("");
     }
   }, [value]);
 
@@ -41,21 +59,21 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       // Ignore native select/option elements — they render outside the DOM tree
-      if (target.tagName === 'SELECT' || target.tagName === 'OPTION') return;
+      if (target.tagName === "SELECT" || target.tagName === "OPTION") return;
       if (containerRef.current && !containerRef.current.contains(target)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let raw = e.target.value.replace(/[^\d/]/g, '');
+    let raw = e.target.value.replace(/[^\d/]/g, "");
     setInputValue(raw);
 
     if (raw.length === 10) {
-      const parsed = parse(raw, 'dd/MM/yyyy', new Date());
+      const parsed = parse(raw, "dd/MM/yyyy", new Date());
       if (isValid(parsed)) {
         onChange(parsed);
         setCalendarMonth(new Date(parsed.getFullYear(), parsed.getMonth(), 1));
@@ -67,29 +85,31 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
 
   const handleInputBlur = () => {
     if (inputValue.length === 10) {
-      const parsed = parse(inputValue, 'dd/MM/yyyy', new Date());
+      const parsed = parse(inputValue, "dd/MM/yyyy", new Date());
       if (!isValid(parsed)) {
-        setInputValue(value ? format(value, 'dd/MM/yyyy') : '');
+        setInputValue(value ? format(value, "dd/MM/yyyy") : "");
       }
     } else if (inputValue.length > 0) {
-      setInputValue(value ? format(value, 'dd/MM/yyyy') : '');
+      setInputValue(value ? format(value, "dd/MM/yyyy") : "");
     }
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       if (inputValue.length === 10) {
-        const parsed = parse(inputValue, 'dd/MM/yyyy', new Date());
+        const parsed = parse(inputValue, "dd/MM/yyyy", new Date());
         if (isValid(parsed)) {
           onChange(parsed);
-          setCalendarMonth(new Date(parsed.getFullYear(), parsed.getMonth(), 1));
+          setCalendarMonth(
+            new Date(parsed.getFullYear(), parsed.getMonth(), 1),
+          );
           setIsOpen(false);
         }
       }
-    } else if (e.key === 'Tab') {
+    } else if (e.key === "Tab") {
       if (inputValue.length === 10) {
-        const parsed = parse(inputValue, 'dd/MM/yyyy', new Date());
+        const parsed = parse(inputValue, "dd/MM/yyyy", new Date());
         if (isValid(parsed)) {
           setIsOpen(false);
         }
@@ -101,16 +121,19 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
     setIsOpen(true);
   };
 
-  const handleDayClick = useCallback((day: Date) => {
-    if (value && day.toDateString() === value.toDateString()) {
-      setIsOpen(false);
-      return;
-    }
-    onChange(day);
-    setInputValue(format(day, 'dd/MM/yyyy'));
-    setCalendarMonth(new Date(day.getFullYear(), day.getMonth(), 1));
-    requestAnimationFrame(() => setIsOpen(false));
-  }, [onChange, value]);
+  const handleDayClick = useCallback(
+    (day: Date) => {
+      if (value && day.toDateString() === value.toDateString()) {
+        setIsOpen(false);
+        return;
+      }
+      onChange(day);
+      setInputValue(format(day, "dd/MM/yyyy"));
+      setCalendarMonth(new Date(day.getFullYear(), day.getMonth(), 1));
+      requestAnimationFrame(() => setIsOpen(false));
+    },
+    [onChange, value],
+  );
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newMonth = parseInt(e.target.value);
@@ -127,7 +150,7 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
   return (
     <div ref={containerRef} className="relative w-full" id={id}>
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cosmic-500 pointer-events-none z-10" />
+        <Calendar className="absolute left-3 top-1/2 z-10 w-4 h-4 -translate-y-1/2 pointer-events-none text-cosmic-500" />
         <input
           ref={inputRef}
           type="text"
@@ -139,7 +162,9 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
           placeholder={placeholder}
           required={required}
           className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none transition-colors ${
-            isOpen ? 'border-cosmic-500 ring-1 ring-cosmic-500' : 'border-white/15 hover:border-white/25'
+            isOpen
+              ? "ring-1 border-cosmic-500 ring-cosmic-500"
+              : "border-white/15 hover:border-white/25"
           }`}
         />
       </div>
@@ -151,7 +176,7 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
             .rdp-month_grid td { padding: 0; }
             .rdp-day_button { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
           `}</style>
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex gap-2 items-center mb-3">
             <div className="relative flex-1">
               <select
                 value={calendarMonth.getMonth()}
@@ -159,7 +184,13 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
                 className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
               >
                 {MONTHS.map((m, i) => (
-                  <option key={i} value={i} className="bg-[#1e1b4b] text-purple-200">{m}</option>
+                  <option
+                    key={i}
+                    value={i}
+                    className="bg-[#1e1b4b] text-purple-200"
+                  >
+                    {m}
+                  </option>
                 ))}
               </select>
               <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-400 pointer-events-none" />
@@ -170,8 +201,14 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
                 onChange={handleYearChange}
                 className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
               >
-                {YEARS.map(y => (
-                  <option key={y} value={y} className="bg-[#1e1b4b] text-purple-200">{y}</option>
+                {YEARS.map((y) => (
+                  <option
+                    key={y}
+                    value={y}
+                    className="bg-[#1e1b4b] text-purple-200"
+                  >
+                    {y}
+                  </option>
                 ))}
               </select>
               <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-400 pointer-events-none" />
@@ -186,22 +223,24 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, placeholder = 'S
             locale={ro}
             showOutsideDays
             classNames={{
-              months: 'flex flex-col',
-              month: 'space-y-4',
-              caption: 'hidden',
-              nav: 'hidden',
-              table: 'w-full table-fixed',
-              head_row: 'flex',
-              head_cell: 'text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center',
-              row: 'flex w-full mt-1',
-              cell: 'h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-              day: 'h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer',
-              day_selected: 'bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100',
-              day_today: 'ring-1 ring-purple-400/50',
-              day_outside: 'text-purple-400/40',
-              day_disabled: 'text-purple-400/30 opacity-50',
-              day_range_middle: 'bg-purple-500/20 text-purple-200',
-              day_hidden: 'invisible',
+              months: "flex flex-col",
+              month: "space-y-4",
+              caption: "hidden",
+              nav: "hidden",
+              table: "w-full table-fixed",
+              head_row: "flex",
+              head_cell:
+                "text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center",
+              row: "flex w-full mt-1",
+              cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+              day: "h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer",
+              day_selected:
+                "bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100",
+              day_today: "ring-1 ring-purple-400/50",
+              day_outside: "text-purple-400/40",
+              day_disabled: "text-purple-400/30 opacity-50",
+              day_range_middle: "bg-purple-500/20 text-purple-200",
+              day_hidden: "invisible",
             }}
           />
         </div>

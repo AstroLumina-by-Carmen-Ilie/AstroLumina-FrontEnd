@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export interface NavbarProps {
   isScrolled: boolean;
@@ -6,42 +6,53 @@ export interface NavbarProps {
 
 export const getNavbarStyles = () => {
   return {
-    navClasses: "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-midnight-950/80 backdrop-blur-xl border-b border-white/5",
-    linkClasses: "text-cosmic-200 hover:text-white px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 hover:bg-white/10 cursor-pointer",
-    mobileLinkClasses: "text-cosmic-200 hover:text-white block px-4 py-3 rounded-lg text-lg font-semibold transition-all duration-200 hover:bg-white/10 cursor-pointer",
-    logoClasses: "font-display text-xl font-bold text-white hover:text-cosmic-300 transition-colors",
+    navClasses:
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-luxury bg-midnight-950/80 backdrop-blur-2xl border-b border-white/5 hover:bg-midnight-950/90",
+    linkClasses:
+      "relative text-cosmic-200 hover:text-white px-5 py-2.5 rounded-lg text-base font-medium transition-all duration-400 ease-luxury cursor-pointer group overflow-hidden",
+    mobileLinkClasses:
+      "text-cosmic-200 hover:text-white block px-5 py-3 rounded-lg text-lg font-medium transition-all duration-400 ease-luxury cursor-pointer",
+    logoClasses:
+      "font-display text-xl font-bold text-white hover:text-gold-400 transition-all duration-400 ease-luxury cursor-pointer",
   };
 };
 
 export const NavbarLogo: React.FC = () => (
-  <div className="flex-shrink-0 flex items-center">
-    <Link to="/" className="flex items-center cursor-pointer">
+  <div className="flex flex-shrink-0 items-center">
+    <Link to="/" className="flex items-center cursor-pointer group">
       <img
         src="https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/logo/Banner.png"
         alt="AstroLumina"
-        className="h-14 w-auto"
+        className="w-auto h-12 transition-transform duration-500 group-hover:scale-105"
       />
     </Link>
   </div>
 );
 
-export const NavbarLinks: React.FC<{ linkClasses: string }> = ({ linkClasses }) => {
+export const NavbarLinks: React.FC<{ linkClasses: string }> = ({
+  linkClasses,
+}) => {
   return (
     <>
       {/* <Link to="/servicii" className={linkClasses}>
-        Servicii
+        <span className="relative z-10">Servicii</span>
+        <span className="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link>
       <Link to="/produse" className={linkClasses}>
-        Produse
+        <span className="relative z-10">Produse</span>
+        <span className="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link>
       <Link to="/evenimente" className={linkClasses}>
-        Evenimente
+        <span className="relative z-10">Evenimente</span>
+        <span className="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link>
       <Link to="/despre-mine" className={linkClasses}>
-        Despre mine
+        <span className="relative z-10">Despre mine</span>
+        <span className="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link>
       <Link to="/contact" className={linkClasses}>
-        Contact
+        <span className="relative z-10">Contact</span>
+        <span className="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link> */}
     </>
   );

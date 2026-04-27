@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -37,42 +37,53 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   COSMIC STARFIELD BACKGROUND
+   MODERN COSMIC BACKGROUND - More Realistic & Elegant
    ═══════════════════════════════════════════════════════════════ */
 .stars {
   background: #0a0a1a;
-  background-image: 
-    url('https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/images/NightSky.jpg'),
-    radial-gradient(white, rgba(255,255,255,.15) 2px, transparent 3px),
-    radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.07) 2px, transparent 3px),
-    radial-gradient(rgba(255,255,255,.3), rgba(255,255,255,.07) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px),
-    radial-gradient(white, rgba(255,255,255,.07) 2px, transparent 3px);
-  background-size: 
+  background-image:
+    url("https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/images/NightSky.jpg"),
+    radial-gradient(
+      ellipse at 20% 30%,
+      rgba(88, 28, 135, 0.4) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(120, 53, 15, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255, 255, 255, 0.1) 1px, transparent 3px),
+    radial-gradient(white, rgba(255, 255, 255, 0.08) 1px, transparent 2px);
+  background-size:
     cover,
-    550px 550px,
-    350px 350px,
-    250px 250px,
-    150px 150px,
-    130px 130px,
-    100px 100px;
-  background-position: 
+    cover,
+    cover,
+    600px 600px,
+    400px 400px,
+    250px 250px;
+  background-position:
+    center,
+    center,
     center,
     0 0,
-    40px 60px,
-    130px 270px,
-    70px 100px,
-    200px 200px,
-    300px 300px;
-  background-repeat: 
-    no-repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat,
-    repeat;
+    100px 150px,
+    50px 300px;
+  background-repeat: no-repeat;
+}
+
+/* Ambient glow overlay for depth */
+.stars::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(124, 58, 237, 0.15) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -99,31 +110,33 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  background: radial-gradient(circle at center,
-    rgba(255,255,255,0.8) 0%,
-    rgba(255,255,255,0.6) 20%,
-    rgba(255,255,255,0.4) 40%,
-    rgba(255,255,255,0.2) 60%,
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.2) 60%,
     transparent 100%
   );
   animation: shooting-star 4s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.7)) 
-          drop-shadow(0 0 16px rgba(255,255,255,0.5))
-          drop-shadow(0 0 24px rgba(255,255,255,0.3));
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7))
+    drop-shadow(0 0 16px rgba(255, 255, 255, 0.5))
+    drop-shadow(0 0 24px rgba(255, 255, 255, 0.3));
   border-radius: 50%;
 }
 
 .shooting-star::before,
 .shooting-star::after {
-  content: '';
+  content: "";
   position: absolute;
-  background: radial-gradient(circle at center,
-    rgba(255,255,255,0.7) 0%,
-    rgba(255,255,255,0.5) 30%,
-    rgba(255,255,255,0.3) 60%,
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.3) 60%,
     transparent 100%
   );
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
 
 .shooting-star::before {
@@ -144,23 +157,68 @@
   border-radius: 1.5px;
 }
 
-.shooting-star:nth-child(1) { top: -15%; left: 8%; animation-delay: 0s; }
-.shooting-star:nth-child(2) { top: -10%; right: 25%; animation-delay: 2.1s; }
-.shooting-star:nth-child(3) { top: 15%; right: -12%; animation-delay: 4.2s; }
-.shooting-star:nth-child(4) { top: 35%; right: -8%; animation-delay: 1.3s; }
-.shooting-star:nth-child(5) { top: 55%; right: -15%; animation-delay: 3.4s; }
-.shooting-star:nth-child(6) { top: 75%; right: -5%; animation-delay: 0.7s; }
-.shooting-star:nth-child(7) { bottom: -12%; right: 35%; animation-delay: 2.8s; }
-.shooting-star:nth-child(8) { bottom: -8%; left: 28%; animation-delay: 1.9s; }
-.shooting-star:nth-child(9) { bottom: 15%; left: -10%; animation-delay: 3.6s; }
-.shooting-star:nth-child(10) { bottom: 40%; left: -6%; animation-delay: 0.4s; }
+.shooting-star:nth-child(1) {
+  top: -15%;
+  left: 8%;
+  animation-delay: 0s;
+}
+.shooting-star:nth-child(2) {
+  top: -10%;
+  right: 25%;
+  animation-delay: 2.1s;
+}
+.shooting-star:nth-child(3) {
+  top: 15%;
+  right: -12%;
+  animation-delay: 4.2s;
+}
+.shooting-star:nth-child(4) {
+  top: 35%;
+  right: -8%;
+  animation-delay: 1.3s;
+}
+.shooting-star:nth-child(5) {
+  top: 55%;
+  right: -15%;
+  animation-delay: 3.4s;
+}
+.shooting-star:nth-child(6) {
+  top: 75%;
+  right: -5%;
+  animation-delay: 0.7s;
+}
+.shooting-star:nth-child(7) {
+  bottom: -12%;
+  right: 35%;
+  animation-delay: 2.8s;
+}
+.shooting-star:nth-child(8) {
+  bottom: -8%;
+  left: 28%;
+  animation-delay: 1.9s;
+}
+.shooting-star:nth-child(9) {
+  bottom: 15%;
+  left: -10%;
+  animation-delay: 3.6s;
+}
+.shooting-star:nth-child(10) {
+  bottom: 40%;
+  left: -6%;
+  animation-delay: 0.4s;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    TWINKLING STARS
    ═══════════════════════════════════════════════════════════════ */
 @keyframes twinkle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .animate-twinkle {
@@ -171,7 +229,8 @@
    FLOATING PARTICLES
    ═══════════════════════════════════════════════════════════════ */
 @keyframes float-particle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: 0.6;
   }
@@ -202,43 +261,61 @@
    GLASS MORPHISM CARD
    ═══════════════════════════════════════════════════════════════ */
 .glass-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+.glass-luxury {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(124, 58, 237, 0.05) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* ═══════════════════════════════════════════════════════════════
    COSMIC GLOW EFFECTS
    ═══════════════════════════════════════════════════════════════ */
 .glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3),
-              0 0 40px rgba(168, 85, 247, 0.1);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.3),
+    0 0 40px rgba(168, 85, 247, 0.1);
 }
 
 .glow-gold {
-  box-shadow: 0 0 20px rgba(234, 179, 8, 0.3),
-              0 0 40px rgba(234, 179, 8, 0.1);
+  box-shadow:
+    0 0 20px rgba(234, 179, 8, 0.3),
+    0 0 40px rgba(234, 179, 8, 0.1);
 }
 
 .text-glow-purple {
-  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5),
-               0 0 40px rgba(168, 85, 247, 0.3);
+  text-shadow:
+    0 0 20px rgba(168, 85, 247, 0.5),
+    0 0 40px rgba(168, 85, 247, 0.3);
 }
 
 .text-glow-gold {
-  text-shadow: 0 0 20px rgba(234, 179, 8, 0.5),
-               0 0 40px rgba(234, 179, 8, 0.3);
+  text-shadow:
+    0 0 20px rgba(234, 179, 8, 0.5),
+    0 0 40px rgba(234, 179, 8, 0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -250,13 +327,19 @@
 }
 
 .gradient-border::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   padding: 1px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(234, 179, 8, 0.5));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.5),
+    rgba(234, 179, 8, 0.5)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -276,8 +359,12 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -348,4 +435,426 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LUXURY HOVER EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+.luxury-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-hover:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(168, 85, 247, 0.1);
+}
+
+.luxury-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(168, 85, 247, 0.15);
+}
+
+.luxury-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-button:hover::before {
+  left: 100%;
+}
+
+.luxury-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(124, 58, 237, 0.3),
+    0 0 30px rgba(124, 58, 237, 0.2);
+}
+
+.luxury-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, #a855f7, #eab308);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-link:hover::after {
+  width: calc(100% - 1.5rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL ANIMATIONS (Intersection Observer)
+   ═══════════════════════════════════════════════════════════════ */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered animations for children */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stagger-children.is-visible > *:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(2) {
+  transition-delay: 100ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(3) {
+  transition-delay: 200ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(4) {
+  transition-delay: 300ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(5) {
+  transition-delay: 400ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(6) {
+  transition-delay: 500ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(7) {
+  transition-delay: 600ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.is-visible > *:nth-child(8) {
+  transition-delay: 700ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LUXURY GLASSMORPHISM ENHANCED
+   ═══════════════════════════════════════════════════════════════ */
+.glass-luxury {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-luxury-hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-luxury-hover:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  border-color: rgba(168, 85, 247, 0.35);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(124, 58, 237, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ENHANCED GRADIENT BORDERS
+   ═══════════════════════════════════════════════════════════════ */
+.gradient-border-luxury {
+  position: relative;
+  background: transparent;
+}
+
+.gradient-border-luxury::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.6),
+    rgba(234, 179, 8, 0.4),
+    rgba(168, 85, 247, 0.6)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border-luxury:hover::before {
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PARALLAX CONTAINER
+   ═══════════════════════════════════════════════════════════════ */
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-bg {
+  position: absolute;
+  inset: -10%;
+  background-size: cover;
+  background-position: center;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ELEGANT TYPOGRAPHY ENHANCEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+.text-gradient-luxury {
+  background: linear-gradient(135deg, #a855f7 0%, #eab308 50%, #a855f7 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerLuxuryText 4s linear infinite;
+}
+
+@keyframes shimmerLuxuryText {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.text-shadow-luxury {
+  text-shadow:
+    0 2px 10px rgba(168, 85, 247, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   IMAGE HOVER EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+.image-zoom-hover {
+  overflow: hidden;
+}
+
+.image-zoom-hover img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-zoom-hover:hover img {
+  transform: scale(1.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CURSOR EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+.cursor-luxury {
+  cursor: pointer;
+}
+
+.cursor-none {
+  cursor: none;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent);
+  pointer-events: none;
+  z-index: 9999;
+  transition:
+    transform 0.1s ease,
+    opacity 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE TRANSITIONS
+   ═══════════════════════════════════════════════════════════════ */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL ENHANCEMENT
+   ═══════════════════════════════════════════════════════════════ */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL INDICATOR ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes scroll-dot {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(16px);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes scroll-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.animate-scroll-arrow {
+  animation: scroll-arrow 1.8s ease-in-out infinite;
 }
