@@ -178,22 +178,12 @@ function App() {
 
           <div className="container relative z-10 px-6 py-32 mx-auto text-center">
             <div className="mx-auto max-w-4xl">
-              <p className="mb-6 text-sm font-medium tracking-[0.3em] uppercase text-gold-400/80 font-display animate-fade-in-down">
-                Servicii de Astrologie
-              </p>
-
               <h1
                 className="mb-8 text-6xl font-bold leading-tight font-display md:text-7xl lg:text-8xl animate-fade-in-up"
                 style={{ animationDelay: "0.15s" }}
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cosmic-200 to-cosmic-300">
-                  Astro
-                </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-300">
-                  Lumin
-                </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-cosmic-400">
-                  a
+                  AstroLumina
                 </span>
               </h1>
 
@@ -205,11 +195,13 @@ function App() {
               </p>
 
               <p
-                className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed md:text-2xl text-cosmic-100/60 font-body animate-fade-in-up"
+                className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed md:text-2xl text-cosmic-100/60 font-display animate-fade-in-up"
                 style={{ animationDelay: "0.45s" }}
               >
-                Deblochează secretele propriului destin prin înțelepciunea
-                străveche a stelelor
+                Deblochează secretele propriului destin prin
+                <span className="block">
+                  înțelepciunea străveche a stelelor
+                </span>
               </p>
 
               <div
@@ -229,15 +221,6 @@ function App() {
                 >
                   <span>Contactează-mă</span>
                 </button>
-              </div>
-            </div>
-
-            <div className="flex absolute bottom-12 left-1/2 flex-col gap-3 items-center -translate-x-1/2 animate-float-gentle">
-              <span className="text-xs tracking-widest uppercase text-cosmic-400/50">
-                Descoperă
-              </span>
-              <div className="flex justify-center pt-2 w-6 h-10 rounded-full border border-cosmic-400/30">
-                <div className="w-1.5 h-3 bg-cosmic-400/50 rounded-full animate-pulse"></div>
               </div>
             </div>
           </div>
@@ -260,13 +243,10 @@ function App() {
 
           <div className="container relative z-10 px-6 mx-auto">
             <div className="mb-20 text-center">
-              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-                Ofertele Noastre
-              </p>
               <h2 className="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                 Servicii Astrologice
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
+              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70 font-display">
                 Descoperă gama completă de servicii astrologice, de la analize
                 gratuite la consultații personalizate
               </p>
@@ -369,13 +349,10 @@ function App() {
 
           <div className="container relative z-10 px-6 mx-auto">
             <div className="mb-20 text-center">
-              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-                Resurse Exclusive
-              </p>
               <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Produse Digitale
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70">
+              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70 font-display">
                 Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
               </p>
             </div>
@@ -437,13 +414,10 @@ function App() {
 
           <div className="container relative z-10 px-6 mx-auto">
             <div className="mb-20 text-center">
-              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-                Experiențe Unice
-              </p>
               <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Evenimente
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70">
+              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70 font-display">
                 Workshopuri și sesiuni de grup pentru explorarea energiilor
                 cosmice
               </p>
@@ -519,13 +493,10 @@ function App() {
 
           <div className="container px-6 mx-auto">
             <div className="mb-20 text-center">
-              <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-                De Ce Să Ne Alegi
-              </p>
               <h2 className="mb-5 text-4xl font-bold text-white font-display md:text-5xl">
                 De ce AstroLumina?
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
+              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70 font-display">
                 O abordare autentică a astrologiei, bazată pe cunoștințe
                 profunde și dedicare
               </p>
@@ -568,9 +539,6 @@ function App() {
           <div className="container relative z-10 px-6 mx-auto">
             <div className="mx-auto max-w-5xl">
               <div className="mb-16 text-center">
-                <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-                  Legătura Cu Noi
-                </p>
                 <h2 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                   Contact
                 </h2>
