@@ -51,35 +51,35 @@ const KarmicChartPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-midnight-950 text-white">
+    <div className="min-h-screen text-white bg-midnight-950">
       <Navbar isScrolled={true} />
 
-      <main className="container mx-auto px-6 pt-24 pb-16">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-4xl font-bold bg-gradient-to-r from-cosmic-300 to-gold-400 bg-clip-text text-transparent">
+      <main className="container px-6 pt-24 pb-16 mx-auto">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
             Astrograma Natală și Karmică
           </h1>
-          <p className="text-cosmic-300 mt-4 max-w-2xl mx-auto">
+          <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
             Sesiune live în care aducem claritate și direcție prin înțelegerea astrogramei tale!
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="glass-card overflow-hidden">
+        <div className="mx-auto max-w-7xl">
+          <div className="overflow-hidden glass-card">
             <div className="flex flex-col md:flex-row">
               {/* Left Panel */}
-              <div className="hidden md:flex md:w-1/2 p-8 flex-col justify-center bg-gradient-to-br from-cosmic-900/30 to-transparent">
-                <h2 className="font-display text-3xl font-bold text-white mb-6">
+              <div className="flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+                <h2 className="mb-6 text-3xl font-bold text-white font-display">
                   Astrograma Natală și Karmică
                 </h2>
-                <div className="text-cosmic-200/80 leading-relaxed mb-8 space-y-4">
+                <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
                   <p>
                     În această sesiune live, explorăm împreună harta ta natală – "poza cerului" din momentul nașterii tale. Fiecare planetă vorbește despre o parte din tine, de la felul în care iubești, până la cum îți exprimi talentele sau ce tipare te pot bloca.
                   </p>
                   <p>
                     Astrograma este mai mult decât o hartă - ea este un instrument profund de autocunoaștere care îți oferă răspunsuri clare despre:
                   </p>
-                  <ul className="list-disc list-inside space-y-1">
+                  <ul className="space-y-1 list-disc list-inside">
                     <li>direcția ta profesională și resursele interioare</li>
                     <li>tiparele în iubire și ce tip de partener ți se potrivește</li>
                     <li>cum îți poți valorifica talentele și câștiga banii în mod benefic</li>
@@ -107,7 +107,7 @@ const KarmicChartPage = () => {
                     { num: 2, label: 'Date contact' },
                     { num: 3, label: 'Rezultat' },
                   ].map((step) => (
-                    <div key={step.num} className="flex items-center gap-3">
+                    <div key={step.num} className="flex gap-3 items-center">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
@@ -128,9 +128,9 @@ const KarmicChartPage = () => {
               </div>
 
               {/* Right Panel */}
-              <div className="w-full md:w-1/2 p-8">
+              <div className="p-8 w-full md:w-1/2">
                 {/* Mobile step indicator */}
-                <div className="md:hidden mb-8">
+                <div className="mb-8 md:hidden">
                   <div className="flex justify-between items-center mb-4">
                     {[1, 2, 3].map((step) => (
                       <div
@@ -147,9 +147,9 @@ const KarmicChartPage = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="h-1 bg-white/10 rounded-full">
+                  <div className="h-1 rounded-full bg-white/10">
                     <div
-                      className="h-full bg-gradient-to-r from-cosmic-500 to-cosmic-400 rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r rounded-full transition-all duration-500 from-cosmic-500 to-cosmic-400"
                       style={{ width: `${((currentStep - 1) / 2) * 100}%` }}
                     />
                   </div>

@@ -108,7 +108,7 @@ const ConstellationBookingPage: React.FC = () => {
           <div className="mx-auto max-w-7xl">
             <div className="overflow-hidden glass-card">
               <div className="flex flex-col md:flex-row">
-                <div className="hidden flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+                <div className="flex flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
                   <h2 className="mb-6 text-3xl font-bold text-white font-display">
                     {event?.title || "Eveniment Constelații"}
                   </h2>
@@ -170,7 +170,7 @@ const ConstellationBookingPage: React.FC = () => {
         <div className="mx-auto max-w-7xl">
           <div className="overflow-hidden glass-card">
             <div className="flex flex-col md:flex-row">
-              <div className="hidden flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+              <div className="flex flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
                 <h2 className="mb-6 text-3xl font-bold text-white font-display">
                   {event?.title || "Constelații"}
                 </h2>

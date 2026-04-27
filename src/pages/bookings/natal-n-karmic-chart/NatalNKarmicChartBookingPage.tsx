@@ -125,7 +125,7 @@ const NatalNKarmicChartBookingPage = () => {
           <div className="overflow-hidden glass-card">
             <div className="flex flex-col md:flex-row">
               {/* Left Panel */}
-              <div className="hidden flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+              <div className="flex flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
                 <h2 className="mb-6 text-3xl font-bold text-white font-display">
                   Astrograma Natală și Karmică
                 </h2>
