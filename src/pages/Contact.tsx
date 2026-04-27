@@ -87,10 +87,7 @@ const Contact = () => {
 
         <div className="relative z-10 px-6 mx-auto max-w-6xl">
           <div className="mb-20 text-center">
-            <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-              Legătura Cu Noi
-            </p>
-            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-white via-cosmic-100 to-cosmic-200">
+            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Contact
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
@@ -99,7 +96,7 @@ const Contact = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="glass-luxury-hover p-10">
+            <div className="p-10 glass-luxury-hover">
               <h2 className="mb-8 text-2xl font-semibold text-white font-display">
                 Trimite un mesaj
               </h2>
@@ -166,7 +163,7 @@ const Contact = () => {
                 </div>
                 <button
                   type="submit"
-                  className="luxury-button flex gap-3 justify-center items-center px-8 py-4 w-full font-semibold text-white bg-gradient-to-r rounded-full from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                  className="flex gap-3 justify-center items-center px-8 py-4 w-full font-semibold text-white bg-gradient-to-r rounded-full luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                 >
                   <Send className="w-5 h-5" />
                   <span>Trimite mesaj</span>
@@ -174,7 +171,7 @@ const Contact = () => {
               </form>
             </div>
 
-            <div className="glass-luxury-hover p-10">
+            <div className="p-10 glass-luxury-hover">
               <h2 className="mb-8 text-2xl font-semibold text-white font-display">
                 Întrebări frecvente
               </h2>
@@ -194,9 +191,9 @@ const Contact = () => {
                         {item.question}
                       </span>
                       {openFaq === index ? (
-                        <ChevronUp className="flex-shrink-0 w-5 h-5 text-gold-400 transition-transform duration-300" />
+                        <ChevronUp className="flex-shrink-0 w-5 h-5 transition-transform duration-300 text-gold-400" />
                       ) : (
-                        <ChevronDown className="flex-shrink-0 w-5 h-5 text-cosmic-400 group-hover:text-gold-400 transition-colors duration-300" />
+                        <ChevronDown className="flex-shrink-0 w-5 h-5 transition-colors duration-300 text-cosmic-400 group-hover:text-gold-400" />
                       )}
                     </button>
                     {openFaq === index && (

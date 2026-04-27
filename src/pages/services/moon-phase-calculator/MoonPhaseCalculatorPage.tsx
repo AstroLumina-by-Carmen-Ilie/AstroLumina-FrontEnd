@@ -126,14 +126,24 @@ const MoonPhaseCalculatorPage = () => {
 
         <div className="container relative z-10 px-6 mx-auto">
           <div className="mx-auto max-w-7xl">
+            <div className="mb-8 text-center">
+              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
+                Calculatorul Fazei Lunare
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
+                Descoperă influența fazelor lunare asupra vieții tale și profită
+                de energia fiecărei luni
+              </p>
+            </div>
+
             <div className="overflow-hidden glass-card">
               <div className="flex flex-col md:flex-row">
                 {/* Left Panel */}
-                <div className="hidden flex-col justify-center p-10 bg-gradient-to-br to-transparent from-cosmic-900/40 via-cosmic-800/20 md:flex md:w-1/2">
+                <div className="flex flex-col justify-center p-10 bg-gradient-to-br to-transparent from-cosmic-900/40 via-cosmic-800/20 md:w-1/2">
                   <h2 className="mb-6 text-3xl font-bold text-white font-display">
                     Calculatorul Fazelor Lunare
                   </h2>
-                  <div className="mb-8 space-y-4 leading-relaxed text-cosmic-200/80">
+                  <div className="space-y-4 leading-relaxed text-cosmic-200/80">
                     <p>
                       Descoperă faza lunii pentru orice dată și locație sau vezi
                       cum arată luna în acest moment. Luna are o influență

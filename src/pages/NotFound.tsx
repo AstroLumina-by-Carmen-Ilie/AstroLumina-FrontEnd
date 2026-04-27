@@ -21,10 +21,6 @@ const NotFound = () => {
                 style={{ animationDelay: "0.5s" }}
               />
             </div>
-
-            <p className="mb-3 text-sm font-medium tracking-[0.2em] uppercase text-gold-400/70 font-display">
-              Eroare
-            </p>
             <h1 className="mb-4 text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display via-cosmic-100 to-cosmic-200">
               404
             </h1>

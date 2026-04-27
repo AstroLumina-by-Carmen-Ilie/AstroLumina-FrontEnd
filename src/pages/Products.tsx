@@ -62,9 +62,6 @@ const Products = () => {
 
         <div className="relative z-10 px-6 mx-auto max-w-6xl">
           <div className="mb-20 text-center">
-            <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
-              Resurse Exclusive
-            </p>
             <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Produse Astrologice
             </h1>

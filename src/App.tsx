@@ -179,7 +179,7 @@ function App() {
           <div className="container relative z-10 px-6 py-32 mx-auto text-center">
             <div className="mx-auto max-w-4xl">
               <h1
-                className="mb-8 text-6xl font-bold leading-tight font-display md:text-7xl lg:text-8xl animate-fade-in-up"
+                className="mb-8 text-4xl font-bold leading-tight font-display md:text-6xl lg:text-7xl animate-fade-in-up"
                 style={{ animationDelay: "0.15s" }}
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cosmic-200 to-cosmic-300">
