@@ -204,22 +204,15 @@ function App() {
                 </span>
               </p>
 
-              <div
-                className="flex flex-col gap-5 justify-center sm:flex-row animate-fade-in-up"
-                style={{ animationDelay: "0.6s" }}
-              >
+<div className="flex justify-center animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
                 <button
                   onClick={() => scrollToSection("services")}
-                  className="inline-flex relative gap-3 items-center px-10 py-5 font-semibold text-white bg-gradient-to-r rounded-full luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                  className="p-3 cursor-pointer group"
+                  aria-label="Scroll to explore"
                 >
-                  <span>Explorează Servicii</span>
-                  <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />
-                </button>
-                <button
-                  onClick={() => scrollToSection("contact")}
-                  className="inline-flex gap-3 items-center px-10 py-5 font-semibold rounded-full glass-luxury-hover text-cosmic-100 hover:text-white"
-                >
-                  <span>Contactează-mă</span>
+                  <svg className="w-6 h-6 text-white/40 group-hover:text-white/60 transition-colors duration-300 animate-scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
                 </button>
               </div>
             </div>
