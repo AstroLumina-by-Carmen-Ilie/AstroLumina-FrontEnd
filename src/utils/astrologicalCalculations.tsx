@@ -6,8 +6,7 @@ import {
   LunarDataPayload,
   LunarDataResponse,
 } from "@/types";
-
-const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL;
+import { ASTROLOGICAL_API_URL } from "@/config";
 export const calculateAstralElementsPosition = async (
   language: string,
   payload: BirthDataPayload,

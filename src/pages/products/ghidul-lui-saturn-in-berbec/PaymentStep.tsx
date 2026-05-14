@@ -4,9 +4,7 @@ import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
-
-const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
-const PAYMENT_API_URL = import.meta.env.VITE_PAYMENT_API_URL;
+import { STRIPE_PK, PAYMENT_API_URL } from "@/config";
 
 const stripePromise = loadStripe(STRIPE_PK);
 

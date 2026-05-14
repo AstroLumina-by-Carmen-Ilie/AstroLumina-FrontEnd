@@ -6,12 +6,17 @@ services:
     image: ghcr.io/astrolumina-by-carmen-ilie/astrolumina-frontend:latest
     pull_policy: always
     restart: unless-stopped
-    env_file:
-      - .env
+    environment:
+      - ASTROLOGICAL_API_URL=${ASTROLOGICAL_API_URL}
+      - PAYMENT_API_URL=${PAYMENT_API_URL}
+      - BOOKING_API_URL=${BOOKING_API_URL}
+      - STRIPE_PK=${STRIPE_PK}
+      - NODE_ENV=${NODE_ENV}
+      - FRONTEND_SENTRY_DSN=${FRONTEND_SENTRY_DSN}
     ports:
       - "5173:80"
     healthcheck:
-      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:80/" ]
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -1,4 +1,6 @@
-const R2_BASE_URL = "https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/fonts";
+import { R2_BASE_URL } from "@/config";
+
+const R2_FONTS_URL = R2_BASE_URL + "/fonts";
 
 const fontCache = new Map<string, string>();
 
@@ -7,7 +9,7 @@ export async function loadFontAsBase64(filename: string): Promise<string> {
     return fontCache.get(filename)!;
   }
 
-  const url = `${R2_BASE_URL}/${filename}`;
+  const url = `${R2_FONTS_URL}/${filename}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to load font: ${url} (${response.status})`);

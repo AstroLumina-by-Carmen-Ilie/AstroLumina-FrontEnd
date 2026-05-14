@@ -40,11 +40,14 @@
         connect-src 'self'
           https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev
           http://localhost:3031 
+          http://astrology-api:3031 
           https://astrolumina-astrologyapi.onrender.com 
           https://api.stripe.com 
           http://localhost:3032 
+          http://payment-api:3032 
           https://astrolumina-paymentapi.onrender.com 
           http://localhost:3033 
+          http://booking-api:3033 
           https://astrolumina-bookingapi.onrender.com;
       "
     />
@@ -67,6 +70,7 @@
   </head>
   <body>
     <div id="root"></div>
+    <script src="/env.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { R2_BASE_URL } from "@/config";
 
 export interface NavbarProps {
   isScrolled: boolean;
@@ -17,11 +18,13 @@ export const getNavbarStyles = () => {
   };
 };
 
+const R2_LOGO_URL = R2_BASE_URL + "/logo";
+
 export const NavbarLogo: React.FC = () => (
   <div className="flex flex-shrink-0 items-center">
     <Link to="/" className="flex items-center cursor-pointer group">
       <img
-        src="https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/logo/Banner.png"
+        src={`${R2_LOGO_URL}/Banner.png`}
         alt="AstroLumina"
         className="h-12 w-auto transition-transform duration-500 group-hover:scale-105"
       />

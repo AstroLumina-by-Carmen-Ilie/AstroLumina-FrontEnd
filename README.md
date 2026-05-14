@@ -47,14 +47,18 @@ AstroLumina/
 Creează un fișier `.env` în rădăcina proiectului:
 
 ```env
-VITE_NODE_ENV=development
+NODE_ENV=development
 
-VITE_ASTROLOGICAL_API_URL=http://localhost:3031
-VITE_PAYMENT_API_URL=http://localhost:3032
-VITE_BOOKING_API_URL=http://localhost:3033
+ASTROLOGICAL_API_URL=<url>
+PAYMENT_API_URL=<url>
+BOOKING_API_URL=<url>
 
-VITE_STRIPE_PK=pk_test_...
+STRIPE_PK=<stripe-pk>
+
+SENTRY_DSN=<sentry-dsn>
 ```
+
+Toate variabilele sunt obligatorii (fara valori default). App-ul va esua la pornire daca lipsesc.
 
 ### Instalare
 
