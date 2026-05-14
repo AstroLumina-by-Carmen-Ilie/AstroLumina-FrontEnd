@@ -67,8 +67,8 @@ export default {
         "shimmer-luxury": "shimmerLuxury 3s ease-in-out infinite",
         "pulse-glow": "pulseGlow 2s ease-in-out infinite",
         "reveal-text": "revealText 1s ease-out forwards",
-        "magnetic": "magnetic 0.3s ease-out",
-        "tilt": "tilt 0.3s ease-out",
+        magnetic: "magnetic 0.3s ease-out",
+        tilt: "tilt 0.3s ease-out",
       },
       keyframes: {
         float: {
@@ -145,8 +145,12 @@ export default {
           "100%": { transform: "scale(1)" },
         },
         tilt: {
-          "0%": { transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)" },
-          "100%": { transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)" },
+          "0%": {
+            transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+          },
+          "100%": {
+            transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+          },
         },
       },
       backgroundImage: {
@@ -166,31 +170,35 @@ export default {
         soft: "0 4px 24px rgba(0, 0, 0, 0.06)",
         "soft-lg": "0 8px 40px rgba(0, 0, 0, 0.08)",
         cosmic: "0 8px 32px rgba(91, 33, 182, 0.2)",
-        "luxury-gold": "0 4px 24px rgba(202, 138, 4, 0.15), 0 8px 48px rgba(202, 138, 4, 0.1)",
-        "luxury-purple": "0 4px 24px rgba(124, 58, 237, 0.15), 0 8px 48px rgba(124, 58, 237, 0.1)",
-        "elegant": "0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04)",
-        "card-hover": "0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+        "luxury-gold":
+          "0 4px 24px rgba(202, 138, 4, 0.15), 0 8px 48px rgba(202, 138, 4, 0.1)",
+        "luxury-purple":
+          "0 4px 24px rgba(124, 58, 237, 0.15), 0 8px 48px rgba(124, 58, 237, 0.1)",
+        elegant:
+          "0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04)",
+        "card-hover":
+          "0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)",
       },
       transitionTimingFunction: {
-        "luxury": "cubic-bezier(0.4, 0, 0.2, 1)",
+        luxury: "cubic-bezier(0.4, 0, 0.2, 1)",
         "bounce-soft": "cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "smooth": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+        smooth: "cubic-bezier(0.25, 0.1, 0.25, 1)",
       },
       transitionDuration: {
-        "400": "400ms",
-        "500": "500ms",
-        "600": "600ms",
-        "700": "700ms",
-        "900": "900ms",
+        400: "400ms",
+        500: "500ms",
+        600: "600ms",
+        700: "700ms",
+        900: "900ms",
       },
       spacing: {
-        "18": "4.5rem",
-        "88": "22rem",
-        "128": "32rem",
+        18: "4.5rem",
+        88: "22rem",
+        128: "32rem",
       },
       letterSpacing: {
-        "luxury": "0.15em",
-        "elegant": "0.05em",
+        luxury: "0.15em",
+        elegant: "0.05em",
       },
     },
   },

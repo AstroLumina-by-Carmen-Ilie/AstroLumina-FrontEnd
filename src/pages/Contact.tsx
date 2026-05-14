@@ -81,16 +81,16 @@ const Contact = () => {
     <div className="min-h-screen text-white bg-midnight-950">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative pt-28 pb-20">
+      <div className="relative pb-20 pt-28">
         <div className="cosmic-orb cosmic-orb-purple w-[500px] h-[500px] top-0 right-0 opacity-15"></div>
         <div className="cosmic-orb cosmic-orb-gold w-[400px] h-[400px] bottom-0 left-0 opacity-10"></div>
 
-        <div className="relative z-10 px-6 mx-auto max-w-6xl">
+        <div className="relative z-10 max-w-6xl px-6 mx-auto">
           <div className="mb-20 text-center">
             <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Contact
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
+            <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70">
               Ai întrebări sau dorești o consultație? Trimite-mi un mesaj.
             </p>
           </div>
@@ -111,7 +111,7 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
-                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Numele tău"
                     required
                   />
@@ -126,7 +126,7 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="email@exemplu.ro"
                     required
                   />
@@ -141,7 +141,7 @@ const Contact = () => {
                   <input
                     type="text"
                     id="subject"
-                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Despre ce dorești să discutăm?"
                     required
                   />
@@ -156,14 +156,14 @@ const Contact = () => {
                   <textarea
                     id="message"
                     rows={5}
-                    className="p-4 w-full text-white rounded-xl border transition-all duration-300 resize-none bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border resize-none rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Scrie mesajul tău aici..."
                     required
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="flex gap-3 justify-center items-center px-8 py-4 w-full font-semibold text-white bg-gradient-to-r rounded-full luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                  className="flex items-center justify-center w-full gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                 >
                   <Send className="w-5 h-5" />
                   <span>Trimite mesaj</span>
@@ -182,7 +182,7 @@ const Contact = () => {
                     className="border-b border-white/5 last:border-0"
                   >
                     <button
-                      className="flex justify-between items-center py-5 w-full text-left transition-colors cursor-pointer text-cosmic-200 hover:text-white group"
+                      className="flex items-center justify-between w-full py-5 text-left transition-colors cursor-pointer text-cosmic-200 hover:text-white group"
                       onClick={() =>
                         setOpenFaq(openFaq === index ? null : index)
                       }

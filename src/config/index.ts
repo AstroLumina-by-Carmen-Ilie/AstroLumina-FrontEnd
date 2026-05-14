@@ -1,12 +1,49 @@
 import * as Sentry from "@sentry/react";
 
 const envSchema = z.object({
+  NODE_ENV: z.enum(["development", "staging", "production"]),
+
+  ASTROLOGY_API_SERVER_PORT: z.coerce
+    .number()
+    .int()
+    .positive()
+    .min(1, "ASTROLOGY_API_SERVER_PORT is required"),
+  ASTROLOGY_API_SERVER_DNS: z
+    .string()
+    .min(1, "ASTROLOGY_API_SERVER_DNS is required"),
+
+  BOOKING_API_SERVER_PORT: z.coerce
+    .number()
+    .int()
+    .positive()
+    .min(1, "BOOKING_API_SERVER_PORT is required"),
+  BOOKING_API_SERVER_DNS: z
+    .string()
+    .min(1, "BOOKING_API_SERVER_DNS is required"),
+
+  PAYMENT_API_SERVER_PORT: z.coerce
+    .number()
+    .int()
+    .positive()
+    .min(1, "PAYMENT_API_SERVER_PORT is required"),
+  PAYMENT_API_SERVER_DNS: z
+    .string()
+    .min(1, "PAYMENT_API_SERVER_DNS is required"),
+
+  FRONTEND_SERVER_PORT: z.coerce
+    .number()
+    .int()
+    .positive()
+    .min(1, "FRONTEND_SERVER_PORT is required"),
+  FRONTEND_SERVER_DNS: z.string().min(1, "FRONTEND_SERVER_DNS is required"),
+
+  FRONTEND_SENTRY_DSN: z.string().min(1, "FRONTEND_SENTRY_DSN is required"),
+
   ASTROLOGICAL_API_URL: z.string().min(1, "ASTROLOGICAL_API_URL is required"),
   PAYMENT_API_URL: z.string().min(1, "PAYMENT_API_URL is required"),
   BOOKING_API_URL: z.string().min(1, "BOOKING_API_URL is required"),
+
   STRIPE_PK: z.string().min(1, "STRIPE_PK is required"),
-  NODE_ENV: z.enum(["development", "staging", "production"]),
-  FRONTEND_SENTRY_DSN: z.string().min(1, "FRONTEND_SENTRY_DSN is required"),
   R2_BASE_URL: z.string().min(1, "R2_BASE_URL is required"),
 });
 
@@ -58,9 +95,22 @@ export const env = parseAndValidateEnv();
 initSentry(env.FRONTEND_SENTRY_DSN, env.NODE_ENV);
 
 // Export validated config
+export const NODE_ENV = env.NODE_ENV;
+
+export const ASTROLOGY_API_SERVER_PORT = env.ASTROLOGY_API_SERVER_PORT;
+export const ASTROLOGY_API_SERVER_DNS = env.ASTROLOGY_API_SERVER_DNS;
+export const BOOKING_API_SERVER_PORT = env.BOOKING_API_SERVER_PORT;
+export const BOOKING_API_SERVER_DNS = env.BOOKING_API_SERVER_DNS;
+export const PAYMENT_API_SERVER_PORT = env.PAYMENT_API_SERVER_PORT;
+export const PAYMENT_API_SERVER_DNS = env.PAYMENT_API_SERVER_DNS;
+export const FRONTEND_SERVER_PORT = env.FRONTEND_SERVER_PORT;
+export const FRONTEND_SERVER_DNS = env.FRONTEND_SERVER_DNS;
+
+export const FRONTEND_SENTRY_DSN = env.FRONTEND_SENTRY_DSN;
+
 export const ASTROLOGICAL_API_URL = env.ASTROLOGICAL_API_URL;
 export const PAYMENT_API_URL = env.PAYMENT_API_URL;
 export const BOOKING_API_URL = env.BOOKING_API_URL;
+
 export const STRIPE_PK = env.STRIPE_PK;
-export const NODE_ENV = env.NODE_ENV;
 export const R2_BASE_URL = env.R2_BASE_URL;

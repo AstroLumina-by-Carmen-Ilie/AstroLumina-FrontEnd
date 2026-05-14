@@ -7,17 +7,25 @@ services:
     pull_policy: always
     restart: unless-stopped
     environment:
+      - NODE_ENV=${NODE_ENV}
+      - ASTROLOGY_API_SERVER_PORT=${ASTROLOGY_API_SERVER_PORT}
+      - ASTROLOGY_API_SERVER_DNS=${ASTROLOGY_API_SERVER_DNS}
+      - BOOKING_API_SERVER_PORT=${BOOKING_API_SERVER_PORT}
+      - BOOKING_API_SERVER_DNS=${BOOKING_API_SERVER_DNS}
+      - PAYMENT_API_SERVER_PORT=${PAYMENT_API_SERVER_PORT}
+      - PAYMENT_API_SERVER_DNS=${PAYMENT_API_SERVER_DNS}
+      - FRONTEND_SERVER_PORT=${FRONTEND_SERVER_PORT}
+      - FRONTEND_SERVER_DNS=${FRONTEND_SERVER_DNS}
+      - FRONTEND_SENTRY_DSN=${FRONTEND_SENTRY_DSN}
       - ASTROLOGICAL_API_URL=${ASTROLOGICAL_API_URL}
       - PAYMENT_API_URL=${PAYMENT_API_URL}
       - BOOKING_API_URL=${BOOKING_API_URL}
       - STRIPE_PK=${STRIPE_PK}
-      - NODE_ENV=${NODE_ENV}
-      - FRONTEND_SENTRY_DSN=${FRONTEND_SENTRY_DSN}
       - R2_BASE_URL=${R2_BASE_URL}
     ports:
-      - "5173:80"
+      - "${FRONTEND_SERVER_PORT}:80"
     healthcheck:
-      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:80" ]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:80"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,10 +34,10 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 1G
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
     networks:
       - frontend
