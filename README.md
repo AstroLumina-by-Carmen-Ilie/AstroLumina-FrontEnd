@@ -47,7 +47,7 @@ AstroLumina/
 Creează un fișier `.env` în rădăcina proiectului:
 
 ```env
-NODE_ENV=development
+NODE_ENV=development|staging|production
 
 ASTROLOGICAL_API_URL=<url>
 PAYMENT_API_URL=<url>
@@ -56,6 +56,8 @@ BOOKING_API_URL=<url>
 STRIPE_PK=<stripe-pk>
 
 SENTRY_DSN=<sentry-dsn>
+
+R2_BASE_URL=<r2-url>
 ```
 
 Toate variabilele sunt obligatorii (fara valori default). App-ul va esua la pornire daca lipsesc.

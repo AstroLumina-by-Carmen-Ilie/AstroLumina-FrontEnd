@@ -5,7 +5,7 @@ const envSchema = z.object({
   PAYMENT_API_URL: z.string().min(1, "PAYMENT_API_URL is required"),
   BOOKING_API_URL: z.string().min(1, "BOOKING_API_URL is required"),
   STRIPE_PK: z.string().min(1, "STRIPE_PK is required"),
-  NODE_ENV: z.enum(["development", "production"]).default("production"),
+  NODE_ENV: z.enum(["development", "staging", "production"]),
   FRONTEND_SENTRY_DSN: z.string().min(1, "FRONTEND_SENTRY_DSN is required"),
   R2_BASE_URL: z.string().min(1, "R2_BASE_URL is required"),
 });
