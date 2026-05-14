@@ -68,11 +68,11 @@ const MoonPhaseCalculatorPage = () => {
       return (
         <div className="space-y-5">
           <p className="mb-8 text-lg text-center text-cosmic-200/70">
-            Alegeți modalitatea de calcul a fazei lunare
+            Alegeți modalitatea de calcul a fazei Lunare
           </p>
           <button
             type="button"
-            className="flex gap-3 justify-center items-center px-8 py-5 w-full font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
             onClick={() => setSelectionMode("specific-date")}
           >
             <svg
@@ -92,7 +92,7 @@ const MoonPhaseCalculatorPage = () => {
           </button>
           <button
             type="button"
-            className="flex gap-3 justify-center items-center px-8 py-5 w-full font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-500 shadow-luxury-gold"
+            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-500 shadow-luxury-gold"
             onClick={handleCurrentDate}
           >
             <svg
@@ -108,7 +108,7 @@ const MoonPhaseCalculatorPage = () => {
                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
               />
             </svg>
-            <span>Vezi luna acum</span>
+            <span>Vezi Luna acum</span>
           </button>
         </div>
       );
@@ -130,9 +130,9 @@ const MoonPhaseCalculatorPage = () => {
               <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
                 Calculatorul Fazei Lunare
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
-                Descoperă influența fazelor lunare asupra vieții tale și profită
-                de energia fiecărei luni
+              <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
+                Descoperă influența fazelor Lunare asupra vieții tale și profită
+                de energia fiecărei Luni
               </p>
             </div>
 
@@ -145,19 +145,19 @@ const MoonPhaseCalculatorPage = () => {
                   </h2>
                   <div className="space-y-4 leading-relaxed text-cosmic-200/80">
                     <p>
-                      Descoperă faza lunii pentru orice dată și locație sau vezi
-                      cum arată luna în acest moment. Luna are o influență
+                      Descoperă faza Lunii pentru orice dată și locație sau vezi
+                      cum arată Luna în acest moment. Acest astru are o influență
                       profundă asupra energiei noastre și a ritmurilor naturale.
                     </p>
                     <p>Ce vei primi:</p>
                     <ul className="space-y-1 list-disc list-inside">
-                      <li>Faza curentă a lunii cu reprezentare vizuală</li>
-                      <li>Semnul zodiacal al lunii și soarelui</li>
+                      <li>Faza curentă a Lunii cu reprezentare vizuală</li>
+                      <li>Semnul zodiacal al Lunii și Soarelui</li>
                       <li>Orele de răsărit și apus pentru locația ta</li>
-                      <li>Următoarele faze importante ale lunii</li>
+                      <li>Următoarele faze importante ale Lunii</li>
                     </ul>
                     <p>
-                      Informațiile despre fazele lunare te pot ajuta să îți
+                      Informațiile despre fazele Lunare te pot ajuta să îți
                       planifici activitățile în funcție de energia ciclurilor
                       cosmice.
                     </p>
@@ -165,7 +165,7 @@ const MoonPhaseCalculatorPage = () => {
                 </div>
 
                 {/* Right Panel */}
-                <div className="p-10 w-full md:w-1/2">{renderContent()}</div>
+                <div className="w-full p-10 md:w-1/2">{renderContent()}</div>
               </div>
             </div>
           </div>
