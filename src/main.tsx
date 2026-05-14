@@ -32,18 +32,18 @@ if (rootElement) {
       <LoadingProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<AstralCalculator />} />
+            <Route path="/" element={<NotFound />} />
             <Route path="/despre-mine" element={<NotFound />} />
             <Route path="/contact" element={<NotFound />} />
             <Route path="/servicii" element={<NotFound />} />
             {/* Calculators */}
             <Route
               path="/servicii/calculatorul-astral"
-              element={<NotFound />}
+              element={<AstralCalculator />}
             />
             <Route
               path="/servicii/calculatorul-fazei-lunare"
-              element={<NotFound />}
+              element={<MoonPhaseCalculator />}
             />
             {/* Previews */}
             <Route

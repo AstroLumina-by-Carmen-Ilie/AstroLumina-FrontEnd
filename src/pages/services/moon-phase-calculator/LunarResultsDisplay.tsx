@@ -31,9 +31,9 @@ const LunarResultsDisplay: React.FC<{
         </p>
       </div>
 
-      <div className="mb-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="mb-4 border rounded-xl bg-white/5 border-white/10">
         <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
-          🌙 Faza lunară
+          🌙 Faza Lunară
         </h4>
 
         <div className="p-4 pt-0">
@@ -67,7 +67,7 @@ const LunarResultsDisplay: React.FC<{
         </div>
       </div>
 
-      <div className="mb-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="mb-4 border rounded-xl bg-white/5 border-white/10">
         <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
           ☀️ Soare
         </h4>
@@ -111,7 +111,7 @@ const LunarResultsDisplay: React.FC<{
         </div>
       </div>
 
-      <div className="rounded-xl border bg-white/5 border-white/10">
+      <div className="border rounded-xl bg-white/5 border-white/10">
         <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
           🔮 Fazele Lunii
         </h4>
