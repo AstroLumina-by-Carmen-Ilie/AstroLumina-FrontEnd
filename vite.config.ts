@@ -1,10 +1,104 @@
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import path from "path";
+import fs from "fs";
 import react from "@vitejs/plugin-react";
+
+const ENV_VARS = [
+  "NODE_ENV",
+  "ASTROLOGY_API_SERVER_PORT",
+  "ASTROLOGY_API_SERVER_DNS",
+  "BOOKING_API_SERVER_PORT",
+  "BOOKING_API_SERVER_DNS",
+  "PAYMENT_API_SERVER_PORT",
+  "PAYMENT_API_SERVER_DNS",
+  "FRONTEND_SERVER_PORT",
+  "FRONTEND_SERVER_DNS",
+  "FRONTEND_SENTRY_DSN",
+  "ASTROLOGICAL_API_URL",
+  "PAYMENT_API_URL",
+  "BOOKING_API_URL",
+  "STRIPE_PK",
+  "R2_BASE_URL",
+] as const;
+
+function hasEnvVars(): boolean {
+  return ENV_VARS.filter((k) => k !== "NODE_ENV").some(
+    (key) => process.env[key] !== undefined,
+  );
+}
+
+function envJsPlugin(): Plugin {
+  return {
+    name: "env-js-plugin",
+    transformIndexHtml(html) {
+      if (!hasEnvVars()) {
+        return html;
+      }
+
+      let result = html;
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          result = result.replaceAll(`__${key}__`, value);
+        }
+      }
+
+      const envValues: Record<string, string> = {};
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          envValues[key] = value;
+        }
+      }
+
+      const envJsContent = `window.ENV = ${JSON.stringify(envValues, null, 2)};`;
+
+      return result.replace(
+        '<script src="/env.js"></script>',
+        `<script>${envJsContent}</script>`
+      );
+    },
+    closeBundle() {
+      const distPath = path.resolve(__dirname, "dist", "env.js");
+      const envValues: Record<string, string> = {};
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          envValues[key] = value;
+        }
+      }
+
+      const content = hasEnvVars()
+        ? `window.ENV = ${JSON.stringify(envValues, null, 2)};\n`
+        : `window.ENV = {
+  NODE_ENV: "__NODE_ENV__",
+  ASTROLOGY_API_SERVER_PORT: "__ASTROLOGY_API_SERVER_PORT__",
+  ASTROLOGY_API_SERVER_DNS: "__ASTROLOGY_API_SERVER_DNS__",
+  BOOKING_API_SERVER_PORT: "__BOOKING_API_SERVER_PORT__",
+  BOOKING_API_SERVER_DNS: "__BOOKING_API_SERVER_DNS__",
+  PAYMENT_API_SERVER_PORT: "__PAYMENT_API_SERVER_PORT__",
+  PAYMENT_API_SERVER_DNS: "__PAYMENT_API_SERVER_DNS__",
+  FRONTEND_SERVER_PORT: "__FRONTEND_SERVER_PORT__",
+  FRONTEND_SERVER_DNS: "__FRONTEND_SERVER_DNS__",
+  FRONTEND_SENTRY_DSN: "__FRONTEND_SENTRY_DSN__",
+  ASTROLOGICAL_API_URL: "__ASTROLOGICAL_API_URL__",
+  PAYMENT_API_URL: "__PAYMENT_API_URL__",
+  BOOKING_API_URL: "__BOOKING_API_URL__",
+  STRIPE_PK: "__STRIPE_PK__",
+  R2_BASE_URL: "__R2_BASE_URL__",
+};
+`;
+
+      fs.writeFileSync(distPath, content);
+    },
+  };
+}
+
+const serverPort = parseInt(process.env.FRONTEND_SERVER_PORT || "5173", 10);
 
 export default defineConfig({
   base: "/",
-  plugins: [react()],
+  plugins: [react(), envJsPlugin()],
   build: {
     target: "es2022",
     minify: "esbuild",
@@ -21,7 +115,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: serverPort,
     host: true,
   },
   preview: {

@@ -5,6 +5,7 @@ import { ro } from "date-fns/locale";
 import { ChevronDown } from "lucide-react";
 import axios from "axios";
 import { AvailableSlot, AvailabilitySelectorProps } from "@/types";
+import { BOOKING_API_URL } from "@/config";
 
 /** Local YYYY-MM-DD (avoids UTC shift from toISOString). */
 function toLocalYmd(d: Date): string {
@@ -93,7 +94,6 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   onNext,
   onBack,
 }) => {
-  const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
   const SESSION_KEY = "astrograma-natala-si-karmica";
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(

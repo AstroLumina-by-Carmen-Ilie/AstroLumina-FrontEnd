@@ -68,7 +68,10 @@ if (rootElement) {
             />
             {/* Evenimente */}
             <Route path="/evenimente" element={<Events />} />
-            <Route path="/evenimente/rezervare/:id" element={<ConstellationEvent />} />
+            <Route
+              path="/evenimente/rezervare/:id"
+              element={<ConstellationEvent />}
+            />
             {/*  */}
             <Route path="*" element={<NotFound />} />
           </Routes>

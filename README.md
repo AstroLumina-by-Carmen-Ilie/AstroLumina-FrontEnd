@@ -14,31 +14,31 @@ AstroLumina/
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + TypeScript + Vite |
-| Styling | Tailwind CSS + Custom CSS (cosmic/glassmorphism) |
-| Routing | React Router v6 |
-| HTTP | Axios |
-| Payments | Stripe (Embedded Checkout) |
-| Booking | Cal.com (@calcom/embed-react) |
-| PDF | jsPDF + jspdf-autotable |
-| Date | flatpickr |
-| Location | country-state-city |
-| Icons | Lucide React |
-| Fonts | Playfair Display + Inter |
-| Deployment | Cloudflare Pages |
+| Layer      | Technology                                       |
+| ---------- | ------------------------------------------------ |
+| Frontend   | React 18 + TypeScript + Vite                     |
+| Styling    | Tailwind CSS + Custom CSS (cosmic/glassmorphism) |
+| Routing    | React Router v6                                  |
+| HTTP       | Axios                                            |
+| Payments   | Stripe (Embedded Checkout)                       |
+| Booking    | Cal.com (@calcom/embed-react)                    |
+| PDF        | jsPDF + jspdf-autotable                          |
+| Date       | flatpickr                                        |
+| Location   | country-state-city                               |
+| Icons      | Lucide React                                     |
+| Fonts      | Playfair Display + Inter                         |
+| Deployment | Cloudflare Pages                                 |
 
 ## Servicii
 
-| Serviciu | Ruta | Descriere | Status |
-|----------|------|-----------|--------|
-| Calculatorul Astral | `/servicii/calculatorul-astral` | Calculator gratuit poziții planetare | ✅ Activ |
-| Lumina Natală | `/astrograma/lumina-natala-si-karmica` | Hartă natală + PDF | ✅ Activ |
-| Lumina Karmică | `/servicii/lumina-karmica` | Hartă karmică + PDF | ✅ Activ |
-| Consultații | `/servicii/consultatii` | Programare cu Cal.com | ✅ Activ |
-| Previziuni | `/astrograma/lumina-previzionala` | Tranzituri și previziuni | 🔧 În dezvoltare |
-| Relațională | `/astrograma/lumina-relationala` | Sinastrie și compatibilitate | 🔧 În dezvoltare |
+| Serviciu            | Ruta                                   | Descriere                            | Status           |
+| ------------------- | -------------------------------------- | ------------------------------------ | ---------------- |
+| Calculatorul Astral | `/servicii/calculatorul-astral`        | Calculator gratuit poziții planetare | ✅ Activ         |
+| Lumina Natală       | `/astrograma/lumina-natala-si-karmica` | Hartă natală + PDF                   | ✅ Activ         |
+| Lumina Karmică      | `/servicii/lumina-karmica`             | Hartă karmică + PDF                  | ✅ Activ         |
+| Consultații         | `/servicii/consultatii`                | Programare cu Cal.com                | ✅ Activ         |
+| Previziuni          | `/astrograma/lumina-previzionala`      | Tranzituri și previziuni             | 🔧 În dezvoltare |
+| Relațională         | `/astrograma/lumina-relationala`       | Sinastrie și compatibilitate         | 🔧 În dezvoltare |
 
 ## Configurare
 
@@ -47,14 +47,29 @@ AstroLumina/
 Creează un fișier `.env` în rădăcina proiectului:
 
 ```env
-VITE_NODE_ENV=development
+NODE_ENV=development|staging|production
 
-VITE_ASTROLOGICAL_API_URL=http://localhost:3031
-VITE_PAYMENT_API_URL=http://localhost:3032
-VITE_BOOKING_API_URL=http://localhost:3033
+ASTROLOGY_API_SERVER_PORT=3031
+ASTROLOGY_API_SERVER_DNS=localhost
+BOOKING_API_SERVER_PORT=3033
+BOOKING_API_SERVER_DNS=localhost
+PAYMENT_API_SERVER_PORT=3032
+PAYMENT_API_SERVER_DNS=localhost
+FRONTEND_SERVER_PORT=5173
+FRONTEND_SERVER_DNS=localhost
 
-VITE_STRIPE_PK=pk_test_...
+ASTROLOGICAL_API_URL=http://localhost:3031
+PAYMENT_API_URL=http://localhost:3032
+BOOKING_API_URL=http://localhost:3033
+
+STRIPE_PK=<stripe-pk>
+
+FRONTEND_SENTRY_DSN=<sentry-dsn>
+
+R2_BASE_URL=https://pub-xxx.r2.dev
 ```
+
+Toate variabilele sunt obligatorii (fara valori default). App-ul va esua la pornire daca lipsesc.
 
 ### Instalare
 
@@ -78,6 +93,7 @@ npm run preview
 ## Structura API-urilor
 
 ### AstrologyAPI (3031)
+
 - `POST /api/v2/:lang/birth-data` — Date complete naștere
 - `POST /api/v2/:lang/astral-data` — Date astrale filtrate
 - `POST /api/v2/:lang/astral-data/:type` — Date filtrate pe tip (natal/karmic)
@@ -85,12 +101,14 @@ npm run preview
 - `GET /health` — Health check
 
 ### PaymentAPI (3032)
+
 - `POST /create-checkout-session/:product` — Creare sesiune checkout Stripe
 - `GET /session-status?session_id=` — Verificare status plată
 - `GET /products` — Lista produse disponibile
 - `GET /health` — Health check
 
 ### BookingAPI (3033)
+
 - `GET /api/event-types` — Tipuri de evenimente Cal.com
 - `GET /api/bookings` — Lista rezervări
 - `POST /api/bookings` — Creare rezervare

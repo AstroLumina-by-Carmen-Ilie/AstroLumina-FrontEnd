@@ -26,25 +26,32 @@
       content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' 
-          https://js.stripe.com
+          https://*.stripe.com
           https://static.cloudflareinsights.com;
         style-src 'self' 'unsafe-inline' 
           https://fonts.googleapis.com;
         font-src 'self' 
           https://fonts.gstatic.com 
-          https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev;
+          https://*.r2.dev;
         img-src 'self' data: https:;
         frame-src 
-          https://js.stripe.com
-          https://m.stripe.com;
+          https://*.stripe.com;
+        worker-src 'self' blob:;
         connect-src 'self'
-          https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev
-          http://localhost:3031 
-          https://astrolumina-astrologyapi.onrender.com 
-          https://api.stripe.com 
-          http://localhost:3032 
-          https://astrolumina-paymentapi.onrender.com 
-          http://localhost:3033 
+          https://*.r2.dev
+          https://*.stripe.com
+          https://*.sentry.io
+          http://localhost:__ASTROLOGY_API_SERVER_PORT__
+          http://localhost:__PAYMENT_API_SERVER_PORT__
+          http://localhost:__BOOKING_API_SERVER_PORT__
+          http://__ASTROLOGY_API_SERVER_DNS__:__ASTROLOGY_API_SERVER_PORT__
+          https://__ASTROLOGY_API_SERVER_DNS__:__ASTROLOGY_API_SERVER_PORT__
+          http://__PAYMENT_API_SERVER_DNS__:__PAYMENT_API_SERVER_PORT__
+          https://__PAYMENT_API_SERVER_DNS__:__PAYMENT_API_SERVER_PORT__
+          http://__BOOKING_API_SERVER_DNS__:__BOOKING_API_SERVER_PORT__
+          https://__BOOKING_API_SERVER_DNS__:__BOOKING_API_SERVER_PORT__
+          https://astrolumina-astrologyapi.onrender.com
+          https://astrolumina-paymentapi.onrender.com
           https://astrolumina-bookingapi.onrender.com;
       "
     />
@@ -67,6 +74,7 @@
   </head>
   <body>
     <div id="root"></div>
+    <script src="/env.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

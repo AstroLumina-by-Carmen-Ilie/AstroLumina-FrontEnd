@@ -56,16 +56,16 @@ const Products = () => {
     <div className="min-h-screen text-white bg-midnight-950">
       <Navbar isScrolled={isScrolled} />
 
-      <div className="relative pt-28 pb-20">
+      <div className="relative pb-20 pt-28">
         <div className="cosmic-orb cosmic-orb-gold w-[500px] h-[500px] top-0 left-0 opacity-10"></div>
         <div className="cosmic-orb cosmic-orb-purple w-[400px] h-[400px] bottom-0 right-0 opacity-10"></div>
 
-        <div className="relative z-10 px-6 mx-auto max-w-6xl">
+        <div className="relative z-10 max-w-6xl px-6 mx-auto">
           <div className="mb-20 text-center">
             <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Produse Astrologice
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70">
+            <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70">
               Ghiduri digitale și rapoarte pentru auto-cunoaștere prin
               astrologie
             </p>
@@ -78,16 +78,16 @@ const Products = () => {
                 className="overflow-hidden glass-luxury-hover group"
               >
                 <div className="p-10">
-                  <div className="flex flex-col gap-6 justify-between items-start mb-8 md:flex-row md:items-center">
-                    <div className="flex gap-5 items-center">
-                      <div className="flex justify-center items-center w-14 h-14 rounded-2xl transition-all duration-500 bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
+                  <div className="flex flex-col items-start justify-between gap-6 mb-8 md:flex-row md:items-center">
+                    <div className="flex items-center gap-5">
+                      <div className="flex items-center justify-center transition-all duration-500 w-14 h-14 rounded-2xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
                         <Package className="w-6 h-6" />
                       </div>
                       <h2 className="text-2xl font-bold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
                         {product.title}
                       </h2>
                     </div>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex items-center gap-4">
                       <span className="text-lg font-semibold text-gold-400">
                         {product.price}
                       </span>
@@ -106,7 +106,7 @@ const Products = () => {
                       {product.details.map((detail, index) => (
                         <li
                           key={index}
-                          className="flex gap-3 items-start text-base text-cosmic-200/70"
+                          className="flex items-start gap-3 text-base text-cosmic-200/70"
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-gold-500 mt-2 flex-shrink-0"></div>
                           <span>{detail}</span>
@@ -117,7 +117,7 @@ const Products = () => {
 
                   <Link
                     to={`/produse/${product.id}`}
-                    className="inline-flex gap-3 items-center px-8 py-4 font-semibold text-white bg-gradient-to-r rounded-full luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                    className="inline-flex items-center gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                   >
                     <span>Vezi detalii</span>
                     <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />

@@ -5,9 +5,8 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { ConstellationEvent } from "@/data/events";
+import { STRIPE_PK, PAYMENT_API_URL } from "@/config";
 
-const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
-const PAYMENT_API_URL = import.meta.env.VITE_PAYMENT_API_URL;
 const stripePromise = loadStripe(STRIPE_PK);
 
 interface TicketPaymentFormProps {

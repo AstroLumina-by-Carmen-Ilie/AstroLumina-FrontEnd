@@ -21,6 +21,9 @@ RUN mkdir -p \
   /var/cache/nginx/scgi_temp
 
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker-entrypoint.sh /docker-entrypoint-astrolumina.sh
+RUN chmod +x /docker-entrypoint-astrolumina.sh \
+  && rm -f /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 RUN chown -R nginx:nginx \
@@ -28,4 +31,4 @@ RUN chown -R nginx:nginx \
   /var/cache/nginx
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/docker-entrypoint-astrolumina.sh"]

@@ -1,7 +1,5 @@
 import { useState, useCallback } from "react";
-
-const BOOKING_API_URL =
-  import.meta.env.VITE_BOOKING_API_URL || "http://localhost:3033";
+import { BOOKING_API_URL } from "@/config";
 
 interface SeatInfo {
   eventId: string;

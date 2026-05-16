@@ -5,9 +5,8 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { AvailableSlot, PaymentFormProps } from "@/types";
+import { STRIPE_PK, PAYMENT_API_URL } from "@/config";
 
-const STRIPE_PK = import.meta.env.VITE_STRIPE_PK;
-const PAYMENT_API_URL = import.meta.env.VITE_PAYMENT_API_URL;
 const stripePromise = loadStripe(STRIPE_PK);
 
 /** Stripe client_secret is always `${resourceId}_secret_${random}` (Checkout Session `cs_…` or PaymentIntent `pi_…`). */

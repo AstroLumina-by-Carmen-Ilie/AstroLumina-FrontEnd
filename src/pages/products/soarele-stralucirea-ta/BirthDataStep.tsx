@@ -11,8 +11,7 @@ import {
   getRomanianCityCoordinates,
   COUNTRY_NAMES_RO,
 } from "@/data";
-
-const ASTROLOGICAL_API_URL = import.meta.env.VITE_ASTROLOGICAL_API_URL;
+import { ASTROLOGICAL_API_URL } from "@/config";
 
 interface BirthDataStepProps {
   onNext: (sunSign: string) => void;
