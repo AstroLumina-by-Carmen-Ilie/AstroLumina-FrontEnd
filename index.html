@@ -26,20 +26,21 @@
       content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' 
-          https://js.stripe.com
+          https://*.stripe.com
           https://static.cloudflareinsights.com;
         style-src 'self' 'unsafe-inline' 
           https://fonts.googleapis.com;
         font-src 'self' 
           https://fonts.gstatic.com 
-          https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev;
+          https://*.r2.dev;
         img-src 'self' data: https:;
         frame-src 
-          https://js.stripe.com
-          https://m.stripe.com;
+          https://*.stripe.com;
+        worker-src 'self' blob:;
         connect-src 'self'
-          https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev
-          https://api.stripe.com
+          https://*.r2.dev
+          https://*.stripe.com
+          https://*.sentry.io
           http://localhost:__ASTROLOGY_API_SERVER_PORT__
           http://localhost:__PAYMENT_API_SERVER_PORT__
           http://localhost:__BOOKING_API_SERVER_PORT__

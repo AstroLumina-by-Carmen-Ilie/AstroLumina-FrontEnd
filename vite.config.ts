@@ -1,10 +1,75 @@
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import path from "path";
+import fs from "fs";
 import react from "@vitejs/plugin-react";
+
+const ENV_VARS = [
+  "NODE_ENV",
+  "ASTROLOGY_API_SERVER_PORT",
+  "ASTROLOGY_API_SERVER_DNS",
+  "BOOKING_API_SERVER_PORT",
+  "BOOKING_API_SERVER_DNS",
+  "PAYMENT_API_SERVER_PORT",
+  "PAYMENT_API_SERVER_DNS",
+  "FRONTEND_SERVER_PORT",
+  "FRONTEND_SERVER_DNS",
+  "FRONTEND_SENTRY_DSN",
+  "ASTROLOGICAL_API_URL",
+  "PAYMENT_API_URL",
+  "BOOKING_API_URL",
+  "STRIPE_PK",
+  "R2_BASE_URL",
+] as const;
+
+function envJsPlugin(): Plugin {
+  return {
+    name: "env-js-plugin",
+    transformIndexHtml(html) {
+      let result = html;
+
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          result = result.replaceAll(`__${key}__`, value);
+        }
+      }
+
+      const envValues: Record<string, string> = {};
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          envValues[key] = value;
+        }
+      }
+
+      const envJsContent = `window.ENV = ${JSON.stringify(envValues, null, 2)};`;
+
+      return result.replace(
+        '<script src="/env.js"></script>',
+        `<script>${envJsContent}</script>`
+      );
+    },
+    closeBundle() {
+      const distPath = path.resolve(__dirname, "dist", "env.js");
+      const envValues: Record<string, string> = {};
+      for (const key of ENV_VARS) {
+        const value = process.env[key];
+        if (value !== undefined) {
+          envValues[key] = value;
+        }
+      }
+
+      const envJsContent = `window.ENV = ${JSON.stringify(envValues, null, 2)};\n`;
+      fs.writeFileSync(distPath, envJsContent);
+    },
+  };
+}
+
+const serverPort = parseInt(process.env.FRONTEND_SERVER_PORT || "5173", 10);
 
 export default defineConfig({
   base: "/",
-  plugins: [react()],
+  plugins: [react(), envJsPlugin()],
   build: {
     target: "es2022",
     minify: "esbuild",
@@ -21,7 +86,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: serverPort,
     host: true,
   },
   preview: {

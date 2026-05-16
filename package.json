@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "start": "npm run dev",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "update-n-build": "npm update --ignore-scripts && npm install --include=dev && npm run build"
+    "c_u_i_b_d": "npm run clean && npm update --ignore-scripts && npm install --include=dev && npm run build && npm run dev"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
