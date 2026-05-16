@@ -21,12 +21,21 @@ const ENV_VARS = [
   "R2_BASE_URL",
 ] as const;
 
+function hasEnvVars(): boolean {
+  return ENV_VARS.filter((k) => k !== "NODE_ENV").some(
+    (key) => process.env[key] !== undefined,
+  );
+}
+
 function envJsPlugin(): Plugin {
   return {
     name: "env-js-plugin",
     transformIndexHtml(html) {
-      let result = html;
+      if (!hasEnvVars()) {
+        return html;
+      }
 
+      let result = html;
       for (const key of ENV_VARS) {
         const value = process.env[key];
         if (value !== undefined) {
@@ -59,8 +68,28 @@ function envJsPlugin(): Plugin {
         }
       }
 
-      const envJsContent = `window.ENV = ${JSON.stringify(envValues, null, 2)};\n`;
-      fs.writeFileSync(distPath, envJsContent);
+      const content = hasEnvVars()
+        ? `window.ENV = ${JSON.stringify(envValues, null, 2)};\n`
+        : `window.ENV = {
+  NODE_ENV: "__NODE_ENV__",
+  ASTROLOGY_API_SERVER_PORT: "__ASTROLOGY_API_SERVER_PORT__",
+  ASTROLOGY_API_SERVER_DNS: "__ASTROLOGY_API_SERVER_DNS__",
+  BOOKING_API_SERVER_PORT: "__BOOKING_API_SERVER_PORT__",
+  BOOKING_API_SERVER_DNS: "__BOOKING_API_SERVER_DNS__",
+  PAYMENT_API_SERVER_PORT: "__PAYMENT_API_SERVER_PORT__",
+  PAYMENT_API_SERVER_DNS: "__PAYMENT_API_SERVER_DNS__",
+  FRONTEND_SERVER_PORT: "__FRONTEND_SERVER_PORT__",
+  FRONTEND_SERVER_DNS: "__FRONTEND_SERVER_DNS__",
+  FRONTEND_SENTRY_DSN: "__FRONTEND_SENTRY_DSN__",
+  ASTROLOGICAL_API_URL: "__ASTROLOGICAL_API_URL__",
+  PAYMENT_API_URL: "__PAYMENT_API_URL__",
+  BOOKING_API_URL: "__BOOKING_API_URL__",
+  STRIPE_PK: "__STRIPE_PK__",
+  R2_BASE_URL: "__R2_BASE_URL__",
+};
+`;
+
+      fs.writeFileSync(distPath, content);
     },
   };
 }
