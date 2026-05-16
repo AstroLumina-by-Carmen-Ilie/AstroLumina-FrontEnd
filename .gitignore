@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Certs
+certs
+
 # Dependencies
 node_modules
 
@@ -22,6 +25,7 @@ workers
 
 # Environment variables
 .env
+.env*
 .env.production
 .env.local
 !.env.example

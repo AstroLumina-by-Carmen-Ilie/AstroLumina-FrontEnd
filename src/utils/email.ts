@@ -1,5 +1,5 @@
-const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-const R2_PDF_BASE = "https://pub-3a468a81beab43daa28dba00d60409d6.r2.dev/pdfs";
+import { BOOKING_API_URL, R2_BASE_URL } from "@/config";
+const R2_PDF_URL = R2_BASE_URL + "/pdfs";
 
 export async function sendGhidulSaturnEmail(to: string) {
   try {
@@ -19,7 +19,7 @@ export async function sendGhidulSaturnEmail(to: string) {
             <p style="margin-top: 30px;">Cu drag,<br>Echipa AstroLumina</p>
           </div>
         `,
-          attachments: [`${R2_PDF_BASE}/Ghidul-lui-Saturn-in-Berbec.pdf`],
+          attachments: [`${R2_PDF_URL}/Ghidul-lui-Saturn-in-Berbec.pdf`],
         }),
       },
     );
@@ -59,7 +59,7 @@ export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
             <p style="margin-top: 30px;">Cu drag,<br>Echipa AstroLumina</p>
           </div>
         `,
-          attachments: [`${R2_PDF_BASE}/${attachmentFileName}`],
+          attachments: [`${R2_PDF_URL}/${attachmentFileName}`],
         }),
       },
     );

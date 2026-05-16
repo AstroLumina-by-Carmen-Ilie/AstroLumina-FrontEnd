@@ -12,8 +12,6 @@ import Contact from "@/pages/Contact";
 import Services from "@/pages/Services";
 import AstralCalculator from "@/pages/services/AstralCalculator";
 import MoonPhaseCalculator from "@/pages/services/MoonPhaseCalculator";
-import NatalChart from "@/pages/previews/NatalChart";
-import KarmicChart from "@/pages/previews/KarmicChart";
 import NatalNKarmicChartBooking from "@/pages/bookings/NatalNKarmicChartBooking";
 import SynastryChartBooking from "@/pages/bookings/SynastryChartBooking";
 import PredictiveChartBooking from "@/pages/bookings/PredictiveChartBooking";
@@ -44,15 +42,6 @@ if (rootElement) {
             <Route
               path="/servicii/calculatorul-fazei-lunare"
               element={<MoonPhaseCalculator />}
-            />
-            {/* Previews */}
-            <Route
-              path="/servicii/calculator-lumina-natala"
-              element={<NotFound />}
-            />
-            <Route
-              path="/servicii/calculator-lumina-karmica"
-              element={<NotFound />}
             />
             {/* Astrograme */}
             <Route

@@ -1,7 +1,7 @@
 {
   "name": "astrolumina-frontend",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "engines": {
     "node": ">=20.0.0"
@@ -9,19 +9,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "build:cloudflare": "vite build",
+    "build:cloudflare": "npm install --include=dev && npm run build",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "start": "npm run dev",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "update-n-build": "npm update --ignore-scripts && npm install --include=dev && npm run build"
+    "c_u_i_b_d": "npm run clean && npm update --ignore-scripts && npm install --include=dev && npm run build && npm run dev"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@sentry/react": "^10.53.1",
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.5.0",
-    "resend": "^6.10.0",
     "axios": "^1.7.9",
     "country-state-city": "^3.2.1",
     "dompurify": "^3.4.0",
@@ -34,7 +34,8 @@
     "react-dom": "^18.3.1",
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.30.3",
-    "react-select": "^5.10.0"
+    "react-select": "^5.10.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

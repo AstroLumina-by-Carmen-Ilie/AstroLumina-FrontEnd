@@ -157,7 +157,7 @@ function App() {
 
       <main className="relative">
         {/* ═══════ HERO SECTION ═══════ */}
-        <section className="flex overflow-hidden relative justify-center items-center min-h-screen">
+        <section className="relative flex items-center justify-center min-h-screen overflow-hidden">
           <div className="absolute inset-0 stars">
             <div className="shooting-star"></div>
             <div className="shooting-star"></div>
@@ -177,7 +177,7 @@ function App() {
           ></div>
 
           <div className="container relative z-10 px-6 py-32 mx-auto text-center">
-            <div className="mx-auto max-w-4xl">
+            <div className="max-w-4xl mx-auto">
               <h1
                 className="mb-8 text-4xl font-bold leading-tight font-display md:text-6xl lg:text-7xl animate-fade-in-up"
                 style={{ animationDelay: "0.15s" }}
@@ -188,14 +188,14 @@ function App() {
               </h1>
 
               <p
-                className="mx-auto mb-4 max-w-2xl text-lg italic md:text-xl text-cosmic-200/70 font-display animate-fade-in-up"
+                className="max-w-2xl mx-auto mb-4 text-lg italic md:text-xl text-cosmic-200/70 font-display animate-fade-in-up"
                 style={{ animationDelay: "0.3s" }}
               >
                 by Carmen Ilie
               </p>
 
               <p
-                className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed md:text-2xl text-cosmic-100/60 font-display animate-fade-in-up"
+                className="max-w-3xl mx-auto mb-12 text-xl leading-relaxed md:text-2xl text-cosmic-100/60 font-display animate-fade-in-up"
                 style={{ animationDelay: "0.45s" }}
               >
                 Deblochează secretele propriului destin prin
@@ -204,21 +204,34 @@ function App() {
                 </span>
               </p>
 
-<div className="flex justify-center animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
+              <div
+                className="flex justify-center animate-fade-in-up"
+                style={{ animationDelay: "0.6s" }}
+              >
                 <button
                   onClick={() => scrollToSection("services")}
                   className="p-3 cursor-pointer group"
                   aria-label="Scroll to explore"
                 >
-                  <svg className="w-6 h-6 text-white/40 group-hover:text-white/60 transition-colors duration-300 animate-scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  <svg
+                    className="w-6 h-6 transition-colors duration-300 text-white/40 group-hover:text-white/60 animate-scroll-arrow"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t to-transparent pointer-events-none from-midnight-950 via-midnight-950/80"></div>
+          <div className="absolute bottom-0 left-0 w-full h-48 pointer-events-none bg-gradient-to-t to-transparent from-midnight-950 via-midnight-950/80"></div>
         </section>
 
         {/* ═══════ SERVICES SECTION ═══════ */}
@@ -239,7 +252,7 @@ function App() {
               <h2 className="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                 Servicii Astrologice
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70 font-display">
+              <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70 font-display">
                 Descoperă gama completă de servicii astrologice, de la analize
                 gratuite la consultații personalizate
               </p>
@@ -251,9 +264,9 @@ function App() {
                   <Link
                     key={index}
                     to={service.link}
-                    className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
+                    className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br to-transparent rounded-bl-full from-cosmic-500/10"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-br to-transparent from-cosmic-500/10"></div>
 
                     {service.badge && (
                       <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
@@ -266,7 +279,7 @@ function App() {
                       </span>
                     )}
 
-                    <div className="flex justify-center items-center mb-6 w-14 h-14 bg-gradient-to-br rounded-2xl transition-transform duration-500 from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
+                    <div className="flex items-center justify-center mb-6 transition-transform duration-500 w-14 h-14 bg-gradient-to-br rounded-2xl from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
                       {service.icon}
                     </div>
 
@@ -289,22 +302,22 @@ function App() {
                   <Link
                     key={index}
                     to={service.link}
-                    className="overflow-hidden relative p-7 cursor-pointer group glass-luxury-hover"
+                    className="relative overflow-hidden cursor-pointer p-7 group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl to-transparent rounded-bl-full from-gold-500/10"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 rounded-bl-full bg-gradient-to-bl to-transparent from-gold-500/10"></div>
 
                     {service.badge && (
-                      <span className="absolute top-5 right-5 px-3 py-1 text-xs font-semibold rounded-full border bg-gold-500/20 text-gold-400 border-gold-500/30">
+                      <span className="absolute px-3 py-1 text-xs font-semibold border rounded-full top-5 right-5 bg-gold-500/20 text-gold-400 border-gold-500/30">
                         {service.badge}
                       </span>
                     )}
                     {service.price && (
-                      <span className="absolute top-5 right-5 px-3 py-1 text-xs font-semibold rounded-full border bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
+                      <span className="absolute px-3 py-1 text-xs font-semibold border rounded-full top-5 right-5 bg-cosmic-500/20 text-cosmic-300 border-cosmic-500/30">
                         {service.price}
                       </span>
                     )}
 
-                    <div className="flex justify-center items-center mb-5 w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
+                    <div className="flex items-center justify-center w-12 h-12 mb-5 transition-all rounded-xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                       {service.icon}
                     </div>
 
@@ -326,7 +339,7 @@ function App() {
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        <div className="mx-auto max-w-4xl cosmic-divider"></div>
+        <div className="max-w-4xl mx-auto cosmic-divider"></div>
 
         {/* ═══════ PRODUCTS SECTION ═══════ */}
         <section
@@ -345,19 +358,19 @@ function App() {
               <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Produse Digitale
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70 font-display">
+              <p className="max-w-xl mx-auto text-lg text-cosmic-300/70 font-display">
                 Ghiduri și rapoarte pentru auto-cunoaștere prin astrologie
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-4xl md:grid-cols-2">
+            <div className="grid max-w-4xl grid-cols-1 gap-8 mx-auto mb-8 md:grid-cols-2">
               {products.map((product, index) => (
                 <Link
                   key={index}
                   to={product.link}
-                  className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
+                  className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                 >
-                  <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl to-transparent rounded-bl-full from-gold-500/10"></div>
+                  <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-gradient-to-bl to-transparent from-gold-500/10"></div>
 
                   {product.badge ? (
                     <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
@@ -369,7 +382,7 @@ function App() {
                     </span>
                   )}
 
-                  <div className="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl transition-all duration-500 bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
+                  <div className="flex items-center justify-center mb-6 transition-all duration-500 w-14 h-14 rounded-2xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
                     <Package className="w-6 h-6" />
                   </div>
 
@@ -390,7 +403,7 @@ function App() {
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        <div className="mx-auto max-w-4xl cosmic-divider"></div>
+        <div className="max-w-4xl mx-auto cosmic-divider"></div>
 
         {/* ═══════ EVENTS SECTION ═══════ */}
         <section
@@ -410,13 +423,13 @@ function App() {
               <h2 className="mb-4 text-4xl font-bold text-white font-display md:text-5xl">
                 Evenimente
               </h2>
-              <p className="mx-auto max-w-xl text-lg text-cosmic-300/70 font-display">
+              <p className="max-w-xl mx-auto text-lg text-cosmic-300/70 font-display">
                 Workshopuri și sesiuni de grup pentru explorarea energiilor
                 cosmice
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-4xl md:grid-cols-2">
+            <div className="grid max-w-4xl grid-cols-1 gap-8 mx-auto mb-8 md:grid-cols-2">
               {(() => {
                 const now = new Date();
                 const upcomingEvents = CONSTELLATION_EVENTS.filter(
@@ -426,15 +439,15 @@ function App() {
                   <Link
                     key={index}
                     to={`/evenimente/rezervare/${event.id}`}
-                    className="overflow-hidden relative p-8 cursor-pointer group glass-luxury-hover"
+                    className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl to-transparent rounded-bl-full from-cosmic-500/10"></div>
+                    <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-gradient-to-bl to-transparent from-cosmic-500/10"></div>
 
                     <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30">
                       {event.price} €
                     </span>
 
-                    <div className="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl transition-all duration-500 bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
+                    <div className="flex items-center justify-center mb-6 transition-all duration-500 w-14 h-14 rounded-2xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30">
                       <Calendar className="w-6 h-6" />
                     </div>
 
@@ -443,7 +456,7 @@ function App() {
                     </h3>
 
                     <div className="flex flex-wrap gap-5 mb-6 text-sm text-cosmic-300/70">
-                      <div className="flex gap-2 items-center">
+                      <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-gold-400" />
                         <span>
                           {event.date.toLocaleDateString("ro-RO", {
@@ -453,7 +466,7 @@ function App() {
                           })}
                         </span>
                       </div>
-                      <div className="flex gap-2 items-center">
+                      <div className="flex items-center gap-2">
                         <Users className="w-4 h-4 text-gold-400" />
                         <span>{event.location}</span>
                       </div>
@@ -470,7 +483,7 @@ function App() {
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        <div className="mx-auto max-w-4xl cosmic-divider"></div>
+        <div className="max-w-4xl mx-auto cosmic-divider"></div>
 
         {/* ═══════ FEATURES SECTION ═══════ */}
         <section
@@ -489,7 +502,7 @@ function App() {
               <h2 className="mb-5 text-4xl font-bold text-white font-display md:text-5xl">
                 De ce AstroLumina?
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-cosmic-300/70 font-display">
+              <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70 font-display">
                 O abordare autentică a astrologiei, bazată pe cunoștințe
                 profunde și dedicare
               </p>
@@ -498,7 +511,7 @@ function App() {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {features.map((feature, index) => (
                 <div key={index} className="text-center group">
-                  <div className="flex justify-center items-center mx-auto mb-6 w-16 h-16 bg-gradient-to-br rounded-2xl transition-all duration-500 glass-luxury-hover from-cosmic-500/20 to-gold-500/10 text-cosmic-400 group-hover:scale-110 group-hover:from-cosmic-500/30 group-hover:to-gold-500/20">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 transition-all duration-500 bg-gradient-to-br rounded-2xl glass-luxury-hover from-cosmic-500/20 to-gold-500/10 text-cosmic-400 group-hover:scale-110 group-hover:from-cosmic-500/30 group-hover:to-gold-500/20">
                     {feature.icon}
                   </div>
                   <h3 className="mb-3 text-lg font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
@@ -514,7 +527,7 @@ function App() {
         </section>
 
         {/* ═══════ DIVIDER ═══════ */}
-        <div className="mx-auto max-w-4xl cosmic-divider"></div>
+        <div className="max-w-4xl mx-auto cosmic-divider"></div>
 
         {/* ═══════ CONTACT SECTION ═══════ */}
         <section
@@ -530,7 +543,7 @@ function App() {
           <div className="cosmic-orb cosmic-orb-purple w-[300px] h-[300px] top-0 right-0 opacity-10"></div>
 
           <div className="container relative z-10 px-6 mx-auto">
-            <div className="mx-auto max-w-5xl">
+            <div className="max-w-5xl mx-auto">
               <div className="mb-16 text-center">
                 <h2 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                   Contact
@@ -549,9 +562,9 @@ function App() {
                   <div className="space-y-6">
                     <a
                       href="mailto:contact@astrolumina.ro"
-                      className="flex gap-4 items-center transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
+                      className="flex items-center gap-4 transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
                     >
-                      <div className="flex justify-center items-center w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
+                      <div className="flex items-center justify-center w-12 h-12 transition-all rounded-xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -579,9 +592,9 @@ function App() {
 
                     <a
                       href="tel:+40123456789"
-                      className="flex gap-4 items-center transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
+                      className="flex items-center gap-4 transition-all cursor-pointer duration-400 text-cosmic-200 hover:text-white group"
                     >
-                      <div className="flex justify-center items-center w-12 h-12 rounded-xl transition-all bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
+                      <div className="flex items-center justify-center w-12 h-12 transition-all rounded-xl bg-cosmic-500/20 text-cosmic-400 group-hover:scale-110 group-hover:bg-cosmic-500/30 duration-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -607,8 +620,8 @@ function App() {
                       </div>
                     </a>
 
-                    <div className="flex gap-4 items-center text-cosmic-200">
-                      <div className="flex justify-center items-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
+                    <div className="flex items-center gap-4 text-cosmic-200">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -634,8 +647,8 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="flex gap-4 items-center text-cosmic-200">
-                      <div className="flex justify-center items-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
+                    <div className="flex items-center gap-4 text-cosmic-200">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-cosmic-500/20 text-cosmic-400">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-5 h-5"
@@ -679,7 +692,7 @@ function App() {
                   </p>
                   <Link
                     to="/contact"
-                    className="inline-flex gap-3 items-center self-start px-8 py-4 font-semibold text-white bg-gradient-to-r rounded-full luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                    className="inline-flex items-center self-start gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                   >
                     <span>Vezi Pagina de Contact</span>
                     <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />
@@ -692,7 +705,7 @@ function App() {
 
         {/* ═══════ FOOTER ═══════ */}
         <footer className="px-6 py-8 border-t border-white/5">
-          <div className="mx-auto max-w-6xl text-sm text-center text-cosmic-400">
+          <div className="max-w-6xl mx-auto text-sm text-center text-cosmic-400">
             <p>
               &copy; {new Date().getFullYear()} AstroLumina by Carmen Ilie.
               Toate drepturile rezervate.

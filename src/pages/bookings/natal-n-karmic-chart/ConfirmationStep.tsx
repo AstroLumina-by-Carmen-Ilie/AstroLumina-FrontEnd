@@ -4,6 +4,7 @@ import {
   OnePersonBookingResponse,
   OnePersonConfirmationStepProps,
 } from "@/types";
+import { BOOKING_API_URL } from "@/config";
 
 const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   payload,
@@ -15,8 +16,6 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   onBack,
   onComplete,
 }) => {
-  const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL;
-
   const [isConfirming, setIsConfirming] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
