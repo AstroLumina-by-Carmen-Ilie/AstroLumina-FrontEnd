@@ -117,7 +117,7 @@ const LunarResultsDisplay: React.FC<{
         </h4>
 
         <div className="p-4 pt-0">
-          <div className="grid grid-cols-2 gap-3 text-left">      
+          <div className="grid grid-cols-2 gap-3 text-left">
             <div className="col-span-2 p-3 rounded-lg bg-white/5">
               <p className="mb-1 text-xs tracking-wide uppercase text-cosmic-400">
                 🌑 Ultima Lună Nouă
@@ -125,7 +125,10 @@ const LunarResultsDisplay: React.FC<{
               <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.full_moon?.last
                   ?.datestamp !== null
-                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.full_moon.last.datestamp)
+                  ? formatDateFromDatestamp(
+                      result.moon.detailed.upcoming_phases.full_moon.last
+                        .datestamp,
+                    )
                   : "N/A"}
               </p>
             </div>
@@ -136,7 +139,10 @@ const LunarResultsDisplay: React.FC<{
               <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.new_moon?.next
                   ?.datestamp !== null
-                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.new_moon.next.datestamp)
+                  ? formatDateFromDatestamp(
+                      result.moon.detailed.upcoming_phases.new_moon.next
+                        .datestamp,
+                    )
                   : "N/A"}
               </p>
             </div>
@@ -147,7 +153,10 @@ const LunarResultsDisplay: React.FC<{
               <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.new_moon?.last
                   ?.datestamp !== null
-                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.new_moon.last.datestamp)
+                  ? formatDateFromDatestamp(
+                      result.moon.detailed.upcoming_phases.new_moon.last
+                        .datestamp,
+                    )
                   : "N/A"}
               </p>
             </div>
@@ -158,7 +167,10 @@ const LunarResultsDisplay: React.FC<{
               <p className="text-sm text-cosmic-100">
                 {result.moon.detailed?.upcoming_phases?.full_moon?.next
                   ?.datestamp !== null
-                  ? formatDateFromDatestamp(result.moon.detailed.upcoming_phases.full_moon.next.datestamp)
+                  ? formatDateFromDatestamp(
+                      result.moon.detailed.upcoming_phases.full_moon.next
+                        .datestamp,
+                    )
                   : "N/A"}
               </p>
             </div>

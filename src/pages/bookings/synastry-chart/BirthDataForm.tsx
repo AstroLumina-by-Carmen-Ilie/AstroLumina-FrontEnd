@@ -502,7 +502,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
         <input
           type="text"
           id="fullName"
-          className="p-3 w-full rounded-xl border transition-colors bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange("fullName", e.target.value)}
@@ -647,7 +647,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       </div>
 
       {errors.calculation && (
-        <div className="p-3 text-sm text-red-400 rounded-xl border bg-red-500/10 border-red-500/20">
+        <div className="p-3 text-sm text-red-400 border rounded-xl bg-red-500/10 border-red-500/20">
           {errors.calculation}
         </div>
       )}
@@ -657,7 +657,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           <button
             type="button"
             onClick={onBack}
-            className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+            className="flex-1 px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Pasul anterior
           </button>

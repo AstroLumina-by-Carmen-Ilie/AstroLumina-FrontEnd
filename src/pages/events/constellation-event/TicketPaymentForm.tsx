@@ -58,14 +58,13 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
       });
   }, [ticketCount, eventId]);
 
-  
-
   return (
     <div>
-      <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 mb-6 border rounded-xl bg-white/5 border-white/10">
         <div className="pb-4 mb-4 border-b border-white/10">
           <p className="text-sm text-cosmic-200">
-            <span className="font-semibold">Plată pentru:</span> {ticketCount} bilet(e) x {event?.price || 120} €
+            <span className="font-semibold">Plată pentru:</span> {ticketCount}{" "}
+            bilet(e) x {event?.price || 120} €
           </p>
           <p className="mt-2 text-lg font-bold text-gold-400">
             Total: {totalPrice} €
@@ -74,7 +73,7 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
 
         {paymentComplete ? (
           <div className="py-8 text-center">
-            <div className="inline-flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-emerald-500/20">
+            <div className="inline-flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-emerald-500/20">
               <span className="text-2xl text-emerald-400">✓</span>
             </div>
             <p className="font-medium text-emerald-300">
@@ -95,8 +94,6 @@ const TicketPaymentForm: React.FC<TicketPaymentFormProps> = ({
           </div>
         )}
       </div>
-
-      
     </div>
   );
 };

@@ -28,7 +28,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({ onComplete }) => {
 
   return (
     <div id="checkout">
-      <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 mb-6 border rounded-xl bg-white/5 border-white/10">
         <div className="pb-4 mb-6 border-b border-white/10">
           <p className="text-sm text-cosmic-200">
             <span className="font-semibold">Produs:</span> Ghidul lui Saturn în
