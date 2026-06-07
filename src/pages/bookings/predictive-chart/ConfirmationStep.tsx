@@ -96,10 +96,10 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   if (isProcessing || isConfirming) {
     return (
       <div className="space-y-6">
-        <div className="flex justify-center items-center py-12">
+        <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="inline-block">
-              <div className="w-12 h-12 rounded-full border-4 animate-spin border-cosmic-600 border-t-cosmic-300"></div>
+              <div className="w-12 h-12 border-4 rounded-full animate-spin border-cosmic-600 border-t-cosmic-300"></div>
             </div>
             <p className="mt-4 text-cosmic-200">Se crează sesiunea ta...</p>
             <p className="mt-2 text-sm text-cosmic-400">
@@ -114,7 +114,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   if (error) {
     return (
       <div className="space-y-6">
-        <div className="p-6 rounded-xl border bg-red-500/20 border-red-500/50">
+        <div className="p-6 border rounded-xl bg-red-500/20 border-red-500/50">
           <h3 className="mb-2 font-semibold text-red-300">
             A apărut o problemă
           </h3>
@@ -126,7 +126,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         <div className="flex gap-4">
           <button
             onClick={onBack}
-            className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+            className="flex-1 px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Pasul anterior
           </button>
@@ -135,7 +135,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
               setError(null);
               handleConfirmBooking();
             }}
-            className="flex-1 px-6 py-3 text-white rounded-xl transition-colors cursor-pointer bg-cosmic-600 hover:bg-cosmic-500"
+            className="flex-1 px-6 py-3 text-white transition-colors cursor-pointer rounded-xl bg-cosmic-600 hover:bg-cosmic-500"
           >
             Încearcă din nou
           </button>
@@ -147,8 +147,8 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
   if (bookingConfirmation) {
     return (
       <div className="space-y-6">
-        <div className="p-6 rounded-xl border bg-emerald-500/20 border-emerald-500/50">
-          <div className="flex gap-3 items-center mb-2">
+        <div className="p-6 border rounded-xl bg-emerald-500/20 border-emerald-500/50">
+          <div className="flex items-center gap-3 mb-2">
             <div className="text-2xl text-emerald-400">✓</div>
             <h3 className="font-semibold text-emerald-300">
               Sesiune programată cu succes!
@@ -159,7 +159,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
           </p>
         </div>
 
-        <div className="p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+        <div className="p-6 space-y-4 border rounded-xl bg-white/5 border-white/10">
           <h3 className="font-semibold text-cosmic-200">Detalii sesiune</h3>
 
           <div className="grid grid-cols-2 gap-4">
@@ -205,7 +205,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
               <p className="mb-1 text-xs font-semibold uppercase text-cosmic-400">
                 Status
               </p>
-              <p className="text-emerald-400 capitalize">
+              <p className="capitalize text-emerald-400">
                 {bookingConfirmation.status}
               </p>
             </div>
@@ -221,7 +221,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
           </div>
         </div>
 
-        <div className="p-6 space-y-4 rounded-xl border bg-cosmic-900/30 border-cosmic-700/30">
+        <div className="p-6 space-y-4 border rounded-xl bg-cosmic-900/30 border-cosmic-700/30">
           <h3 className="font-semibold text-cosmic-200">Ce urmează?</h3>
           <ul className="space-y-3">
             <li className="flex gap-3">
@@ -251,7 +251,7 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         <div className="flex gap-4 pt-4">
           <button
             onClick={onComplete}
-            className="flex-1 px-6 py-3 font-medium text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+            className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
           >
             Înapoi la pagina principală
           </button>
@@ -271,35 +271,45 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
         </p>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 border sm:p-6 rounded-xl bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Date personale</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-words">{userInfo.name}</p>
+            <p className="text-sm break-words sm:text-base text-cosmic-100">
+              {userInfo.name}
+            </p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Email</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-all">{contactInfo.email}</p>
+            <p className="text-sm break-all sm:text-base text-cosmic-100">
+              {contactInfo.email}
+            </p>
           </div>
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Telefon</p>
-            <p className="text-sm sm:text-base text-cosmic-100">{contactInfo.phone}</p>
+            <p className="text-sm sm:text-base text-cosmic-100">
+              {contactInfo.phone}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 border sm:p-6 rounded-xl bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Date naștere</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Data nașterii</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Data nașterii
+            </p>
             <p className="text-sm sm:text-base text-cosmic-100">
               {userInfo.birthDate.toLocaleDateString("ro-RO")}
             </p>
           </div>
           <div>
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Ora nașterii</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Ora nașterii
+            </p>
             <p className="text-sm sm:text-base text-cosmic-100">
               {userInfo.birthHour.toLocaleTimeString("ro-RO", {
                 hour: "2-digit",
@@ -308,20 +318,24 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
             </p>
           </div>
           <div className="sm:col-span-2">
-            <p className="mb-1 text-xs uppercase text-cosmic-400">Locul nașterii</p>
-            <p className="text-sm sm:text-base text-cosmic-100 break-words">{userInfo.location}</p>
+            <p className="mb-1 text-xs uppercase text-cosmic-400">
+              Locul nașterii
+            </p>
+            <p className="text-sm break-words sm:text-base text-cosmic-100">
+              {userInfo.location}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 border sm:p-6 rounded-xl bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Motivul discuției</h4>
         <p className="text-sm text-cosmic-100">{bookingQuestions.notes}</p>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 space-y-4 border sm:p-6 rounded-xl bg-white/5 border-white/10">
         <h4 className="font-semibold text-cosmic-200">Programare</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Data</p>
             <p className="text-sm sm:text-base text-cosmic-100">
@@ -348,13 +362,13 @@ const ConfirmationStep: React.FC<OnePersonConfirmationStepProps> = ({
       <div className="flex gap-4 pt-4">
         <button
           onClick={onBack}
-          className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          className="flex-1 px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Pasul anterior
         </button>
         <button
           onClick={handleConfirmBooking}
-          className="flex-1 px-6 py-3 font-medium text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Confirmă sesiunea
         </button>

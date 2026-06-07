@@ -88,7 +88,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="p-4 mb-6 rounded-xl border bg-white/5 border-white/10">
+      <div className="p-4 mb-6 border rounded-xl bg-white/5 border-white/10">
         <div className="pb-4 mb-6 border-b border-white/10">
           <p className="text-sm text-cosmic-200">
             <span className="font-semibold">Plată pentru:</span> Astrograma
@@ -104,7 +104,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         </div>
         {existingPaymentIntentId ? (
           <div className="py-8 text-center">
-            <div className="inline-flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-emerald-500/20">
+            <div className="inline-flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-emerald-500/20">
               <span className="text-2xl text-emerald-400">✓</span>
             </div>
             <p className="font-medium text-emerald-300">
@@ -123,7 +123,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          className="flex-1 px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Pasul anterior
         </button>
@@ -138,7 +138,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         >
           Pasul următor
           {!isComplete && (
-            <div className="absolute -top-10 left-1/2 px-3 py-2 w-max text-xs text-center whitespace-nowrap rounded-lg opacity-0 transition-opacity -translate-x-1/2 pointer-events-none bg-cosmic-900/90 text-cosmic-200 group-hover:opacity-100">
+            <div className="absolute px-3 py-2 text-xs text-center transition-opacity -translate-x-1/2 rounded-lg opacity-0 pointer-events-none -top-10 left-1/2 w-max whitespace-nowrap bg-cosmic-900/90 text-cosmic-200 group-hover:opacity-100">
               Plata este obligatorie pentru a continua
             </div>
           )}

@@ -56,7 +56,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
           ticketCount,
           paymentIntentId,
           event?.title,
-          event?.date?.toISOString()
+          event?.date?.toISOString(),
         );
         if (success) {
           setEmailSent(true);
@@ -64,7 +64,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       } catch (error) {
         console.error("Failed to confirm booking:", error);
         setEmailError(
-          "Notificările nu au putut fi trimise, dar rezervarea a fost confirmată."
+          "Notificările nu au putut fi trimise, dar rezervarea a fost confirmată.",
         );
       } finally {
         setIsConfirming(false);
@@ -78,7 +78,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     return (
       <div className="p-8 text-center">
         <div className="inline-block">
-          <div className="w-12 h-12 rounded-full border-4 animate-spin border-cosmic-600 border-t-cosmic-300"></div>
+          <div className="w-12 h-12 border-4 rounded-full animate-spin border-cosmic-600 border-t-cosmic-300"></div>
         </div>
         <p className="mt-4 text-cosmic-200">Se confirmă rezervarea...</p>
       </div>
@@ -87,7 +87,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
   return (
     <div className="p-8 text-center glass-card">
-      <div className="flex justify-center items-center mx-auto mb-6 w-16 h-16 rounded-full bg-emerald-500/20">
+      <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-500/20">
         <CheckCircle className="w-8 h-8 text-emerald-400" />
       </div>
 
@@ -120,7 +120,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
       <div className="mb-6 text-sm text-cosmic-300">
         {emailSent ? (
-          <p className="flex gap-2 justify-center items-center text-emerald-400">
+          <p className="flex items-center justify-center gap-2 text-emerald-400">
             <Mail className="w-4 h-4" />
             Un email cu detaliile evenimentului a fost trimis
           </p>
@@ -134,16 +134,16 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <div className="space-y-3">
         <button
           onClick={onComplete}
-          className="py-3 w-full font-medium text-white bg-gradient-to-r rounded-xl transition-all cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
+          className="w-full py-3 font-medium text-white transition-all cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
         >
           Înapoi la pagina principală
-          <ArrowRight className="inline ml-2 w-4 h-4" />
+          <ArrowRight className="inline w-4 h-4 ml-2" />
         </button>
 
         {onBack && (
           <button
             onClick={() => navigate("/evenimente")}
-            className="py-3 w-full rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+            className="w-full py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
           >
             Vezi toate evenimentele
           </button>

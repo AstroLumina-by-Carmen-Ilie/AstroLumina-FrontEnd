@@ -382,7 +382,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     <div className="space-y-5">
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="fullName"
         >
           Nume complet
@@ -390,20 +390,20 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
         <input
           type="text"
           id="fullName"
-          className="w-full p-3 bg-white/5 border border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500 transition-colors"
+          className="w-full p-3 transition-colors border bg-white/5 border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange("fullName", e.target.value)}
           required
         />
         {errors.fullName && (
-          <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.fullName}</p>
         )}
       </div>
 
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="birthDate"
         >
           Data nașterii
@@ -416,13 +416,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           required
         />
         {errors.birthDate && (
-          <p className="text-red-400 text-xs mt-1">{errors.birthDate}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.birthDate}</p>
         )}
       </div>
 
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="birthHour"
         >
           Ora nașterii
@@ -435,13 +435,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           required
         />
         {errors.birthHour && (
-          <p className="text-red-400 text-xs mt-1">{errors.birthHour}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.birthHour}</p>
         )}
       </div>
 
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="birthCountry"
         >
           Țara nașterii
@@ -466,13 +466,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           menuPosition="fixed"
         />
         {errors.birthCountry && (
-          <p className="text-red-400 text-xs mt-1">{errors.birthCountry}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.birthCountry}</p>
         )}
       </div>
 
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="birthCounty"
         >
           Județ/Regiune
@@ -498,13 +498,13 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           menuPosition="fixed"
         />
         {errors.birthCounty && (
-          <p className="text-red-400 text-xs mt-1">{errors.birthCounty}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.birthCounty}</p>
         )}
       </div>
 
       <div>
         <label
-          className="block text-cosmic-300 text-sm mb-2"
+          className="block mb-2 text-sm text-cosmic-300"
           htmlFor="birthCity"
         >
           Orașul nașterii
@@ -530,26 +530,26 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           menuPosition="fixed"
         />
         {errors.birthCity && (
-          <p className="text-red-400 text-xs mt-1">{errors.birthCity}</p>
+          <p className="mt-1 text-xs text-red-400">{errors.birthCity}</p>
         )}
       </div>
 
       {errors.calculation && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm">
+        <div className="p-3 text-sm text-red-400 border bg-red-500/10 border-red-500/20 rounded-xl">
           {errors.calculation}
         </div>
       )}
 
       <button
         type="button"
-        className="w-full py-3 px-6 bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 text-white font-semibold rounded-xl shadow-glow-purple transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 rounded-xl shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={formState.isCalculating}
         onClick={handleCalculatePositions}
       >
         {formState.isCalculating ? (
           <>
             <svg
-              className="animate-spin w-4 h-4 mr-2"
+              className="w-4 h-4 mr-2 animate-spin"
               viewBox="0 0 16 16"
               fill="none"
             >

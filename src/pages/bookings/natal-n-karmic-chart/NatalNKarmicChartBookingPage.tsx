@@ -115,7 +115,7 @@ const NatalNKarmicChartBookingPage = () => {
           <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
             Astrograma Natală și Karmică
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
+          <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
             Sesiune live în care aducem claritate și direcție prin înțelegerea
             astrogramei tale!
           </p>
@@ -180,7 +180,7 @@ const NatalNKarmicChartBookingPage = () => {
                     { num: 5, label: "Plată" },
                     { num: 6, label: "Confirmare" },
                   ].map((step) => (
-                    <div key={step.num} className="flex gap-3 items-center">
+                    <div key={step.num} className="flex items-center gap-3">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
@@ -203,10 +203,10 @@ const NatalNKarmicChartBookingPage = () => {
               </div>
 
               {/* Right Panel */}
-              <div className="p-8 w-full md:w-1/2">
+              <div className="w-full p-8 md:w-1/2">
                 {/* Mobile step indicator */}
                 <div className="mb-8 md:hidden">
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center justify-between mb-4">
                     {[1, 2, 3, 4, 5, 6].map((step) => (
                       <div
                         key={step}
@@ -224,7 +224,7 @@ const NatalNKarmicChartBookingPage = () => {
                   </div>
                   <div className="h-1 rounded-full bg-white/10">
                     <div
-                      className="h-full bg-gradient-to-r rounded-full transition-all duration-500 from-cosmic-500 to-cosmic-400"
+                      className="h-full transition-all duration-500 rounded-full bg-gradient-to-r from-cosmic-500 to-cosmic-400"
                       style={{ width: `${((currentStep - 1) / 5) * 100}%` }}
                     />
                   </div>

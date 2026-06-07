@@ -146,8 +146,9 @@ const MoonPhaseCalculatorPage = () => {
                   <div className="space-y-4 leading-relaxed text-cosmic-200/80">
                     <p>
                       Descoperă faza Lunii pentru orice dată și locație sau vezi
-                      cum arată Luna în acest moment. Acest astru are o influență
-                      profundă asupra energiei noastre și a ritmurilor naturale.
+                      cum arată Luna în acest moment. Acest astru are o
+                      influență profundă asupra energiei noastre și a ritmurilor
+                      naturale.
                     </p>
                     <p>Ce vei primi:</p>
                     <ul className="space-y-1 list-disc list-inside">

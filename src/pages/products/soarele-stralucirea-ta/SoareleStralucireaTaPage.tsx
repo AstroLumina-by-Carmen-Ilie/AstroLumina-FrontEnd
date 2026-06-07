@@ -36,7 +36,7 @@ const SoareleStralucireaTaPage = () => {
           <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
             Soarele, Strălucirea Ta
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
+          <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
             Descoperă care este zodia Soarelui tău și cadoul pe care ți-l oferim
           </p>
         </div>
@@ -78,7 +78,7 @@ const SoareleStralucireaTaPage = () => {
                     { num: 1, label: "Data nașterii" },
                     { num: 2, label: "Email" },
                   ].map((step) => (
-                    <div key={step.num} className="flex gap-3 items-center">
+                    <div key={step.num} className="flex items-center gap-3">
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
                           step.num === currentStep
@@ -102,10 +102,10 @@ const SoareleStralucireaTaPage = () => {
 
               <div
                 aria-label="Formularul principal"
-                className="p-8 w-full md:w-1/2"
+                className="w-full p-8 md:w-1/2"
               >
                 <div className="mb-8 md:hidden">
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center justify-between mb-4">
                     {[1, 2].map((step) => (
                       <div
                         key={step}
@@ -123,7 +123,7 @@ const SoareleStralucireaTaPage = () => {
                   </div>
                   <div className="h-1 rounded-full bg-white/10">
                     <div
-                      className="h-full bg-gradient-to-r rounded-full transition-all duration-500 from-cosmic-500 to-cosmic-400"
+                      className="h-full transition-all duration-500 rounded-full bg-gradient-to-r from-cosmic-500 to-cosmic-400"
                       style={{ width: `${((currentStep - 1) / 1) * 100}%` }}
                     />
                   </div>

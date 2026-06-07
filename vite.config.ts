@@ -55,7 +55,7 @@ function envJsPlugin(): Plugin {
 
       return result.replace(
         '<script src="/env.js"></script>',
-        `<script>${envJsContent}</script>`
+        `<script>${envJsContent}</script>`,
       );
     },
     closeBundle() {

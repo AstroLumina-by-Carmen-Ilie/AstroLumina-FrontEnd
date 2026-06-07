@@ -74,7 +74,7 @@ const ResultsDisplay: React.FC<{
         <p className="mb-4 text-lg text-cosmic-300">{userInfo.location}</p>
       </div>
 
-      <div className="rounded-xl border bg-white/5 border-white/10">
+      <div className="border rounded-xl bg-white/5 border-white/10">
         <h4 className="p-4 pb-0 mb-4 text-xl font-semibold text-cosmic-100">
           Pozițiile astrelor
         </h4>
@@ -129,7 +129,9 @@ const ResultsDisplay: React.FC<{
                 </th>
                 {activeTab !== 2 && (
                   <>
-                    {/* <th className="p-2 text-sm font-medium sm:p-3 text-cosmic-300 sm:text-base">Casa</th> */}
+                    <th className="p-2 text-sm font-medium sm:p-3 text-cosmic-300 sm:text-base">
+                      Casa
+                    </th>
                     <th className="p-2 text-sm font-medium sm:p-3 text-cosmic-300 sm:text-base">
                       Retrograd
                     </th>
@@ -161,9 +163,9 @@ const ResultsDisplay: React.FC<{
                   </td>
                   {activeTab !== 2 && (
                     <>
-                      {/* <td className="p-2 text-sm whitespace-normal sm:p-3 text-cosmic-200 sm:text-base">
+                      <td className="p-2 text-sm whitespace-normal sm:p-3 text-cosmic-200 sm:text-base">
                         {info.house}
-                      </td> */}
+                      </td>
                       <td className="p-2 text-sm whitespace-normal sm:p-3 text-cosmic-200 sm:text-base">
                         {info.retrograde ? "✓" : ""}
                       </td>
@@ -178,7 +180,7 @@ const ResultsDisplay: React.FC<{
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className="flex gap-2 justify-center items-center px-6 py-3 w-full font-semibold bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
               <svg

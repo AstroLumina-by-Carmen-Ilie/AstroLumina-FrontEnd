@@ -44,21 +44,27 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
   onBack,
 }) => {
   const [holders, setHolders] = useState<HolderData[]>(
-    Array(ticketCount).fill(null).map(() => ({ fullName: "", email: "", phone: "" }))
+    Array(ticketCount)
+      .fill(null)
+      .map(() => ({ fullName: "", email: "", phone: "" })),
   );
   const [nameErrors, setNameErrors] = useState<Record<number, string>>({});
 
   const handleTicketCountChange = (newCount: number) => {
     onTicketCountChange(newCount);
     setHolders(
-      Array(newCount).fill(null).map((_, i) =>
-        holders[i] || { fullName: "", email: "", phone: "" }
-      )
+      Array(newCount)
+        .fill(null)
+        .map((_, i) => holders[i] || { fullName: "", email: "", phone: "" }),
     );
     setNameErrors({});
   };
 
-  const updateHolder = (index: number, field: keyof HolderData, value: string) => {
+  const updateHolder = (
+    index: number,
+    field: keyof HolderData,
+    value: string,
+  ) => {
     setHolders((prev) => {
       const newHolders = [...prev];
       newHolders[index] = { ...newHolders[index], [field]: value };
@@ -110,15 +116,17 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="p-6 mb-6 rounded-xl border bg-white/5 border-white/10">
+        <div className="p-6 mb-6 border rounded-xl bg-white/5 border-white/10">
           <label className="block mb-3 text-sm font-medium text-cosmic-200">
             Număr de persoane
           </label>
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => handleTicketCountChange(Math.max(1, ticketCount - 1))}
-              className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors cursor-pointer bg-white/10 hover:bg-white/20"
+              onClick={() =>
+                handleTicketCountChange(Math.max(1, ticketCount - 1))
+              }
+              className="flex items-center justify-center w-10 h-10 transition-colors rounded-lg cursor-pointer bg-white/10 hover:bg-white/20"
             >
               -
             </button>
@@ -127,9 +135,13 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
             </span>
             <button
               type="button"
-              onClick={() => handleTicketCountChange(Math.min(availableSeats, ticketCount + 1))}
+              onClick={() =>
+                handleTicketCountChange(
+                  Math.min(availableSeats, ticketCount + 1),
+                )
+              }
               disabled={ticketCount >= availableSeats}
-              className="flex justify-center items-center w-10 h-10 rounded-lg transition-colors cursor-pointer bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-10 h-10 transition-colors rounded-lg cursor-pointer bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               +
             </button>
@@ -143,7 +155,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
           {holders.map((holder, index) => (
             <div
               key={index}
-              className="p-4 rounded-xl border bg-white/5 border-white/10"
+              className="p-4 border rounded-xl bg-white/5 border-white/10"
             >
               <h3 className="mb-4 text-lg font-semibold text-white">
                 Persoana {index + 1}
@@ -156,17 +168,21 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                     Nume complet <span className="text-red-400">*</span>
                   </label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <User className="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-cosmic-400" />
                     <input
                       type="text"
                       value={holder.fullName}
-                      onChange={(e) => updateHolder(index, "fullName", e.target.value)}
+                      onChange={(e) =>
+                        updateHolder(index, "fullName", e.target.value)
+                      }
                       placeholder="Nume Prenume"
-                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                     />
                   </div>
                   {nameErrors[index] && (
-                    <p className="mt-1 text-sm text-red-400">{nameErrors[index]}</p>
+                    <p className="mt-1 text-sm text-red-400">
+                      {nameErrors[index]}
+                    </p>
                   )}
                 </div>
 
@@ -176,13 +192,15 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                     Email <span className="text-cosmic-500">(opțional)</span>
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <Mail className="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-cosmic-400" />
                     <input
                       type="email"
                       value={holder.email}
-                      onChange={(e) => updateHolder(index, "email", e.target.value)}
+                      onChange={(e) =>
+                        updateHolder(index, "email", e.target.value)
+                      }
                       placeholder="email@example.com"
-                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                     />
                   </div>
                 </div>
@@ -193,13 +211,15 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                     Telefon <span className="text-cosmic-500">(opțional)</span>
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 w-5 h-5 -translate-y-1/2 text-cosmic-400" />
+                    <Phone className="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-cosmic-400" />
                     <input
                       type="tel"
                       value={holder.phone}
-                      onChange={(e) => updateHolder(index, "phone", e.target.value)}
+                      onChange={(e) =>
+                        updateHolder(index, "phone", e.target.value)
+                      }
                       placeholder="+40 123 456 789"
-                      className="py-3 pr-4 pl-10 w-full text-white rounded-lg border bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
                     />
                   </div>
                 </div>
@@ -208,17 +228,19 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
           ))}
         </div>
 
-        <div className="p-4 mt-6 rounded-xl border bg-white/5 border-white/10">
-          <div className="flex justify-between items-center">
+        <div className="p-4 mt-6 border rounded-xl bg-white/5 border-white/10">
+          <div className="flex items-center justify-between">
             <span className="text-cosmic-200">Total de plată:</span>
-            <span className="text-xl font-bold text-gold-400">{totalPrice} €</span>
+            <span className="text-xl font-bold text-gold-400">
+              {totalPrice} €
+            </span>
           </div>
         </div>
 
         <div className="flex gap-4 mt-6">
           <button
             type="submit"
-            className="flex-1 py-4 font-semibold text-white bg-gradient-to-r rounded-xl transition-all cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
+            className="flex-1 py-4 font-semibold text-white transition-all cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
           >
             Continuă la plată
           </button>
