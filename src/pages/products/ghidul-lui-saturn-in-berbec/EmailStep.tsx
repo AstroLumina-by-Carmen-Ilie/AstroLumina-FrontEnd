@@ -40,7 +40,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
   if (emailSent) {
     return (
       <div className="py-12 text-center">
-        <div className="inline-flex justify-center items-center mb-6 w-20 h-20 rounded-full bg-emerald-500/20">
+        <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-emerald-500/20">
           <span className="text-4xl text-emerald-400">✓</span>
         </div>
         <h2 className="mb-4 text-2xl font-bold text-white">
@@ -51,7 +51,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         </p>
         <button
           onClick={() => navigate("/produse")}
-          className="px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          className="px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Înapoi la produse
         </button>
@@ -61,9 +61,9 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
 
   return (
     <div className="space-y-6">
-      <div className="p-6 rounded-xl border bg-emerald-500/10 border-emerald-500/20">
-        <div className="flex gap-3 items-center">
-          <div className="flex justify-center items-center w-10 h-10 rounded-full bg-emerald-500/20">
+      <div className="p-6 border rounded-xl bg-emerald-500/10 border-emerald-500/20">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20">
             <span className="text-xl text-emerald-400">✓</span>
           </div>
           <div>
@@ -82,7 +82,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         <input
           type="email"
           id="email"
-          className="p-3 w-full rounded-xl border transition-colors bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="email@exemplu.ro"
           value={customerEmail}
           onChange={(e) => setCustomerEmail(e.target.value)}
@@ -91,7 +91,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
       </div>
 
       {error && (
-        <div className="p-3 text-sm text-red-400 rounded-xl border bg-red-500/10 border-red-500/20">
+        <div className="p-3 text-sm text-red-400 border rounded-xl bg-red-500/10 border-red-500/20">
           {error}
         </div>
       )}
@@ -100,12 +100,12 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         type="button"
         onClick={handleSend}
         disabled={isSendingEmail}
-        className="flex justify-center items-center px-6 py-3 w-full font-semibold text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSendingEmail ? (
           <>
             <svg
-              className="mr-2 w-4 h-4 animate-spin"
+              className="w-4 h-4 mr-2 animate-spin"
               viewBox="0 0 16 16"
               fill="none"
             >

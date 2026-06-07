@@ -207,7 +207,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
           Selectează data și ora disponibilă
         </h3>
 
-        <div className="grid gap-6 min-w-0 md:grid-cols-2">
+        <div className="grid min-w-0 gap-6 md:grid-cols-2">
           <div className="min-w-0">
             <div className="w-full max-w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10 overflow-hidden">
               <style>{`
@@ -215,7 +215,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
                 .availability-rdp .rdp-month_grid td { padding: 0; }
                 .availability-rdp .rdp-day_button { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
               `}</style>
-              <div className="flex gap-2 items-center mb-3">
+              <div className="flex items-center gap-2 mb-3">
                 <div className="relative flex-1 min-w-0">
                   <select
                     value={calendarMonth.getMonth()}
@@ -254,7 +254,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
                 </div>
               </div>
 
-              <div className="overflow-x-auto w-full min-w-0">
+              <div className="w-full min-w-0 overflow-x-auto">
                 <DayPicker
                   mode="single"
                   selected={selectedDate}
@@ -292,7 +292,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
             </div>
           </div>
 
-          <div className="p-4 min-w-0 rounded-xl border bg-white/5 border-white/10">
+          <div className="min-w-0 p-4 border rounded-xl bg-white/5 border-white/10">
             {selectedDate ? (
               <>
                 <p className="mb-4 text-sm font-semibold text-cosmic-200">
@@ -340,7 +340,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
       </div>
 
       {selectedSlot && (
-        <div className="p-4 rounded-xl border bg-cosmic-600/20 border-cosmic-600/50">
+        <div className="p-4 border rounded-xl bg-cosmic-600/20 border-cosmic-600/50">
           <p className="text-sm text-cosmic-200">
             <span className="font-semibold">Slot selectat:</span>{" "}
             {new Date(selectedSlot.time).toLocaleDateString("ro-RO")} ora{" "}
@@ -356,7 +356,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 px-6 py-3 rounded-xl border transition-colors cursor-pointer bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          className="flex-1 px-6 py-3 transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
         >
           Pasul anterior
         </button>

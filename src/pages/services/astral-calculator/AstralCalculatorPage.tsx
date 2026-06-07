@@ -51,7 +51,7 @@ const AstralCalculatorPage = () => {
               <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
                 Calculatorul Astral
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-cosmic-300">
+              <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
                 Află pozițiile exacte ale planetelor în timp real și
                 interpretarea influențelor astrologice curente
               </p>
@@ -85,7 +85,7 @@ const AstralCalculatorPage = () => {
                 </div>
 
                 {/* Right Panel */}
-                <div className="p-10 w-full md:w-1/2">{renderContent()}</div>
+                <div className="w-full p-10 md:w-1/2">{renderContent()}</div>
               </div>
             </div>
           </div>

@@ -144,7 +144,7 @@ const TimeInput: React.FC<TimeInputProps> = ({
   return (
     <div ref={containerRef} className="relative w-full" id={id}>
       <div className="relative">
-        <Clock className="absolute left-3 top-1/2 z-10 w-4 h-4 -translate-y-1/2 pointer-events-none text-cosmic-500" />
+        <Clock className="absolute z-10 w-4 h-4 -translate-y-1/2 pointer-events-none left-3 top-1/2 text-cosmic-500" />
         <input
           ref={inputRef}
           type="text"
@@ -165,12 +165,12 @@ const TimeInput: React.FC<TimeInputProps> = ({
 
       {isOpen && (
         <div className="absolute z-50 mt-2 w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <select
                 value={selectedHour}
                 onChange={handleHourChange}
-                className="px-3 py-2 pr-8 w-full text-sm text-purple-200 rounded-lg border appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
+                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
               >
                 {HOURS.map((h) => (
                   <option
@@ -189,7 +189,7 @@ const TimeInput: React.FC<TimeInputProps> = ({
               <select
                 value={selectedMinute}
                 onChange={(e) => handleMinuteChange(parseInt(e.target.value))}
-                className="px-3 py-2 pr-8 w-full text-sm text-purple-200 rounded-lg border appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
+                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
               >
                 {MINUTES.map((m) => (
                   <option

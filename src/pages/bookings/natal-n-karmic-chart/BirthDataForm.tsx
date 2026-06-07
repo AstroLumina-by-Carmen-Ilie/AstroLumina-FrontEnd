@@ -484,7 +484,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
         <input
           type="text"
           id="fullName"
-          className="p-3 w-full rounded-xl border transition-colors bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange("fullName", e.target.value)}
@@ -629,14 +629,14 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       </div>
 
       {errors.calculation && (
-        <div className="p-3 text-sm text-red-400 rounded-xl border bg-red-500/10 border-red-500/20">
+        <div className="p-3 text-sm text-red-400 border rounded-xl bg-red-500/10 border-red-500/20">
           {errors.calculation}
         </div>
       )}
 
       <button
         type="button"
-        className="flex justify-center items-center px-6 py-3 w-full font-semibold text-white bg-gradient-to-r rounded-xl transition-all duration-300 cursor-pointer from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={handleSaveBirthData}
       >
         Pasul următor

@@ -150,7 +150,7 @@ const DateInput: React.FC<DateInputProps> = ({
   return (
     <div ref={containerRef} className="relative w-full" id={id}>
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 z-10 w-4 h-4 -translate-y-1/2 pointer-events-none text-cosmic-500" />
+        <Calendar className="absolute z-10 w-4 h-4 -translate-y-1/2 pointer-events-none left-3 top-1/2 text-cosmic-500" />
         <input
           ref={inputRef}
           type="text"
@@ -176,7 +176,7 @@ const DateInput: React.FC<DateInputProps> = ({
             .rdp-month_grid td { padding: 0; }
             .rdp-day_button { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
           `}</style>
-          <div className="flex gap-2 items-center mb-3">
+          <div className="flex items-center gap-2 mb-3">
             <div className="relative flex-1">
               <select
                 value={calendarMonth.getMonth()}

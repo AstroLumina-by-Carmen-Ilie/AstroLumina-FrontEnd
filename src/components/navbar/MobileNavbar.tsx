@@ -43,7 +43,7 @@ const MobileNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   return (
     <div className="md:hidden">
       <nav className={`${navClasses} ${isScrolled ? "shadow-lg" : ""}`}>
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="px-6 mx-auto max-w-7xl">
           <div className="flex items-center justify-between h-16">
             <NavbarLogo />
 

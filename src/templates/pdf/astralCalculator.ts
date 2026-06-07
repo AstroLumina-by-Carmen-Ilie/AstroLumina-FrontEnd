@@ -72,6 +72,7 @@ const createPlanetsTable = (elements: AstralElements) => {
     p.symbol,
     p.sign,
     p.emoji,
+    p.house,
     p.element,
     p.retrograde ? "✓" : "",
   ]);
@@ -91,6 +92,7 @@ const createAsteroidsTable = (elements: AstralElements) => {
     p.symbol,
     p.sign,
     p.emoji,
+    p.house,
     p.element,
     p.retrograde ? "✓" : "",
   ]);
@@ -131,10 +133,10 @@ const addTable = (
       } else {
         // Font logic: Quivira for symbols -> NotoSans for text
         if (
-          (data.column.index === 1 ||
-            data.column.index === 3 ||
-            data.column.index === 5) &&
-          headers.length === 6
+          data.column.index === 1 ||
+          data.column.index === 3 ||
+          (headers.length === 6 && data.column.index === 5) ||
+          (headers.length === 7 && data.column.index === 6)
         ) {
           // Use Quivira font for symbol columns in 7-column tables
           data.cell.styles.font = "Quivira";
@@ -142,8 +144,17 @@ const addTable = (
           data.cell.styles.font = "NotoSans";
         }
 
-        if (data.row.section === "body" && data.column.index === 4) {
-          const element = data.row.raw[4];
+        if (data.row.section === "body") {
+          let colorColumnIndex = null;
+
+          if (headers.length === 6 && data.column.index === 4) {
+            colorColumnIndex = 4;
+          } else if (headers.length === 7 && data.column.index === 5) {
+            colorColumnIndex = 5;
+          }
+
+          const element =
+            colorColumnIndex !== null ? data.row.raw[colorColumnIndex] : null;
           const elementColors: Record<string, number[]> = {
             Aer: [220, 230, 255],
             Apă: [173, 216, 230],
@@ -203,7 +214,7 @@ export const generateAstralElementsPDF = async (
   addTable(
     doc,
     "Tabel Planete",
-    ["Planetă", "Simbol", "Semn", "Simbol", "Element", "Retrograd"],
+    ["Planetă", "Simbol", "Semn", "Simbol", "Casă", "Element", "Retrograd"],
     planetsTableData,
     45,
   );
@@ -230,7 +241,7 @@ export const generateAstralElementsPDF = async (
     addTable(
       doc,
       "Tabel Asteroizi",
-      ["Planetă", "Simbol", "Semn", "Simbol", "Element", "Retrograd"],
+      ["Planetă", "Simbol", "Semn", "Simbol", "Casă", "Element", "Retrograd"],
       asteroidsTableData,
       50,
     );
