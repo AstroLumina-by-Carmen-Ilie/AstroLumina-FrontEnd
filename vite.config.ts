@@ -1,7 +1,11 @@
 import { defineConfig, Plugin } from "vite";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const ENV_VARS = [
   "NODE_ENV",
@@ -60,6 +64,7 @@ function envJsPlugin(): Plugin {
     },
     closeBundle() {
       const distPath = path.resolve(__dirname, "dist", "env.js");
+      fs.mkdirSync(path.dirname(distPath), { recursive: true });
       const envValues: Record<string, string> = {};
       for (const key of ENV_VARS) {
         const value = process.env[key];
@@ -101,15 +106,25 @@ export default defineConfig({
   plugins: [react(), envJsPlugin()],
   build: {
     target: "es2022",
-    minify: "esbuild",
+    minify: "oxc",
     sourcemap: false,
-    rollupOptions: {
-      external: ["dompurify"],
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["lucide-react", "react-select", "react-flatpickr"],
-          pdf: ["jspdf", "jspdf-autotable"],
+        codeSplitting: {
+          groups: [
+            {
+              name: "vendor",
+              test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+            },
+            {
+              name: "ui",
+              test: /[\\/]node_modules[\\/](lucide-react|react-select|react-flatpickr)[\\/]/,
+            },
+            {
+              name: "pdf",
+              test: /[\\/]node_modules[\\/](jspdf|jspdf-autotable)[\\/]/,
+            },
+          ],
         },
       },
     },
