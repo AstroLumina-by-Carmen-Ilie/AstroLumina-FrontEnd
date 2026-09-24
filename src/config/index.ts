@@ -56,7 +56,7 @@ declare global {
   }
 }
 
-function initSentry(dsn?: string, environment: string) {
+function initSentry(dsn: string | undefined, environment: string) {
   if (dsn) {
     Sentry.init({
       dsn,
