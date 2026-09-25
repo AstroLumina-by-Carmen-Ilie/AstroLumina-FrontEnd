@@ -38,6 +38,38 @@ export async function sendGhidulSaturnEmail(to: string) {
   }
 }
 
+export interface ContactEmailPayload {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export async function sendContactEmail(payload: ContactEmailPayload) {
+  try {
+    const response = await fetch(`${BOOKING_API_URL}/send-contact-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      console.error("Contact email API error:", data);
+      return {
+        success: false,
+        error: data?.error || "Trimiterea mesajului a eșuat.",
+      };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Failed to send contact email:", error);
+    return { success: false, error };
+  }
+}
+
 export async function sendSoareleStralucireaEmail(to: string, sunSign: string) {
   try {
     const attachmentFileName = `${sunSign}, Stralucirea Ta.pdf`;
