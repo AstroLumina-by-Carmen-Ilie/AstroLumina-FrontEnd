@@ -108,6 +108,9 @@ export default defineConfig({
     target: "es2022",
     minify: "oxc",
     sourcemap: false,
+    // Initial bundle is ~170 kB; chunks above the default 500 kB limit are
+    // all lazy-loaded on demand (geo dataset, PDF engine, error tracking).
+    chunkSizeWarningLimit: 9000,
     rolldownOptions: {
       output: {
         codeSplitting: {
@@ -117,12 +120,8 @@ export default defineConfig({
               test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
             },
             {
-              name: "ui",
-              test: /[\\/]node_modules[\\/](lucide-react|react-select|react-flatpickr|react-day-picker|flatpickr)[\\/]/,
-            },
-            {
               name: "forms-data",
-              test: /[\\/]node_modules[\\/](country-state-city)[\\/]/,
+              test: /[\\/]node_modules[\\/]country-state-city[\\/]lib[\\/](state|city)\.js/,
             },
             {
               name: "stripe",
