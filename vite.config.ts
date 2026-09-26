@@ -118,11 +118,23 @@ export default defineConfig({
             },
             {
               name: "ui",
-              test: /[\\/]node_modules[\\/](lucide-react|react-select|react-flatpickr)[\\/]/,
+              test: /[\\/]node_modules[\\/](lucide-react|react-select|react-flatpickr|react-day-picker|flatpickr)[\\/]/,
+            },
+            {
+              name: "forms-data",
+              test: /[\\/]node_modules[\\/](country-state-city)[\\/]/,
+            },
+            {
+              name: "stripe",
+              test: /[\\/]node_modules[\\/](@stripe)[\\/]/,
+            },
+            {
+              name: "sentry",
+              test: /[\\/]node_modules[\\/](@sentry)[\\/]/,
             },
             {
               name: "pdf",
-              test: /[\\/]node_modules[\\/](jspdf|jspdf-autotable)[\\/]/,
+              test: /[\\/]node_modules[\\/](jspdf|jspdf-autotable|html2canvas)[\\/]/,
             },
           ],
         },
