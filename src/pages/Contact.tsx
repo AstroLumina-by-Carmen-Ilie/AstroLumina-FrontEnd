@@ -2,11 +2,20 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/navbar/Navbar";
 import { useLoading } from "@/hooks/useLoading";
 import { ChevronDown, ChevronUp, Send } from "lucide-react";
+import { sendContactEmail } from "@/utils/email";
+
+type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 const Contact = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { startLoading, stopLoading } = useLoading();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     startLoading();
@@ -73,8 +82,34 @@ const Contact = () => {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "sending") return;
+
+    setStatus("sending");
+    setErrorMessage("");
+
+    const result = await sendContactEmail({
+      name: name.trim(),
+      email: email.trim(),
+      subject: subject.trim(),
+      message: message.trim(),
+    });
+
+    if (result.success) {
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } else {
+      setStatus("error");
+      setErrorMessage(
+        typeof result.error === "string"
+          ? result.error
+          : "Trimiterea mesajului a eșuat. Te rog încearcă din nou.",
+      );
+    }
   };
 
   return (
@@ -111,6 +146,11 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={status === "sending"}
+                    minLength={2}
+                    maxLength={100}
                     className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Numele tău"
                     required
@@ -126,6 +166,10 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={status === "sending"}
+                    maxLength={254}
                     className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="email@exemplu.ro"
                     required
@@ -141,6 +185,11 @@ const Contact = () => {
                   <input
                     type="text"
                     id="subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    disabled={status === "sending"}
+                    minLength={3}
+                    maxLength={150}
                     className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Despre ce dorești să discutăm?"
                     required
@@ -156,17 +205,42 @@ const Contact = () => {
                   <textarea
                     id="message"
                     rows={5}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    disabled={status === "sending"}
+                    minLength={10}
+                    maxLength={5000}
                     className="w-full p-4 text-white transition-all duration-300 border resize-none rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Scrie mesajul tău aici..."
                     required
                   ></textarea>
                 </div>
+                {status === "success" && (
+                  <p
+                    role="status"
+                    className="p-4 text-sm leading-relaxed border rounded-xl bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                  >
+                    Mesajul a fost trimis cu succes! Îți voi răspunde cât mai
+                    curând posibil.
+                  </p>
+                )}
+                {status === "error" && (
+                  <p
+                    role="alert"
+                    className="p-4 text-sm leading-relaxed border rounded-xl bg-red-500/10 border-red-500/30 text-red-300"
+                  >
+                    {errorMessage}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="flex items-center justify-center w-full gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                  disabled={status === "sending"}
+                  className="flex items-center justify-center w-full gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
-                  <span>Trimite mesaj</span>
+                  <span>
+                    {status === "sending" ? "Se trimite..." : "Trimite mesaj"}
+                  </span>
                 </button>
               </form>
             </div>

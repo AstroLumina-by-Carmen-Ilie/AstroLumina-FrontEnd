@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
-import { Country, State, City } from "country-state-city";
+import { Country, loadCities, loadStates } from "@/utils/location-data";
 import DateInput from "@/components/ui/DateInput";
 import TimeInput from "@/components/ui/TimeInput";
 import {
@@ -78,6 +78,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
   };
 
   useEffect(() => {
+    void (async () => {
     try {
       const defaultOptions = [{ value: "", label: "Selectează..." }];
       const countries = Country.getAllCountries().map((country) => ({
@@ -146,7 +147,9 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
           }
         } else {
           try {
-            const counties = State.getStatesOfCountry(birthCountry).map(
+            const { getStatesOfCountry } = await loadStates();
+            const { getCitiesOfState } = await loadCities();
+            const counties = getStatesOfCountry(birthCountry).map(
               (state) => ({
                 value: state.isoCode,
                 label: formatStateName(state.name),
@@ -158,7 +161,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
             }));
 
             if (birthCounty) {
-              const cities = City.getCitiesOfState(
+              const cities = getCitiesOfState(
                 birthCountry,
                 birthCounty,
               ).map((city) => ({
@@ -198,13 +201,14 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     } catch (error) {
       console.error("Error initializing countries:", error);
     }
+    })();
   }, [initialValues]);
 
   const handleFormChange = (field: string, value: any) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleCountryChange = (option: SelectOption | null) => {
+  const handleCountryChange = async (option: SelectOption | null) => {
     const countryCode = option?.value || "";
 
     setFormState((prev) => ({
@@ -244,7 +248,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
 
     try {
-      const counties = State.getStatesOfCountry(countryCode).map((state) => ({
+      const { getStatesOfCountry } = await loadStates();
+      const counties = getStatesOfCountry(countryCode).map((state) => ({
         value: state.isoCode,
         label: formatStateName(state.name),
       }));
@@ -259,7 +264,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
   };
 
-  const handleCountyChange = (option: SelectOption | null) => {
+  const handleCountyChange = async (option: SelectOption | null) => {
     const countyCode = option?.value || "";
     const { birthCountry } = formState;
 
@@ -292,7 +297,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
 
     try {
-      const cities = City.getCitiesOfState(birthCountry, countyCode).map(
+      const { getCitiesOfState } = await loadCities();
+      const cities = getCitiesOfState(birthCountry, countyCode).map(
         (city) => ({
           value: city.name,
           label: city.name,
@@ -308,7 +314,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
   };
 
-  const handleCityChange = (option: SelectOption | null) => {
+  const handleCityChange = async (option: SelectOption | null) => {
     const cityName = option?.value || "";
     const { birthCountry, birthCounty } = formState;
 
@@ -334,7 +340,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
         return;
       }
 
-      const cityData = City.getCitiesOfState(birthCountry, birthCounty).find(
+      const { getCitiesOfState } = await loadCities();
+      const cityData = getCitiesOfState(birthCountry, birthCounty).find(
         (city) => city.name === cityName,
       );
 
@@ -416,10 +423,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       if (birthCountry === "RO" && ROMANIAN_COUNTIES[birthCounty]) {
         stateName = getRomanianCountyName(birthCounty);
       } else {
+        const { getStateByCodeAndCountry } = await loadStates();
+        const { getCitiesOfState } = await loadCities();
         stateName =
-          State.getStateByCodeAndCountry(birthCounty, birthCountry)?.name ||
+          getStateByCodeAndCountry(birthCounty, birthCountry)?.name ||
           birthCounty;
-        const cities = City.getCitiesOfState(birthCountry, birthCounty);
+        const cities = getCitiesOfState(birthCountry, birthCounty);
         cityName = cities.find((c) => c.name === birthCity)?.name || birthCity;
       }
 
