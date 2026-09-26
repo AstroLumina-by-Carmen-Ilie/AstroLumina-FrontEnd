@@ -37,7 +37,7 @@ export const NavbarLinks: React.FC<{ linkClasses: string }> = ({
 }) => {
   return (
     <>
-      <Link to="/servicii" className={linkClasses}>
+      {/* <Link to="/servicii" className={linkClasses}>
         <span className="relative z-10">Servicii</span>
         <span className="absolute inset-0 transition-opacity opacity-0 bg-gradient-to-r from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
       </Link>
@@ -56,7 +56,7 @@ export const NavbarLinks: React.FC<{ linkClasses: string }> = ({
       <Link to="/contact" className={linkClasses}>
         <span className="relative z-10">Contact</span>
         <span className="absolute inset-0 transition-opacity opacity-0 bg-gradient-to-r from-cosmic-500/20 to-gold-500/20 group-hover:opacity-100 duration-400"></span>
-      </Link>
+      </Link> */}
     </>
   );
 };

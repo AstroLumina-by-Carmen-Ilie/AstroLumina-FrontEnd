@@ -44,8 +44,8 @@ const ConstellationEvent = lazy(
 
 function RouteFallback() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-midnight-950">
-      <div className="h-10 w-10 animate-spin rounded-full border-2 border-cosmic-500/30 border-t-cosmic-400" />
+    <div className="flex items-center justify-center min-h-screen bg-midnight-950">
+      <div className="w-10 h-10 border-2 rounded-full animate-spin border-cosmic-500/30 border-t-cosmic-400" />
     </div>
   );
 }
@@ -62,10 +62,10 @@ if (rootElement) {
         <Router>
           <Suspense fallback={<RouteFallback />}>
             <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/despre-mine" element={<AboutMe />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/servicii" element={<Services />} />
+              <Route path="/" element={<NotFound />} />
+              <Route path="/despre-mine" element={<NotFound />} />
+              <Route path="/contact" element={<NotFound />} />
+              <Route path="/servicii" element={<NotFound />} />
               {/* Calculators */}
               <Route
                 path="/servicii/calculatorul-astral"
@@ -78,31 +78,31 @@ if (rootElement) {
               {/* Astrograme */}
               <Route
                 path="/astrograma/lumina-natala-si-karmica"
-                element={<NatalNKarmicChartBooking />}
+                element={<NotFound />}
               />
               <Route
                 path="/astrograma/lumina-relationala"
-                element={<SynastryChartBooking />}
+                element={<NotFound />}
               />
               <Route
                 path="/astrograma/lumina-previzionala"
-                element={<PredictiveChartBooking />}
+                element={<NotFound />}
               />
               {/* Produse */}
-              <Route path="/produse" element={<Products />} />
+              <Route path="/produse" element={<NotFound />} />
               <Route
                 path="/produse/ghidul-lui-saturn-in-berbec"
-                element={<GhidulLuiSaturnInBerbec />}
+                element={<NotFound />}
               />
               <Route
                 path="/produse/soarele-stralucirea-ta"
-                element={<SoareleStralucireaTa />}
+                element={<NotFound />}
               />
               {/* Evenimente */}
-              <Route path="/evenimente" element={<Events />} />
+              <Route path="/evenimente" element={<NotFound />} />
               <Route
                 path="/evenimente/rezervare/:id"
-                element={<ConstellationEvent />}
+                element={<NotFound />}
               />
               {/*  */}
               <Route path="*" element={<NotFound />} />
