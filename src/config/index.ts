@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react";
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -56,23 +55,25 @@ declare global {
   }
 }
 
-function initSentry(dsn: string | undefined, environment: string) {
-  if (dsn) {
-    Sentry.init({
-      dsn,
-      environment,
-      integrations: [
-        Sentry.browserTracingIntegration(),
-        Sentry.replayIntegration({
-          maskAllText: false,
-          blockAllMedia: false,
-        }),
-      ],
-      tracesSampleRate: environment === "production" ? 0.1 : 1.0,
-      replaysSessionSampleRate: 0.1,
-      replaysOnErrorSampleRate: 1.0,
-    });
+export async function initSentry(dsn: string | undefined, environment: string) {
+  if (!dsn) {
+    return;
   }
+  const Sentry = await import("@sentry/react");
+  Sentry.init({
+    dsn,
+    environment,
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration({
+        maskAllText: false,
+        blockAllMedia: false,
+      }),
+    ],
+    tracesSampleRate: environment === "production" ? 0.1 : 1.0,
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
+  });
 }
 
 function parseAndValidateEnv(): EnvConfig {
@@ -92,10 +93,6 @@ function parseAndValidateEnv(): EnvConfig {
 
 export const env = parseAndValidateEnv();
 
-// Initialize Sentry with validated config
-initSentry(env.FRONTEND_SENTRY_DSN, env.NODE_ENV);
-
-// Export validated config
 export const NODE_ENV = env.NODE_ENV;
 
 export const ASTROLOGY_API_SERVER_PORT = env.ASTROLOGY_API_SERVER_PORT;

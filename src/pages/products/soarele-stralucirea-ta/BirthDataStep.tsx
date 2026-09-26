@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Country, State, City } from "country-state-city";
+import { Country, loadCities, loadStates } from "@/utils/location-data";
 import { BirthDataPayload, SelectOption, LocationCoordinates } from "@/types";
 import DateInput from "@/components/ui/DateInput";
 import TimeInput from "@/components/ui/TimeInput";
@@ -61,7 +61,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
   }, []);
 
-  const handleCountryChange = (option: SelectOption | null) => {
+  const handleCountryChange = async (option: SelectOption | null) => {
     const countryCode = option?.value || "";
     setFormState((prev) => ({
       ...prev,
@@ -96,7 +96,8 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
 
     try {
-      const states = State.getStatesOfCountry(countryCode).map((state) => ({
+      const { getStatesOfCountry } = await loadStates();
+      const states = getStatesOfCountry(countryCode).map((state) => ({
         value: state.isoCode,
         label: state.name.replace(
           / County$| State$| Municipality$| Province$| Region$| District$/,
@@ -113,7 +114,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
   };
 
-  const handleCountyChange = (option: SelectOption | null) => {
+  const handleCountyChange = async (option: SelectOption | null) => {
     const countyCode = option?.value || "";
     const { birthCountry } = formState;
 
@@ -145,7 +146,8 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
 
     try {
-      const cities = City.getCitiesOfState(birthCountry, countyCode).map(
+      const { getCitiesOfState } = await loadCities();
+      const cities = getCitiesOfState(birthCountry, countyCode).map(
         (city) => ({
           value: city.name,
           label: city.name,
@@ -160,7 +162,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
   };
 
-  const handleCityChange = (option: SelectOption | null) => {
+  const handleCityChange = async (option: SelectOption | null) => {
     const cityName = option?.value || "";
     const { birthCountry, birthCounty } = formState;
 
@@ -181,7 +183,8 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         return;
       }
 
-      const cityData = City.getCitiesOfState(birthCountry, birthCounty).find(
+      const { getCitiesOfState } = await loadCities();
+      const cityData = getCitiesOfState(birthCountry, birthCounty).find(
         (city) => city.name === cityName,
       );
       if (cityData?.latitude && cityData?.longitude) {
