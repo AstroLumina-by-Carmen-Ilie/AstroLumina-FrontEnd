@@ -1,5 +1,5 @@
 # =============================================================================
-# AstroLumina Frontend - Dockerfile cu Nginx
+# AstroLumina Frontend - Dockerfile with Nginx
 # =============================================================================
 
 FROM node:22-alpine AS builder
