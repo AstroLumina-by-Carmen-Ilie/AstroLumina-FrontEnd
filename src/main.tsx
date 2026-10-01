@@ -8,9 +8,9 @@ import "flatpickr/dist/themes/material_blue.css";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import { env, initSentry } from "@/config";
 
-// Route-level code splitting: fiecare pagina devine un chunk separat,
-// incarcat la cerere. Fara asta, toate paginile + country-state-city +
-// stripe + jspdf ajungeau intr-un singur chunk de ~10MB.
+// Route-level code splitting: each page becomes a separate chunk,
+// loaded on demand. Without this, all pages + country-state-city +
+// stripe + jspdf ended up in a single ~10MB chunk.
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const AboutMe = lazy(() => import("@/pages/AboutMe"));
 const Contact = lazy(() => import("@/pages/Contact"));

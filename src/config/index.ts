@@ -37,6 +37,11 @@ const envSchema = z.object({
     .min(1, "FRONTEND_SERVER_PORT is required"),
   FRONTEND_SERVER_DNS: z.string().min(1, "FRONTEND_SERVER_DNS is required"),
 
+  ASTROLOGY_API_SERVER_K8S_PORT: z.coerce.number().int().positive().optional(),
+  BOOKING_API_SERVER_K8S_PORT: z.coerce.number().int().positive().optional(),
+  PAYMENT_API_SERVER_K8S_PORT: z.coerce.number().int().positive().optional(),
+  FRONTEND_SERVER_K8S_PORT: z.coerce.number().int().positive().optional(),
+
   FRONTEND_SENTRY_DSN: z.string().min(1, "FRONTEND_SENTRY_DSN is required"),
 
   ASTROLOGICAL_API_URL: z.string().min(1, "ASTROLOGICAL_API_URL is required"),
@@ -103,6 +108,10 @@ export const PAYMENT_API_SERVER_PORT = env.PAYMENT_API_SERVER_PORT;
 export const PAYMENT_API_SERVER_DNS = env.PAYMENT_API_SERVER_DNS;
 export const FRONTEND_SERVER_PORT = env.FRONTEND_SERVER_PORT;
 export const FRONTEND_SERVER_DNS = env.FRONTEND_SERVER_DNS;
+export const ASTROLOGY_API_SERVER_K8S_PORT = env.ASTROLOGY_API_SERVER_K8S_PORT;
+export const BOOKING_API_SERVER_K8S_PORT = env.BOOKING_API_SERVER_K8S_PORT;
+export const PAYMENT_API_SERVER_K8S_PORT = env.PAYMENT_API_SERVER_K8S_PORT;
+export const FRONTEND_SERVER_K8S_PORT = env.FRONTEND_SERVER_K8S_PORT;
 
 export const FRONTEND_SENTRY_DSN = env.FRONTEND_SENTRY_DSN;
 
