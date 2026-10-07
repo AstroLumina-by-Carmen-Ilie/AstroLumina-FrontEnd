@@ -11,7 +11,7 @@ import {
   getRomanianCityCoordinates,
   COUNTRY_NAMES_RO,
 } from "@/data";
-import { ASTROLOGICAL_API_URL } from "@/config";
+import { ASTROLOGY_API_URL } from "@/config";
 
 interface BirthDataStepProps {
   onNext: (sunSign: string) => void;
@@ -251,7 +251,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
       };
 
       const response = await axios.post(
-        `${ASTROLOGICAL_API_URL}/api/v2/ro/astral-data`,
+        `${ASTROLOGY_API_URL}/api/v2/ro/astral-data`,
         payload,
         { headers: { "Content-Type": "application/json" } },
       );
