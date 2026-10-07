@@ -6,7 +6,7 @@ import {
   LunarDataPayload,
   LunarDataResponse,
 } from "@/types";
-import { ASTROLOGICAL_API_URL } from "@/config";
+import { ASTROLOGY_API_URL } from "@/config";
 export const calculateAstralElementsPosition = async (
   language: string,
   payload: BirthDataPayload,
@@ -17,7 +17,7 @@ export const calculateAstralElementsPosition = async (
   try {
     const options = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/astral-data`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const calculateLunarPhasePosition = async (
   try {
     const options = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/lunar-data`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/lunar-data`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const calculateNatalChart = async (
   try {
     const options_data = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data/natal`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/astral-data/natal`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export const calculateNatalChart = async (
 
     const options_chart = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-chart`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/astral-chart`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export const calculateKarmicChart = async (
   try {
     const options_data = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-data/karmic`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/astral-data/karmic`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export const calculateKarmicChart = async (
 
     const options_chart = {
       method: "POST",
-      url: `${ASTROLOGICAL_API_URL}/api/v2/${language}/astral-chart`,
+      url: `${ASTROLOGY_API_URL}/api/v2/${language}/astral-chart`,
       headers: {
         "Accept-Language": language,
         "Content-Type": "application/json",
