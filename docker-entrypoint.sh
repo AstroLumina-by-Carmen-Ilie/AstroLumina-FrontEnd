@@ -21,12 +21,9 @@ for file in /usr/share/nginx/html/env.js /usr/share/nginx/html/index.html; do
   sed -i "s|__FRONTEND_SERVER_DC_DNS__|${FRONTEND_SERVER_DC_DNS}|g" "$file"
   sed -i "s|__FRONTEND_SERVER_K8S_PORT__|${FRONTEND_SERVER_K8S_PORT}|g" "$file"
   sed -i "s|__FRONTEND_SERVER_K8S_DNS__|${FRONTEND_SERVER_K8S_DNS}|g" "$file"
-  sed -i "s|__ASTROLOGY_API_DC_URL__|${ASTROLOGY_API_DC_URL}|g" "$file"
-  sed -i "s|__ASTROLOGY_API_K8S_URL__|${ASTROLOGY_API_K8S_URL}|g" "$file"
-  sed -i "s|__PAYMENT_API_DC_URL__|${PAYMENT_API_DC_URL}|g" "$file"
-  sed -i "s|__PAYMENT_API_K8S_URL__|${PAYMENT_API_K8S_URL}|g" "$file"
-  sed -i "s|__BOOKING_API_DC_URL__|${BOOKING_API_DC_URL}|g" "$file"
-  sed -i "s|__BOOKING_API_K8S_URL__|${BOOKING_API_K8S_URL}|g" "$file"
+  sed -i "s|__ASTROLOGY_API_URL__|${ASTROLOGY_API_URL}|g" "$file"
+  sed -i "s|__PAYMENT_API_URL__|${PAYMENT_API_URL}|g" "$file"
+  sed -i "s|__BOOKING_API_URL__|${BOOKING_API_URL}|g" "$file"
 done
 
 exec nginx -g "daemon off;"
