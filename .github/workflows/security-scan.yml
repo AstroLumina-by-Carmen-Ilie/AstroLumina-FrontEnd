@@ -242,7 +242,7 @@ jobs:
       - name: Start frontend and wait for health
         run: |
           docker run -d --name frontend-scan \
-            -p "${FRONTEND_SERVER_DC_PORT}:80" \
+            -p "${FRONTEND_SERVER_PORT}:80" \
             -e NODE_ENV="${NODE_ENV}" \
             -e FRONTEND_SERVER_PORT="${FRONTEND_SERVER_PORT}" \
             -e FRONTEND_SENTRY_DSN="${FRONTEND_SENTRY_DSN}" \
@@ -269,8 +269,8 @@ jobs:
             -e BOOKING_API_URL="${BOOKING_API_URL}" \
             frontend:security-scan
           for i in $(seq 1 30); do
-            if curl -fs "http://localhost:${FRONTEND_SERVER_DC_PORT}/health" > /dev/null; then
-              echo "Frontend is up on port ${FRONTEND_SERVER_DC_PORT}"
+            if curl -fs "http://localhost:${FRONTEND_SERVER_PORT}/health" > /dev/null; then
+              echo "Frontend is up on port ${FRONTEND_SERVER_PORT}"
               exit 0
             fi
             sleep 2
