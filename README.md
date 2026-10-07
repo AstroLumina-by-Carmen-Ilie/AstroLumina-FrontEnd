@@ -1,8 +1,8 @@
 # AstroLumina
 
-Servicii profesionale de astrologie — hărți natale, hărți karmice, consultații și previziuni personalizate.
+Professional astrology services — natal charts, karmic charts, consultations and personalized forecasts.
 
-## Arhitectură
+## Architecture
 
 ```
 AstroLumina/
@@ -29,103 +29,113 @@ AstroLumina/
 | Fonts      | Playfair Display + Inter                         |
 | Deployment | Cloudflare Pages                                 |
 
-## Servicii
+## Configuration
 
-| Serviciu            | Ruta                                   | Descriere                            | Status           |
-| ------------------- | -------------------------------------- | ------------------------------------ | ---------------- |
-| Calculatorul Astral | `/servicii/calculatorul-astral`        | Calculator gratuit poziții planetare | ✅ Activ         |
-| Lumina Natală       | `/astrograma/lumina-natala-si-karmica` | Hartă natală + PDF                   | ✅ Activ         |
-| Lumina Karmică      | `/servicii/lumina-karmica`             | Hartă karmică + PDF                  | ✅ Activ         |
-| Consultații         | `/servicii/consultatii`                | Programare cu Cal.com                | ✅ Activ         |
-| Previziuni          | `/astrograma/lumina-previzionala`      | Tranzituri și previziuni             | 🔧 În dezvoltare |
-| Relațională         | `/astrograma/lumina-relationala`       | Sinastrie și compatibilitate         | 🔧 În dezvoltare |
+### Environment variables
 
-## Configurare
-
-### Variabile de mediu
-
-Creează un fișier `.env` în rădăcina proiectului:
+Create an `.env` file in the project root:
 
 ```env
 NODE_ENV=development|staging|production
 
-ASTROLOGY_API_SERVER_PORT=3031
-ASTROLOGY_API_SERVER_DNS=localhost
-BOOKING_API_SERVER_PORT=3033
-BOOKING_API_SERVER_DNS=localhost
-PAYMENT_API_SERVER_PORT=3032
-PAYMENT_API_SERVER_DNS=localhost
 FRONTEND_SERVER_PORT=5173
-FRONTEND_SERVER_DNS=localhost
-
-ASTROLOGICAL_API_URL=http://localhost:3031
-PAYMENT_API_URL=http://localhost:3032
-BOOKING_API_URL=http://localhost:3033
-
-STRIPE_PK=<stripe-pk>
 
 FRONTEND_SENTRY_DSN=<sentry-dsn>
 
+STRIPE_PK=<stripe-pk>
+
 R2_BASE_URL=https://pub-xxx.r2.dev
+
+ASTROLOGY_API_SERVER_DC_PORT=3031
+ASTROLOGY_API_SERVER_DC_DNS=localhost
+ASTROLOGY_API_SERVER_K8S_PORT=3031
+ASTROLOGY_API_SERVER_K8S_DNS=localhost
+BOOKING_API_SERVER_DC_PORT=3033
+BOOKING_API_SERVER_DC_DNS=localhost
+BOOKING_API_SERVER_K8S_PORT=3033
+BOOKING_API_SERVER_K8S_DNS=localhost
+PAYMENT_API_SERVER_DC_PORT=3032
+PAYMENT_API_SERVER_DC_DNS=localhost
+PAYMENT_API_SERVER_K8S_PORT=3032
+PAYMENT_API_SERVER_K8S_DNS=localhost
+FRONTEND_SERVER_DC_PORT=5173
+FRONTEND_SERVER_DC_DNS=localhost
+FRONTEND_SERVER_K8S_PORT=5173
+FRONTEND_SERVER_K8S_DNS=localhost
+
+ASTROLOGY_API_URL=http://localhost:3031
+PAYMENT_API_URL=http://localhost:3032
+BOOKING_API_URL=http://localhost:3033
 ```
 
-Toate variabilele sunt obligatorii (fara valori default). App-ul va esua la pornire daca lipsesc.
+The app fails at startup if the required variables are missing (no default values).
 
-### Instalare
+### API base URLs
+
+The frontend calls the backends through `ASTROLOGY_API_URL`,
+`PAYMENT_API_URL` and `BOOKING_API_URL`:
+
+- In the Docker Compose context, `docker-compose.yml` maps each of them to
+  its `*_API_DC_URL` counterpart, so the three values always follow the
+  Compose endpoints.
+- For external hosting — e.g. frontend on Cloudflare with APIs on Render —
+  set the three `*_API_URL` variables directly to the public API addresses.
+
+### Install
 
 ```bash
 npm install
 ```
 
-### Dezvoltare
+### Development
 
 ```bash
 npm run dev
 ```
 
-### Build producție
+### Production build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Structura API-urilor
+## API structure
 
 ### AstrologyAPI (3031)
 
-- `POST /api/v2/:lang/birth-data` — Date complete naștere
-- `POST /api/v2/:lang/astral-data` — Date astrale filtrate
-- `POST /api/v2/:lang/astral-data/:type` — Date filtrate pe tip (natal/karmic)
-- `POST /api/v2/:lang/astral-chart` — SVG hartă astrologică
+- `POST /api/v2/:lang/birth-data` — Full birth data
+- `POST /api/v2/:lang/astral-data` — Filtered astral data
+- `POST /api/v2/:lang/astral-data/:type` — Data filtered by type (natal/karmic)
+- `POST /api/v2/:lang/astral-chart` — Astrology chart SVG
 - `GET /health` — Health check
 
 ### PaymentAPI (3032)
 
-- `POST /create-checkout-session/:product` — Creare sesiune checkout Stripe
-- `GET /session-status?session_id=` — Verificare status plată
-- `GET /products` — Lista produse disponibile
+- `POST /create-checkout-session/:product` — Create Stripe checkout session
+- `GET /session-status?session_id=` — Check payment status
+- `GET /products` — List available products
 - `GET /health` — Health check
 
 ### BookingAPI (3033)
 
-- `GET /api/event-types` — Tipuri de evenimente Cal.com
-- `GET /api/bookings` — Lista rezervări
-- `POST /api/bookings` — Creare rezervare
-- `GET /api/availability/slots` — Sloturi disponibile
+- `GET /api/event-types` — Cal.com event types
+- `GET /api/bookings` — List bookings
+- `POST /api/bookings` — Create booking
+- `GET /api/availability/slots` — Available slots
 - `GET /health` — Health check
 
 ## Design System
 
-- **Culori primare:** Cosmic Purple (#7C3AED) + Gold (#CA8A04)
+- **Primary colors:** Cosmic Purple (#7C3AED) + Gold (#CA8A04)
 - **Background:** Midnight Dark (#0a0a1a)
-- **Fonturi:** Playfair Display (headings) + Inter (body)
-- **Stil:** Glassmorphism cu cosmic effects
-- **Animații:** Shooting stars, floating particles, shimmer effects
+- **Fonts:** Playfair Display (headings) + Inter (body)
+- **Style:** Glassmorphism with cosmic effects
+- **Animations:** Shooting stars, floating particles, shimmer effects
 
-## Securitate
+## Security
 
-- Nu expune niciodată chei secrete (`STRIPE_SK`) în codul frontend
-- Toate cheile secrete aparțin backend-urilor
-- CORS este configurat pe fiecare API
-- Rate limiting este activat pe API-uri
+- Never expose secret keys (`STRIPE_SK`) in frontend code
+- All secret keys belong to the backends
+- CORS is configured on each API
+- Rate limiting is enabled on the APIs
