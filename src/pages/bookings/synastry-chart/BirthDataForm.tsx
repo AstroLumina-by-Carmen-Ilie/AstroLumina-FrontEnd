@@ -56,21 +56,15 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     getInitialFormState(initialValues),
   );
 
-  useEffect(() => {
-    if (!initialValues) {
-      setFormState({
-        fullName: "",
-        birthDate: null as Date | null,
-        birthHour: null as Date | null,
-        birthCountry: "",
-        birthCounty: "",
-        birthCity: "",
-        coordinates: null as LocationCoordinates | null,
-      });
-    } else {
-      setFormState(getInitialFormState(initialValues));
-    }
-  }, [initialValues]);
+  // Reset the form when the parent passes new initial values. Done during
+  // render (React-endorsed "adjust state during render" pattern), not in an
+  // effect, so no cascading passive re-render happens. Compared by reference:
+  // the parent holds a stable object while the user edits.
+  const [prevInitialValues, setPrevInitialValues] = useState(initialValues);
+  if (prevInitialValues !== initialValues) {
+    setPrevInitialValues(initialValues);
+    setFormState(getInitialFormState(initialValues));
+  }
 
   const [options, setOptions] = useState({
     countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],

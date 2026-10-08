@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ro } from "date-fns/locale";
@@ -89,6 +89,34 @@ const YEARS = Array.from({ length: 3 }, (_, i) => CURRENT_YEAR + i);
 /** Horizon for one request — availability limits come from Cal.com; widen here if needed. */
 const AVAILABILITY_RANGE_DAYS = 90;
 
+/**
+ * Pure slot fetcher: performs the HTTP request and returns normalized slots
+ * without touching component state. State updates happen in the caller's
+ * async continuations, so mounting does not synchronously setState in an
+ * effect (which would cascade renders).
+ */
+async function requestSlotsForRange(
+  sessionKey: string,
+  startDate: Date,
+  endDate: Date,
+): Promise<AvailableSlot[]> {
+  const startTime = startDate.toISOString();
+  const endTime = new Date(endDate.getTime() + 86400000).toISOString();
+
+  const response = await axios.get(
+    `${BOOKING_API_URL}/api/availability/slots/session/${sessionKey}`,
+    {
+      params: {
+        startTime,
+        endTime,
+        timeZone: "Europe/Bucharest",
+      },
+    },
+  );
+
+  return normalizeSlotsFromApi(response.data.slots);
+}
+
 const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   initialValues,
   onNext,
@@ -103,60 +131,43 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(
     initialValues || null,
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [datesWithSlots, setDatesWithSlots] = useState<Set<string>>(new Set());
   const [calendarMonth, setCalendarMonth] = useState<Date>(
     initialValues ? new Date(initialValues.time) : new Date(),
   );
 
-  const fetchSlotsForRange = useCallback(
-    async (startDate: Date, endDate: Date) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const startTime = startDate.toISOString();
-        const endTime = new Date(endDate.getTime() + 86400000).toISOString();
-
-        const response = await axios.get(
-          `${BOOKING_API_URL}/api/availability/slots/session/${SESSION_KEY}`,
-          {
-            params: {
-              startTime,
-              endTime,
-              timeZone: "Europe/Bucharest",
-            },
-          },
-        );
-
-        const slots = normalizeSlotsFromApi(response.data.slots);
+  // Initial slot load. The effect body only starts async work; every
+  // setState runs in a promise continuation (never synchronously), guarded
+  // by `cancelled` so an unmounted component is left alone.
+  useEffect(() => {
+    let cancelled = false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const end = new Date(today.getTime() + AVAILABILITY_RANGE_DAYS * 86400000);
+    requestSlotsForRange(SESSION_KEY, today, end).then(
+      (slots) => {
+        if (cancelled) return;
         setAvailableSlots(slots);
-
-        const dateSet = new Set<string>();
-        slots.forEach((slot) => {
-          dateSet.add(slot.date);
-        });
-        setDatesWithSlots(dateSet);
-      } catch (err) {
+        setDatesWithSlots(new Set(slots.map((slot) => slot.date)));
+        setIsLoading(false);
+      },
+      (err: unknown) => {
+        if (cancelled) return;
         console.error("Error fetching availability slots:", err);
         setError(
           "Nu am putut încărca disponibilitatea. Te rog încearcă din nou.",
         );
         setAvailableSlots([]);
         setDatesWithSlots(new Set());
-      } finally {
         setIsLoading(false);
-      }
-    },
-    [],
-  );
-
-  useEffect(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const end = new Date(today.getTime() + AVAILABILITY_RANGE_DAYS * 86400000);
-    fetchSlotsForRange(today, end);
-  }, [fetchSlotsForRange]);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSelectDate = (date: Date | undefined) => {
     setSelectedDate(date);

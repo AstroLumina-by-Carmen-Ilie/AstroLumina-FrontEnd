@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
@@ -28,16 +28,10 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     coordinates: null as LocationCoordinates | null,
   });
 
-  const [options, setOptions] = useState({
-    countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    countyOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    cityOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isCalculating, setIsCalculating] = useState(false);
-
-  useEffect(() => {
+  // Static reference data (countries + Romanian counties) is computed
+  // synchronously for the initial state — no effect needed.
+  const getInitialOptions = () => {
+    const placeholder: SelectOption = { value: "", label: "Selectează..." };
     try {
       const countries = Country.getAllCountries().map((country) => ({
         value: country.isoCode,
@@ -51,15 +45,25 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         }),
       );
 
-      setOptions({
-        countryOptions: [{ value: "", label: "Selectează..." }, ...countries],
-        countyOptions: [{ value: "", label: "Selectează..." }, ...counties],
-        cityOptions: [{ value: "", label: "Selectează..." }],
-      });
+      return {
+        countryOptions: [placeholder, ...countries],
+        countyOptions: [placeholder, ...counties],
+        cityOptions: [placeholder],
+      };
     } catch (error) {
       console.error("Error initializing:", error);
+      return {
+        countryOptions: [placeholder],
+        countyOptions: [placeholder],
+        cityOptions: [placeholder],
+      };
     }
-  }, []);
+  };
+
+  const [options, setOptions] = useState(getInitialOptions);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const handleCountryChange = async (option: SelectOption | null) => {
     const countryCode = option?.value || "";

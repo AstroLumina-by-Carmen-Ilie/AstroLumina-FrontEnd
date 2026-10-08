@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
 import DateInput from "@/components/ui/DateInput";
@@ -39,22 +39,56 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
   setResult,
   setUserInfo,
 }) => {
-  const [formState, setFormState] = useState({
-    fullName: "",
-    birthDate: null as Date | null,
-    birthHour: null as Date | null,
-    birthCountry: "",
-    birthCounty: "",
-    birthCity: "",
-    coordinates: null as LocationCoordinates | null,
-    isCalculating: false,
-  });
+  // Static reference data (countries + Romanian counties, Romania
+  // preselected) is computed synchronously for the initial state — no
+  // effect needed.
+  const getInitialData = () => {
+    const placeholder: SelectOption = { value: "", label: "Selectează..." };
+    const fallback = {
+      formState: {
+        fullName: "",
+        birthDate: null as Date | null,
+        birthHour: null as Date | null,
+        birthCountry: "",
+        birthCounty: "",
+        birthCity: "",
+        coordinates: null as LocationCoordinates | null,
+        isCalculating: false,
+      },
+      options: {
+        countryOptions: [placeholder],
+        stateOptions: [placeholder],
+        cityOptions: [placeholder],
+      },
+    };
+    try {
+      const countries = Country.getAllCountries().map((country) => ({
+        value: country.isoCode,
+        label: COUNTRY_NAMES_RO[country.isoCode] || country.name,
+      }));
+      fallback.options.countryOptions = [placeholder, ...countries];
 
-  const [options, setOptions] = useState({
-    countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    stateOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    cityOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-  });
+      const romania = countries.find((c) => c.value === "RO");
+      if (romania) {
+        fallback.formState.birthCountry = romania.value;
+        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
+          ([code, [name]]) => ({
+            value: code,
+            label: name,
+          }),
+        );
+        fallback.options.stateOptions = [placeholder, ...romaniaCounties];
+      }
+      return fallback;
+    } catch (error) {
+      console.error("Error initializing countries:", error);
+      return fallback;
+    }
+  };
+
+  const [initialData] = useState(getInitialData);
+  const [formState, setFormState] = useState(initialData.formState);
+  const [options, setOptions] = useState(initialData.options);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -65,44 +99,6 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       "",
     );
   };
-
-  useEffect(() => {
-    try {
-      const defaultOptions = [{ value: "", label: "Selectează..." }];
-      const countries = Country.getAllCountries().map((country) => ({
-        value: country.isoCode,
-        label: COUNTRY_NAMES_RO[country.isoCode] || country.name,
-      }));
-
-      setOptions((prev) => ({
-        ...prev,
-        countryOptions: [{ value: "", label: "Selectează..." }, ...countries],
-      }));
-
-      const romania = countries.find((c) => c.value === "RO");
-
-      if (romania) {
-        setFormState((prev) => ({
-          ...prev,
-          birthCountry: romania.value,
-        }));
-
-        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
-          ([code, [name]]) => ({
-            value: code,
-            label: name,
-          }),
-        );
-
-        setOptions((prev) => ({
-          ...prev,
-          stateOptions: [...defaultOptions, ...romaniaCounties],
-        }));
-      }
-    } catch (error) {
-      console.error("Error initializing countries:", error);
-    }
-  }, []);
 
   type FormState = typeof formState;
 

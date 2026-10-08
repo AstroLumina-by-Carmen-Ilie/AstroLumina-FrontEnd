@@ -46,14 +46,20 @@ const DateInput: React.FC<DateInputProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  // Sync display state when the parent passes a new date. Done during render
+  // (React-endorsed "adjust state during render" pattern), not in an effect,
+  // so no cascading passive re-render happens. Compared by timestamp so a
+  // re-created but equal Date instance does not wipe in-progress typing.
+  const [prevValue, setPrevValue] = useState<Date | null>(value);
+  if ((value?.getTime() ?? null) !== (prevValue?.getTime() ?? null)) {
+    setPrevValue(value);
     if (value) {
       setInputValue(format(value, "dd/MM/yyyy"));
       setCalendarMonth(value);
     } else {
       setInputValue("");
     }
-  }, [value]);
+  }
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
