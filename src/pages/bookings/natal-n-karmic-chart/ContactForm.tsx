@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ContactFormProps } from "@/types";
 import { COUNTRY_CODES, CountryCode } from "@/data";
 
@@ -44,24 +44,21 @@ const ContactForm: React.FC<ContactFormProps> = ({
     getInitialCountryCode,
   );
   const [phone, setPhone] = useState(getInitialPhone);
-  const [phoneError, setPhoneError] = useState("");
+  // Submit-time error (e.g. empty phone) lives in state; the digit-count
+  // error below is derived during render from phone + countryCode, so no
+  // effect is needed to keep them in sync.
+  const [submitPhoneError, setSubmitPhoneError] = useState<string | null>(
+    null,
+  );
   const [email, setEmail] = useState(initialValues?.email || "");
   const [emailError, setEmailError] = useState("");
 
-  useEffect(() => {
-    if (phone && countryCode) {
-      const digitsOnly = phone.replace(/\D/g, "");
-      if (digitsOnly.length !== countryCode.digitCount) {
-        setPhoneError(
-          `Trebuie să conțină exact ${countryCode.digitCount} cifre`,
-        );
-      } else {
-        setPhoneError("");
-      }
-    } else {
-      setPhoneError("");
-    }
-  }, [phone, countryCode]);
+  const digitsOnly = phone.replace(/\D/g, "");
+  const livePhoneError =
+    phone && digitsOnly.length !== countryCode.digitCount
+      ? `Trebuie să conțină exact ${countryCode.digitCount} cifre`
+      : "";
+  const phoneError = submitPhoneError ?? livePhoneError;
 
   const formatPhoneDisplay = (value: string): string => {
     const digits = value.replace(/\D/g, "");
@@ -75,8 +72,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const digitsOnly = value.replace(/\D/g, "");
-    const limited = digitsOnly.slice(0, countryCode.digitCount);
+    const limited = value.replace(/\D/g, "").slice(0, countryCode.digitCount);
+    setSubmitPhoneError(null);
     setPhone(limited);
   };
 
@@ -85,20 +82,23 @@ const ContactForm: React.FC<ContactFormProps> = ({
     if (selected) {
       setCountryCode(selected);
       setPhone("");
-      setPhoneError("");
+      setSubmitPhoneError(null);
     }
   };
 
   const validateForm = (): boolean => {
     let isValid = true;
-    const digitsOnly = phone.replace(/\D/g, "");
 
     if (!phone.trim()) {
-      setPhoneError("Numărul de telefon este obligatoriu");
+      setSubmitPhoneError("Numărul de telefon este obligatoriu");
       isValid = false;
     } else if (digitsOnly.length !== countryCode.digitCount) {
-      setPhoneError(`Trebuie să conțină exact ${countryCode.digitCount} cifre`);
+      setSubmitPhoneError(
+        `Trebuie să conțină exact ${countryCode.digitCount} cifre`,
+      );
       isValid = false;
+    } else {
+      setSubmitPhoneError(null);
     }
 
     if (!email) {
@@ -135,7 +135,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             id="countryCode"
             value={countryCode.value}
             onChange={(e) => handleCountryCodeChange(e.target.value)}
-            className="w-full p-3 transition-colors border cursor-pointer rounded-xl bg-white/5 border-white/15 text-cosmic-100 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+            className="w-full p-3 transition-colors border cursor-pointer rounded-xl bg-white/5 border-white/15 text-cosmic-100 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               color: "#e9d5ff",
@@ -177,7 +177,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           <input
             type="tel"
             id="phone"
-            className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
+            className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:ring-1 ${
               phoneError
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                 : "border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500"
@@ -200,7 +200,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         <input
           type="email"
           id="email"
-          className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
+          className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:ring-1 ${
             emailError
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"
               : "border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500"
@@ -228,7 +228,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         </button>
         <button
           type="submit"
-          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Pasul următor
         </button>

@@ -33,7 +33,7 @@ export const calculateAstralElementsPosition = async (
     };
   } catch (error) {
     console.error("API request error:", error);
-    throw new Error("Failed to fetch reading");
+    throw new Error("Failed to fetch reading", { cause: error });
   }
 };
 
@@ -57,7 +57,7 @@ export const calculateLunarPhasePosition = async (
     return response.data;
   } catch (error) {
     console.error("API request error:", error);
-    throw new Error("Failed to fetch lunar data");
+    throw new Error("Failed to fetch lunar data", { cause: error });
   }
 };
 
@@ -103,7 +103,7 @@ export const calculateNatalChart = async (
     };
   } catch (error) {
     console.error("API request error:", error);
-    throw new Error("Failed to fetch reading");
+    throw new Error("Failed to fetch reading", { cause: error });
   }
 };
 
@@ -149,6 +149,6 @@ export const calculateKarmicChart = async (
     };
   } catch (error) {
     console.error("API request error:", error);
-    throw new Error("Failed to fetch reading");
+    throw new Error("Failed to fetch reading", { cause: error });
   }
 };

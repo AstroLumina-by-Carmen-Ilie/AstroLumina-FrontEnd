@@ -21,7 +21,7 @@ const NotFound = () => {
                 style={{ animationDelay: "0.5s" }}
               />
             </div>
-            <h1 className="mb-4 text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display via-cosmic-100 to-cosmic-200">
+            <h1 className="mb-4 text-6xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white font-display via-cosmic-100 to-cosmic-200">
               404
             </h1>
             <h2 className="mb-4 text-2xl font-semibold text-white font-display">
@@ -34,7 +34,7 @@ const NotFound = () => {
 
             <button
               onClick={() => navigate("/")}
-              className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+              className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-full bg-linear-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
             >
               <ArrowLeft className="w-5 h-5" />
               Înapoi acasă

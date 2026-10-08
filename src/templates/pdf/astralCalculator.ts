@@ -1,6 +1,9 @@
-import { AstralElements, UserInfo } from "@/types";
+import { AstralElement, AstralElements, UserInfo } from "@/types";
 import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import autoTable, {
+  type CellHookData,
+  type RowInput,
+} from "jspdf-autotable";
 import { loadFontsForPDF } from "@/utils/fontLoader";
 
 // Utility functions
@@ -31,7 +34,7 @@ const calculateElementDistribution = (
   elements: AstralElements,
 ): Record<string, number> => {
   const elementDistribution: Record<string, number> = {};
-  elements.forEach((p: any) => {
+  elements.forEach((p: AstralElement) => {
     if (p.element) {
       elementDistribution[p.element] =
         (elementDistribution[p.element] || 0) + 1;
@@ -67,19 +70,19 @@ const addElementDistribution = (
 };
 
 const createPlanetsTable = (elements: AstralElements) => {
-  return elements.map((p: any) => [
+  return elements.map((p: AstralElement) => [
     p.name,
-    p.symbol,
+    p.symbol ?? "",
     p.sign,
     p.emoji,
-    p.house,
+    p.house ?? "",
     p.element,
     p.retrograde ? "✓" : "",
   ]);
 };
 
 const createHousesTable = (houses: AstralElements) => {
-  return houses.map((h: any) => [
+  return houses.map((h: AstralElement) => [
     h.name,
     h.sign,
     formatDegreesMinutes(h.position),
@@ -87,12 +90,12 @@ const createHousesTable = (houses: AstralElements) => {
 };
 
 const createAsteroidsTable = (elements: AstralElements) => {
-  return elements.map((p: any) => [
+  return elements.map((p: AstralElement) => [
     p.name,
-    p.symbol,
+    p.symbol ?? "",
     p.sign,
     p.emoji,
-    p.house,
+    p.house ?? "",
     p.element,
     p.retrograde ? "✓" : "",
   ]);
@@ -102,7 +105,7 @@ const addTable = (
   doc: jsPDF,
   title: string,
   headers: string[],
-  data: any[][],
+  data: RowInput[],
   startY: number,
 ) => {
   doc.setFont("NotoSans");
@@ -127,7 +130,7 @@ const addTable = (
       textColor: [0, 0, 0],
       lineWidth: 0.1,
     },
-    didParseCell: function (data: any) {
+    didParseCell: function (data: CellHookData) {
       if (data.row.section === "head") {
         data.cell.styles.font = "NotoSans";
       } else {
@@ -155,7 +158,7 @@ const addTable = (
 
           const element =
             colorColumnIndex !== null ? data.row.raw[colorColumnIndex] : null;
-          const elementColors: Record<string, number[]> = {
+          const elementColors: Record<string, [number, number, number]> = {
             Aer: [220, 230, 255],
             Apă: [173, 216, 230],
             Foc: [255, 200, 180],
@@ -192,7 +195,7 @@ export const generateAstralElementsPDF = async (
 
   // Split astral elements into planets and asteroids
   const splitIndex = result.astral_elements.findIndex(
-    (item: any) => item.name === "Chiron",
+    (item: AstralElement) => item.name === "Chiron",
   );
   const planetsData =
     splitIndex === -1

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import Select from "react-select";
+import { useState } from "react";
+import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
 import DateInput from "@/components/ui/DateInput";
 import TimeInput from "@/components/ui/TimeInput";
@@ -39,22 +39,56 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
   setResult,
   setUserInfo,
 }) => {
-  const [formState, setFormState] = useState({
-    fullName: "",
-    birthDate: null as Date | null,
-    birthHour: null as Date | null,
-    birthCountry: "",
-    birthCounty: "",
-    birthCity: "",
-    coordinates: null as LocationCoordinates | null,
-    isCalculating: false,
-  });
+  // Static reference data (countries + Romanian counties, Romania
+  // preselected) is computed synchronously for the initial state — no
+  // effect needed.
+  const getInitialData = () => {
+    const placeholder: SelectOption = { value: "", label: "Selectează..." };
+    const fallback = {
+      formState: {
+        fullName: "",
+        birthDate: null as Date | null,
+        birthHour: null as Date | null,
+        birthCountry: "",
+        birthCounty: "",
+        birthCity: "",
+        coordinates: null as LocationCoordinates | null,
+        isCalculating: false,
+      },
+      options: {
+        countryOptions: [placeholder],
+        stateOptions: [placeholder],
+        cityOptions: [placeholder],
+      },
+    };
+    try {
+      const countries = Country.getAllCountries().map((country) => ({
+        value: country.isoCode,
+        label: COUNTRY_NAMES_RO[country.isoCode] || country.name,
+      }));
+      fallback.options.countryOptions = [placeholder, ...countries];
 
-  const [options, setOptions] = useState({
-    countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    stateOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    cityOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-  });
+      const romania = countries.find((c) => c.value === "RO");
+      if (romania) {
+        fallback.formState.birthCountry = romania.value;
+        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
+          ([code, [name]]) => ({
+            value: code,
+            label: name,
+          }),
+        );
+        fallback.options.stateOptions = [placeholder, ...romaniaCounties];
+      }
+      return fallback;
+    } catch (error) {
+      console.error("Error initializing countries:", error);
+      return fallback;
+    }
+  };
+
+  const [initialData] = useState(getInitialData);
+  const [formState, setFormState] = useState(initialData.formState);
+  const [options, setOptions] = useState(initialData.options);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -66,45 +100,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     );
   };
 
-  useEffect(() => {
-    try {
-      const defaultOptions = [{ value: "", label: "Selectează..." }];
-      const countries = Country.getAllCountries().map((country) => ({
-        value: country.isoCode,
-        label: COUNTRY_NAMES_RO[country.isoCode] || country.name,
-      }));
+  type FormState = typeof formState;
 
-      setOptions((prev) => ({
-        ...prev,
-        countryOptions: [{ value: "", label: "Selectează..." }, ...countries],
-      }));
-
-      const romania = countries.find((c) => c.value === "RO");
-
-      if (romania) {
-        setFormState((prev) => ({
-          ...prev,
-          birthCountry: romania.value,
-        }));
-
-        const romaniaCounties = Object.entries(ROMANIAN_COUNTIES).map(
-          ([code, [name]]) => ({
-            value: code,
-            label: name,
-          }),
-        );
-
-        setOptions((prev) => ({
-          ...prev,
-          stateOptions: [...defaultOptions, ...romaniaCounties],
-        }));
-      }
-    } catch (error) {
-      console.error("Error initializing countries:", error);
-    }
-  }, []);
-
-  const handleFormChange = (field: string, value: any) => {
+  const handleFormChange = <K extends keyof FormState>(
+    field: K,
+    value: FormState[K],
+  ) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -354,8 +355,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
   };
 
-  const selectStyles = {
-    control: (base: any) => ({
+  const selectStyles: StylesConfig<SelectOption> = {
+    control: (base) => ({
       ...base,
       backgroundColor: "rgba(255,255,255,0.05)",
       borderColor: "rgba(255,255,255,0.15)",
@@ -364,23 +365,23 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       minHeight: "48px",
       "&:hover": { borderColor: "rgba(168,85,247,0.5)" },
     }),
-    singleValue: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    input: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    menu: (base: any) => ({
+    singleValue: (base) => ({ ...base, color: "#f3e8ff" }),
+    input: (base) => ({ ...base, color: "#f3e8ff" }),
+    menu: (base) => ({
       ...base,
       backgroundColor: "#1e1b4b",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: "0.75rem",
       overflow: "hidden",
     }),
-    option: (base: any, state: any) => ({
+    option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? "rgba(168,85,247,0.2)" : "transparent",
       color: state.isFocused ? "#f3e8ff" : "#c084fc",
       "&:hover": { backgroundColor: "rgba(168,85,247,0.2)" },
     }),
-    placeholder: (base: any) => ({ ...base, color: "#a855f7" }),
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+    placeholder: (base) => ({ ...base, color: "#a855f7" }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
@@ -395,7 +396,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
         <input
           type="text"
           id="fullName"
-          className="w-full p-3 transition-colors border bg-white/5 border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border bg-white/5 border-white/15 rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) => handleFormChange("fullName", e.target.value)}
@@ -547,7 +548,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
 
       <button
         type="button"
-        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 rounded-xl shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-linear-to-r from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 rounded-xl shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={formState.isCalculating}
         onClick={handleCalculatePositions}
       >

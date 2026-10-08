@@ -34,7 +34,13 @@ const TimeInput: React.FC<TimeInputProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  // Sync display state when the parent passes a new time. Done during render
+  // (React-endorsed "adjust state during render" pattern), not in an effect,
+  // so no cascading passive re-render happens. Compared by timestamp so a
+  // re-created but equal Date instance does not wipe in-progress typing.
+  const [prevValue, setPrevValue] = useState<Date | null>(value);
+  if ((value?.getTime() ?? null) !== (prevValue?.getTime() ?? null)) {
+    setPrevValue(value);
     if (value) {
       const h = value.getHours();
       const m = value.getMinutes();
@@ -46,7 +52,7 @@ const TimeInput: React.FC<TimeInputProps> = ({
       setSelectedHour(0);
       setSelectedMinute(0);
     }
-  }, [value]);
+  }
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -155,7 +161,7 @@ const TimeInput: React.FC<TimeInputProps> = ({
           onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
           required={required}
-          className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none transition-colors ${
+          className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden transition-colors ${
             isOpen
               ? "ring-1 border-cosmic-500 ring-cosmic-500"
               : "border-white/15 hover:border-white/25"
@@ -164,19 +170,19 @@ const TimeInput: React.FC<TimeInputProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
+        <div className="absolute z-50 mt-2 w-full p-3 bg-midnight-800 border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
           <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <select
                 value={selectedHour}
                 onChange={handleHourChange}
-                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
+                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-hidden focus:border-purple-400"
               >
                 {HOURS.map((h) => (
                   <option
                     key={h}
                     value={h}
-                    className="bg-[#1e1b4b] text-purple-200"
+                    className="bg-midnight-800 text-purple-200"
                   >
                     {pad(h)}
                   </option>
@@ -189,13 +195,13 @@ const TimeInput: React.FC<TimeInputProps> = ({
               <select
                 value={selectedMinute}
                 onChange={(e) => handleMinuteChange(parseInt(e.target.value))}
-                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-none focus:border-purple-400"
+                className="w-full px-3 py-2 pr-8 text-sm text-purple-200 border rounded-lg appearance-none cursor-pointer bg-white/10 border-white/15 focus:outline-hidden focus:border-purple-400"
               >
                 {MINUTES.map((m) => (
                   <option
                     key={m}
                     value={m}
-                    className="bg-[#1e1b4b] text-purple-200"
+                    className="bg-midnight-800 text-purple-200"
                   >
                     {pad(m)}
                   </option>

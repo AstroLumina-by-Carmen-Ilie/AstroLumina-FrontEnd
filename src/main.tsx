@@ -6,6 +6,7 @@ import "./styles/starry-theme.css";
 import "./styles/astronomy-fonts.css";
 import "flatpickr/dist/themes/material_blue.css";
 import { LoadingProvider } from "@/contexts/LoadingContext";
+import RouteFallback from "@/components/RouteFallback";
 import { env, initSentry } from "@/config";
 
 // Route-level code splitting: each page becomes a separate chunk,
@@ -41,14 +42,6 @@ const Events = lazy(() => import("@/pages/Events"));
 const ConstellationEvent = lazy(
   () => import("@/pages/events/ConstellationEvent"),
 );
-
-function RouteFallback() {
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-midnight-950">
-      <div className="w-10 h-10 border-2 rounded-full animate-spin border-cosmic-500/30 border-t-cosmic-400" />
-    </div>
-  );
-}
 
 const rootElement = document.getElementById("root");
 

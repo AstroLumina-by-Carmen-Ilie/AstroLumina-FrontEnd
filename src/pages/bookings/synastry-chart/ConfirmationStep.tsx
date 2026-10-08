@@ -256,7 +256,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
         <div className="flex gap-4 pt-4">
           <button
             onClick={onComplete}
-            className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+            className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
           >
             Înapoi la pagina principală
           </button>
@@ -281,7 +281,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div>
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-sm break-words sm:text-base text-cosmic-100">
+            <p className="text-sm wrap-break-word sm:text-base text-cosmic-100">
               {firstMemberUserInfo.name}
             </p>
           </div>
@@ -305,7 +305,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="sm:col-span-2">
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-sm break-words sm:text-base text-cosmic-100">
+            <p className="text-sm wrap-break-word sm:text-base text-cosmic-100">
               {firstMemberUserInfo.name}
             </p>
           </div>
@@ -332,7 +332,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
             <p className="mb-1 text-xs uppercase text-cosmic-400">
               Locul nașterii
             </p>
-            <p className="text-sm break-words sm:text-base text-cosmic-100">
+            <p className="text-sm wrap-break-word sm:text-base text-cosmic-100">
               {firstMemberUserInfo.location}
             </p>
           </div>
@@ -344,7 +344,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="sm:col-span-2">
             <p className="mb-1 text-xs uppercase text-cosmic-400">Nume</p>
-            <p className="text-sm break-words sm:text-base text-cosmic-100">
+            <p className="text-sm wrap-break-word sm:text-base text-cosmic-100">
               {secondMemberUserInfo.name}
             </p>
           </div>
@@ -371,7 +371,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
             <p className="mb-1 text-xs uppercase text-cosmic-400">
               Locul nașterii
             </p>
-            <p className="text-sm break-words sm:text-base text-cosmic-100">
+            <p className="text-sm wrap-break-word sm:text-base text-cosmic-100">
               {secondMemberUserInfo.location}
             </p>
           </div>
@@ -418,7 +418,7 @@ const ConfirmationStep: React.FC<TwoPersonsConfirmationStepProps> = ({
         </button>
         <button
           onClick={handleConfirmBooking}
-          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Confirmă sesiunea
         </button>

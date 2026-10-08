@@ -46,14 +46,20 @@ const DateInput: React.FC<DateInputProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  // Sync display state when the parent passes a new date. Done during render
+  // (React-endorsed "adjust state during render" pattern), not in an effect,
+  // so no cascading passive re-render happens. Compared by timestamp so a
+  // re-created but equal Date instance does not wipe in-progress typing.
+  const [prevValue, setPrevValue] = useState<Date | null>(value);
+  if ((value?.getTime() ?? null) !== (prevValue?.getTime() ?? null)) {
+    setPrevValue(value);
     if (value) {
       setInputValue(format(value, "dd/MM/yyyy"));
       setCalendarMonth(value);
     } else {
       setInputValue("");
     }
-  }, [value]);
+  }
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -69,7 +75,7 @@ const DateInput: React.FC<DateInputProps> = ({
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let raw = e.target.value.replace(/[^\d/]/g, "");
+    const raw = e.target.value.replace(/[^\d/]/g, "");
     setInputValue(raw);
 
     if (raw.length === 10) {
@@ -161,7 +167,7 @@ const DateInput: React.FC<DateInputProps> = ({
           onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
           required={required}
-          className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-none transition-colors ${
+          className={`w-full pl-10 pr-3 py-3 bg-white/5 border rounded-xl text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden transition-colors ${
             isOpen
               ? "ring-1 border-cosmic-500 ring-cosmic-500"
               : "border-white/15 hover:border-white/25"
@@ -170,7 +176,7 @@ const DateInput: React.FC<DateInputProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
+        <div className="absolute z-50 mt-2 w-full p-3 bg-midnight-800 border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10">
           <style>{`
             .rdp-month_grid { width: 100%; table-layout: fixed; border-spacing: 0; }
             .rdp-month_grid td { padding: 0; }
@@ -181,13 +187,13 @@ const DateInput: React.FC<DateInputProps> = ({
               <select
                 value={calendarMonth.getMonth()}
                 onChange={handleMonthChange}
-                className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
+                className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-hidden focus:border-purple-400 cursor-pointer"
               >
                 {MONTHS.map((m, i) => (
                   <option
                     key={i}
                     value={i}
-                    className="bg-[#1e1b4b] text-purple-200"
+                    className="bg-midnight-800 text-purple-200"
                   >
                     {m}
                   </option>
@@ -199,13 +205,13 @@ const DateInput: React.FC<DateInputProps> = ({
               <select
                 value={calendarMonth.getFullYear()}
                 onChange={handleYearChange}
-                className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
+                className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-hidden focus:border-purple-400 cursor-pointer"
               >
                 {YEARS.map((y) => (
                   <option
                     key={y}
                     value={y}
-                    className="bg-[#1e1b4b] text-purple-200"
+                    className="bg-midnight-800 text-purple-200"
                   >
                     {y}
                   </option>
@@ -232,7 +238,7 @@ const DateInput: React.FC<DateInputProps> = ({
               head_cell:
                 "text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center",
               row: "flex w-full mt-1",
-              cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+              cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:has-aria-[selected]:rounded-l-md last:has-aria-[selected]:rounded-r-md focus-within:relative focus-within:z-20",
               day: "h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer",
               day_selected:
                 "bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100",

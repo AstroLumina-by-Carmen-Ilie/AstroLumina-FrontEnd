@@ -1,8 +1,308 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap')
+layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-cosmic-50: #faf5ff;
+  --color-cosmic-100: #f3e8ff;
+  --color-cosmic-200: #e9d5ff;
+  --color-cosmic-300: #d8b4fe;
+  --color-cosmic-400: #c084fc;
+  --color-cosmic-500: #a855f7;
+  --color-cosmic-600: #9333ea;
+  --color-cosmic-700: #7c3aed;
+  --color-cosmic-800: #6d28d9;
+  --color-cosmic-900: #5b21b6;
+  --color-cosmic-950: #3b0764;
+
+  --color-gold-50: #fefce8;
+  --color-gold-100: #fef9c3;
+  --color-gold-200: #fef08a;
+  --color-gold-300: #fde047;
+  --color-gold-400: #facc15;
+  --color-gold-500: #eab308;
+  --color-gold-600: #ca8a04;
+  --color-gold-700: #a16207;
+  --color-gold-800: #854d0e;
+  --color-gold-900: #713f12;
+  --color-gold-950: #422006;
+
+  --color-midnight-50: #eef2ff;
+  --color-midnight-100: #e0e7ff;
+  --color-midnight-200: #c7d2fe;
+  --color-midnight-300: #a5b4fc;
+  --color-midnight-400: #818cf8;
+  --color-midnight-500: #6366f1;
+  --color-midnight-600: #4f46e5;
+  --color-midnight-700: #4338ca;
+  --color-midnight-800: #1e1b4b;
+  --color-midnight-900: #0f0d2e;
+  --color-midnight-950: #0a0a1a;
+
+  --font-display: Playfair Display, serif;
+  --font-body: Inter, sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-scale-in: scaleIn 0.3s ease-out;
+  --animate-pulse-soft: pulseSoft 3s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 0.6s ease-out;
+  --animate-fade-in-down: fadeInDown 0.6s ease-out;
+  --animate-fade-in-left: fadeInLeft 0.6s ease-out;
+  --animate-fade-in-right: fadeInRight 0.6s ease-out;
+  --animate-scale-in-up: scaleInUp 0.5s ease-out;
+  --animate-float-gentle: floatGentle 4s ease-in-out infinite;
+  --animate-shimmer-luxury: shimmerLuxury 3s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
+  --animate-reveal-text: revealText 1s ease-out forwards;
+  --animate-magnetic: magnetic 0.3s ease-out;
+  --animate-tilt: tilt 0.3s ease-out;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-cosmic: linear-gradient(
+    135deg,
+    #0a0a1a 0%,
+    #1e1b4b 50%,
+    #3b0764 100%
+  );
+  --background-image-gradient-gold: linear-gradient(
+    135deg,
+    #ca8a04 0%,
+    #eab308 50%,
+    #fde047 100%
+  );
+
+  --backdrop-blur-xs: 2px;
+
+  --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(234, 179, 8, 0.3);
+  --shadow-glow-lg: 0 0 40px rgba(168, 85, 247, 0.4);
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-soft-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
+  --shadow-cosmic: 0 8px 32px rgba(91, 33, 182, 0.2);
+  --shadow-luxury-gold:
+    0 4px 24px rgba(202, 138, 4, 0.15), 0 8px 48px rgba(202, 138, 4, 0.1);
+  --shadow-luxury-purple:
+    0 4px 24px rgba(124, 58, 237, 0.15), 0 8px 48px rgba(124, 58, 237, 0.1);
+  --shadow-elegant:
+    0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover:
+    0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  --ease-luxury: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  --transition-duration-400: 400ms;
+  --transition-duration-500: 500ms;
+  --transition-duration-600: 600ms;
+  --transition-duration-700: 700ms;
+  --transition-duration-900: 900ms;
+
+  --tracking-luxury: 0.15em;
+  --tracking-elegant: 0.05em;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    100% {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes scaleIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes pulseSoft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes scaleInUp {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes floatGentle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes shimmerLuxury {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes pulseGlow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+    }
+  }
+  @keyframes revealText {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes magnetic {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes tilt {
+    0% {
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    }
+    100% {
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   html {

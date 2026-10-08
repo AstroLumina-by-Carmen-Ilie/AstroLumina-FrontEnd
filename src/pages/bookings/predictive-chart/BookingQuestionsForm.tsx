@@ -40,7 +40,7 @@ const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({
         </label>
         <textarea
           id="notes"
-          className="w-full p-3 transition-colors border resize-none rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border resize-none rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Descrie subiectul pe care vrei să îl explorezi în consultație..."
           rows={4}
           value={notes}
@@ -63,7 +63,7 @@ const BookingQuestionsForm: React.FC<BookingQuestionsFormProps> = ({
         </button>
         <button
           type="submit"
-          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Pasul următor
         </button>
