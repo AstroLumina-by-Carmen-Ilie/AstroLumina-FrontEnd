@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AstralElements } from "@/types";
+import { AstralElement, AstralElements } from "@/types";
 import { generateAstralElementsPDF } from "@/templates/pdf/astralCalculator";
 
 // Utility functions
@@ -30,7 +30,7 @@ const ResultsDisplay: React.FC<{
   const [activeTab, setActiveTab] = useState<1 | 2 | 3>(1);
 
   const splitIndex = result.astral_elements.findIndex(
-    (item: any) => item.name === "Chiron",
+    (item: AstralElement) => item.name === "Chiron",
   );
 
   const planetsData =
@@ -140,7 +140,7 @@ const ResultsDisplay: React.FC<{
               </tr>
             </thead>
             <tbody>
-              {displayedData.map((info: any, index: number) => (
+              {displayedData.map((info: AstralElement, index: number) => (
                 <tr key={index} className="border-b border-white/5">
                   <td className="p-2 text-sm whitespace-normal sm:p-3 text-cosmic-200 sm:text-base">
                     {activeTab === 2 ? (

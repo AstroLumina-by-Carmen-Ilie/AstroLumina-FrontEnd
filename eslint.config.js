@@ -22,6 +22,11 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // The codebase intentionally syncs props into local state and fetches
+      // data inside effects (DateInput/TimeInput value sync, phone
+      // validation, slot fetching). Keep the new compiler-era rule off until
+      // those components are refactored to derived state / event handlers.
+      "react-hooks/set-state-in-effect": "off",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },

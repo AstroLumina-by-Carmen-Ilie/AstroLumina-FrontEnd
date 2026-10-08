@@ -32,7 +32,7 @@ const ConstellationBookingPage: React.FC = () => {
     if (hasFetchedRef.current) return;
     hasFetchedRef.current = true;
     fetchSeats(eventId);
-  }, [eventId]);
+  }, [eventId, fetchSeats]);
 
   const availableSeats = getAvailableSeats(eventId);
   const eventFull = availableSeats <= 0;

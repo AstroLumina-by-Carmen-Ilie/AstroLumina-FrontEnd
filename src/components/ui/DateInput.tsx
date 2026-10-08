@@ -69,7 +69,7 @@ const DateInput: React.FC<DateInputProps> = ({
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let raw = e.target.value.replace(/[^\d/]/g, "");
+    const raw = e.target.value.replace(/[^\d/]/g, "");
     setInputValue(raw);
 
     if (raw.length === 10) {

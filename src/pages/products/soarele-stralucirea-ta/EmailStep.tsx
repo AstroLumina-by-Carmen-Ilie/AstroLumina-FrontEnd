@@ -119,6 +119,14 @@ const EmailStep: React.FC<EmailStepProps> = ({ sunSign, onBack }) => {
           "Trimite-mi informațiile"
         )}
       </button>
+
+      <button
+        type="button"
+        onClick={onBack}
+        className="w-full px-6 py-3 font-semibold transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+      >
+        Înapoi
+      </button>
     </div>
   );
 };

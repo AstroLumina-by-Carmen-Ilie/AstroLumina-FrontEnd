@@ -10,7 +10,6 @@ import {
   Moon,
   Compass,
   ArrowRight,
-  ChevronDown,
   Check,
   Package,
   Calendar,

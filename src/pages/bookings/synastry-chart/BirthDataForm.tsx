@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Select from "react-select";
+import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
 import DateInput from "@/components/ui/DateInput";
 import TimeInput from "@/components/ui/TimeInput";
@@ -222,7 +222,12 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     })();
   }, [initialValues]);
 
-  const handleFormChange = (field: string, value: any) => {
+  type FormState = ReturnType<typeof getInitialFormState>;
+
+  const handleFormChange = <K extends keyof FormState>(
+    field: K,
+    value: FormState[K],
+  ) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -470,8 +475,8 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
     }
   };
 
-  const selectStyles = {
-    control: (base: any) => ({
+  const selectStyles: StylesConfig<SelectOption> = {
+    control: (base) => ({
       ...base,
       backgroundColor: "rgba(255,255,255,0.05)",
       borderColor: "rgba(255,255,255,0.15)",
@@ -480,23 +485,23 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({
       minHeight: "48px",
       "&:hover": { borderColor: "rgba(168,85,247,0.5)" },
     }),
-    singleValue: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    input: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    menu: (base: any) => ({
+    singleValue: (base) => ({ ...base, color: "#f3e8ff" }),
+    input: (base) => ({ ...base, color: "#f3e8ff" }),
+    menu: (base) => ({
       ...base,
       backgroundColor: "#1e1b4b",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: "0.75rem",
       overflow: "hidden",
     }),
-    option: (base: any, state: any) => ({
+    option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? "rgba(168,85,247,0.2)" : "transparent",
       color: state.isFocused ? "#f3e8ff" : "#c084fc",
       "&:hover": { backgroundColor: "rgba(168,85,247,0.2)" },
     }),
-    placeholder: (base: any) => ({ ...base, color: "#a855f7" }),
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+    placeholder: (base) => ({ ...base, color: "#a855f7" }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   return (

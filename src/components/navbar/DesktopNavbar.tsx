@@ -1,10 +1,10 @@
 import React from "react";
 import {
   NavbarProps,
-  getNavbarStyles,
   NavbarLogo,
   NavbarLinks,
 } from "@/components/navbar/NavbarCommon";
+import { getNavbarStyles } from "@/components/navbar/navbarStyles";
 
 const DesktopNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   const { navClasses, linkClasses } = getNavbarStyles();

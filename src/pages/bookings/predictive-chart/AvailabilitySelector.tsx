@@ -148,7 +148,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
         setIsLoading(false);
       }
     },
-    [BOOKING_API_URL],
+    [],
   );
 
   useEffect(() => {

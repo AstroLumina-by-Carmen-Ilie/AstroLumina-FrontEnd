@@ -17,18 +17,6 @@ interface AttendeesFormProps {
   onBack: () => void;
 }
 
-const validateEmail = (email: string): boolean => {
-  if (!email.trim()) return true; // Optional, so empty is valid
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-};
-
-const validatePhone = (phone: string): boolean => {
-  if (!phone.trim()) return true; // Optional, so empty is valid
-  const cleaned = phone.replace(/\D/g, "");
-  return cleaned.length >= 10;
-};
-
 interface HolderData {
   fullName: string;
   email: string;
@@ -238,6 +226,13 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
         </div>
 
         <div className="flex gap-4 mt-6">
+          <button
+            type="button"
+            onClick={onBack}
+            className="px-6 py-4 font-semibold transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          >
+            Înapoi
+          </button>
           <button
             type="submit"
             className="flex-1 py-4 font-semibold text-white transition-all cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"

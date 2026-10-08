@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Select from "react-select";
+import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
 import { BirthDataPayload, SelectOption, LocationCoordinates } from "@/types";
 import DateInput from "@/components/ui/DateInput";
@@ -230,7 +230,6 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         coordinates,
         fullName,
         birthCountry,
-        birthCounty,
         birthCity,
       } = formState;
       if (!birthDate || !birthHour || !coordinates) {
@@ -277,8 +276,8 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
   };
 
-  const selectStyles = {
-    control: (base: any) => ({
+  const selectStyles: StylesConfig<SelectOption> = {
+    control: (base) => ({
       ...base,
       backgroundColor: "rgba(255,255,255,0.05)",
       borderColor: "rgba(255,255,255,0.15)",
@@ -286,21 +285,21 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
       color: "white",
       minHeight: "48px",
     }),
-    singleValue: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    input: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    menu: (base: any) => ({
+    singleValue: (base) => ({ ...base, color: "#f3e8ff" }),
+    input: (base) => ({ ...base, color: "#f3e8ff" }),
+    menu: (base) => ({
       ...base,
       backgroundColor: "#1e1b4b",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: "0.75rem",
     }),
-    option: (base: any, state: any) => ({
+    option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? "rgba(168,85,247,0.2)" : "transparent",
       color: state.isFocused ? "#f3e8ff" : "#c084fc",
     }),
-    placeholder: (base: any) => ({ ...base, color: "#a855f7" }),
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+    placeholder: (base) => ({ ...base, color: "#a855f7" }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
