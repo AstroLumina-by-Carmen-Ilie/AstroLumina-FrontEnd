@@ -30,10 +30,10 @@ const AboutMe = () => {
         <div className="relative z-10 max-w-4xl px-6 mx-auto">
           <div className="mb-20 text-center">
             <div className="relative inline-block mb-8">
-              <div className="flex items-center justify-center w-40 h-40 mx-auto transition-transform duration-500 border-2 rounded-full bg-gradient-to-br from-cosmic-500/30 to-gold-500/30 border-white/10 group-hover:scale-105">
+              <div className="flex items-center justify-center w-40 h-40 mx-auto transition-transform duration-500 border-2 rounded-full bg-linear-to-br from-cosmic-500/30 to-gold-500/30 border-white/10 group-hover:scale-105">
                 <Sparkles className="w-10 h-10 text-cosmic-400/50" />
               </div>
-              <div className="absolute flex items-center justify-center w-12 h-12 border rounded-full -bottom-2 -right-2 bg-gradient-to-br from-gold-500/30 to-cosmic-500/30 border-white/10">
+              <div className="absolute flex items-center justify-center w-12 h-12 border rounded-full -bottom-2 -right-2 bg-linear-to-br from-gold-500/30 to-cosmic-500/30 border-white/10">
                 <Star className="w-5 h-5 text-gold-400" />
               </div>
             </div>
@@ -41,7 +41,7 @@ const AboutMe = () => {
             <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-gold-400/70 font-display">
               Astrolog & Consultant Spiritual
             </p>
-            <h1 className="mb-4 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display md:text-5xl from-white via-cosmic-100 to-cosmic-200">
+            <h1 className="mb-4 text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r font-display md:text-5xl from-white via-cosmic-100 to-cosmic-200">
               Carmen Ilie
             </h1>
             <blockquote className="mt-6 text-lg italic text-cosmic-300/60 font-display">
@@ -52,7 +52,7 @@ const AboutMe = () => {
           <div className="space-y-8">
             <div className="p-10 glass-luxury-hover">
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cosmic-500/30 to-gold-500/20 text-cosmic-400">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-cosmic-500/30 to-gold-500/20 text-cosmic-400">
                   <Star className="w-5 h-5" />
                 </div>
                 <h2 className="text-2xl font-bold text-white font-display">
@@ -70,7 +70,7 @@ const AboutMe = () => {
 
             <div className="p-10 glass-luxury-hover">
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-gold-500/30 to-cosmic-500/20 text-gold-400">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-gold-500/30 to-cosmic-500/20 text-gold-400">
                   <Compass className="w-5 h-5" />
                 </div>
                 <h2 className="text-2xl font-bold text-white font-display">
@@ -89,7 +89,7 @@ const AboutMe = () => {
 
             <div className="p-10 glass-luxury-hover">
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cosmic-500/30 to-gold-500/20 text-cosmic-400">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-cosmic-500/30 to-gold-500/20 text-cosmic-400">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <h2 className="text-2xl font-bold text-white font-display">

@@ -122,7 +122,7 @@ const Contact = () => {
 
         <div className="relative z-10 max-w-6xl px-6 mx-auto">
           <div className="mb-20 text-center">
-            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
+            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Contact
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70">
@@ -151,7 +151,7 @@ const Contact = () => {
                     disabled={status === "sending"}
                     minLength={2}
                     maxLength={100}
-                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Numele tău"
                     required
                   />
@@ -170,7 +170,7 @@ const Contact = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={status === "sending"}
                     maxLength={254}
-                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="email@exemplu.ro"
                     required
                   />
@@ -190,7 +190,7 @@ const Contact = () => {
                     disabled={status === "sending"}
                     minLength={3}
                     maxLength={150}
-                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Despre ce dorești să discutăm?"
                     required
                   />
@@ -210,7 +210,7 @@ const Contact = () => {
                     disabled={status === "sending"}
                     minLength={10}
                     maxLength={5000}
-                    className="w-full p-4 text-white transition-all duration-300 border resize-none rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
+                    className="w-full p-4 text-white transition-all duration-300 border resize-none rounded-xl bg-white/5 border-white/10 placeholder-cosmic-400/50 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500/30 focus:bg-white/10"
                     placeholder="Scrie mesajul tău aici..."
                     required
                   ></textarea>
@@ -235,7 +235,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="flex items-center justify-center w-full gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center w-full gap-3 px-8 py-4 font-semibold text-white rounded-full bg-linear-to-r luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
                   <span>
@@ -265,9 +265,9 @@ const Contact = () => {
                         {item.question}
                       </span>
                       {openFaq === index ? (
-                        <ChevronUp className="flex-shrink-0 w-5 h-5 transition-transform duration-300 text-gold-400" />
+                        <ChevronUp className="shrink-0 w-5 h-5 transition-transform duration-300 text-gold-400" />
                       ) : (
-                        <ChevronDown className="flex-shrink-0 w-5 h-5 transition-colors duration-300 text-cosmic-400 group-hover:text-gold-400" />
+                        <ChevronDown className="shrink-0 w-5 h-5 transition-colors duration-300 text-cosmic-400 group-hover:text-gold-400" />
                       )}
                     </button>
                     {openFaq === index && (

@@ -107,7 +107,7 @@ const ConstellationBookingPage: React.FC = () => {
           <div className="mx-auto max-w-7xl">
             <div className="overflow-hidden glass-card">
               <div className="flex flex-col md:flex-row">
-                <div className="flex flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+                <div className="flex flex-col justify-center p-8 bg-linear-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
                   <h2 className="mb-6 text-3xl font-bold text-white font-display">
                     {event?.title || "Eveniment Constelații"}
                   </h2>
@@ -133,7 +133,7 @@ const ConstellationBookingPage: React.FC = () => {
                     </p>
                     <button
                       onClick={() => navigate("/evenimente")}
-                      className="inline-flex items-center gap-2 px-6 py-3 font-medium text-white transition-all duration-300 rounded-full cursor-pointer bg-gradient-to-r group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
+                      className="inline-flex items-center gap-2 px-6 py-3 font-medium text-white transition-all duration-300 rounded-full cursor-pointer bg-linear-to-r group from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
                     >
                       Înapoi la evenimente
                     </button>
@@ -153,7 +153,7 @@ const ConstellationBookingPage: React.FC = () => {
 
       <main className="container px-6 pt-24 pb-16 mx-auto">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
+          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r font-display from-cosmic-300 to-gold-400">
             Rezervare Eveniment
           </h1>
           <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
@@ -169,7 +169,7 @@ const ConstellationBookingPage: React.FC = () => {
         <div className="mx-auto max-w-7xl">
           <div className="overflow-hidden glass-card">
             <div className="flex flex-col md:flex-row">
-              <div className="flex flex-col justify-center p-8 bg-gradient-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
+              <div className="flex flex-col justify-center p-8 bg-linear-to-br to-transparent md:flex md:w-1/2 from-cosmic-900/30">
                 <h2 className="mb-6 text-3xl font-bold text-white font-display">
                   {event?.title || "Constelații"}
                 </h2>
@@ -241,7 +241,7 @@ const ConstellationBookingPage: React.FC = () => {
                   </div>
                   <div className="h-1 rounded-full bg-white/10">
                     <div
-                      className="h-full transition-all duration-500 rounded-full bg-gradient-to-r from-cosmic-500 to-cosmic-400"
+                      className="h-full transition-all duration-500 rounded-full bg-linear-to-r from-cosmic-500 to-cosmic-400"
                       style={{ width: `${((currentStep - 1) / 2) * 100}%` }}
                     />
                   </div>

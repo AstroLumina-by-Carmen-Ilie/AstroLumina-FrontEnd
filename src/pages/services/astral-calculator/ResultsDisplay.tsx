@@ -180,7 +180,7 @@ const ResultsDisplay: React.FC<{
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
               <svg

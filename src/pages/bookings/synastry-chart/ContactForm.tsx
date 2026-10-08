@@ -135,7 +135,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             id="countryCode"
             value={countryCode.value}
             onChange={(e) => handleCountryCodeChange(e.target.value)}
-            className="w-full p-3 transition-colors border cursor-pointer rounded-xl bg-white/5 border-white/15 text-cosmic-100 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+            className="w-full p-3 transition-colors border cursor-pointer rounded-xl bg-white/5 border-white/15 text-cosmic-100 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               color: "#e9d5ff",
@@ -177,7 +177,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           <input
             type="tel"
             id="phone"
-            className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
+            className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:ring-1 ${
               phoneError
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                 : "border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500"
@@ -200,7 +200,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         <input
           type="email"
           id="email"
-          className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:ring-1 ${
+          className={`w-full p-3 rounded-xl border transition-colors bg-white/5 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:ring-1 ${
             emailError
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"
               : "border-white/15 focus:border-cosmic-500 focus:ring-cosmic-500"
@@ -228,7 +228,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         </button>
         <button
           type="submit"
-          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
+          className="flex-1 px-6 py-3 font-medium text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"
         >
           Pasul următor
         </button>
