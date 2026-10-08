@@ -1,4 +1,5 @@
 import { R2_BASE_URL } from "@/config";
+import type { jsPDF } from "jspdf";
 
 const R2_FONTS_URL = R2_BASE_URL + "/fonts";
 
@@ -30,7 +31,7 @@ export async function loadFontAsBase64(filename: string): Promise<string> {
 }
 
 export async function loadFontsForPDF(
-  doc: any,
+  doc: jsPDF,
   fonts: { filename: string; family: string; style: string }[],
 ): Promise<void> {
   for (const font of fonts) {

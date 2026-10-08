@@ -130,7 +130,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         <button
           type="submit"
           disabled={!isComplete}
-          className={`group flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
+          className={`group flex-1 bg-linear-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
             !isComplete
               ? "opacity-50 cursor-not-allowed"
               : "cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"

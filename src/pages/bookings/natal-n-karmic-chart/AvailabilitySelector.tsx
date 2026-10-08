@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ro } from "date-fns/locale";
@@ -89,6 +89,34 @@ const YEARS = Array.from({ length: 3 }, (_, i) => CURRENT_YEAR + i);
 /** Horizon for one request — availability limits come from Cal.com; widen here if needed. */
 const AVAILABILITY_RANGE_DAYS = 90;
 
+/**
+ * Pure slot fetcher: performs the HTTP request and returns normalized slots
+ * without touching component state. State updates happen in the caller's
+ * async continuations, so mounting does not synchronously setState in an
+ * effect (which would cascade renders).
+ */
+async function requestSlotsForRange(
+  sessionKey: string,
+  startDate: Date,
+  endDate: Date,
+): Promise<AvailableSlot[]> {
+  const startTime = startDate.toISOString();
+  const endTime = new Date(endDate.getTime() + 86400000).toISOString();
+
+  const response = await axios.get(
+    `${BOOKING_API_URL}/api/availability/slots/session/${sessionKey}`,
+    {
+      params: {
+        startTime,
+        endTime,
+        timeZone: "Europe/Bucharest",
+      },
+    },
+  );
+
+  return normalizeSlotsFromApi(response.data.slots);
+}
+
 const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   initialValues,
   onNext,
@@ -103,60 +131,43 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(
     initialValues || null,
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [datesWithSlots, setDatesWithSlots] = useState<Set<string>>(new Set());
   const [calendarMonth, setCalendarMonth] = useState<Date>(
     initialValues ? new Date(initialValues.time) : new Date(),
   );
 
-  const fetchSlotsForRange = useCallback(
-    async (startDate: Date, endDate: Date) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const startTime = startDate.toISOString();
-        const endTime = new Date(endDate.getTime() + 86400000).toISOString();
-
-        const response = await axios.get(
-          `${BOOKING_API_URL}/api/availability/slots/session/${SESSION_KEY}`,
-          {
-            params: {
-              startTime,
-              endTime,
-              timeZone: "Europe/Bucharest",
-            },
-          },
-        );
-
-        const slots = normalizeSlotsFromApi(response.data.slots);
+  // Initial slot load. The effect body only starts async work; every
+  // setState runs in a promise continuation (never synchronously), guarded
+  // by `cancelled` so an unmounted component is left alone.
+  useEffect(() => {
+    let cancelled = false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const end = new Date(today.getTime() + AVAILABILITY_RANGE_DAYS * 86400000);
+    requestSlotsForRange(SESSION_KEY, today, end).then(
+      (slots) => {
+        if (cancelled) return;
         setAvailableSlots(slots);
-
-        const dateSet = new Set<string>();
-        slots.forEach((slot) => {
-          dateSet.add(slot.date);
-        });
-        setDatesWithSlots(dateSet);
-      } catch (err) {
+        setDatesWithSlots(new Set(slots.map((slot) => slot.date)));
+        setIsLoading(false);
+      },
+      (err: unknown) => {
+        if (cancelled) return;
         console.error("Error fetching availability slots:", err);
         setError(
           "Nu am putut încărca disponibilitatea. Te rog încearcă din nou.",
         );
         setAvailableSlots([]);
         setDatesWithSlots(new Set());
-      } finally {
         setIsLoading(false);
-      }
-    },
-    [BOOKING_API_URL],
-  );
-
-  useEffect(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const end = new Date(today.getTime() + AVAILABILITY_RANGE_DAYS * 86400000);
-    fetchSlotsForRange(today, end);
-  }, [fetchSlotsForRange]);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSelectDate = (date: Date | undefined) => {
     setSelectedDate(date);
@@ -209,7 +220,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
 
         <div className="grid min-w-0 gap-6 md:grid-cols-2">
           <div className="min-w-0">
-            <div className="w-full max-w-full p-3 bg-[#1e1b4b] border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10 overflow-hidden">
+            <div className="w-full max-w-full p-3 bg-midnight-800 border border-white/10 rounded-xl shadow-2xl shadow-purple-500/10 overflow-hidden">
               <style>{`
                 .availability-rdp .rdp-month_grid { width: 100%; table-layout: fixed; border-spacing: 0; }
                 .availability-rdp .rdp-month_grid td { padding: 0; }
@@ -220,13 +231,13 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
                   <select
                     value={calendarMonth.getMonth()}
                     onChange={handleMonthChange}
-                    className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
+                    className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-hidden focus:border-purple-400 cursor-pointer"
                   >
                     {MONTHS.map((m, i) => (
                       <option
                         key={i}
                         value={i}
-                        className="bg-[#1e1b4b] text-purple-200"
+                        className="bg-midnight-800 text-purple-200"
                       >
                         {m}
                       </option>
@@ -238,13 +249,13 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
                   <select
                     value={calendarMonth.getFullYear()}
                     onChange={handleYearChange}
-                    className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-none focus:border-purple-400 cursor-pointer"
+                    className="w-full appearance-none bg-white/10 border border-white/15 rounded-lg px-3 py-1.5 pr-8 text-sm text-purple-200 focus:outline-hidden focus:border-purple-400 cursor-pointer"
                   >
                     {YEARS.map((y) => (
                       <option
                         key={y}
                         value={y}
-                        className="bg-[#1e1b4b] text-purple-200"
+                        className="bg-midnight-800 text-purple-200"
                       >
                         {y}
                       </option>
@@ -276,7 +287,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
                     head_cell:
                       "text-purple-400/60 rounded-md flex-1 font-normal text-[0.7rem] text-center",
                     row: "flex w-full mt-1",
-                    cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                    cell: "h-8 flex-1 flex items-center justify-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-purple-500/10 first:has-aria-[selected]:rounded-l-md last:has-aria-[selected]:rounded-r-md focus-within:relative focus-within:z-20",
                     day: "h-8 w-8 p-0 font-normal text-purple-200 hover:bg-purple-500/20 rounded-md transition-colors cursor-pointer",
                     day_selected:
                       "bg-purple-600/40 text-purple-100 hover:bg-purple-600/50 hover:text-purple-100 focus:bg-purple-600/50 focus:text-purple-100",
@@ -363,7 +374,7 @@ const AvailabilitySelector: React.FC<AvailabilitySelectorProps> = ({
         <button
           type="submit"
           disabled={!selectedSlot}
-          className={`flex-1 bg-gradient-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
+          className={`flex-1 bg-linear-to-r from-cosmic-600 to-cosmic-500 text-white py-3 px-6 rounded-xl transition-all duration-300 ${
             !selectedSlot
               ? "opacity-50 cursor-not-allowed"
               : "cursor-pointer hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple"

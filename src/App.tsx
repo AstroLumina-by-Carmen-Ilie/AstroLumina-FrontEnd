@@ -10,7 +10,6 @@ import {
   Moon,
   Compass,
   ArrowRight,
-  ChevronDown,
   Check,
   Package,
   Calendar,
@@ -182,7 +181,7 @@ function App() {
                 className="mb-8 text-4xl font-bold leading-tight font-display md:text-6xl lg:text-7xl animate-fade-in-up"
                 style={{ animationDelay: "0.15s" }}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cosmic-200 to-cosmic-300">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-cosmic-200 to-cosmic-300">
                   AstroLumina
                 </span>
               </h1>
@@ -231,7 +230,7 @@ function App() {
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 w-full h-48 pointer-events-none bg-gradient-to-t to-transparent from-midnight-950 via-midnight-950/80"></div>
+          <div className="absolute bottom-0 left-0 w-full h-48 pointer-events-none bg-linear-to-t to-transparent from-midnight-950 via-midnight-950/80"></div>
         </section>
 
         {/* ═══════ SERVICES SECTION ═══════ */}
@@ -249,7 +248,7 @@ function App() {
 
           <div className="container relative z-10 px-6 mx-auto">
             <div className="mb-20 text-center">
-              <h2 className="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
+              <h2 className="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                 Servicii Astrologice
               </h2>
               <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70 font-display">
@@ -266,7 +265,7 @@ function App() {
                     to={service.link}
                     className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-br to-transparent from-cosmic-500/10"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-linear-to-br to-transparent from-cosmic-500/10"></div>
 
                     {service.badge && (
                       <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
@@ -279,7 +278,7 @@ function App() {
                       </span>
                     )}
 
-                    <div className="flex items-center justify-center mb-6 transition-transform duration-500 w-14 h-14 bg-gradient-to-br rounded-2xl from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
+                    <div className="flex items-center justify-center mb-6 transition-transform duration-500 w-14 h-14 bg-linear-to-br rounded-2xl from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
                       {service.icon}
                     </div>
 
@@ -304,7 +303,7 @@ function App() {
                     to={service.link}
                     className="relative overflow-hidden cursor-pointer p-7 group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 w-24 h-24 rounded-bl-full bg-gradient-to-bl to-transparent from-gold-500/10"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 rounded-bl-full bg-linear-to-bl to-transparent from-gold-500/10"></div>
 
                     {service.badge && (
                       <span className="absolute px-3 py-1 text-xs font-semibold border rounded-full top-5 right-5 bg-gold-500/20 text-gold-400 border-gold-500/30">
@@ -370,7 +369,7 @@ function App() {
                   to={product.link}
                   className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                 >
-                  <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-gradient-to-bl to-transparent from-gold-500/10"></div>
+                  <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-linear-to-bl to-transparent from-gold-500/10"></div>
 
                   {product.badge ? (
                     <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
@@ -441,7 +440,7 @@ function App() {
                     to={`/evenimente/rezervare/${event.id}`}
                     className="relative p-8 overflow-hidden cursor-pointer group glass-luxury-hover"
                   >
-                    <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-gradient-to-bl to-transparent from-cosmic-500/10"></div>
+                    <div className="absolute top-0 right-0 rounded-bl-full w-28 h-28 bg-linear-to-bl to-transparent from-cosmic-500/10"></div>
 
                     <span className="absolute top-6 right-6 px-4 py-1.5 text-xs font-semibold rounded-full bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30">
                       {event.price} €
@@ -511,7 +510,7 @@ function App() {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {features.map((feature, index) => (
                 <div key={index} className="text-center group">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 transition-all duration-500 bg-gradient-to-br rounded-2xl glass-luxury-hover from-cosmic-500/20 to-gold-500/10 text-cosmic-400 group-hover:scale-110 group-hover:from-cosmic-500/30 group-hover:to-gold-500/20">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 transition-all duration-500 bg-linear-to-br rounded-2xl glass-luxury-hover from-cosmic-500/20 to-gold-500/10 text-cosmic-400 group-hover:scale-110 group-hover:from-cosmic-500/30 group-hover:to-gold-500/20">
                     {feature.icon}
                   </div>
                   <h3 className="mb-3 text-lg font-semibold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
@@ -545,7 +544,7 @@ function App() {
           <div className="container relative z-10 px-6 mx-auto">
             <div className="max-w-5xl mx-auto">
               <div className="mb-16 text-center">
-                <h2 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
+                <h2 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
                   Contact
                 </h2>
                 <p className="text-lg text-cosmic-300/70">
@@ -692,7 +691,7 @@ function App() {
                   </p>
                   <Link
                     to="/contact"
-                    className="inline-flex items-center self-start gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                    className="inline-flex items-center self-start gap-3 px-8 py-4 font-semibold text-white rounded-full bg-linear-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                   >
                     <span>Vezi Pagina de Contact</span>
                     <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />

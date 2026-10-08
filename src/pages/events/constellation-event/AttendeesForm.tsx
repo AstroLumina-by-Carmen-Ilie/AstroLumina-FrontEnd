@@ -17,18 +17,6 @@ interface AttendeesFormProps {
   onBack: () => void;
 }
 
-const validateEmail = (email: string): boolean => {
-  if (!email.trim()) return true; // Optional, so empty is valid
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-};
-
-const validatePhone = (phone: string): boolean => {
-  if (!phone.trim()) return true; // Optional, so empty is valid
-  const cleaned = phone.replace(/\D/g, "");
-  return cleaned.length >= 10;
-};
-
 interface HolderData {
   fullName: string;
   email: string;
@@ -176,7 +164,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                         updateHolder(index, "fullName", e.target.value)
                       }
                       placeholder="Nume Prenume"
-                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-hidden focus:border-cosmic-500"
                     />
                   </div>
                   {nameErrors[index] && (
@@ -200,7 +188,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                         updateHolder(index, "email", e.target.value)
                       }
                       placeholder="email@example.com"
-                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-hidden focus:border-cosmic-500"
                     />
                   </div>
                 </div>
@@ -219,7 +207,7 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
                         updateHolder(index, "phone", e.target.value)
                       }
                       placeholder="+40 123 456 789"
-                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-none focus:border-cosmic-500"
+                      className="w-full py-3 pl-10 pr-4 text-white border rounded-lg bg-white/10 border-white/10 placeholder-cosmic-400 focus:outline-hidden focus:border-cosmic-500"
                     />
                   </div>
                 </div>
@@ -239,8 +227,15 @@ const AttendeesForm: React.FC<AttendeesFormProps> = ({
 
         <div className="flex gap-4 mt-6">
           <button
+            type="button"
+            onClick={onBack}
+            className="px-6 py-4 font-semibold transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+          >
+            Înapoi
+          </button>
+          <button
             type="submit"
-            className="flex-1 py-4 font-semibold text-white transition-all cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
+            className="flex-1 py-4 font-semibold text-white transition-all cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
           >
             Continuă la plată
           </button>

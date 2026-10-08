@@ -72,7 +72,7 @@ const MoonPhaseCalculatorPage = () => {
           </p>
           <button
             type="button"
-            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-linear-to-r rounded-xl luxury-button from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
             onClick={() => setSelectionMode("specific-date")}
           >
             <svg
@@ -92,7 +92,7 @@ const MoonPhaseCalculatorPage = () => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-gradient-to-r rounded-xl luxury-button from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-500 shadow-luxury-gold"
+            className="flex items-center justify-center w-full gap-3 px-8 py-5 font-semibold text-white bg-linear-to-r rounded-xl luxury-button from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-500 shadow-luxury-gold"
             onClick={handleCurrentDate}
           >
             <svg
@@ -127,7 +127,7 @@ const MoonPhaseCalculatorPage = () => {
         <div className="container relative z-10 px-6 mx-auto">
           <div className="mx-auto max-w-7xl">
             <div className="mb-8 text-center">
-              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r font-display from-cosmic-300 to-gold-400">
+              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r font-display from-cosmic-300 to-gold-400">
                 Calculatorul Fazei Lunare
               </h1>
               <p className="max-w-2xl mx-auto mt-4 text-cosmic-300">
@@ -139,7 +139,7 @@ const MoonPhaseCalculatorPage = () => {
             <div className="overflow-hidden glass-card">
               <div className="flex flex-col md:flex-row">
                 {/* Left Panel */}
-                <div className="flex flex-col justify-center p-10 bg-gradient-to-br to-transparent from-cosmic-900/40 via-cosmic-800/20 md:w-1/2">
+                <div className="flex flex-col justify-center p-10 bg-linear-to-br to-transparent from-cosmic-900/40 via-cosmic-800/20 md:w-1/2">
                   <h2 className="mb-6 text-3xl font-bold text-white font-display">
                     Calculatorul Fazelor Lunare
                   </h2>

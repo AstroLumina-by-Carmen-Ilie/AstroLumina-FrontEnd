@@ -82,7 +82,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         <input
           type="email"
           id="email"
-          className="w-full p-3 transition-colors border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 transition-colors border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="email@exemplu.ro"
           value={customerEmail}
           onChange={(e) => setCustomerEmail(e.target.value)}
@@ -100,7 +100,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         type="button"
         onClick={handleSend}
         disabled={isSendingEmail}
-        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSendingEmail ? (
           <>
@@ -124,6 +124,14 @@ const EmailStep: React.FC<EmailStepProps> = ({ onBack }) => {
         ) : (
           "Trimite-mi ghidul"
         )}
+      </button>
+
+      <button
+        type="button"
+        onClick={onBack}
+        className="w-full px-6 py-3 font-semibold transition-colors border cursor-pointer rounded-xl bg-white/5 text-cosmic-200 hover:bg-white/10 border-white/10"
+      >
+        Înapoi
       </button>
     </div>
   );

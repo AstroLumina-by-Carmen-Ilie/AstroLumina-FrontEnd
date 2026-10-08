@@ -29,7 +29,7 @@ export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({
       <div className="min-h-screen">
         {children}
         {isLoading && (
-          <div className="fixed inset-0 bg-slate-900 z-[9999]">
+          <div className="fixed inset-0 bg-slate-900 z-9999">
             <LoadingAnimation />
           </div>
         )}

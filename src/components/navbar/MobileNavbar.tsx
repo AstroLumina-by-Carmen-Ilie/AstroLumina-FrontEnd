@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   NavbarProps,
-  getNavbarStyles,
   NavbarLogo,
   NavbarLinks,
 } from "@components/navbar/NavbarCommon";
+import { getNavbarStyles } from "@components/navbar/navbarStyles";
 import { Menu, X } from "lucide-react";
 
 const MobileNavbar: React.FC<NavbarProps> = ({ isScrolled }) => {

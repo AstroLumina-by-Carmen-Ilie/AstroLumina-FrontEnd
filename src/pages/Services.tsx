@@ -119,7 +119,7 @@ const Services = () => {
 
         <div className="relative z-10 max-w-6xl px-6 mx-auto">
           <div className="mb-20 text-center">
-            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
+            <h1 className="mb-5 text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white font-display md:text-5xl via-cosmic-100 to-cosmic-200">
               Servicii Astrologice
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-cosmic-300/70">
@@ -136,7 +136,7 @@ const Services = () => {
                 <div className="p-10">
                   <div className="flex flex-col items-start justify-between gap-6 mb-8 md:flex-row md:items-center">
                     <div className="flex items-center gap-5">
-                      <div className="flex items-center justify-center transition-all duration-500 w-14 h-14 bg-gradient-to-br rounded-2xl from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
+                      <div className="flex items-center justify-center transition-all duration-500 w-14 h-14 bg-linear-to-br rounded-2xl from-cosmic-500/30 to-gold-500/20 text-cosmic-400 group-hover:scale-110">
                         {service.icon}
                       </div>
                       <h2 className="text-2xl font-bold text-white transition-colors font-display group-hover:text-gold-300 duration-400">
@@ -170,7 +170,7 @@ const Services = () => {
                           key={index}
                           className="flex items-start gap-3 text-base text-cosmic-200/70"
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-gold-500 mt-2 flex-shrink-0"></div>
+                          <div className="w-1.5 h-1.5 rounded-full bg-gold-500 mt-2 shrink-0"></div>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -179,7 +179,7 @@ const Services = () => {
 
                   <Link
                     to={service.link}
-                    className="inline-flex items-center gap-3 px-8 py-4 font-semibold text-white rounded-full bg-gradient-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
+                    className="inline-flex items-center gap-3 px-8 py-4 font-semibold text-white rounded-full bg-linear-to-r luxury-button group from-cosmic-600 via-cosmic-500 to-cosmic-600 hover:from-cosmic-500 hover:to-cosmic-500 shadow-luxury-purple"
                   >
                     <span>Află mai multe</span>
                     <ArrowRight className="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1.5" />

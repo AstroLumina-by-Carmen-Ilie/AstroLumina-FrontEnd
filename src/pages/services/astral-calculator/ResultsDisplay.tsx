@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AstralElements } from "@/types";
+import { AstralElement, AstralElements } from "@/types";
 import { generateAstralElementsPDF } from "@/templates/pdf/astralCalculator";
 
 // Utility functions
@@ -30,7 +30,7 @@ const ResultsDisplay: React.FC<{
   const [activeTab, setActiveTab] = useState<1 | 2 | 3>(1);
 
   const splitIndex = result.astral_elements.findIndex(
-    (item: any) => item.name === "Chiron",
+    (item: AstralElement) => item.name === "Chiron",
   );
 
   const planetsData =
@@ -140,7 +140,7 @@ const ResultsDisplay: React.FC<{
               </tr>
             </thead>
             <tbody>
-              {displayedData.map((info: any, index: number) => (
+              {displayedData.map((info: AstralElement, index: number) => (
                 <tr key={index} className="border-b border-white/5">
                   <td className="p-2 text-sm whitespace-normal sm:p-3 text-cosmic-200 sm:text-base">
                     {activeTab === 2 ? (
@@ -180,7 +180,7 @@ const ResultsDisplay: React.FC<{
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-midnight-950 shadow-glow-gold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
               <svg

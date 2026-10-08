@@ -134,7 +134,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <div className="space-y-3">
         <button
           onClick={onComplete}
-          className="w-full py-3 font-medium text-white transition-all cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
+          className="w-full py-3 font-medium text-white transition-all cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400"
         >
           Înapoi la pagina principală
           <ArrowRight className="inline w-4 h-4 ml-2" />

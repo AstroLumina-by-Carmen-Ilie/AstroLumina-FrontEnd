@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import Select from "react-select";
+import Select, { type StylesConfig } from "react-select";
 import { Country, loadCities, loadStates } from "@/utils/location-data";
 import { BirthDataPayload, SelectOption, LocationCoordinates } from "@/types";
 import DateInput from "@/components/ui/DateInput";
@@ -28,16 +28,10 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     coordinates: null as LocationCoordinates | null,
   });
 
-  const [options, setOptions] = useState({
-    countryOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    countyOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-    cityOptions: [{ value: "", label: "Selectează..." }] as SelectOption[],
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isCalculating, setIsCalculating] = useState(false);
-
-  useEffect(() => {
+  // Static reference data (countries + Romanian counties) is computed
+  // synchronously for the initial state — no effect needed.
+  const getInitialOptions = () => {
+    const placeholder: SelectOption = { value: "", label: "Selectează..." };
     try {
       const countries = Country.getAllCountries().map((country) => ({
         value: country.isoCode,
@@ -51,15 +45,25 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         }),
       );
 
-      setOptions({
-        countryOptions: [{ value: "", label: "Selectează..." }, ...countries],
-        countyOptions: [{ value: "", label: "Selectează..." }, ...counties],
-        cityOptions: [{ value: "", label: "Selectează..." }],
-      });
+      return {
+        countryOptions: [placeholder, ...countries],
+        countyOptions: [placeholder, ...counties],
+        cityOptions: [placeholder],
+      };
     } catch (error) {
       console.error("Error initializing:", error);
+      return {
+        countryOptions: [placeholder],
+        countyOptions: [placeholder],
+        cityOptions: [placeholder],
+      };
     }
-  }, []);
+  };
+
+  const [options, setOptions] = useState(getInitialOptions);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const handleCountryChange = async (option: SelectOption | null) => {
     const countryCode = option?.value || "";
@@ -230,7 +234,6 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         coordinates,
         fullName,
         birthCountry,
-        birthCounty,
         birthCity,
       } = formState;
       if (!birthDate || !birthHour || !coordinates) {
@@ -277,8 +280,8 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
     }
   };
 
-  const selectStyles = {
-    control: (base: any) => ({
+  const selectStyles: StylesConfig<SelectOption> = {
+    control: (base) => ({
       ...base,
       backgroundColor: "rgba(255,255,255,0.05)",
       borderColor: "rgba(255,255,255,0.15)",
@@ -286,21 +289,21 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
       color: "white",
       minHeight: "48px",
     }),
-    singleValue: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    input: (base: any) => ({ ...base, color: "#f3e8ff" }),
-    menu: (base: any) => ({
+    singleValue: (base) => ({ ...base, color: "#f3e8ff" }),
+    input: (base) => ({ ...base, color: "#f3e8ff" }),
+    menu: (base) => ({
       ...base,
       backgroundColor: "#1e1b4b",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: "0.75rem",
     }),
-    option: (base: any, state: any) => ({
+    option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? "rgba(168,85,247,0.2)" : "transparent",
       color: state.isFocused ? "#f3e8ff" : "#c084fc",
     }),
-    placeholder: (base: any) => ({ ...base, color: "#a855f7" }),
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+    placeholder: (base) => ({ ...base, color: "#a855f7" }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
@@ -315,7 +318,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         <input
           type="text"
           id="fullName"
-          className="w-full p-3 border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-none focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
+          className="w-full p-3 border rounded-xl bg-white/5 border-white/15 text-cosmic-100 placeholder-cosmic-500 focus:outline-hidden focus:border-cosmic-500 focus:ring-1 focus:ring-cosmic-500"
           placeholder="Introdu numele tău..."
           value={formState.fullName}
           onChange={(e) =>
@@ -471,7 +474,7 @@ const BirthDataStep: React.FC<BirthDataStepProps> = ({ onNext }) => {
         type="button"
         onClick={handleCalculate}
         disabled={isCalculating}
-        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-gradient-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-300 cursor-pointer bg-linear-to-r rounded-xl from-cosmic-600 to-cosmic-500 hover:from-cosmic-500 hover:to-cosmic-400 shadow-glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isCalculating ? (
           <>
