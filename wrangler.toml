@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
   cwd = "."
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
 
 [[pages_build]]
   directory = "dist"
